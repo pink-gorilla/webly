@@ -4,7 +4,7 @@
    [shadow.cljs.devtools.api :as shadow]
    [shadow.cljs.devtools.server :as shadow-server]   
    [webly.web.handler :refer [make-handler]]
-   [demo.routes :refer [demo-routes-backend]]
+   [demo.routes :refer [demo-routes-backend demo-routes-frontend]]
    [demo.handler] ; side-effects
    ))
 
@@ -12,7 +12,7 @@
 ;  (timbre/set-level! :debug)
 (timbre/set-level! :info)
 
-(def handler (make-handler demo-routes-backend))
+(def handler (make-handler demo-routes-backend demo-routes-frontend))
 
 (defn -main
   {:shadow/requires-server true}

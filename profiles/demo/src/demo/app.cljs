@@ -6,7 +6,9 @@
    [pinkgorilla.ui.config :refer [set-prefix!]]
    [webly.web.views :refer [webly-app]]
    [webly.config] ; side-effects
-   [demo.routes :refer [demo-routes-backend]]))
+   [demo.routes :refer [demo-routes-backend]]
+   [demo.views] ; side-effects
+   ))
 
 (set-prefix! "/r/")
 

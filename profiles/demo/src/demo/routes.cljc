@@ -2,6 +2,7 @@
 
 (def demo-routes-app
   {"" :demo/main
+   "help" :demo/help
    "demo/save" :demo/save})
 
 (def demo-routes-api

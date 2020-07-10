@@ -4,6 +4,7 @@
    [taoensso.timbre :as log :refer [tracef debugf info infof warnf errorf]]
    [ring.util.response :as response]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
+   [bidi.bidi :as bidi]
    [bidi.ring]
    [webly.user.auth.middleware :refer [wrap-oauth]]
    [webly.web.middleware :refer [wrap-goldly]]
@@ -56,20 +57,22 @@
 (defn add-ring-handler [key handler]
   (swap! ring-handler assoc key handler))
 
+(defn frontend? [routes-frontend handler-kw]
+  (bidi/path-for routes-frontend handler-kw))
+
 (defn route->handler
-  ([]
-   (info "->handler no args ..")
-   nil)
-  ([handler-kw & args]
-   (info "route handler:" handler-kw " args:" args)
-   (if-let [handler (handler-kw @ring-handler)]
-     handler
-     app-handler)))
+  [routes-frontend handler-kw & args]
+  (info "route handler:" handler-kw " args:" args)
+  (if-let [handler (handler-kw @ring-handler)]
+    handler
+    (if (frontend? routes-frontend handler-kw)
+      app-handler
+      nil)))
 
 ; handler is used by shadow-cljs
 (defn make-handler
-  [bidi-routes]
-  (bidi.ring/make-handler bidi-routes route->handler))
+  [routes-backend routes-frontend]
+  (bidi.ring/make-handler routes-backend (partial route->handler routes-frontend)))
 
 (defn add-webly-default-handler []
   (-> ring-handler
