@@ -15,7 +15,6 @@
 ;
   )
 
-
 #_(defmethod page-contents :index []
     [:span
      [:h1 "Routing example: Index"]

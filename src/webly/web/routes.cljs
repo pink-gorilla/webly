@@ -1,10 +1,10 @@
  (ns webly.web.routes
-  (:require
-   [taoensso.timbre :refer-macros [info]]
-   [reagent.core :as r]
-   [bidi.bidi :as bidi]
-   [pushy.core :as pushy]
-   [cemerick.url :as url]))
+   (:require
+    [taoensso.timbre :refer-macros [info]]
+    [reagent.core :as r]
+    [bidi.bidi :as bidi]
+    [pushy.core :as pushy]
+    [cemerick.url :as url]))
 
 ; query param handling
 ; bidi does not handle query params

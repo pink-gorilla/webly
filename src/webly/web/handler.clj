@@ -71,7 +71,6 @@
   [bidi-routes]
   (bidi.ring/make-handler bidi-routes route->handler))
 
-
 (defn add-webly-default-handler []
   (-> ring-handler
       (swap! assoc :webly/oauth2 handler-auth)

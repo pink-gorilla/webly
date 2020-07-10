@@ -6,7 +6,6 @@
    #?(:cljs [webly.user.auth.view]) ; side effects
    ))
 
-
 (def webly-config
   (atom {:title "webly"}))
 
@@ -15,6 +14,7 @@
 ; route definitions can be composed with bidi. 
 ; Therefore it does make sense that default route config is
 ; exported here. 
+
 
 (def explorer-routes-ui
   {"explorer"     :ui/explorer

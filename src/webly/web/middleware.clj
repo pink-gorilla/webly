@@ -27,13 +27,13 @@
         ((if (:websocket? request) handler wrapped) request))))
 
 #_(defn wrap-api-handler
-  "a wrapper for JSON API calls
+    "a wrapper for JSON API calls
    from pinkgorilla notebook
    "
-  [handler]
-  (-> handler
-      (wrap-defaults api-defaults)
-      (wrap-restful-format :formats [:json :transit-json :edn])))
+    [handler]
+    (-> handler
+        (wrap-defaults api-defaults)
+        (wrap-restful-format :formats [:json :transit-json :edn])))
 
 (defn wrap-api-handler ; from gorilla-explore
   "a wrapper for JSON API calls"
