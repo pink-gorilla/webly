@@ -12,3 +12,9 @@ pom.xml.asc
 .lein-failures
 .nrepl-port
 .cpcache/
+/test/creds.edn
+.classpath
+.project
+.settings/*
+node_modules
+.shadow-cljs

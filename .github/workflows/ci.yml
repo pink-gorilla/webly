@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache Maven dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/project.clj') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    - name: Install dependencies
+      run: |
+        lein deps
+    - name: Check formatting
+      run: lein cljfmt check
+    - name: Run tests
+      run: |
+        lein test
+    - name: Release
+      env:
+        RELEASE_USERNAME: ${{ secrets.ReleaseUsername }}
+        RELEASE_PASSWORD: ${{ secrets.ReleasePassword }}
+      run: |
+        git config --global user.email "ci@pinkgorilla.org"
+        git config --global user.name "CI/CD"
+        #
+        # Could not transfer metadata foo:bar/maven-metadata.xml from/to releases (https://clojars.org/repo): Read timed out
+        # Default 10000 not enough for us
+        #
+        export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"
+        lein release
