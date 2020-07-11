@@ -1,15 +1,15 @@
-(ns goldly.web.ws
+(ns webly.ws
+  (:require-macros
+   [cljs.core.async.macros :as asyncm :refer [go go-loop]])
   (:require
    [clojure.string :as str]
-   [cljs.core.async :as async  :refer (<! >! put! chan)]
+   [cljs.core.async :as async  :refer [<! >! put! chan]]
    [re-frame.core :refer [reg-event-db dispatch-sync dispatch]]
-   [taoensso.encore :as encore :refer-macros (have have?)]
-   [taoensso.timbre :as timbre :refer-macros (tracef debugf infof warnf errorf trace)]
-   [taoensso.sente :as sente :refer (cb-success?)]
+   [taoensso.encore :as encore :refer-macros [have have?]]
+   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof warnf errorf trace]]
+   [taoensso.sente :as sente :refer [cb-success?]]
    [taoensso.sente.packers.transit :as sente-transit] ;; Optional, for Transit encoding
-   )
-  (:require-macros
-   [cljs.core.async.macros :as asyncm :refer (go go-loop)]))
+   ))
 
 ;; CSRF check
 

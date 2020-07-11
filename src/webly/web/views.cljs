@@ -18,7 +18,7 @@
 
 (defn webly-app []
   (fn []
-    (let [current-page @current] ; (:handler @current)
+    (let [current-page @current]
       [:div
        [link-css "tailwindcss/dist/tailwind.css"]
        [link-css "@fortawesome/fontawesome-free/css/all.min.css"]

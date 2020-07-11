@@ -1,4 +1,4 @@
-(ns webly.user.auth.auth
+(ns webly.oauth2.auth
   "TODO: Unused"
   (:require
    [re-frame.core :refer [reg-event-fx reg-cofx reg-sub inject-cofx]]

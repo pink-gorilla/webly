@@ -81,7 +81,7 @@
       ;(wrap-json-response)
         (wrap-gzip))) ;oz 
 
-(defn wrap-goldly [handler]
+(defn wrap-webly [handler]
   (-> handler
       (wrap-defaults site-defaults)
       (wrap-session)

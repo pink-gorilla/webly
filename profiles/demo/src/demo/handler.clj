@@ -5,6 +5,15 @@
    [webly.web.middleware :refer [wrap-api-handler]]
    [webly.web.handler :refer [add-ring-handler]]))
 
+; test
+
+(defn test-handler [req]
+  {:status 200 :body "test"})
+
+(add-ring-handler :api/test test-handler)
+
+; time
+
 (defn current-unix-time []
   (quot (System/currentTimeMillis) 1000))
 

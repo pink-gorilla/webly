@@ -1,4 +1,4 @@
-(ns webly.user.auth.events
+(ns webly.oauth2.events
   (:require
    [taoensso.timbre :refer-macros [info]]
    [re-frame.core :refer [reg-event-fx dispatch]]))

@@ -2,16 +2,18 @@
   (:require
    [taoensso.timbre :as timbre :refer [info]]
    [shadow.cljs.devtools.api :as shadow]
-   [shadow.cljs.devtools.server :as shadow-server]   
+   [shadow.cljs.devtools.server :as shadow-server]
    [webly.web.handler :refer [make-handler]]
+   [webly.config :refer [webly-config]]
    [demo.routes :refer [demo-routes-backend demo-routes-frontend]]
    [demo.handler] ; side-effects
    ))
 
-;(timbre/set-level! :trace) ; Uncomment for more logging
-;  (timbre/set-level! :debug)
-(timbre/set-level! :info)
+(swap! webly-config assoc :start "demo.app.start (); ")
 
+(timbre/set-level! (:timbre-loglevel @webly-config))
+
+(info "making handler ..")
 (def handler (make-handler demo-routes-backend demo-routes-frontend))
 
 (defn -main

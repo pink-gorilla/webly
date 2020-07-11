@@ -1,17 +1,7 @@
-{:lein   {:profile "+demo"}
+{:lein   {:profile "+dev"}
 
  ; shadow dev http server settings
- :dev-http {8019  {:roots
-                   [;"target/node_modules/public"  ;  css and png from selected npm dependencies
-                    "target/demo" ; demo ui bundle
-                    "profiles/demo/public" ; demo ui resources (html, data files)
-                  ;"resources/public"; resources we ship without npm
-                    "classpath:public" ; resources from jars (gorilla-ui) 
-                  ;"classpath:resources"
-                  ;"classpath:resources/public"
-                    "node_modules" ; dev only npm dependencies (tailwind)
-                    ]
-                   :handler demo.app/handler}}
+ :dev-http {8019 {:handler demo.app/handler}}
 
  :builds {:demo {:target :browser
                  :output-dir "target/demo/public"

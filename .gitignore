@@ -18,3 +18,4 @@ pom.xml.asc
 .settings/*
 node_modules
 .shadow-cljs
+creds.edn

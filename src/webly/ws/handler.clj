@@ -1,9 +1,11 @@
-
-   [goldly.web.ws :refer [get-sente-session-uid sente-session-with-uid
-                          ring-ajax-get-or-ws-handshake ring-ajax-post]]
-
-
-; WEBSOCKET
+(ns webly.ws.handler
+  (:require
+   [taoensso.timbre :as log :refer [info infof]]
+   [cheshire.core :as json]
+   [webly.web.handler :refer [get-csrf-token]]
+   [webly.web.middleware :refer [wrap-webly]]
+   [webly.ws :refer [get-sente-session-uid sente-session-with-uid
+                     ring-ajax-get-or-ws-handshake ring-ajax-post]]))
 
 (defn ws-token-handler-raw [req]
   (let [token {:csrf-token (get-csrf-token)}]
@@ -29,12 +31,12 @@
 
 (def ws-token-handler
   (-> ws-token-handler-raw
-      wrap-goldly))
+      wrap-webly))
 
 (def ws-chsk-get
   (-> ws-handshake-handler
-      wrap-goldly))
+      wrap-webly))
 
 (def ws-chsk-post
   (-> ws-ajax-post-handler
-      wrap-goldly))
+      wrap-webly))

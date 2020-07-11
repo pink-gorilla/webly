@@ -17,24 +17,23 @@
    (css "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css")])
 
 (defn layout [page]
-  (page/html5
-   [:head
-    [:meta {:http-equiv "Content-Type"
-            :content "text/html; charset=utf-8"}]
-
-    [:meta {:name "viewport"
-            :content "width=device-width, initial-scale=1.0"}]
-
-    [:title (:title @webly-config)]
-    [:link {:rel "shortcut icon" :href "/r/favicon.ico"}]
-    (css "/r/tailwindcss/dist/tailwind.css")
-    (load-fonts)]
-   [:body
-    [:div#webly page]
-    [:div
-     [:script {:src "/r/main.js" :type "text/javascript"}]
-       ; todo: start goldly via explicit command
-     #_[:script {:type "text/javascript"} "routing_example.core.init_BANG_ (); "]]]))
+  (let [{:keys [title start icon]} @webly-config]
+    (page/html5
+     [:head
+      [:meta {:http-equiv "Content-Type"
+              :content "text/html; charset=utf-8"}]
+      [:meta {:name "viewport"
+              :content "width=device-width, initial-scale=1.0"}]
+      [:title title]
+      [:link {:rel "shortcut icon"
+              :href icon}]
+      (css "/r/tailwindcss/dist/tailwind.css")
+      (load-fonts)]
+     [:body
+      [:div#webly page]
+      [:div  ; .w-screen.h-screen
+       [:script {:src "/r/main.js" :type "text/javascript"}]
+       [:script {:type "text/javascript"} start]]])))
 
 (defn app-page [csrf-token]
   (layout [:div

@@ -13,6 +13,7 @@ lein demo
 
 # Features
 - routing with bidi (this allows to have links within the web-app)
+- this means a registry for ring-handlers and reagent-views
 - oauth2 with github
 - dynamically generated app html that works with csrf
 - ring middleware for api calls
@@ -30,5 +31,12 @@ Bidi is not as highly starred as compojure, but it has important benefits:
 - It does not use macros, this means routes can be easily tested, transformed, sent between client-server, stored, modified. 
 - No linting errors due to macros.
 - Easy testing of route definitions, and handler results (including wrapping routes)
-- TODO: use bidi for RPC routing on websocket.
 
+
+
+# todo
+- unit tests
+  - bidi
+  - resources
+  - oauth2 
+- use bidi for RPC routing on websocket.

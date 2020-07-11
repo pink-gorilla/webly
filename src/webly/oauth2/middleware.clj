@@ -1,9 +1,8 @@
-(ns webly.user.auth.middleware
+(ns webly.oauth2.middleware
   (:require
    ;[cheshire.generate :as cheshire]
    ;[cognitect.transit :as transit]
 
-   [ring.util.response :as res]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
    [ring-ttl-session.core :refer [ttl-memory-store]]
    [ring.middleware.session :refer [wrap-session]]
@@ -41,16 +40,3 @@
 ; (defn wrap-base [handler]
 ;  
 
-; oauth tokens are stored here:
-; [gorillauniverse.github.filesystem :refer [workbooks-for-token]]
-; (let [github-token] (-> request :oauth2/access-tokens :github) 
-; (workbooks-for-token github-token)
-
-(defn handler-auth [request]
-  ; Once the user is authenticated, a new key is added to every request:
-  ;   :oauth2/access-tokens
-  (println "oauth2 tokens: " (-> request :oauth2/access-tokens :github))
-  (let [github-token (:token (-> request :oauth2/access-tokens :github))
-        _ (println "github token: " github-token)]
-    ;(println (tentacles.gists/user-gists "awb99" {:oauth-token github-token}))
-    (res/response {:token github-token})))

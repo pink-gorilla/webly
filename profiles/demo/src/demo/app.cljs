@@ -3,25 +3,11 @@
    [reagent.dom]
    [taoensso.timbre :as timbre :refer [info]]
    [re-frame.core :refer [clear-subscription-cache! dispatch-sync]]
-   [pinkgorilla.ui.config :refer [set-prefix!]]
-   [webly.web.views :refer [webly-app]]
-   [webly.config] ; side-effects
+   [webly.config :refer [webly-config]]
+   [webly.web.app]
    [demo.routes :refer [demo-routes-backend]]
    [demo.views] ; side-effects
    ))
-
-(set-prefix! "/r/")
-
-(defn print-log-init! []
-  (enable-console-print!)
-;(timbre/set-level! :trace) ; Uncomment for more logging
-  (timbre/set-level! :debug)
-  #_(timbre/set-level! :info))
-
-(defn mount-app []
-  (dispatch-sync [:bidi/init demo-routes-backend])
-  (reagent.dom/render [webly-app]
-                      (.getElementById js/document "app")))
 
 ;; before-reload is a good place to stop application stuff before we reload.
 (defn ^:dev/before-load before-reload []
@@ -29,7 +15,7 @@
   (info "shadow-cljs reload: before"))
 
 (defn ^:dev/after-load after-reload []
-  (print-log-init!)
+  (webly.web.app/print-log-init!)
   (println "shadow-cljs reload: after")
   (info "shadow-cljs reload: after")
 
@@ -42,11 +28,12 @@
   ;(init-routes)
   ;(start-router!)
   (println "mounting webly-app ..")
-  (mount-app))
+  (webly.web.app/mount-app))
 
 (after-reload)
 
 (defn ^:export start []
   (info "webly demo starting ..")
-  (mount-app))
+  (webly.web.app/start demo-routes-backend)
+  (webly.web.app/mount-app))
 

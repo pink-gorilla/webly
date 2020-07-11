@@ -1,19 +1,19 @@
-(ns goldly.web.ws
+(ns webly.ws
   (:require
-   [clojure.core.async :as async  :refer (<! <!! >! >!! put! chan go go-loop)]
-   [clojure.java.io :as io]
+   [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
+   ;[clojure.java.io :as io]
    ;[ring.middleware.defaults :refer [wrap-defaults site-defaults]]
    ;[ring.middleware.gzip :refer [wrap-gzip]]
-   [ring.middleware.keyword-params]
-   [ring.middleware.params]
+   ;[ring.middleware.keyword-params]
+;   [ring.middleware.params]
 ;   [ring.middleware.cljsjs :refer [wrap-cljsjs]]
   ; [ring.middleware.anti-forgery :as af :refer :all]
-   [ring.util.response :as response]
-   [taoensso.encore :as encore :refer (have have?)]
-   [taoensso.timbre :as log :refer (tracef debugf info infof warnf error errorf)]
+   ;[ring.util.response :as response]
+   [taoensso.encore :as encore :refer [have have?]]
+   [taoensso.timbre :as log :refer [tracef debugf info infof warnf error errorf]]
    [taoensso.sente  :as sente]
-   [taoensso.sente.server-adapters.http-kit :refer (get-sch-adapter)]
-   [taoensso.sente.packers.transit :as sente-transit]))
+   [taoensso.sente.packers.transit :as sente-transit]
+   [taoensso.sente.server-adapters.http-kit :refer [get-sch-adapter]]))
 
 (defn unique-id
   "Get a unique id for a session."
@@ -146,8 +146,3 @@
   ;
   )
 
-
-; ws
-        "token"                 #'ws-token-handler
-"chsk"                  {:get #'ws-chsk-get
-                         :post #'ws-chsk-post}

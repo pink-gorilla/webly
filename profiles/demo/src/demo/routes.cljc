@@ -1,20 +1,24 @@
-(ns demo.routes)
-
-(def demo-routes-app
-  {"" :demo/main
-   "help" :demo/help
-   "demo/save" :demo/save})
+(ns demo.routes
+  (:require
+   [webly.web.resources :refer [resource-handler]]))
 
 (def demo-routes-api
-  {"/api/" {"time"  {:get  :api/time}
-            "test"  {:post  :api/test}}})
+  {"time"  {:get  :api/time}
+   "test"  {:post  :api/test}})
+
+(def demo-routes-app
+  {""          :demo/main
+   "help"      :demo/help
+   "save"      :demo/save ; there is no handler defined for this on purpose
+   })
 
 (def demo-routes-frontend
   ["/" demo-routes-app])
 
 (def demo-routes-backend
-  ["" {"/" demo-routes-app
-       "" demo-routes-api}])
+  ["/" {"" demo-routes-app
+        "api/" demo-routes-api
+        "r" resource-handler}])
 
 
 

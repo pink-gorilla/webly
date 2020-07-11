@@ -16,23 +16,25 @@
                   ["vcs" "push"]]
 
   :target-path  "target/jar"
-
   :source-paths ["src"]
-  ; "test"
-  ;:test-paths ["test"]
+  :test-paths ["test"]
   :resource-paths  ["resources" ; not from npm
-                    #_"target/node_modules"] ; css png resources from npm modules
+                    "target/demo"] ; bundle
+
+  :managed-dependencies [[joda-time "2.9.9"]
+                         [clj-time "0.14.3"]
+                         [com.fasterxml.jackson.core/jackson-core "2.11.0"]
+
+                         [com.cognitect/transit-clj "1.0.324"]
+
+                         [com.cognitect/transit-java "1.0.343"]]
+
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.async "1.1.582"]
                  ;[org.clojure/tools.cli "1.0.194"]
                  [com.taoensso/timbre "4.10.0"] ; clj/cljs logging
                  [clojure.java-time "0.3.2"]
-
-                 ; routing
-                 [bidi "2.1.6"]
-                 [clj-commons/pushy "0.3.10"]
-                 [com.cemerick/url "0.1.1"]  ; url query-strings
 
                  ; encoding
                  [org.clojure/data.json "1.0.0"]
@@ -54,12 +56,16 @@
                  [ring/ring-json "0.5.0"]
                  [ring-cljsjs "0.2.0"]
                  [bk/ring-gzip "0.3.0"] ; from oz
-
                  [luminus/ring-ttl-session "0.3.3"]
                   ;[clj-oauth2 "0.2.0"] ;oauth2
                  ;[com.telenordigital.data-insights/clj-oauth2 "0.7.2"]
                  [ring-oauth2 "0.1.4"]
                  ;[expound "0.7.2"] ; see clojurewb
+
+                 ; routing
+                 [bidi "2.1.6"]
+                 [clj-commons/pushy "0.3.10"]
+                 [com.cemerick/url "0.1.1"]  ; url query-strings
 
                  ; frontend
                  [reagent "0.10.0" :exclusions [org.clojure/tools.reader
@@ -71,16 +77,16 @@
                  [org.pinkgorilla/gorilla-ui "0.2.23"
                   :exclusions [org.clojure/clojurescript]]]
 
-
-  :profiles {:demo  {:source-paths ["profiles/demo/src"]
-                     :dependencies [[org.clojure/clojure "1.10.1"]
+  :profiles {:dev {:source-paths ["profiles/demo/src"]
+                   :resource-paths  ["target/demo"
+                                     "profiles/demo/resources"]
+                   :dependencies [[org.clojure/clojure "1.10.1"]
                                    ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundeler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
-                                    [thheller/shadow-cljs "2.8.81"]
-                                    [thheller/shadow-cljsjs "0.0.21"]
-                                    [org.clojure/clojurescript "1.10.773"]]}
+                                  [thheller/shadow-cljs "2.8.81"]
+                                  [thheller/shadow-cljsjs "0.0.21"]
+                                  [org.clojure/clojurescript "1.10.773"]
 
-             :dev {:source-paths ["profiles/dev/src"]
-                   :dependencies [[clj-kondo "2020.03.20"]
+                                  [clj-kondo "2020.03.20"]
                                   ;[http-kit "2.3.0"]
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
@@ -102,8 +108,7 @@
             ["change" "version" "leiningen.release/bump-version"]
 
             "build-shadow-ci"  ^{:doc "Runs demo  via webserver."}
-            ["with-profile" "demo" "run" "-m" "shadow.cljs.devtools.cli" "watch" "demo"]
+            ["with-profile" "dev" "run" "-m" "shadow.cljs.devtools.cli" "compile" "demo"]
 
-
-            "demo"  ^{:doc "Runs UI components via webserver."}
-            ["with-profile" "demo" "run" "-m" "demo.app"]})
+            "demo"  ^{:doc "compiles & runs demo app and serves via webserver."}
+            ["with-profile" "dev" "run" "-m" "demo.app"]})

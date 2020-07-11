@@ -2,12 +2,6 @@
    [ring.mock.request :refer [request] :rename {request mock-request}]
 
 (comment
-
-     ; the app is greedy.
-  ["app" (-> #'app-handler)]
-  ["app/" (-> #'app-handler)]
-  ["/app" (-> #'app-handler)]
-  ["/app/" (-> #'app-handler)]
     ;[#"^.*$" #'app-handler]  ;; redirect / to index.html
 
 
