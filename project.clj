@@ -67,7 +67,7 @@
                  [re-frame "0.10.9"]
                  [cljs-ajax "0.8.0"] ; needed for re-frame/http-fx
                  [day8.re-frame/http-fx "0.1.6"] ; reframe based http requests
-                 [org.pinkgorilla/gorilla-ui "0.2.23"
+                 [org.pinkgorilla/gorilla-ui "0.2.24"
                   :exclusions [org.clojure/clojurescript]]
 
                  ;shadow
