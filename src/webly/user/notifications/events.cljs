@@ -1,4 +1,4 @@
-(ns webly.user.notifications
+(ns webly.user.notifications.events
   (:require
    [taoensso.timbre :refer-macros [info]]
    [re-frame.core :as rf :include-macros true :refer [dispatch]]
