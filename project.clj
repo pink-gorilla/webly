@@ -32,7 +32,6 @@
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.async "1.1.582"]
-                 ;[org.clojure/tools.cli "1.0.194"]
                  [com.taoensso/timbre "4.10.0"] ; clj/cljs logging
                  [clojure.java-time "0.3.2"]
 
@@ -52,13 +51,10 @@
                   :exclusions [javax.servlet/servlet-api]]
                  ;; [ring.middleware.logger "0.5.0"]
                  [metosin/muuntaja "0.6.7"] ; 30x faster than ring-middleware-format
-                 ;[ring-middleware-format "0.7.4"]
                  [ring/ring-json "0.5.0"]
                  [ring-cljsjs "0.2.0"]
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [luminus/ring-ttl-session "0.3.3"]
-                  ;[clj-oauth2 "0.2.0"] ;oauth2
-                 ;[com.telenordigital.data-insights/clj-oauth2 "0.7.2"]
                  [ring-oauth2 "0.1.4"]
                  ;[expound "0.7.2"] ; see clojurewb
 

@@ -65,11 +65,11 @@
 ; I am afraid that the bundle might end up in the jar, so I took the test out
 
 #_(deftest cljs-bundle-main []
-  (is (= "text/javascript"
-         (-> "/r/main.js" GET content-type))))
+    (is (= "text/javascript"
+           (-> "/r/main.js" GET content-type))))
 
 #_(deftest cljs-bundle-runtime []
-  (is (= "text/javascript"
-         (-> "/r/cljs-runtime/cljs.core.js" GET content-type)))
-  (is (= "application/octet-stream"
-         (-> "/r/cljs-runtime/cljs.core.js.map" GET content-type))))
+    (is (= "text/javascript"
+           (-> "/r/cljs-runtime/cljs.core.js" GET content-type)))
+    (is (= "application/octet-stream"
+           (-> "/r/cljs-runtime/cljs.core.js.map" GET content-type))))

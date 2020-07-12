@@ -1,6 +1,5 @@
 (ns demo.handler
   (:require
-   [taoensso.timbre :as timbre :refer [info]]
    [ring.util.response :as res]
    [webly.web.middleware :refer [wrap-api-handler]]
    [webly.web.handler :refer [add-ring-handler]]))
