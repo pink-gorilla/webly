@@ -1,4 +1,4 @@
-(ns goldly.user.local-storage
+(ns webly.user.local-storage
   (:require
    [cljs.reader :as reader]))
 

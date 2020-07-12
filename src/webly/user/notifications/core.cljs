@@ -1,4 +1,4 @@
-(ns webly.notifications.core
+(ns webly.user.notifications.core
   (:require
    [re-frame.core :as rf :include-macros true]))
 

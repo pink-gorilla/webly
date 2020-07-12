@@ -1,4 +1,4 @@
-(ns webly.notifications.subscriptions
+(ns webly.user.notifications.subscriptions
   (:require
    [re-frame.core :refer [reg-sub]]))
 
