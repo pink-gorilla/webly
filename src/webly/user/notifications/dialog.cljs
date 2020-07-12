@@ -2,8 +2,8 @@
   (:require
    [clojure.string :as str]
    [re-frame.core :as rf :include-macros true]
-   [webly.notifications.core :refer [notification-types]]
-   [webly.notifications.subscriptions] ; side-effects
+   [webly.user.notifications.core :refer [notification-types]]
+   [webly.usernotifications.subscriptions] ; side-effects
    ))
 
 
