@@ -24,11 +24,8 @@
   :managed-dependencies [[joda-time "2.9.9"]
                          [clj-time "0.14.3"]
                          [com.fasterxml.jackson.core/jackson-core "2.11.0"]
-
                          [com.cognitect/transit-clj "1.0.324"]
-
                          [com.cognitect/transit-java "1.0.343"]]
-
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.async "1.1.582"]
@@ -71,18 +68,23 @@
                  [cljs-ajax "0.8.0"] ; needed for re-frame/http-fx
                  [day8.re-frame/http-fx "0.1.6"] ; reframe based http requests
                  [org.pinkgorilla/gorilla-ui "0.2.23"
-                  :exclusions [org.clojure/clojurescript]]]
+                  :exclusions [org.clojure/clojurescript]]
 
-  :profiles {:dev {:source-paths ["profiles/demo/src"]
-                   :resource-paths  ["target/demo"
+                 ;shadow
+                 ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundeler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
+                 [thheller/shadow-cljs "2.8.81"]
+                 [thheller/shadow-cljsjs "0.0.21"]
+                 [org.clojure/clojurescript "1.10.773"]]
+
+  :profiles {:dev {; dev profile refers to profiles/demo
+                   ; this is because unit tests use demo profile for resource tests
+                   ; so the demo serves tw puroses
+                   ; 1. ilustrate links in web-app
+                   ; 2. run unit tests 
+                   :source-paths ["profiles/demo/src"]
+                   :resource-paths  ["target/webly"
                                      "profiles/demo/resources"]
-                   :dependencies [[org.clojure/clojure "1.10.1"]
-                                   ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundeler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
-                                  [thheller/shadow-cljs "2.8.81"]
-                                  [thheller/shadow-cljsjs "0.0.21"]
-                                  [org.clojure/clojurescript "1.10.773"]
-
-                                  [clj-kondo "2020.03.20"]
+                   :dependencies [[clj-kondo "2020.03.20"]
                                   ;[http-kit "2.3.0"]
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
@@ -103,8 +105,11 @@
   :aliases {"bump-version"
             ["change" "version" "leiningen.release/bump-version"]
 
-            "build-shadow-ci"  ^{:doc "Runs demo  via webserver."}
-            ["with-profile" "dev" "run" "-m" "shadow.cljs.devtools.cli" "compile" "demo"]
+            ;"build-shadow-ci"  ^{:doc "compiles bundle"}
+            ;["with-profile" "dev" "run" "-m" "shadow.cljs.devtools.cli" "compile" "demo"]
 
+            "build"  ^{:doc "compiles bundle via webly"}
+           ["with-profile" "dev" "run" "-m" "webly.build-cli" "compile" "+dev" "demo.app/handler" "demo.app"]
+            
             "demo"  ^{:doc "compiles & runs demo app and serves via webserver."}
             ["with-profile" "dev" "run" "-m" "demo.app"]})

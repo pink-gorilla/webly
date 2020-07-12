@@ -1,7 +1,7 @@
 # Ping Gorilla Webly [![GitHub Actions status |pink-gorilla/webly](https://github.com/pink-gorilla/webly/workflows/CI/badge.svg)](https://github.com/pink-gorilla/webly/actions?workflow=CI)[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/webly.svg)](https://clojars.org/org.pinkgorilla/webly)
 
 - This project is used in [Notebook](https://github.com/pink-gorilla/gorilla-notebook) and [Goldly](https://github.com/pink-gorilla/goldly).
-- Tools to build reagent web apps.
+- Tools to build reagent/re-frame clojurescript web apps that are served from a clojure webserver.
 
 # UI demo
 
@@ -17,7 +17,7 @@ lein demo
 - oauth2 with github
 - dynamically generated app html that works with csrf
 - ring middleware for api calls
-
+- webly build (compiles/watches via shadow-cljs)
 
 # Architecture
 
