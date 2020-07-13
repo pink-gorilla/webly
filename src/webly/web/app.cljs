@@ -2,7 +2,7 @@
   (:require
    [reagent.dom]
    [taoensso.timbre :as timbre :refer [info]]
-   [re-frame.core :refer [clear-subscription-cache! dispatch-sync]]
+   [re-frame.core :refer [clear-subscription-cache! dispatch dispatch-sync]]
    [pinkgorilla.ui.config :refer [set-prefix!]]
    [webly.web.views :refer [webly-app]]
    [webly.config :refer [webly-config]] ; side-effects
@@ -19,7 +19,7 @@
                       (.getElementById js/document "app")))
 
 (defn start [routes]
-  (dispatch-sync [:bidi/init routes]))
+  (dispatch [:bidi/init routes]))
 
 ;; before-reload is a good place to stop application stuff before we reload.
 (defn ^:dev/before-load
