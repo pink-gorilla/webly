@@ -1,7 +1,7 @@
 (ns webly.web.handler
   (:require
    [clojure.string]
-   [taoensso.timbre :refer [info error]]
+   [taoensso.timbre :refer [debug error]]
    [ring.util.response :as response]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [bidi.bidi :as bidi]
@@ -56,12 +56,12 @@
 
 (defn get-handler
   [routes-frontend handler-kw]
-  (info "get-handler:" handler-kw)
+  (debug "get-handler:" handler-kw)
   (if (keyword? handler-kw)
     (if-let [handler (handler-kw @handler-registry)]
       handler
       (if (frontend? routes-frontend handler-kw)
-        (do (info "get-handler: rendering web-app for frontend-route")
+        (do (debug "get-handler: rendering web-app for frontend-route")
             app-handler)
         (do (error "handler-registry does not contain handler for: " handler-kw)
             nil)))

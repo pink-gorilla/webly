@@ -10,15 +10,15 @@
 
 
 (rf/reg-event-fx
- :notification-add
+ :notification/add
  (fn ; fn-traced
    [{:keys [db]} [_ n]]
    {:db (-> db (update :notifications conj n))
     :dispatch-later [{:ms 5000
-                      :dispatch [:notification-dismiss (:id n)]}]}))
+                      :dispatch [:notification/dismiss (:id n)]}]}))
 
 (rf/reg-event-db
- :notification-dismiss
+ :notification/dismiss
  (fn ; fn-traced
    [db [_ notification-id]]
    (-> db
@@ -31,7 +31,7 @@
  :process-error-response
  (fn [db [_ location response]]
    (info "ERROR RESPONSE: " response)
-   (dispatch [:notification-add
+   (dispatch [:notification/add
               (notification :warning
                             (str location " Error: " (:status-text response) " (" (:status response) ")"))])
    db))

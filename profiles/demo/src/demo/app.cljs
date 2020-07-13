@@ -4,11 +4,12 @@
    [taoensso.timbre :as timbre :refer [info]]
    [webly.web.app]
    [webly.config :refer [webly-config]]
+   [demo.routes :refer [demo-routes-backend]]
    [demo.views] ; side-effects   
-   [demo.routes :refer [demo-routes-backend]]))
+   ))
 
 (defn ^:export start []
-  (swap! webly-config assoc :timbre-loglevel :debug)
+  (swap! webly-config assoc :timbre-loglevel :info)
   (info "webly demo starting ..")
   (webly.web.app/start demo-routes-backend)
   (webly.web.app/mount-app))

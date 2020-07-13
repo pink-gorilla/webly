@@ -3,30 +3,20 @@
    [clojure.string :as str]
    [re-frame.core :as rf :include-macros true]
    [webly.user.notifications.core :refer [notification-types]]
-   [webly.usernotifications.subscriptions] ; side-effects
+   [webly.user.notifications.subscriptions] ; side-effects
+   [webly.user.notifications.events] ; side-effects
    ))
-
-
-
-; old message container 
-
-
-(defn message-container
-  []
-  (let [message (rf/subscribe [:message])]
-    (fn []
-      [:div.status {:style (if (str/blank? @message) {:display "none"} {})}
-       [:h3 @message]])))
-
-
 
 ;; stolen from:
 ;; https://github.com/baskeboler/cljs-karaoke-client/blob/master/src/main/cljs_karaoke/notifications.cljs
 
 
+;.notification:hover {
+;    opacity: 1;
+;} 
+
 (defn type-css-class [notification-type]
   (assert (notification-types notification-type))
-  ;(str "is-" (symbol notification-type))
   (case notification-type
     :danger "bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
     :warning "bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
@@ -34,18 +24,26 @@
     "bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"))
 
 (defn notification-component [n]
-  [:div.notification
+  [:div
    {:key (str "notification-" (:id n))
     :class (type-css-class (:type n))
-    ;:class 
+    :style {:opacity 0.8
+            :margin-bottom "0.5em !important"
+            :hover {:opacity 1.0}}
     :role "alert"}
-   [:button.delete
-    {:on-click #(rf/dispatch [:notification-dismiss (:id n)])}]
+   [:button
+    {:on-click #(rf/dispatch [:notification/dismiss (:id n)])}
+    [:i.fas.fa-trash.mr-3]]
    (:text n)])
 
-(defn ^:export notifications-container-component []
+(defn ^:export notifications-container []
   (let [nots-subs (rf/subscribe [:notifications])]
-    [:div.notifications-container
+    [:div {:style {:position "fixed"
+                   :width "calc(100vw - 3em)"
+                   :top "6em"
+                   :right "1em"
+                   :z-index 300;
+                   :overflow "hidden"}}
      (when (not-empty @nots-subs)
        (doall
         (for [n @nots-subs]

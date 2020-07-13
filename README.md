@@ -5,11 +5,18 @@
 
 # UI demo
 
-The demo runs a webserver on port 8019.
-
 ```
 lein demo
 ```
+
+The demo runs a webserver on port 8019.
+Demonstrates:
+- loading animation
+- navigation links to registered handlers (and error for unregistered handler)
+- notifications
+- dialog
+- api endpoints
+
 
 # Features
 - routing with bidi (this allows to have links within the web-app)

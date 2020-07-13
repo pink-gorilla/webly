@@ -5,6 +5,7 @@
    [reagent.dom]
    [pinkgorilla.ui.config :refer [link-css]]
    [pinkgorilla.ui.ui.dialog :refer [modal-container]]
+   [webly.user.notifications.dialog :refer [notifications-container]]
    [webly.web.handler :refer [reagent-page]]
    [webly.web.routes :refer [current query-params]]))
 
@@ -23,4 +24,5 @@
        [link-css "tailwindcss/dist/tailwind.css"]
        [link-css "@fortawesome/fontawesome-free/css/all.min.css"]
        [modal-container]
+       [notifications-container]
        (reagent-page current-page)])))
