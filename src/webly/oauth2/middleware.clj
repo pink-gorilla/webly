@@ -22,9 +22,9 @@
       :client-id        client-id
       :client-secret    client-secret
       :scopes           ["user:email" "gist"]
-      :launch-uri       "/oauth2/github"
+      :launch-uri       "/oauth2/github/auth"
       :redirect-uri     "/oauth2/github/callback"
-      :landing-uri      "/my"}}))
+      :landing-uri      "/oauth2/github/landing"}}))
 
 (defn wrap-oauth [handler]
   ;(wrap-oauth2 handler my-oauth-profiles)

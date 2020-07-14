@@ -4,6 +4,7 @@
    [webly.build :refer [build-cli]]
    [webly.web.handler :refer [make-handler]]
    [webly.config :refer [webly-config]]
+   [webly.oauth2.default-config] ; side-effects
    [demo.routes :refer [demo-routes-backend demo-routes-frontend]]
    [demo.handler] ; side-effects
    ))

@@ -16,11 +16,15 @@
    [:ol
     [:li [:a.bg-green-300 {:on-click #(goto! :demo/help)} "help"]]
     [:li [:a.bg-red-300 {:on-click #(goto! :demo/save)} "save-as (test for not implemented)"]]
+
     [:li [:p {:on-click #(add-notification "welcome to wonderland")} "show notification"]]
     [:li [:p {:on-click #(add-notification :danger "something bad happened")} "show notification - error"]]
+
     [:li [:p {:on-click show-dialog-demo} "show dialog"]]
 
-    [:li [:a.bg-blue-300 {:href "/api/time"} "api time"]]]])
+    [:li [:a.bg-blue-300 {:href "/api/time"} "api time"]]
+    [:li [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/open-window :github])} "github login via popup (needs creds.edn)"]]
+    [:li [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]]])
 
 (defmethod reagent-page :demo/main [& args]
   [main])

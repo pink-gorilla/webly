@@ -9,13 +9,15 @@
 lein demo
 ```
 
-The demo runs a webserver on port 8019.
+The demo runs a webserver on port 9000.
+
 Demonstrates:
 - loading animation
 - navigation links to registered handlers (and error for unregistered handler)
 - notifications
 - dialog
 - api endpoints
+- oauth2
 
 
 # Features
@@ -27,6 +29,7 @@ Demonstrates:
 - webly build 
   - compiles/watches via shadow-cljs 
   - does not require shadow-cljs.edn
+  - bundle-size report at compile time
 
 # Architecture
 

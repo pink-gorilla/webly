@@ -72,7 +72,8 @@
 
                  ;shadow
                  ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundeler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
-                 [thheller/shadow-cljs "2.8.81"]
+                 [thheller/shadow-cljs "2.10.14"]
+                 ;[thheller/shadow-cljs "2.8.81"]
                  [thheller/shadow-cljsjs "0.0.21"]
                  [org.clojure/clojurescript "1.10.773"]]
 

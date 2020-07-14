@@ -69,7 +69,7 @@
   [:span.bg-red-700.pt-2.p-2
    [:a {:class "block mt-4 lg:inline-block lg:mt-0 text-pink-600 hover:bg-orange-500 mr-4"
         :on-click #(do
-                     (rf/dispatch [:open-oauth-window :github])
+                     (rf/dispatch [:oauth2/open-window :github])
                      (rf/dispatch [:auth/login :foursquare])
                       ;(rf/dispatch [::events/set-navbar-menu-active? false])
                      )}
