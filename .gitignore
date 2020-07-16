@@ -19,3 +19,4 @@ pom.xml.asc
 node_modules
 .shadow-cljs
 creds.edn
+shadow-cljs.edn

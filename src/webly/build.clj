@@ -32,6 +32,7 @@
   (info "webly " mode "handler:" handler "frontend-ns:" frontend-ns)
   (let [opts {:verbose true}
         config (shadow-config lein-profile handler frontend-ns)]
+    (spit "shadow-cljs.edn" (pr-str config))
     (with-redefs [shadow.cljs.devtools.config/load-cljs-edn #(load-cljs-edn config)]
       (run-shadow-dev-server config)
       (case mode
