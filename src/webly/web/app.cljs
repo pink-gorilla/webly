@@ -3,12 +3,11 @@
    [reagent.dom]
    [taoensso.timbre :as timbre :refer [info]]
    [re-frame.core :refer [clear-subscription-cache! dispatch dispatch-sync]]
-   [pinkgorilla.ui.config :refer [set-prefix!]]
    [webly.web.views :refer [webly-app]]
+   [webly.user.dialog] ; side-effects
    [webly.config :refer [webly-config]] ; side-effects
    ))
 
-(set-prefix! "/r/")
 
 (defn print-log-init! []
   (enable-console-print!)

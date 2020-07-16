@@ -6,6 +6,10 @@
                                      :password :env/release_password
                                      :sign-releases false}]]
 
+  :min-lein-version "2.9.4" ; nrepl 0.7.0
+
+  :prep-tasks ["css"] ; copies tailwind css, so it ends up as resources
+
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
                   ["vcs" "commit" "Release %s"]
@@ -18,25 +22,32 @@
   :target-path  "target/jar"
   :source-paths ["src"]
   :test-paths ["test"]
-  :resource-paths  ["resources" ; resources defined here
-                    ]
+  :resource-paths  ["resources"  ; webly resources (svg/img)
+                    "target/node_modules"] ; css png resources from npm modules (tailwind)
 
-  :managed-dependencies [[joda-time "2.9.9"]
-                         [clj-time "0.14.3"]
-                         [com.fasterxml.jackson.core/jackson-core "2.11.0"]
+  :managed-dependencies [[nrepl "0.7.0"]
+                         [joda-time "2.10.6"]
+                         [clj-time "0.15.2"]
+                         [com.fasterxml.jackson.core/jackson-core "2.11.1"]
+                         [com.cognitect/transit-cljs "0.8.264"]
                          [com.cognitect/transit-clj "1.0.324"]
-                         [com.cognitect/transit-java "1.0.343"]]
+                         [com.cognitect/transit-java "1.0.343"]
+                         [org.apache.httpcomponents/httpcore "4.4.12"]
+                         [com.google.javascript/closure-compiler-unshaded "v20200504"]
+                         [org.apache.httpcomponents/httpasyncclient "4.1.4"]
+                         [commons-codec "1.12"]
+                         [com.google.code.findbugs/jsr305 "3.0.2"]]
 
   :dependencies [[org.clojure/clojure "1.10.1"]
-                 [org.clojure/core.async "1.1.582"]
+                 [org.clojure/core.async "1.2.603"]
                  [com.taoensso/timbre "4.10.0"] ; clj/cljs logging
                  [clojure.java-time "0.3.2"]
 
                  ; encoding
                  [org.clojure/data.json "1.0.0"]
-                 [luminus-transit "0.1.1"]
+                 [luminus-transit "0.1.2"]
                  [cheshire "5.10.0"]  ; JSON parsings
-                 [com.taoensso/encore "2.119.0"]
+                 [com.taoensso/encore "2.122.0"]
 
                  ; backend
                  [ring/ring-core "1.8.1"]
@@ -52,7 +63,7 @@
                  [ring-cljsjs "0.2.0"]
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [luminus/ring-ttl-session "0.3.3"]
-                 [ring-oauth2 "0.1.4"]
+                 [ring-oauth2 "0.1.5"]
                  ;[expound "0.7.2"] ; see clojurewb
 
                  ; routing
@@ -64,16 +75,13 @@
                  [reagent "0.10.0" :exclusions [org.clojure/tools.reader
                                                 cljsjs/react
                                                 cljsjs/react-dom]]
-                 [re-frame "0.10.9"]
+                 [re-frame "0.12.0"]
                  [cljs-ajax "0.8.0"] ; needed for re-frame/http-fx
                  [day8.re-frame/http-fx "0.1.6"] ; reframe based http requests
-                 [org.pinkgorilla/gorilla-ui "0.2.24"
-                  :exclusions [org.clojure/clojurescript]]
 
                  ;shadow
-                 ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundeler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
-                 [thheller/shadow-cljs "2.10.14"]
-                 ;[thheller/shadow-cljs "2.8.81"]
+                 ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
+                 [thheller/shadow-cljs "2.10.15"]
                  [thheller/shadow-cljsjs "0.0.21"]
                  [org.clojure/clojurescript "1.10.773"]]
 
@@ -85,10 +93,14 @@
                    :source-paths ["profiles/demo/src"]
                    :resource-paths  ["target/webly"
                                      "profiles/demo/resources"]
-                   :dependencies [[clj-kondo "2020.03.20"]
-                                  [ring/ring-mock "0.4.0"]]
+                   :dependencies [;[clj-kondo "2020.06.21"] ;
+                                  [ring/ring-mock "0.4.0"]
+                                  ]
                    :plugins      [[lein-cljfmt "0.6.6"]
-                                  [lein-cloverage "1.1.2"]]
+                                  ;[lein-cloverage "1.1.2"]
+                                  [lein-shell "0.5.0"]
+                                  [lein-ancient "0.6.15"]
+                                  ]
                    :aliases      {"clj-kondo" ["run" "-m" "clj-kondo.main"]}
                    :cloverage    {:codecov? true
                                   ;; In case we want to exclude stuff
@@ -100,13 +112,19 @@
                                             with-debug-bindings [[:inner 0]]
                                             merge-meta          [[:inner 0]]
                                             try-if-let          [[:block 1]]}}}}
-  :plugins [[lein-ancient "0.6.15"]]
 
   :aliases {"bump-version"
             ["change" "version" "leiningen.release/bump-version"]
 
-            ;"build-shadow-ci"  ^{:doc "compiles bundle"}
-            ;["with-profile" "dev" "run" "-m" "shadow.cljs.devtools.cli" "compile" "demo"]
+            "css"  ^{:doc "Copies certain npm package dependecies"}
+            ["shell" "./scripts/copy_res.sh"]
+
+            "shadow-build"  ^{:doc "compiles bundle"}
+            ["with-profile" "dev" "run" "-m" "shadow.cljs.devtools.cli" "compile" "webly"]
+
+            "shadow-watch"  ^{:doc "compiles bundle"}
+            ["with-profile" "dev" "run" "-m" "shadow.cljs.devtools.cli" "watch" "webly"]
+
 
             "build"  ^{:doc "compiles bundle via webly"}
             ["with-profile" "dev" "run" "-m" "webly.build-cli" "compile" "+dev" "demo.app/handler" "demo.app"]

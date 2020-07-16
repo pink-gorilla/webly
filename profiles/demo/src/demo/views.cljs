@@ -6,9 +6,8 @@
    [webly.user.notifications.core :refer [add-notification]]))
 
 (defn show-dialog-demo []
-  (dispatch [:modal {:show? true
-                     :child [:h1.bg-blue-300.p-5 "dummy dialog"]
-                     :size :small}]))
+  (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
+             :small]))
 
 (defn main []
   [:div

@@ -1,7 +1,6 @@
 (ns webly.oauth2.view
   (:require
    [re-frame.core :as rf]
-   [pinkie.pinkie :refer-macros [register-component]]
    [webly.oauth2.events] ; side-effects
    ))
 
@@ -75,5 +74,4 @@
                      )}
     "Github login"]])
 
-(register-component :p/login auth-login)
 

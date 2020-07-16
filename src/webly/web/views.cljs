@@ -1,10 +1,9 @@
 (ns webly.web.views
   (:require
    [cljs.pprint]
-   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof warnf errorf info]]
    [reagent.dom]
-   [pinkgorilla.ui.config :refer [link-css]]
-   [pinkgorilla.ui.ui.dialog :refer [modal-container]]
+   [webly.config :refer [link-css]]
+   [webly.user.dialog :refer [modal-container]]
    [webly.user.notifications.dialog :refer [notifications-container]]
    [webly.web.handler :refer [reagent-page]]
    [webly.web.routes :refer [current query-params]]))
