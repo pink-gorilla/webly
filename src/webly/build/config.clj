@@ -36,12 +36,12 @@
 (defn shadow-config [lein-profile handler frontend-ns]
   {;:cache-root ".shadow-cljs"
    :lein {:profile lein-profile}
-   :dev-http {9000 {; :root "public" ; shadow does not need to serve resources
+   :dev-http {9000 {;:root "public" ; shadow does not need to serve resources
                     :handler handler}}
    :http {:port 9001  ; shadow dashboard
           :host "localhost"}
    :nrepl {:port 9002
-           :middleware [] ; optional list of namespace-qualified symbols
+           ;:middleware [] ; optional list of namespace-qualified symbols
            }
    ;:user-config {}
    ;
@@ -49,8 +49,8 @@
                     :output-dir "target/webly/public"
                     :asset-path "/r"
                     :modules {:main {:entries [frontend-ns]}}
-                    :devtools {:before-load (symbol "webly.web.app/before-load")
-                               :after-load (symbol "webly.web.app/after-load")}
+                    ;:devtools {:before-load (symbol "webly.web.app/before-load")
+                    ;           :after-load (symbol "webly.web.app/after-load")}
                     :compiler-options {:optimizations :simple}
                     ;:build-id :webly
                     }

@@ -81,26 +81,25 @@
 
                  ;shadow
                  ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
-                 [thheller/shadow-cljs "2.10.15"]
+
                  [thheller/shadow-cljsjs "0.0.21"]
                  [org.clojure/clojurescript "1.10.773"]]
 
-  :profiles {:dev {; dev profile refers to profiles/demo
-                   ; this is because unit tests use demo profile for resource tests
+  :profiles {:demo {; unit tests use demo profile for resource tests
                    ; so the demo serves tw puroses
                    ; 1. ilustrate links in web-app
                    ; 2. run unit tests 
-                   :source-paths ["profiles/demo/src"]
-                   :resource-paths  ["target/webly"
-                                     "profiles/demo/resources"]
-                   :dependencies [;[clj-kondo "2020.06.21"] ;
+                    :source-paths ["profiles/demo/src"]
+                    :resource-paths  ["target/webly"
+                                      "profiles/demo/resources"]}
+
+             :dev {:dependencies [;[clj-kondo "2020.06.21"] ;
                                   [ring/ring-mock "0.4.0"]
-                                  ]
+                                  [thheller/shadow-cljs "2.10.15"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   ;[lein-cloverage "1.1.2"]
                                   [lein-shell "0.5.0"]
-                                  [lein-ancient "0.6.15"]
-                                  ]
+                                  [lein-ancient "0.6.15"]]
                    :aliases      {"clj-kondo" ["run" "-m" "clj-kondo.main"]}
                    :cloverage    {:codecov? true
                                   ;; In case we want to exclude stuff
@@ -120,20 +119,20 @@
             ["shell" "./scripts/copy_res.sh"]
 
             "shadow-build"  ^{:doc "compiles bundle"}
-            ["with-profile" "dev" "run" "-m" "shadow.cljs.devtools.cli" "compile" "webly"]
+            ["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "compile" "webly"]
 
             "shadow-watch"  ^{:doc "compiles bundle"}
-            ["with-profile" "dev" "run" "-m" "shadow.cljs.devtools.cli" "watch" "webly"]
+            ["run" "-m" "shadow.cljs.devtools.cli" "watch" "webly"]
 
 
             "build"  ^{:doc "compiles bundle via webly"}
-            ["with-profile" "dev" "run" "-m" "webly.build-cli" "compile" "+dev" "demo.app/handler" "demo.app"]
+            ["with-profile" "+demo" "run" "-m" "webly.build-cli" "compile" "+demo" "demo.app/handler" "demo.app"]
 
             "build-prod"  ^{:doc "compiles bundle via webly"}
-            ["with-profile" "dev" "run" "-m" "webly.build-cli" "release" "+dev" "demo.app/handler" "demo.app"]
+            ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+demo" "demo.app/handler" "demo.app"]
 
             "run-prod"  ^{:doc "runs compiles bundle on shadow dev server"}
-            ["with-profile" "dev" "run" "-m" "demo.app" "run"]
+            ["with-profile" "+demo" "run" "-m" "demo.app" "run"]
 
             "demo"  ^{:doc "compiles & runs demo app and serves via webserver."}
-            ["with-profile" "dev" "run" "-m" "demo.app" "watch"]})
+            ["with-profile" "+demo" "run" "-m" "demo.app" "watch"]})
