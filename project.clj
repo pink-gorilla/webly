@@ -118,6 +118,9 @@
             "css"  ^{:doc "Copies certain npm package dependecies"}
             ["shell" "./scripts/copy_res.sh"]
 
+            "test-demo"  ^{:doc ""}
+            ["with-profile" "+demo" "test"]
+
             "shadow-build"  ^{:doc "compiles bundle"}
             ["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "compile" "webly"]
 

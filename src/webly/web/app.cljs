@@ -8,7 +8,6 @@
    [webly.config :refer [webly-config]] ; side-effects
    ))
 
-
 (defn print-log-init! []
   (enable-console-print!)
   (timbre/set-level! (:timbre-loglevel @webly-config)))

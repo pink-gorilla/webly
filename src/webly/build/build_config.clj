@@ -12,8 +12,8 @@
 (defn generate-config [config]
   (spit "shadow-cljs.edn" (pr-str config)))
 
-(defn watch-api 
-   {:shadow/requires-server true}
+(defn watch-api
+  {:shadow/requires-server true}
   []
   (let [opts {:verbose true}]
     (shadow-server/start!)
@@ -23,9 +23,7 @@
 
 (defn watch-cli []
   ;(shadow.cljs.devtools.cli-actual/-main "watch" "webly")
-  (shadow.cljs.devtools.cli/-main "watch" "webly")
-  )
-
+  (shadow.cljs.devtools.cli/-main "watch" "webly"))
 
 (defn build [mode config]
   (generate-config config)
@@ -44,7 +42,7 @@
       :run (shadow-server/start!)
 
       ; hot reloading
-      :watch (watch-api) 
+      :watch (watch-api)
              ;(watch-cli)
      ; 
       )))

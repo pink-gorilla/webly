@@ -11,7 +11,6 @@
          :start  "demobad.core.init_BANG_ (); "
          :icon "/r/favicon.ico"}))
 
-
 (defn res-href [href]
   (str (:prefix @webly-config) href))
 

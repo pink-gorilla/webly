@@ -14,6 +14,6 @@
 ; in resources/public/npm-name/... 
 (deftest gorilla-ui-resources []
   (is (= true (resource? "public/tailwindcss/dist/tailwind.css")))
-  (is (= true (resource? "public/leaflet/dist/images/marker-icon.png"))))
+  #_(is (= true (resource? "public/leaflet/dist/images/marker-icon.png"))))
 
 

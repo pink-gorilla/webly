@@ -26,7 +26,7 @@ jobs:
       run: lein cljfmt check
     - name: Run tests
       run: |
-        lein test
+        lein test-demo
     - name: Release
       env:
         RELEASE_USERNAME: ${{ secrets.ReleaseUsername }}
