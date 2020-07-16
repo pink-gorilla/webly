@@ -36,12 +36,11 @@
 (defn shadow-config [lein-profile handler frontend-ns]
   {:cache-root ".shadow-cljs"
    :lein {:profile lein-profile}
-   :dev-http {9000 {:root "public"
+   :dev-http {9000 {; :root "public" ; shadow does not need to serve resources
                     :handler handler}}
    :http {:port 9001  ; shadow dashboard
-          ;:ssl-port 23456
           :host "localhost"}
-   :user-config {}
+   ;:user-config {}
    ;
    :builds {:webly {:target :browser
                     :output-dir "target/webly/public"
@@ -50,4 +49,7 @@
                     :devtools {:before-load (symbol "webly.web.app/before-load")
                                :after-load (symbol "webly.web.app/after-load")}
                     :compiler-options {:optimizations :simple}
-                    :build-id :webly}}})
+                    :build-id :webly}
+            :ci {:target :karma
+                 :output-to  "target/ci.js"
+                 :ns-regexp "-test$"}}})
