@@ -4,5 +4,5 @@
 
 (defn -main
   [mode lein-profile handler frontend-ns]
-  (println "webly/-main" mode lein-profile handler frontend-ns)
+  (println "webly.build-cli -main" mode lein-profile handler frontend-ns)
   (build-cli mode lein-profile handler frontend-ns))

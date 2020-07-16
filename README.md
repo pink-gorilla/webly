@@ -47,6 +47,10 @@ Bidi is not as highly starred as compojure, but it has important benefits:
 
 
 # todo
+
+- watch after a bundle build produces endless compile loops
+- production build compiles, but does not work in browser.
+
 - oauth2 demo/unit-tests
 
 # Notes

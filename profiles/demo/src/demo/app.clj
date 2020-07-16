@@ -10,14 +10,11 @@
    ))
 
 (defn -main
-  []
-  (info "demo starting..")
-  (swap! webly-config assoc :timbre-loglevel :info)
-  (swap! webly-config assoc :title "Webly Demo")
-  (swap! webly-config assoc :start "demo.app.start (); ")
-
-  (info "making handler ..")
-  (def handler (make-handler demo-routes-backend demo-routes-frontend))
-
-  (info "demo watching..")
-  (build-cli :watch "+dev" "demo.app/handler" "demo.app"))
+  [mode]
+  (let [mode (or mode "watch")]
+    (info "demo starting mode: " mode)
+    (swap! webly-config assoc :timbre-loglevel :info)
+    (swap! webly-config assoc :title "Webly Demo")
+    (swap! webly-config assoc :start "demo.app.start (); ")
+    (def handler (make-handler demo-routes-backend demo-routes-frontend))
+    (build-cli mode "+dev" "demo.app/handler" "demo.app")))

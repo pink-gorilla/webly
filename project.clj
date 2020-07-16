@@ -18,8 +18,8 @@
   :target-path  "target/jar"
   :source-paths ["src"]
   :test-paths ["test"]
-  :resource-paths  ["resources" ; not from npm
-                    "target/demo"] ; bundle
+  :resource-paths  ["resources" ; resources defined here
+                    ]
 
   :managed-dependencies [[joda-time "2.9.9"]
                          [clj-time "0.14.3"]
@@ -86,7 +86,6 @@
                    :resource-paths  ["target/webly"
                                      "profiles/demo/resources"]
                    :dependencies [[clj-kondo "2020.03.20"]
-                                  ;[http-kit "2.3.0"]
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]]
@@ -110,7 +109,13 @@
             ;["with-profile" "dev" "run" "-m" "shadow.cljs.devtools.cli" "compile" "demo"]
 
             "build"  ^{:doc "compiles bundle via webly"}
-           ["with-profile" "dev" "run" "-m" "webly.build-cli" "compile" "+dev" "demo.app/handler" "demo.app"]
-            
+            ["with-profile" "dev" "run" "-m" "webly.build-cli" "compile" "+dev" "demo.app/handler" "demo.app"]
+
+            "build-prod"  ^{:doc "compiles bundle via webly"}
+            ["with-profile" "dev" "run" "-m" "webly.build-cli" "release" "+dev" "demo.app/handler" "demo.app"]
+
+            "run-prod"  ^{:doc "runs compiles bundle on shadow dev server"}
+            ["with-profile" "dev" "run" "-m" "demo.app" "run"]
+
             "demo"  ^{:doc "compiles & runs demo app and serves via webserver."}
-            ["with-profile" "dev" "run" "-m" "demo.app"]})
+            ["with-profile" "dev" "run" "-m" "demo.app" "watch"]})
