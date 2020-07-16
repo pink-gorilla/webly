@@ -36,13 +36,13 @@
         (wrap-restful-format :formats [:json :transit-json :edn])))
 
 (defn wrap-api-handler ; from gorilla-explore
-  "a wrapper for JSON API calls"
+  "a wrapper for restful API calls"
   [handler]
   (-> handler ; middlewares execute from bottom -> up
       ;(wrap-defaults api-defaults)
       (wrap-keyword-params)
       (wrap-params)
-      (wrap-format) ; muuntaja
+      (wrap-format) ; muuntaja https://github.com/metosin/muuntaja
       #_(wrap-restful-format :formats [:json
                                      ;:json-kw 
                                        :transit-json
