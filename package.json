@@ -1,7 +1,5 @@
-{
-  "private": true,
+{ "private": true,
   "scripts": {
-    "watch-demo": "shadow-cljs watch webly",
     "test": "cross-env NODE_ENV=development karma start --single-run"
   },
   "dependencies": {
@@ -9,7 +7,6 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-dom-factories": "^1.0.2",
-    "shadow-cljs": "^2.9.10",
     "tailwindcss": "1.5.1"
   },
   "devDependencies": {

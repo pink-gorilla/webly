@@ -3,5 +3,4 @@
   "react" "^16.13.0"
   "react-dom" "^16.13.0"
   "react-dom-factories" "^1.0.2"
-  "shadow-cljs" "^2.9.10"
   "tailwindcss" "1.5.1"}}
