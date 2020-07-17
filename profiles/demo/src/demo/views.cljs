@@ -6,15 +6,14 @@
    [webly.user.notifications.core :refer [add-notification]]))
 
 (defn show-dialog-demo []
-  (dispatch [:modal {:show? true
-                     :child [:h1.bg-blue-300.p-5 "dummy dialog"]
-                     :size :small}]))
+  (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
+             :small]))
 
 (defn main []
   [:div
-   [:h1 "webly demo"]
+   [:h1 "webly demo "]
    [:ol
-    [:li [:a.bg-green-300 {:on-click #(goto! :demo/help)} "help"]]
+    [:li [:a.bg-green-300 {:on-click #(goto! :demo/help)} "help!"]]
     [:li [:a.bg-red-300 {:on-click #(goto! :demo/save)} "save-as (test for not implemented)"]]
 
     [:li [:p {:on-click #(add-notification "welcome to wonderland")} "show notification"]]
