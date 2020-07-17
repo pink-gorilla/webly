@@ -21,6 +21,7 @@ jobs:
           ${{ runner.os }}-maven-
     - name: Install dependencies
       run: |
+        npm install
         lein deps
     - name: Check formatting
       run: lein cljfmt check
