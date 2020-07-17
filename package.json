@@ -1,4 +1,5 @@
-{ "private": true,
+{
+  "private": true,
   "scripts": {
     "test": "cross-env NODE_ENV=development karma start --single-run"
   },
