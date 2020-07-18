@@ -32,10 +32,10 @@
                          [com.cognitect/transit-cljs "0.8.264"]
                          [com.cognitect/transit-clj "1.0.324"]
                          [com.cognitect/transit-java "1.0.343"]
-                         [org.apache.httpcomponents/httpcore "4.4.12"]
+                         [org.apache.httpcomponents/httpcore "4.4.13"]
                          [com.google.javascript/closure-compiler-unshaded "v20200504"]
                          [org.apache.httpcomponents/httpasyncclient "4.1.4"]
-                         [commons-codec "1.12"]
+                         [commons-codec "1.14"]
                          [com.google.code.findbugs/jsr305 "3.0.2"]]
 
   :dependencies [[org.clojure/clojure "1.10.1"]
@@ -95,7 +95,7 @@
                                       "profiles/demo/resources"]}
 
              :dev {:dependencies [;[clj-kondo "2020.06.21"] ;
-                                  [org.clojure/java.classpath "0.2.3"]
+                                  [org.clojure/java.classpath "1.0.0"]
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   ;[lein-cloverage "1.1.2"]
