@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer [info]]
    [shadow.cljs.devtools.cli]
-   [shadow.cljs.devtools.cli-actual]
+   ;[shadow.cljs.devtools.cli-actual]
    [shadow.cljs.devtools.api :as shadow
     ;:refer [watch* worker-running?]
     ]

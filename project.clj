@@ -81,7 +81,8 @@
 
                  ;shadow
                  ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
-
+                 [thheller/shadow-cljs "2.8.81"]
+                ;[thheller/shadow-cljs "2.10.15"]
                  [thheller/shadow-cljsjs "0.0.21"]
                  [org.clojure/clojurescript "1.10.773"]]
 
@@ -94,8 +95,8 @@
                                       "profiles/demo/resources"]}
 
              :dev {:dependencies [;[clj-kondo "2020.06.21"] ;
-                                  [ring/ring-mock "0.4.0"]
-                                  [thheller/shadow-cljs "2.10.15"]]
+                                  [org.clojure/java.classpath "0.2.3"]
+                                  [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   ;[lein-cloverage "1.1.2"]
                                   [lein-shell "0.5.0"]
@@ -118,24 +119,27 @@
             "css"  ^{:doc "Copies certain npm package dependecies"}
             ["shell" "./scripts/copy_res.sh"]
 
-            "test-demo"  ^{:doc ""}
+            "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
             ["with-profile" "+demo" "test"]
 
+            ;; SHADOw-CLJS (for testing purposes only)
+            
             "shadow-build"  ^{:doc "compiles bundle"}
             ["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "compile" "webly"]
 
             "shadow-watch"  ^{:doc "compiles bundle"}
-            ["run" "-m" "shadow.cljs.devtools.cli" "watch" "webly"]
+            ["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "watch" "webly"]
 
+            ;; APP 
 
-            "build"  ^{:doc "compiles bundle via webly"}
+            "demo"  ^{:doc "compiles & runs demo app and serves via webserver."}
+            ["with-profile" "+demo" "run" "-m" "demo.app" "watch"]
+
+            "build-dev"  ^{:doc "compiles bundle via webly"}
             ["with-profile" "+demo" "run" "-m" "webly.build-cli" "compile" "+demo" "demo.app/handler" "demo.app"]
 
             "build-prod"  ^{:doc "compiles bundle via webly"}
             ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+demo" "demo.app/handler" "demo.app"]
 
-            "run-prod"  ^{:doc "runs compiles bundle on shadow dev server"}
-            ["with-profile" "+demo" "run" "-m" "demo.app" "run"]
-
-            "demo"  ^{:doc "compiles & runs demo app and serves via webserver."}
-            ["with-profile" "+demo" "run" "-m" "demo.app" "watch"]})
+            "run-web"  ^{:doc "runs compiles bundle on shadow dev server"}
+            ["with-profile" "+demo" "run" "-m" "demo.app" "run"]})
