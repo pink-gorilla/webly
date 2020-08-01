@@ -53,6 +53,11 @@
                     ;           :after-load (symbol "webly.web.app/after-load")}
                     :compiler-options {:optimizations :simple}
                     ;:build-id :webly
+                    ;:js-options  {:minimize-require false ; module requires full name instead of index
+                    ;                                    ;:js-package-dirs ["packages/babel-worker/node_modules"]
+                    ;                                    ;:js-provider :require
+                    ;                     }
+                    
                     }
             :ci {:target :karma
                  :output-to  "target/ci.js"

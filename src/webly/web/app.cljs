@@ -2,7 +2,7 @@
   (:require
    [reagent.dom]
    [taoensso.timbre :as timbre :refer [info]]
-   [re-frame.core :refer [clear-subscription-cache! dispatch dispatch-sync]]
+   [re-frame.core :refer [clear-subscription-cache! dispatch]]
    [webly.web.views :refer [webly-app]]
    [webly.user.dialog] ; side-effects
    [webly.config :refer [webly-config]] ; side-effects
@@ -28,20 +28,14 @@
 (defn ^:dev/after-load
   after-load []
   (webly.web.app/print-log-init!)
-  (println "shadow-cljs reload: after")
   (info "shadow-cljs reload: after")
 
-  (println "clearing reframe subscription cache..")
+  (info "clearing reframe subscription cache..")
   (clear-subscription-cache!)
 
-  ;(println "re-loading configuration from server..")
-  ;(dispatch [:load-config])
-
-  ;(init-routes)
-  ;(start-router!)
-  (println "mounting webly-app ..")
+  (info "mounting webly-app ..")
   (webly.web.app/mount-app))
 
-(after-load)
+;(after-load)
 
 

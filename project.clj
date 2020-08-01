@@ -84,7 +84,12 @@
                  [thheller/shadow-cljs "2.8.81"]
                 ;[thheller/shadow-cljs "2.10.15"]
                  [thheller/shadow-cljsjs "0.0.21"]
-                 [org.clojure/clojurescript "1.10.773"]]
+                 [org.clojure/clojurescript "1.10.773"]
+                 
+                 #_[district0x.re-frame/google-analytics-fx "1.0.0"
+                  :exclusions [re-frame]]
+                 
+                 ]
 
   :profiles {:demo {; unit tests use demo profile for resource tests
                    ; so the demo serves tw puroses

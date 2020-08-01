@@ -44,7 +44,7 @@
 
 ;; APP
 
-(defn head [title icon]
+(defn head [title icon css-extern]
   [:head
    [:meta {:http-equiv "Content-Type"
            :content "text/html; charset=utf-8"}]
@@ -54,26 +54,31 @@
    [:link {:rel "shortcut icon" :href icon}]
 
    ; css
-   (css "/r/tailwindcss/dist/tailwind.css")
+   ;(css "/r/tailwindcss/dist/tailwind.css") (frontend side)
 
    ; fonts
-   (css "http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic")
-   (css "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic")
-   (css "https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300")
-   (css "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css")
-
+   ;(css "http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic")
+   ;(css "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic")
+   ;(css "https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300")
+   ;(css "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css")
+   (doall (map css css-extern))
+   
+   
    body-loading-style])
 
 (defn layout [page]
-  (let [{:keys [title start icon]} @webly-config]
+  (let [{:keys [title start icon css-extern]} @webly-config]
     (page/html5
-     (head title icon)
+     (head title icon css-extern)
      [:body.loading
       loading
       [:div#webly page]
       [:div  ; .w-screen.h-screen
-       [:script {:src "/r/main.js" :type "text/javascript"}]
-       [:script {:type "text/javascript"} start]]])))
+       [:script {:src "/r/main.js" 
+                 :type "text/javascript"
+                 :onload start
+                 }]
+       #_[:script {:type "text/javascript"} start]]])))
 
 (defn app-page [csrf-token]
   (layout [:div
