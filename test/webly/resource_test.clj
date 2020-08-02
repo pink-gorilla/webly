@@ -32,7 +32,7 @@
 
 (deftest resource-webly []
   (is (= "image/x-icon"
-         (-> "/r/favicon.ico" GET content-type))))
+         (-> "/r/webly/favicon.ico" GET content-type))))
 
 (deftest resources-tailwind []
   (is (= "text/css"
@@ -61,7 +61,7 @@
 
 ; cljs-bundle
 
-; TODO: this test require bundel compile.
+; TODO: this test require bundle compile.
 ; I am afraid that the bundle might end up in the jar, so I took the test out
 
 #_(deftest cljs-bundle-main []
