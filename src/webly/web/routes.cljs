@@ -10,13 +10,14 @@
 ; bidi does not handle query params
 ; idea how to solve the problem:
 ; https://github.com/juxt/bidi/issues/51
-#_(defn match-route-with-query-params
-    [route path & {:as options}]
-    (let [query-params (->> (:query (cemerick.url/url path))
-                            (map (fn [[k v]] [(keyword k) v]))
-                            (into {}))]
-      (-> (bidi/match-route* route path options)
-          (assoc :query-params query-params))))
+(defn match-route-with-query-params
+  [routes path & {:as options}]
+  (let [query-params (->> (:query (cemerick.url/url path))
+                          (map (fn [[k v]] [(keyword k) v]))
+                          (into {}))]
+    (-> (bidi/match-route* routes path options)
+        (assoc :query-params query-params))))
+
 ; bidi swagger:
 ; https://github.com/pink-junkjard/bidi-swagger
 
@@ -50,7 +51,8 @@
 (defn on-url-change [path & options]
   (let [options (or options {})]
     (info "url did change to: " path " options:" options)
-    (bidi/match-route @routes path))) ; options
+    ;(bidi/match-route @routes path)
+    (match-route-with-query-params @routes path options))) ; options
 
 ; see: 
 ; https://github.com/clj-commons/pushy
@@ -58,22 +60,59 @@
 (def history
   (pushy/pushy bidi-goto! on-url-change))
 
-(defn link [handler]
-  (info "link for handler: " handler)
-  (let [url (bidi/path-for @routes handler)]
-    (info "bidi link url: " url)
-    url))
+(defn link
+  ([handler]
+   (info "link for handler: " handler)
+   (let [url (bidi/path-for @routes handler)]
+     (info "bidi link url: " url)
+     url))
+  ([handler route-params]
+   (info "link for handler: " handler "route-params: " route-params)
+   (let [url (apply (partial bidi/path-for @routes) handler route-params)]
+     (info "bidi link url: " url)
+     url)))
 
 (defn nav! [url]
   (set! (.-location js/window) url))
 
-(defn goto! [handler & params]
-  (let [[qp] params]
-    (info "goto! handler: " handler " query-params: " qp)
-    (reset! current {:handler handler})
-    (if qp
-      (let [url (str (link handler) "?" (url/map->query qp))]
-        (set-query-params qp)
-        (pushy/set-token! history url))
-      (pushy/set-token! history (link handler)))))
+; old version only suports query params
+#_(defn goto!-OLD [handler & params]
+    (let [[qp] params]
+      (info "goto! handler: " handler " query-params: " qp)
+      (reset! current {:handler handler})
+      (if qp
+        (let [url (str (link handler) "?" (url/map->query qp))]
+          (set-query-params qp)
+          (pushy/set-token! history url))
+        (pushy/set-token! history (link handler)))))
 
+(defn params->map [params]
+  (let [pairs (partition 2 params)
+        add (fn [m [k v]]
+              (assoc m k v))]
+    (reduce add {} pairs)))
+
+(defn map->params [m]
+  (let [add (fn [acc [k v]]
+              (conj acc k v))]
+    (reduce add [] m)))
+
+(defn goto! [handler & params]
+  (let [_ (info "goto! " handler "params: " params)
+        m (params->map params) ; params is a map without {} example:  :a 1 :b 2  
+        m-route (dissoc m :query-params)
+        ;_ (info "m-route" m-route)
+        p-route (map->params m-route)
+        ;_ (info "p-route" p-route)
+        p-query (:query-params m)
+        base-url (if p-route
+                   (link handler p-route)
+                   (link handler))]
+    (info "goto! handler: " handler " route-p: " p-route  "query-p:" p-query "base-url:" base-url)
+    (reset! current {:handler handler})
+    (if p-query
+      (let [url (str base-url "?" (url/map->query p-query))]
+        (set-query-params p-query)
+        (pushy/set-token! history url))
+      (do (set-query-params {})
+          (pushy/set-token! history base-url)))))

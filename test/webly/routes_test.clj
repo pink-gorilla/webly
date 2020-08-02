@@ -4,15 +4,21 @@
    [ring.mock.request :refer [request] :rename {request mock-request}]
    [bidi.bidi :as bidi]
    [webly.web.resources]
+   [webly.web.handler :refer [frontend?]]
    [demo.routes :refer [demo-routes-backend]]))
 
 (def routes demo-routes-backend)
+
+
+;demo-routes-app
+
 
 (deftest handler->path []
   (is (= (bidi/path-for routes :demo/main) "/"))
   (is (= (bidi/path-for routes :demo/help) "/help"))
   (is (= (bidi/path-for routes :api/test) "/api/test"))
-  (is (= (bidi/path-for routes :api/time) "/api/time")))
+  (is (= (bidi/path-for routes :api/time) "/api/time"))
+  (is (= (bidi/path-for routes :demo/party :location "Vienna") "/party/Vienna")))
 
 (defn GET [url]
   (bidi/match-route routes url :request-method :get))

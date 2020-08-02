@@ -10,6 +10,7 @@
 (def demo-routes-app
   {""          :demo/main
    "help"      :demo/help
+   ["party/" :location] :demo/party
    "save"      :demo/save ; there is no handler defined for this on purpose
    "oauth2/github/landing" :demo/user})
 

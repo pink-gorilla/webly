@@ -52,6 +52,7 @@
                  ; backend
                  [ring/ring-core "1.8.1"]
                  [hiccup "1.0.5"]
+                 
                  ; middlewares
                  [ring/ring-anti-forgery "1.3.0"]
                  [ring-cors "0.1.13"]
@@ -64,8 +65,12 @@
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [luminus/ring-ttl-session "0.3.3"]
                  [ring-oauth2 "0.1.5"]
+                 
+                 ; goldly.user.config:
+                 ;[cprop "0.1.14"] ; configuration
+                 ;[mount "0.1.16"]
                  ;[expound "0.7.2"] ; see clojurewb
-
+                 
                  ; routing
                  [bidi "2.1.6"]
                  [clj-commons/pushy "0.3.10"]
@@ -87,7 +92,8 @@
                  [org.clojure/clojurescript "1.10.773"]
 
                  #_[district0x.re-frame/google-analytics-fx "1.0.0"
-                    :exclusions [re-frame]]]
+                    :exclusions [re-frame]]
+                 ]
 
   :profiles {:demo {; unit tests use demo profile for resource tests
                    ; so the demo serves tw puroses
@@ -98,7 +104,7 @@
                                       "profiles/demo/resources"]}
 
              :dev {:dependencies [;[clj-kondo "2020.06.21"] ;
-                                  [org.clojure/java.classpath "1.0.0"]
+                                  ;[org.clojure/java.classpath "1.0.0"]
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   ;[lein-cloverage "1.1.2"]
@@ -125,7 +131,7 @@
             "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
             ["with-profile" "+demo" "test"]
 
-            ;; SHADOw-CLJS (for testing purposes only)
+            ;; SHADOW-CLJS (for testing purposes only)
 
             "shadow-build"  ^{:doc "compiles bundle"}
             ["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "compile" "webly"]

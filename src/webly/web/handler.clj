@@ -1,7 +1,7 @@
 (ns webly.web.handler
   (:require
    [clojure.string]
-   [taoensso.timbre :refer [debug error]]
+   [taoensso.timbre :refer [debug info error]]
    [ring.util.response :as response]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [bidi.bidi :as bidi]
@@ -52,7 +52,11 @@
   (swap! handler-registry assoc key handler))
 
 (defn frontend? [routes-frontend handler-kw]
-  (bidi/path-for routes-frontend handler-kw))
+  (try
+    (bidi/path-for routes-frontend handler-kw)
+    (catch Exception e
+      (info "frontend? ex:" e)
+      true)))
 
 (defn get-handler
   [routes-frontend handler-kw]

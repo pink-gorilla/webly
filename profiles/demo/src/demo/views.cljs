@@ -16,6 +16,9 @@
     [:li [:a.bg-green-300 {:on-click #(goto! :demo/help)} "help!"]]
     [:li [:a.bg-red-300 {:on-click #(goto! :demo/save)} "save-as (test for not implemented)"]]
 
+    [:li [:a.bg-green-300 {:on-click #(goto! :demo/party :location "Vienna")} "party in vienna (test for route-params)"]]
+    [:li [:a.bg-green-300 {:on-click #(goto! :demo/party :location "Bali" :query-params {:expected-guests 299})} "party in Bali (test for query-params)"]]
+
     [:li [:p {:on-click #(add-notification "welcome to wonderland")} "show notification"]]
     [:li [:p {:on-click #(add-notification :danger "something bad happened")} "show notification - error"]]
 
@@ -40,6 +43,18 @@
   [help])
 
 
+(defn party [{:keys [route-params query-params handler]}]
+  (let [{:keys [location]} route-params
+        {:keys [expected-guests]} query-params]
+    [:div
+     [:h1 "There is a party in " location]
+     (if expected-guests
+       [:p "Expected Guests: " expected-guests]
+       [:p "We don't know how many guests to expect!"])
+     [:p "This is a test for bidi route/query parameters."]]))
+
+(defmethod reagent-page :demo/party [args]
+  [party args])
 
 
 
