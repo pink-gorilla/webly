@@ -62,8 +62,7 @@
    ;(css "https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300")
    ;(css "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css")
    (doall (map css css-extern))
-   
-   
+
    body-loading-style])
 
 (defn layout [page]
@@ -74,10 +73,9 @@
       loading
       [:div#webly page]
       [:div  ; .w-screen.h-screen
-       [:script {:src "/r/main.js" 
+       [:script {:src "/r/main.js"
                  :type "text/javascript"
-                 :onload start
-                 }]
+                 :onload start}]
        #_[:script {:type "text/javascript"} start]]])))
 
 (defn app-page [csrf-token]

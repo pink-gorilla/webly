@@ -16,19 +16,15 @@
   (reagent.dom/render [webly-app]
                       (.getElementById js/document "app")))
 
-(defn start [routes]
-  (dispatch [:bidi/init routes]))
-
 ;; before-reload is a good place to stop application stuff before we reload.
 (defn ^:dev/before-load
   before-load []
-  (println "shadow-cljs reload: before")
-  (info "shadow-cljs reload: before"))
+  (info "before-load"))
 
 (defn ^:dev/after-load
   after-load []
   (webly.web.app/print-log-init!)
-  (info "shadow-cljs reload: after")
+  (info "after-load")
 
   (info "clearing reframe subscription cache..")
   (clear-subscription-cache!)
@@ -37,5 +33,8 @@
   (webly.web.app/mount-app))
 
 ;(after-load)
+
+(defn start [routes]
+  (dispatch [:bidi/init routes]))
 
 

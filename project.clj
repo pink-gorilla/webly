@@ -85,11 +85,9 @@
                 ;[thheller/shadow-cljs "2.10.15"]
                  [thheller/shadow-cljsjs "0.0.21"]
                  [org.clojure/clojurescript "1.10.773"]
-                 
+
                  #_[district0x.re-frame/google-analytics-fx "1.0.0"
-                  :exclusions [re-frame]]
-                 
-                 ]
+                    :exclusions [re-frame]]]
 
   :profiles {:demo {; unit tests use demo profile for resource tests
                    ; so the demo serves tw puroses
@@ -121,14 +119,14 @@
   :aliases {"bump-version"
             ["change" "version" "leiningen.release/bump-version"]
 
-            "css"  ^{:doc "Copies certain npm package dependecies"}
+            "css"  ^{:doc "Copies npm package dependencies that are not managed by shadow-cljs"}
             ["shell" "./scripts/copy_res.sh"]
 
             "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
             ["with-profile" "+demo" "test"]
 
             ;; SHADOw-CLJS (for testing purposes only)
-            
+
             "shadow-build"  ^{:doc "compiles bundle"}
             ["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "compile" "webly"]
 

@@ -57,7 +57,6 @@
                     ;                                    ;:js-package-dirs ["packages/babel-worker/node_modules"]
                     ;                                    ;:js-provider :require
                     ;                     }
-                    
                     }
             :ci {:target :karma
                  :output-to  "target/ci.js"
