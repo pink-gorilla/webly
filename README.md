@@ -2,6 +2,7 @@
 
 - This project is used in [Notebook](https://github.com/pink-gorilla/gorilla-notebook) and [Goldly](https://github.com/pink-gorilla/goldly).
 - Tools to build reagent/re-frame clojurescript web apps that are served from a clojure webserver.
+- **End Users** this project is not for you.
 
 # UI demo
 
@@ -11,14 +12,13 @@ lein demo
 
 The demo runs a webserver on port 9000.
 
-Demonstrates:
+**Demonstrates**
 - loading animation
 - navigation links to registered handlers (and error for unregistered handler)
 - notifications
 - dialog
 - api endpoints
 - oauth2
-
 
 # Features
 - routing with bidi (this allows to have links within the web-app)
@@ -44,17 +44,12 @@ Bidi is not as highly starred as compojure, but it has important benefits:
 - No linting errors due to macros.
 - Easy testing of route definitions, and handler results (including wrapping routes)
 
-
-
-# todo
-
-- watch after a bundle build produces endless compile loops
-- production build compiles, but does not work in browser.
-
-- oauth2 demo/unit-tests
-
 # Notes
 
 If there are problems in using vega with errors to "buffer" then `npm install shadow-cljs --save` might fix it. thheller: both buffer and process are polyfills packages that shadow-cljs will provide ... the npm package is mostly the for CLI stuff but also brings in some extra npm packages
 the compiler is from the CLJ dependency you have in project.clj.
 the npm stuff never does any actual compilation, just runs the java process
+
+# todo
+
+- oauth2 demo/unit-tests
