@@ -28,7 +28,7 @@
   :managed-dependencies [[nrepl "0.7.0"]
                          [joda-time "2.10.6"]
                          [clj-time "0.15.2"]
-                         [com.fasterxml.jackson.core/jackson-core "2.11.1"]
+                         [com.fasterxml.jackson.core/jackson-core "2.11.2"]
                          [com.cognitect/transit-cljs "0.8.264"]
                          [com.cognitect/transit-clj "1.0.324"]
                          [com.cognitect/transit-java "1.0.343"]
@@ -39,7 +39,7 @@
                          [com.google.code.findbugs/jsr305 "3.0.2"]]
 
   :dependencies [[org.clojure/clojure "1.10.1"]
-                 [org.clojure/core.async "1.2.603"]
+                 [org.clojure/core.async "1.3.610"]
                  [com.taoensso/timbre "4.10.0"] ; clj/cljs logging
                  [clojure.java-time "0.3.2"]
 
@@ -80,9 +80,9 @@
                  [reagent "0.10.0" :exclusions [org.clojure/tools.reader
                                                 cljsjs/react
                                                 cljsjs/react-dom]]
-                 [re-frame "0.12.0"]
+                 [re-frame "1.0.0"]
                  [cljs-ajax "0.8.0"] ; needed for re-frame/http-fx
-                 [day8.re-frame/http-fx "0.1.6"] ; reframe based http requests
+                 [day8.re-frame/http-fx "0.2.1"] ; reframe based http requests
 
                  ;shadow
                  ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
