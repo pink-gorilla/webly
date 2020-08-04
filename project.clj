@@ -25,7 +25,7 @@
   :resource-paths  ["resources"  ; webly resources (svg/img)
                     "target/node_modules"] ; css png resources from npm modules (tailwind)
 
-  :managed-dependencies [[nrepl "0.7.0"]
+  :managed-dependencies [;[nrepl "0.8.0"]
                          [joda-time "2.10.6"]
                          [clj-time "0.15.2"]
                          [com.fasterxml.jackson.core/jackson-core "2.11.2"]
@@ -33,10 +33,11 @@
                          [com.cognitect/transit-clj "1.0.324"]
                          [com.cognitect/transit-java "1.0.343"]
                          [org.apache.httpcomponents/httpcore "4.4.13"]
-                         [com.google.javascript/closure-compiler-unshaded "v20200504"]
+                         [com.google.javascript/closure-compiler-unshaded "v20200719"]
                          [org.apache.httpcomponents/httpasyncclient "4.1.4"]
                          [commons-codec "1.14"]
-                         [com.google.code.findbugs/jsr305 "3.0.2"]]
+                         [com.google.code.findbugs/jsr305 "3.0.2"]
+                         [org.ow2.asm/asm "8.0.1"]]
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.async "1.3.610"]
@@ -52,7 +53,7 @@
                  ; backend
                  [ring/ring-core "1.8.1"]
                  [hiccup "1.0.5"]
-                 
+
                  ; middlewares
                  [ring/ring-anti-forgery "1.3.0"]
                  [ring-cors "0.1.13"]
@@ -65,12 +66,7 @@
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [luminus/ring-ttl-session "0.3.3"]
                  [ring-oauth2 "0.1.5"]
-                 
-                 ; goldly.user.config:
-                 ;[cprop "0.1.14"] ; configuration
-                 ;[mount "0.1.16"]
-                 ;[expound "0.7.2"] ; see clojurewb
-                 
+
                  ; routing
                  [bidi "2.1.6"]
                  [clj-commons/pushy "0.3.10"]
@@ -86,14 +82,13 @@
 
                  ;shadow
                  ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
-                 [thheller/shadow-cljs "2.8.81"]
-                ;[thheller/shadow-cljs "2.10.15"]
+                ; [thheller/shadow-cljs "2.8.81"]
+                 [thheller/shadow-cljs "2.10.19"]
                  [thheller/shadow-cljsjs "0.0.21"]
                  [org.clojure/clojurescript "1.10.773"]
 
                  #_[district0x.re-frame/google-analytics-fx "1.0.0"
-                    :exclusions [re-frame]]
-                 ]
+                    :exclusions [re-frame]]]
 
   :profiles {:demo {; unit tests use demo profile for resource tests
                    ; so the demo serves tw puroses
@@ -150,5 +145,5 @@
             "build-prod"  ^{:doc "compiles bundle via webly"}
             ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+demo" "demo.app/handler" "demo.app"]
 
-            "run-web"  ^{:doc "runs compiles bundle on shadow dev server"}
+            "run-web"  ^{:doc "runs compiled bundle on shadow dev server"}
             ["with-profile" "+demo" "run" "-m" "demo.app" "run"]})
