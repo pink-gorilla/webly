@@ -99,7 +99,6 @@
                                       "profiles/demo/resources"]}
 
              :dev {:dependencies [;[clj-kondo "2020.06.21"] ;
-                                  ;[org.clojure/java.classpath "1.0.0"]
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   ;[lein-cloverage "1.1.2"]

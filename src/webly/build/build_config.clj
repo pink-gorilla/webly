@@ -7,6 +7,7 @@
     ;:refer [watch* worker-running?]
     ]
    [shadow.cljs.devtools.server :as shadow-server]
+   [webly.build.install-npm :refer [install-npm]]
    [webly.build.bundle-size :refer [generate-bundlesize-report]]))
 
 (defn generate-config [config]
@@ -28,6 +29,9 @@
 (defn build [mode config]
   (generate-config config)
   (let [opts {:verbose true}]
+
+    (install-npm config opts)
+
     (case mode
 
       ; production build (onebundle file, no source-maps)
@@ -42,8 +46,8 @@
       :run (shadow-server/start!)
 
       ; hot reloading
-      :watch (watch-api)
-             ;(watch-cli)
+      :watch ;(watch-api)
+      (watch-cli)
      ; 
       )))
 

@@ -51,7 +51,9 @@
                     :modules {:main {:entries [frontend-ns]}}
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")
                     ;           :after-load (symbol "webly.web.app/after-load")}
-                    :compiler-options {:optimizations :simple}
+                    :compiler-options {:optimizations :simple
+                                       :output-feature-set :es8 ; this should fix vega polyfill problems
+                                       }
                     ;:build-id :webly
                     ;:js-options  {:minimize-require false ; module requires full name instead of index
                     ;                                    ;:js-package-dirs ["packages/babel-worker/node_modules"]

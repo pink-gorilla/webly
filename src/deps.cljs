@@ -1,6 +1,6 @@
 {:npm-deps
- {"create-react-class" "^15.6.3"
-  "@fortawesome/fontawesome-free" "^5.13.0"  ; font awesome
+ {"@fortawesome/fontawesome-free" "^5.13.0"  ; font awesome
+  "create-react-class" "^15.6.3"
   "react" "^16.13.0"
   "react-dom" "^16.13.0"
   "react-dom-factories" "^1.0.2"
