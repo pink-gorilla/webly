@@ -9,15 +9,30 @@
   (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
              :small]))
 
+
+;(def g! goto!)
+
+
+; g! does the same as goto! but dispatches reframe bidi/goto event
+(defn g!
+  ([handler]
+   (println "dispatching bidi/goto (no-args): " handler)
+   (dispatch [:bidi/goto handler]))
+  ([handler & args]
+   (println "g! with-args: handler:" handler "args: " args)
+   (let [x (into [:bidi/goto handler] args)]
+     (println "dispatching bidi/goto (args): " x)
+     (dispatch x))))
+
 (defn main []
   [:div
    [:h1 "webly demo"]
    [:ol
-    [:li [:a.bg-green-300 {:on-click #(goto! :demo/help)} "help!"]]
-    [:li [:a.bg-red-300 {:on-click #(goto! :demo/save)} "save-as (test for not implemented)"]]
+    [:li [:a.bg-green-300 {:on-click #(g! :demo/help)} "help!"]]
+    [:li [:a.bg-red-300 {:on-click #(g! :demo/save)} "save-as (test for not implemented)"]]
 
-    [:li [:a.bg-green-300 {:on-click #(goto! :demo/party :location "Vienna")} "party in vienna (test for route-params)"]]
-    [:li [:a.bg-green-300 {:on-click #(goto! :demo/party :location "Bali" :query-params {:expected-guests 299})} "party in Bali (test for query-params)"]]
+    [:li [:a.bg-green-300 {:on-click #(g! :demo/party :location "Vienna")} "party in vienna (test for route-params)"]]
+    [:li [:a.bg-green-300 {:on-click #(g! :demo/party :location "Bali" :query-params {:expected-guests 299})} "party in Bali (test for query-params)"]]
 
     [:li [:p {:on-click #(add-notification "welcome to wonderland")} "show notification"]]
     [:li [:p {:on-click #(add-notification :danger "something bad happened")} "show notification - error"]]
@@ -34,7 +49,7 @@
 (defn help []
   [:div
    [:h1 "webly help"]
-   [:a.bg-green-300 {:on-click #(goto! :demo/main)} "main"]
+   [:a.bg-green-300 {:on-click #(g! :demo/main)} "main"]
    [:h1 "help!"]
    [:p "a moon image should show below. this is a test for webly resource handler."]
    [:img {:src "/r/moon.jpg"}]])

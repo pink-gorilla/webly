@@ -20,9 +20,9 @@
 (reg-event-fx
  :bidi/goto
  (fn [_ [_ handler & params]]
-   (info "bidi goto handler: " handler " query-params: " params)
+   (info "bidi goto handler: " handler " params: " params)
    (if (> (count params) 0)
-     (do (info "p: "  (concat [handler] params))
+     (do (info "goto! (params): "  (concat [handler] params))
          (apply goto! (concat [handler] params)))
-     (do (info "goto! no-qp")
+     (do (info "goto! (no-params)" handler)
          (goto! handler)))))

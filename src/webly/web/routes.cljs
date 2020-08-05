@@ -45,7 +45,7 @@
 (def routes (r/atom nil))
 
 (defn bidi-goto! [match]
-  (info "setting current page to: " match)
+  (info "setting current page to handler: " match)
   (reset! current match))
 
 (defn on-url-change [path & options]
@@ -62,7 +62,7 @@
 
 (defn link
   ([handler]
-   (info "link for handler: " handler)
+   (info "link for handler: " handler "no-route-params")
    (let [url (bidi/path-for @routes handler)]
      (info "bidi link url: " url)
      url))
@@ -108,7 +108,7 @@
         base-url (if p-route
                    (link handler p-route)
                    (link handler))]
-    (info "goto! handler: " handler " route-p: " p-route  "query-p:" p-query "base-url:" base-url)
+    (info "goto! handler: " handler " route-p: " p-route  "query-p (map):" p-query "base-url:" base-url)
     (reset! current {:handler handler})
     (if p-query
       (let [url (str base-url "?" (url/map->query p-query))]
