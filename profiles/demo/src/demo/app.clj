@@ -13,9 +13,10 @@
   [mode]
   (let [mode (or mode "watch")]
     (info "demo starting mode: " mode)
-    (swap! webly-config assoc :timbre-loglevel :debug)
-    (swap! webly-config assoc :title "Webly Demo")
-    (swap! webly-config assoc :start "demo.app.start (); ")
+    (swap! webly-config assoc 
+           :timbre-loglevel :debug
+           :title "Webly Demo"
+           :start "demo.app.start (); ")
     (def handler (make-handler demo-routes-backend demo-routes-frontend))
     (build-cli mode "+demo" "demo.app/handler" "demo.app")))
 

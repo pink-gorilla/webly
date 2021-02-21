@@ -1,7 +1,8 @@
 (ns webly.build.config
   (:require
    [taoensso.timbre :as timbre :refer [info]]
-   [shadow.cljs.devtools.config :as config]))
+   [shadow.cljs.devtools.config :as config]
+   [webly.config :refer [webly-config]]))
 
 (defn get-shadow-server-config-edn []
   (let [c (-> (config/load-cljs-edn)
@@ -34,32 +35,37 @@
          :watching))))
 
 (defn shadow-config [lein-profile handler frontend-ns]
-  {;:cache-root ".shadow-cljs"
-   :lein {:profile lein-profile}
-   :dev-http {9000 {;:root "public" ; shadow does not need to serve resources
-                    :handler handler}}
-   :http {:port 9001  ; shadow dashboard
-          :host "localhost"}
-   :nrepl {:port 9002
+  (let [dev-http-port (get-in @webly-config [:shadow :dev-http :port])
+        http-port (get-in @webly-config [:shadow :http :port])
+        http-host (get-in @webly-config [:shadow :http :host])
+        nrepl-port (get-in @webly-config [:shadow :nrepl :port])
+        _ (println "XXX" dev-http-port)]
+    {;:cache-root ".shadow-cljs"
+     :lein {:profile lein-profile}
+     :dev-http {dev-http-port {;:root "public" ; shadow does not need to serve resources
+                               :handler handler}}
+     :http {:port http-port  ; shadow dashboard
+            :host http-host}
+     :nrepl {:port nrepl-port
            ;:middleware [] ; optional list of namespace-qualified symbols
-           }
+             }
    ;:user-config {}
    ;
-   :builds {:webly {:target :browser
-                    :output-dir "target/webly/public"
-                    :asset-path "/r"
-                    :modules {:main {:entries [frontend-ns]}}
+     :builds {:webly {:target :browser
+                      :output-dir "target/webly/public"
+                      :asset-path "/r"
+                      :modules {:main {:entries [frontend-ns]}}
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")
                     ;           :after-load (symbol "webly.web.app/after-load")}
-                    :compiler-options {:optimizations :simple
-                                       :output-feature-set :es8 ; this should fix vega polyfill problems
-                                       }
+                      :compiler-options {:optimizations :simple
+                                         :output-feature-set :es8 ; this should fix vega polyfill problems
+                                         }
                     ;:build-id :webly
                     ;:js-options  {:minimize-require false ; module requires full name instead of index
                     ;                                    ;:js-package-dirs ["packages/babel-worker/node_modules"]
                     ;                                    ;:js-provider :require
                     ;                     }
-                    }
-            :ci {:target :karma
-                 :output-to  "target/ci.js"
-                 :ns-regexp "-test$"}}})
+                      }
+              :ci {:target :karma
+                   :output-to  "target/ci.js"
+                   :ns-regexp "-test$"}}}))

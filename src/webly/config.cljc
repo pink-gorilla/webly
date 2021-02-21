@@ -5,21 +5,26 @@
    ))
 
 (def webly-config
-  (atom {:prefix "/r/" ; resource route prefix
+  (atom {; most web-apps will have to change that 
          :title "webly"
          :icon "/r/webly/favicon.ico"
-
+         :start  "webly.web.app.after-load (); "
          :timbre-loglevel :info ; :trace :debug
 
-         :start  "webly.web.app.after-load (); "
+         ; mos web-apps can leave this at default values
+         :prefix "/r/" ; resource route prefix
          ; css from resources 
          :css-links ["tailwindcss/dist/tailwind.css"
                      "@fortawesome/fontawesome-free/css/all.min.css"]
-         ; css external sites
+         ; css from external sites
          :css-extern ["http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic"
                       "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
                       "https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300"
-                      "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"]}))
+                      "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"]
+
+         :shadow {:dev-http {:port 8000}
+                  :http {:port 8001 :host "localhost"}
+                  :nrepl {:port 8002}}}))
 
 (defn res-href [href]
   (str (:prefix @webly-config) href))
