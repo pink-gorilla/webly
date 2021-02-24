@@ -15,12 +15,14 @@
          :prefix "/r/" ; resource route prefix
          ; css from resources 
          :css-links ["tailwindcss/dist/tailwind.css"
-                     "@fortawesome/fontawesome-free/css/all.min.css"]
+                     "@fortawesome/fontawesome-free/css/all.min.css"
+                     "fonts-google/fonts.css"]
          ; css from external sites
-         :css-extern ["http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic"
-                      "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
-                      "https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300"
-                      "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"]
+         :css-extern [;"http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic"
+                      ;"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
+                      ;"https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300"
+                      ;"https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
+                      ]
 
          :shadow {:dev-http {:port 8000}
                   :http {:port 8001 :host "localhost"}

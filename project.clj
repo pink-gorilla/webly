@@ -8,7 +8,9 @@
 
   :min-lein-version "2.9.4" ; nrepl 0.7.0
 
-  :prep-tasks ["css"] ; copies tailwind css, so it ends up as resources
+  :prep-tasks ["css" ; copies tailwind css, so it ends up as resources 
+               "google-fonts"
+               ] 
 
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
@@ -121,6 +123,9 @@
 
             "css"  ^{:doc "Copies npm package dependencies that are not managed by shadow-cljs"}
             ["shell" "./scripts/copy_res.sh"]
+
+            "google-fonts"  ^{:doc "Installs google fonts in resources"}
+            ["shell" "./scripts/get-fonts.sh"]
 
             "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
             ["with-profile" "+demo" "test"]

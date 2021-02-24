@@ -38,8 +38,7 @@
   (let [dev-http-port (get-in @webly-config [:shadow :dev-http :port])
         http-port (get-in @webly-config [:shadow :http :port])
         http-host (get-in @webly-config [:shadow :http :host])
-        nrepl-port (get-in @webly-config [:shadow :nrepl :port])
-        _ (println "XXX" dev-http-port)]
+        nrepl-port (get-in @webly-config [:shadow :nrepl :port])]
     {;:cache-root ".shadow-cljs"
      :lein {:profile lein-profile}
      :dev-http {dev-http-port {;:root "public" ; shadow does not need to serve resources

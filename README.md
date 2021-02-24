@@ -21,19 +21,22 @@ The demo runs a webserver on port 9000.
 - oauth2
 
 # Features
-- routing with bidi (this allows to have links within the web-app)
-- this means a registry for ring-handlers and reagent-views
-- oauth2 with github
-- dynamically generated app html that works with csrf
-- ring middleware for api calls
-- webly build 
+
+
+## webly build 
+  - this feature is available for apps that use webly
   - compiles/watches via shadow-cljs 
   - does not require shadow-cljs.edn
   - bundle-size report at compile time
 
-# Architecture
+## web app
+- dynamically generated app html that works with csrf
+- ring middleware for api calls
+- routing with bidi (this allows to have links within the web-app)
+- this means a registry for ring-handlers and reagent-views
+- oauth2 with github
 
-## Routing: Bidi
+## Bidi Routing
 
 Bidi is not as highly starred as compojure, but it has important benefits:
 - It is isomorphic (clj and cljs) (forget compojure AND secretary) 
