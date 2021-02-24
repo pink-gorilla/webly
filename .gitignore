@@ -21,3 +21,4 @@ node_modules
 creds.edn
 shadow-cljs.edn
 .calva
+.lsp/

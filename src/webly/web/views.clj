@@ -52,6 +52,7 @@
            :content "width=device-width, initial-scale=1.0"}]
    [:title title]
    [:link {:rel "shortcut icon" :href icon}]
+   [:script "var CLOSURE_UNCOMPILED_DEFINES = {\"re_frame.trace.trace_enabled_QMARK_\":true};"]
 
    ; css
    ;(css "/r/tailwindcss/dist/tailwind.css") (frontend side)
