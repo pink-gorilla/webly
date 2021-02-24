@@ -55,7 +55,7 @@
   (try
     (bidi/path-for routes-frontend handler-kw)
     (catch Exception e
-      (info "frontend? ex:" e)
+      (error "exception in determining bidi/path-for for " handler-kw " ex:" e)
       true)))
 
 (defn get-handler
