@@ -14,7 +14,8 @@
   (let [mode (or mode "watch")]
     (info "demo starting mode: " mode)
     (swap! webly-config assoc 
-           :timbre-loglevel :debug
+           :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
+                              [#{"*"} :debug]]
            :title "Webly Demo"
            :start "demo.app.start (); ")
     (def handler (make-handler demo-routes-backend demo-routes-frontend))

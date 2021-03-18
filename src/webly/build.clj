@@ -1,13 +1,13 @@
 (ns webly.build
   (:require
-   [taoensso.timbre :as timbre :refer [info]]
+   [taoensso.timbre  :refer [info]]
    [webly.build.config :refer [shadow-config]]
-   [webly.config :refer [webly-config]]
+   [webly.config :refer [webly-config timbre-config!]]
    [webly.build.build-config] ; shadow via generated config file
    ))
 
 (defn build [mode lein-profile handler frontend-ns]
-  (timbre/set-level! (:timbre-loglevel @webly-config))
+  (timbre-config!)
   (info "webly " mode "handler:" handler "frontend-ns:" frontend-ns)
   (let [config (shadow-config lein-profile handler frontend-ns)]
     (info "shadow-config: " config)

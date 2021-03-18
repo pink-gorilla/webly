@@ -1,6 +1,6 @@
 (ns webly.config
   (:require
-   [clojure.string] ; clj is empty otherwise
+   [taoensso.timbre :as timbre]
    #?(:cljs [webly.web.events-bidi]) ; side-effects
    ))
 
@@ -9,7 +9,9 @@
          :title "webly"
          :icon "/r/webly/favicon.ico"
          :start  "webly.web.app.after-load (); "
-         :timbre-loglevel :info ; :trace :debug
+
+         :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
+                           [#{"*"} :info]]
 
          ; mos web-apps can leave this at default values
          :prefix "/r/" ; resource route prefix
@@ -35,6 +37,9 @@
   [:link {:rel "stylesheet"
           :href (res-href href)}])
 
-
+(defn timbre-config! []
+  (timbre/set-config!
+   (merge timbre/default-config
+          {:min-level (:timbre-loglevel @webly-config)})))
 
 

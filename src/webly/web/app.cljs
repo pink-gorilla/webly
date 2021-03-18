@@ -1,16 +1,16 @@
 (ns webly.web.app
   (:require
    [reagent.dom]
-   [taoensso.timbre :as timbre :refer [info]]
+   [taoensso.timbre :refer [info]]
    [re-frame.core :refer [clear-subscription-cache! dispatch]]
    [webly.web.views :refer [webly-app]]
    [webly.user.dialog] ; side-effects
-   [webly.config :refer [webly-config]] ; side-effects
+   [webly.config :refer [webly-config timbre-config!]] ; side-effects
    ))
 
 (defn print-log-init! []
   (enable-console-print!)
-  (timbre/set-level! (:timbre-loglevel @webly-config)))
+  (timbre-config!))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]

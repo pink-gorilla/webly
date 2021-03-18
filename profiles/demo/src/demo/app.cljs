@@ -10,7 +10,8 @@
    ))
 
 (defn ^:export start []
-  (swap! webly-config assoc :timbre-loglevel :debug)
+  (swap! webly-config assoc :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
+                                               [#{"*"} :debug]])
   (info "webly demo starting ...")
   (webly.web.app/start demo-routes-backend)
   (webly.web.app/mount-app))

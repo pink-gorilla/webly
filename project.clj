@@ -27,8 +27,7 @@
   :resource-paths  ["resources"  ; webly resources (svg/img)
                     "target/node_modules"] ; css png resources from npm modules (tailwind)
 
-  :managed-dependencies [;[nrepl "0.8.0"]
-                         [joda-time "2.10.6"]
+  :managed-dependencies [[joda-time "2.10.6"]
                          [clj-time "0.15.2"]
                          [com.fasterxml.jackson.core/jackson-core "2.11.2"]
                          [com.cognitect/transit-cljs "0.8.264"]
@@ -43,14 +42,14 @@
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.async "1.3.610"]
-                 [com.taoensso/timbre "4.10.0"] ; clj/cljs logging
+                 [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
                  [clojure.java-time "0.3.2"]
 
                  ; encoding
                  [org.clojure/data.json "1.0.0"]
                  [luminus-transit "0.1.2"]
                  [cheshire "5.10.0"]  ; JSON parsings
-                 [com.taoensso/encore "2.122.0"]
+                 [com.taoensso/encore "3.18.0"]
 
                  ; backend
                  [ring/ring-core "1.8.1"]
