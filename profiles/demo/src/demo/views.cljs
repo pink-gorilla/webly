@@ -40,8 +40,18 @@
     [:li [:p {:on-click show-dialog-demo} "show dialog"]]
 
     [:li [:a.bg-blue-300 {:href "/api/time"} "api time"]]
+
+    ;oauth2
     [:li [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/open-window :github])} "github login via popup (needs creds.edn)"]]
-    [:li [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]]])
+    [:li [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]
+    
+    
+    [:li [:a {;;:href (link :ui/markdown {:file "notebookui.md"})
+             ;:on-click #(goto! :ui/markdown :file "notebookui.md")
+         :on-click #(dispatch [:bidi/goto :ui/markdown :file "webly.md"])} "markdown help"]]
+
+
+    ]])
 
 (defmethod reagent-page :demo/main [& args]
   [main])

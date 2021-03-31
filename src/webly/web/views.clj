@@ -1,8 +1,7 @@
 (ns webly.web.views
   (:require
    [clojure.string :as str]
-   [hiccup.page :as page]
-   [webly.config :refer [webly-config]]))
+   [hiccup.page :as page]))
 
 ;; CSS
 
@@ -66,8 +65,8 @@
 
    body-loading-style])
 
-(defn layout [page]
-  (let [{:keys [title start icon css-extern]} @webly-config]
+(defn layout [webly-config page]
+  (let [{:keys [title start icon css-extern]} webly-config]
     (page/html5
      (head title icon css-extern)
      [:body.loading
@@ -79,8 +78,9 @@
                  :onload start}]
        #_[:script {:type "text/javascript"} start]]])))
 
-(defn app-page [csrf-token]
-  (layout [:div
+(defn app-page [webly-config csrf-token]
+  (layout @webly-config 
+          [:div
            [:div#sente-csrf-token {:data-csrf-token csrf-token}]
            [:div#app]]))
 

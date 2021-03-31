@@ -7,12 +7,14 @@
    [webly.oauth2.default-config] ; side-effects
    [demo.routes :refer [demo-routes-backend demo-routes-frontend]]
    [demo.handler] ; side-effects
+   [webly.user.config.config :refer [load-config!]]
    ))
 
 (defn -main
   [mode]
   (let [mode (or mode "watch")]
     (info "demo starting mode: " mode)
+    (load-config!)
     (swap! webly-config assoc 
            :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
                               [#{"*"} :debug]]

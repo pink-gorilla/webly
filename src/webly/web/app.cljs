@@ -35,6 +35,9 @@
 ;(after-load)
 
 (defn start [routes]
+  (dispatch [:config/load])
+  (dispatch [:markdown/init])
+  (dispatch [:markdown/load-index])
   (dispatch [:bidi/init routes]))
 
 

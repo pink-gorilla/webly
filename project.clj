@@ -10,7 +10,7 @@
 
   :prep-tasks ["css" ; copies tailwind css, so it ends up as resources 
                "google-fonts"
-               ] 
+               "md"]
 
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
@@ -21,11 +21,6 @@
                   ["vcs" "commit" "Begin %s"]
                   ["vcs" "push"]]
 
-  :target-path  "target/jar"
-  :source-paths ["src"]
-  :test-paths ["test"]
-  :resource-paths  ["resources"  ; webly resources (svg/img)
-                    "target/node_modules"] ; css png resources from npm modules (tailwind)
 
   :managed-dependencies [[joda-time "2.10.6"]
                          [clj-time "0.15.2"]
@@ -79,8 +74,9 @@
                                                 cljsjs/react-dom]]
                  [re-frame "1.0.0"]
                  [cljs-ajax "0.8.0"] ; needed for re-frame/http-fx
-                 [day8.re-frame/http-fx "0.2.1"] ; reframe based http requests
 
+                 [day8.re-frame/http-fx "0.2.1"  ; reframe based http requests
+                  :exclusions [[re-frame]]] ; a more modern reframe comes from webly
                  ;shadow
                  ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
                 ; [thheller/shadow-cljs "2.8.81"]
@@ -89,12 +85,25 @@
                  [org.clojure/clojurescript "1.10.773"]
 
                  #_[district0x.re-frame/google-analytics-fx "1.0.0"
-                    :exclusions [re-frame]]]
+                    :exclusions [re-frame]]
+
+                 [resauce "0.1.0"] ; resources
+                 [cprop "0.1.17"]]
+
+  :target-path  "target/jar"
+  :source-paths ["src"]
+  :test-paths ["test"]
+  :resource-paths  ["resources"  ; webly resources (svg/img)
+                    "target/node_modules"] ; css png resources from npm modules (tailwind)
+
+
 
   :profiles {:demo {; unit tests use demo profile for resource tests
                    ; so the demo serves tw puroses
                    ; 1. ilustrate links in web-app
                    ; 2. run unit tests 
+                    :dependencies [[org.pinkgorilla/gorilla-ui "0.2.34" ; brings pinkie
+                                    :exclusions [org.clojure/clojurescript]]]
                     :source-paths ["profiles/demo/src"]
                     :resource-paths  ["target/webly"
                                       "profiles/demo/resources"]}
@@ -125,6 +134,9 @@
 
             "google-fonts"  ^{:doc "Installs google fonts in resources"}
             ["shell" "./scripts/get-fonts.sh"]
+
+            "md"  ^{:doc "Copies markdown files to resources"}
+            ["shell" "./scripts/copy-md.sh"]
 
             "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
             ["with-profile" "+demo" "test"]

@@ -1,0 +1,101 @@
+/* prose.css
+   tailwind is removing (on purpose) all styling from normal html elements.
+   Inside pinkie output however we do want sensible styling, 
+   just not in the whole page.
+
+*/
+
+.prose {
+  font-family:    Segoe UI, Roboto, sans-serif;
+  font-size:      14px;
+  font-weight:    400;
+  color:          rgba(68, 68, 68, 1.0);
+  letter-spacing: 0.002em;
+  /* height:         100%;*/
+  margin:         0px;
+  padding:        0px;
+}
+
+.prose h1 {
+  color: blue;
+  font-weight: 200; /* normal; */
+  font-size: 24px;
+  margin-top: 2em;
+}
+.prose h2 {font-size: 20px;}
+.prose h3 {font-size: 18px;}
+.prose h4 {font-size: 16px;}
+
+
+.prose a {
+    color: black; 
+    textDecoration: 'underline';
+  }
+
+ .prose strong {
+    color: black;
+    font-weight: '600';
+  }
+
+  .prose ol {
+    counter-reset: list-counter
+  }
+
+  .prose ol > li {
+    position: 'relative';
+    counter-increment: list-counter;
+  }
+
+  .prose ol > li::before {
+    content: counter(list-counter) ". ";
+    position: 'absolute';
+    font-weight: '400';
+    color: black;
+  }
+
+.prose ul > li {
+    position: 'relative';
+    list-style-position: inside;
+    list-style-type : circle;
+    list-style-image: none;
+    color: red;
+    margin: 5px;
+    padding: 5px;
+  }
+
+.prose ul > li::before {
+    content: "";
+    position: 'absolute';
+    background-color: black;
+    border-radius: '50%';
+  }
+
+ .prose hr {
+    border-color:black;
+    border-top-width: 1;
+  }
+
+  .prose blockquote {
+    font-weight: '500';
+    font-style: 'italic';
+    color: black;
+    border-left-width: '0.25rem';
+    border-left-color: black;
+    quotes: '"\\201C""\\201D""\\2018""\\2019"';
+  }
+
+  .prose blockquote p:first-of-type::before {
+    content: 'open-quote';
+  }
+  
+  .prose blockquote p:last-of-type::after {
+    content: 'close-quote';
+  }
+
+  .prose code {
+    background-color: lightblue;
+  }
+
+
+
+

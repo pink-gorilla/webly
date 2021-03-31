@@ -2,6 +2,7 @@
   (:require
    [re-frame.core :as rf]
    [webly.oauth2.events] ; side-effects
+   [webly.web.handler :refer [reagent-page]]
    ))
 
 ;; stolen from:
@@ -60,8 +61,6 @@
     [:div.container.content ""]))
 
 
-; [:button.github {:on-click (fn [_] (set! (.-location js/window) "/github-login"))}
-;          "Login with Github"]]
 
 
 (defn auth-login []
@@ -75,3 +74,7 @@
     "Github login"]])
 
 
+(defmethod reagent-page :oauth/github-landing [args]
+  (println "href " (.. js/window -location -href))
+  [:p "github landing" (pr-str args)]
+  )

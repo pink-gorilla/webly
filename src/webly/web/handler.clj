@@ -7,7 +7,9 @@
    [bidi.bidi :as bidi]
    [bidi.ring]
    [webly.web.middleware :refer [wrap-webly]]
-   [webly.web.views :refer [app-page]]))
+   [webly.web.views :refer [app-page]]
+   [webly.config :refer [webly-config]]
+   ))
 
 (defn html-response [html]
   (response/content-type
@@ -36,7 +38,7 @@
         res (response/content-type
              {:status 200
               ;:session session
-              :body (app-page csrf-token)}
+              :body (app-page webly-config csrf-token)}
              "text/html")]
     ;(response/header res "session" session)
     res))

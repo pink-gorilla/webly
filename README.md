@@ -10,7 +10,7 @@
 lein demo
 ```
 
-The demo runs a webserver on port 9000.
+The demo runs a webserver on port 8000.
 
 **Demonstrates**
 - loading animation

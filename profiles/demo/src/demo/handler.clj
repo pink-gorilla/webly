@@ -2,7 +2,9 @@
   (:require
    [ring.util.response :as res]
    [webly.web.middleware :refer [wrap-api-handler]]
-   [webly.web.handler :refer [add-ring-handler]]))
+   [webly.web.handler :refer [add-ring-handler]]
+   [webly.user.markdown.handler :refer [handler-md-files]]
+   ))
 
 ; test
 
@@ -21,3 +23,9 @@
                  (current-unix-time)}))
 
 (add-ring-handler :api/time (wrap-api-handler time-handler))
+
+(add-ring-handler :api/md (wrap-api-handler time-handler))
+
+(add-ring-handler :api/md (wrap-api-handler handler-md-files))
+
+

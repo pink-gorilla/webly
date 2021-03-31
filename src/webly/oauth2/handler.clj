@@ -4,10 +4,6 @@
    [webly.web.handler :refer [add-ring-handler]]
    [webly.oauth2.middleware :refer [wrap-oauth]]))
 
-; oauth tokens are stored here:
-; [gorillauniverse.github.filesystem :refer [workbooks-for-token]]
-; (let [github-token] (-> request :oauth2/access-tokens :github) 
-; (workbooks-for-token github-token)
 
 (defn handler-auth [request]
   ; Once the user is authenticated, a new key is added to every request:

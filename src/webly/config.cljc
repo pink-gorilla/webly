@@ -1,7 +1,13 @@
 (ns webly.config
   (:require
    [taoensso.timbre :as timbre]
-   #?(:cljs [webly.web.events-bidi]) ; side-effects
+
+   ; side-effects
+   #?(:cljs [webly.web.events-bidi]) 
+   #?(:cljs  [webly.user.config.events])
+   #?(:cljs  [webly.user.markdown.subscriptions])
+   #?(:cljs  [webly.user.markdown.events])
+   #?(:cljs  [webly.user.markdown.view]) ; bidi route registration
    ))
 
 (def webly-config
@@ -18,7 +24,8 @@
          ; css from resources 
          :css-links ["tailwindcss/dist/tailwind.css"
                      "@fortawesome/fontawesome-free/css/all.min.css"
-                     "fonts-google/fonts.css"]
+                     "fonts-google/fonts.css"
+                     "webly/prose.css"]
          ; css from external sites
          :css-extern [;"http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic"
                       ;"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"

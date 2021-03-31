@@ -4,15 +4,21 @@
    [webly.oauth2.routes :refer [routes-oauth2]]))
 
 (def demo-routes-api
-  {"time"  {:get  :api/time}
-   "test"  {:post  :api/test}})
+  {"time"   {:get  :api/time}
+   "test"   {:post :api/test}
+   "md"     {:get  :api/md}
+   "config" {:get  :webly/config}
+   })
 
 (def demo-routes-app
   {""          :demo/main
    "help"      :demo/help
    ["party/" :location] :demo/party
    "save"      :demo/save ; there is no handler defined for this on purpose
-   "oauth2/github/landing" :demo/user})
+   "oauth2/github/landing" :oauth/github-landing
+   ["md/" :file] :ui/markdown
+   }
+  )
 
 (def demo-routes-frontend
   ["/" demo-routes-app])
