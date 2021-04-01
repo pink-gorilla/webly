@@ -27,7 +27,7 @@
  (fn [cofx [_ after-config-load config]]
    (let [fx {:db          (assoc-in (:db cofx) [:config] config)
              :dispatch [after-config-load]}]
-     (info "config load-succuss: " config)
+     (info "config load-success: " config)
      (if after-config-load
        fx
        (dissoc fx :dispatch)))))

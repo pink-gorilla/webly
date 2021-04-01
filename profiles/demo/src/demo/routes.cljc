@@ -15,7 +15,7 @@
    "help"      :demo/help
    ["party/" :location] :demo/party
    "save"      :demo/save ; there is no handler defined for this on purpose
-   "oauth2/github/landing" :oauth/github-landing
+   ["oauth2/redirect/" :provider] :oauth2/redirect
    ["md/" :file] :ui/markdown
    }
   )

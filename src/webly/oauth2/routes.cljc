@@ -7,6 +7,5 @@
   {;"test"           :webly/oauth2
    "github/auth"     :webly/oauth2
    "github/callback" :webly/oauth2
-   ;"github/landing"  :webly/oauth2
    })
 

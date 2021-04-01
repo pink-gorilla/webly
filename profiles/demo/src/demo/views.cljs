@@ -42,7 +42,9 @@
     [:li [:a.bg-blue-300 {:href "/api/time"} "api time"]]
 
     ;oauth2
-    [:li [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/open-window :github])} "github login via popup (needs creds.edn)"]]
+    [:li [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/open-window :github])} "github login via popup"]]
+    [:li [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/open-window :google])} "google login via popup"]]
+
     [:li [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]
     
     

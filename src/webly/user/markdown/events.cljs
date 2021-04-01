@@ -68,8 +68,7 @@
 
 (reg-event-db
  :markdown/load-error
- (fn
-   [db [_ response-body]]
+ (fn [db [_ response-body]]
    (let [content (:content response-body)
          _ (error "Content Only:\n" content)]
      (assoc-in db [:markdown :showing :doc]
