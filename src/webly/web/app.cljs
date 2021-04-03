@@ -12,7 +12,6 @@
    [webly.user.markdown.subscriptions]
    [webly.user.markdown.events]
    [webly.user.markdown.view] ; bidi route registration
-   [webly.user.analytics.subscriptions]
    [webly.user.analytics.events]
    [webly.user.config.subscription]))
 
@@ -34,7 +33,7 @@
   (clear-subscription-cache!)
 
   (info "mounting webly-app ..")
-  (dispatch [:ga/event "mounted" "app" "app"])
+  (dispatch [:ga/event {:category "webly" :action "mounted" :label 77 :value 13}])
   (webly.web.app/mount-app))
 
 ;(after-load)

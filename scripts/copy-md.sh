@@ -7,3 +7,4 @@ mkdir -p  $gorillamd
 
 cp README.md $gorillamd/webly.md
 cp README-oauth2.md $gorillamd/webly-oauth2.md
+cp README-analytics.md $gorillamd/webly-ga.md

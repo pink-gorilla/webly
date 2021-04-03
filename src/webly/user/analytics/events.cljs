@@ -20,16 +20,14 @@
 
 (reg-event-db
  :ga/event
- (fn [db [_ category action label]]
-   (let [{:keys [enabled]} (get-in db [:config :google-analytics])]
+ (fn [db [_ {:keys [category action label value]}]]
+   (let [{:keys [enabled]} (get-in db [:config :google-analytics])
+         data {:event_category category
+               :event_label label
+               :value value
+               }]
      (when enabled
        (info "ga event" category)
        ;(gtag "event" (name category)); label value (clj->js fields-object)
-       (send-event category {:action action :label label})))
+       (send-event action data)))
    db))
-
-#_(reg-fx
-   :ga/event
-   (fn [[category action label value fields-object]]
-     (when *enabled*
-       (js/ga "send" "event" category action label value (clj->js fields-object)))))

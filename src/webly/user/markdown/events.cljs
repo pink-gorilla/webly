@@ -55,7 +55,7 @@
  (fn [{:keys [db]} [_ filename]]
    (let [url  (str "/r/gorillamd/" filename)
          _ (info "loading md from :" url)]
-     {:dispatch [:ga/event "md" "load" filename]
+     {:dispatch [:ga/event {:category "webly" :action "md-load" :label "md" :value filename}]
       :db   (-> db
                 (assoc-in [:markdown :showing :file] filename)
                 (assoc-in [:markdown :showing :doc] :markdown/loading)) ; notebook view on loading

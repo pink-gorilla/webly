@@ -7,8 +7,7 @@
    [webly.web.routes :refer [current query-params]]
    [webly.user.config.core :refer [link-css]]
    [webly.user.dialog :refer [modal-container]]
-   [webly.user.notifications.dialog :refer [notifications-container]]
-   [webly.user.analytics.view :refer [google-analytics-container]]))
+   [webly.user.notifications.dialog :refer [notifications-container]]))
 
 (defn not-found-page []
   [:div.bg-red-500.m-5
@@ -35,7 +34,6 @@
             {:keys [css-links]} @config]
         [:div
          [css css-links]
-         [google-analytics-container]
          [modal-container]
          [notifications-container]
          (reagent-page current-page)]))))
