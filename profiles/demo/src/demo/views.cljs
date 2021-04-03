@@ -24,36 +24,46 @@
      (println "dispatching bidi/goto (args): " x)
      (dispatch x))))
 
+
+(defn demo-routing []
+  [:div.bg-blue-400.m-5 {:class "w-1/4"}
+   [:p.text-4xl "bidi routing demo"]
+   [:p [:a.bg-green-300 {:on-click #(g! :demo/help)} "help!"]]
+   [:p [:a.bg-red-300 {:on-click #(g! :demo/save)} "save-as (test for not implemented)"]]
+
+   [:p [:a.bg-green-300 {:on-click #(g! :demo/party :location "Vienna")} "party in vienna (test for route-params)"]]
+   [:p [:a.bg-green-300 {:on-click #(g! :demo/party :location "Bali" :query-params {:expected-guests 299})} "party in Bali (test for query-params)"]]
+   
+   [:p [:a.bg-blue-300 {:href "/api/time"} "api time"]]
+   ])
+
+(defn demo-oauth []
+  [:div.bg-blue-400.m-5 {:class "w-1/4"}
+   [:p.text-4xl "oauth2"]
+   [:p [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/login :github])} "github login via popup"]]
+   [:p [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/login :google])} "google login via popup"]]
+   [:p [:a.bg-blue-300 {:href "/oauth2/github/token?code=99"} "api test: github code ->token"]]
+    ; [:p [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]
+   ])
+
+(defn demo-dialog []
+  [:div.bg-blue-400.m-5 {:class "w-1/4"}
+   [:p.text-4xl "dialog"]
+   [:ol
+    [:li [:p {:on-click #(add-notification "welcome to wonderland")} "show notification"]]
+    [:li [:p {:on-click #(add-notification :danger "something bad happened")} "show notification - error"]]
+    [:li [:p {:on-click show-dialog-demo} "show dialog"]]]])
+
+
 (defn main []
   [:div
    [:h1 "webly demo"]
-   [:ol
-    [:li [:a.bg-green-300 {:on-click #(g! :demo/help)} "help!"]]
-    [:li [:a.bg-red-300 {:on-click #(g! :demo/save)} "save-as (test for not implemented)"]]
-
-    [:li [:a.bg-green-300 {:on-click #(g! :demo/party :location "Vienna")} "party in vienna (test for route-params)"]]
-    [:li [:a.bg-green-300 {:on-click #(g! :demo/party :location "Bali" :query-params {:expected-guests 299})} "party in Bali (test for query-params)"]]
-
-    [:li [:p {:on-click #(add-notification "welcome to wonderland")} "show notification"]]
-    [:li [:p {:on-click #(add-notification :danger "something bad happened")} "show notification - error"]]
-
-    [:li [:p {:on-click show-dialog-demo} "show dialog"]]
-
-    [:li [:a.bg-blue-300 {:href "/api/time"} "api time"]]
-
-    ;oauth2
-    [:li [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/open-window :github])} "github login via popup"]]
-    [:li [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/open-window :google])} "google login via popup"]]
-
-    [:li [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]
-    
-    
-    [:li [:a {;;:href (link :ui/markdown {:file "notebookui.md"})
+   [demo-routing]
+   [demo-dialog]
+    [:p [:a {;;:href (link :ui/markdown {:file "notebookui.md"})
              ;:on-click #(goto! :ui/markdown :file "notebookui.md")
-         :on-click #(dispatch [:bidi/goto :ui/markdown :file "webly.md"])} "markdown help"]]
-
-
-    ]])
+              :on-click #(dispatch [:bidi/goto :ui/markdown :file "webly.md"])} "markdown help"]]
+   [demo-oauth]])
 
 (defmethod reagent-page :demo/main [& args]
   [main])

@@ -2,15 +2,19 @@
   (:require
    [reagent.dom]
    [taoensso.timbre :refer [info]]
-   [re-frame.core :refer [clear-subscription-cache! dispatch]]
+   [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db]]
+
+    ; side-effects
    [webly.web.views :refer [webly-app]]
    [webly.user.dialog] ; side-effects
-   [webly.config :refer [webly-config timbre-config!]] ; side-effects
-   ))
-
-(defn print-log-init! []
-  (enable-console-print!)
-  (timbre-config!))
+   [webly.web.events-bidi]
+   [webly.user.config.events]
+   [webly.user.markdown.subscriptions]
+   [webly.user.markdown.events]
+   [webly.user.markdown.view] ; bidi route registration
+   [webly.user.analytics.subscriptions]
+   [webly.user.analytics.events]
+   [webly.user.config.subscription]))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]
@@ -23,21 +27,30 @@
 
 (defn ^:dev/after-load
   after-load []
-  (webly.web.app/print-log-init!)
+  (enable-console-print!)
   (info "after-load")
 
   (info "clearing reframe subscription cache..")
   (clear-subscription-cache!)
 
   (info "mounting webly-app ..")
+  (dispatch [:ga/event "mounted" "app" "app"])
   (webly.web.app/mount-app))
 
 ;(after-load)
 
+(reg-event-db
+ :webly/app-after-config-load
+ (fn [db [_]]
+   (info "webly config after-load")
+   (dispatch [:ga/init])
+   (dispatch [:markdown/init])
+   (dispatch [:markdown/load-index])
+
+   db))
+
 (defn start [routes]
-  (dispatch [:config/load])
-  (dispatch [:markdown/init])
-  (dispatch [:markdown/load-index])
+  (dispatch [:config/load :webly/app-after-config-load])
   (dispatch [:bidi/init routes]))
 
 

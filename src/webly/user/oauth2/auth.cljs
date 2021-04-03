@@ -1,5 +1,4 @@
-(ns webly.oauth2.auth
-  "TODO: Unused"
+(ns webly.user.oauth2.auth
   (:require
    [re-frame.core :refer [reg-event-fx reg-cofx reg-sub inject-cofx]]
    [cemerick.url :as url]

@@ -1,19 +1,30 @@
-;; Copy to creds.edn and set your private values.
-{:oauth2 
- {:github{
-    ; list your github oauth apps:
-    ;https://github.com/settings/applications/
-    
-    ; register new oauth app
-    ; https://github.com/settings/developers
-    ; callback url is: localhost:8000/oauth2/github/callback    
-    
-    ;github oauth callback needs a URL; this URL is different for prod and dev, so we need different creds 
-    :clientId        ""
-    :clientSecret    ""}  
-  :google {
-   ; https://console.developers.google.com/apis
-           ;    https://console.cloud.google.com/apis/credentials/oauthclient
+{; most web-apps will have to change that 
+ :title "webly"
+ :icon "/r/webly/favicon.ico"
+ :start  "webly.web.app.after-load (); "
 
-  }
-   }}
+ :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
+                   [#{"*"} :info]]
+
+         ; mos web-apps can leave this at default values
+ :prefix "/r/" ; resource route prefix
+         ; css from resources 
+ :css-links ["tailwindcss/dist/tailwind.css"
+             "@fortawesome/fontawesome-free/css/all.min.css"
+             "fonts-google/fonts.css"
+             "webly/prose.css"]
+         ; css from external sites
+ :css-extern [;"http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic"
+                      ;"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
+                      ;"https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300"
+                      ;"https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
+              ]
+
+ :shadow {:dev-http {:port 8000}
+          :http {:port 8001 :host "localhost"}
+          :nrepl {:port 8002}}
+
+ :oauth2 {:github {:clientId        ""
+                   :clientSecret    ""}
+          :google {:clientId        ""
+                   :clientSecret    ""}}}

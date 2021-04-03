@@ -2,7 +2,7 @@
   (:require-macros [reagent.ratom :refer [reaction]])
   (:require
    [re-frame.core :refer [reg-sub-raw reg-event-db dispatch subscribe]]
-   [webly.config :refer [link-css]]))
+   [webly.user.config.core :refer [link-css]]))
 
 ; stolen from:
 ; https://github.com/benhowell/re-frame-modal

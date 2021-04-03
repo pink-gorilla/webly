@@ -2,11 +2,13 @@
   (:require
    [cljs.pprint]
    [reagent.dom]
-   [webly.config :refer [webly-config link-css]]
+   [re-frame.core :refer [subscribe]]
+   [webly.web.handler :refer [reagent-page]]
+   [webly.web.routes :refer [current query-params]]
+   [webly.user.config.core :refer [link-css]]
    [webly.user.dialog :refer [modal-container]]
    [webly.user.notifications.dialog :refer [notifications-container]]
-   [webly.web.handler :refer [reagent-page]]
-   [webly.web.routes :refer [current query-params]]))
+   [webly.user.analytics.view :refer [google-analytics-container]]))
 
 (defn not-found-page []
   [:div.bg-red-500.m-5
@@ -16,16 +18,24 @@
 (defmethod reagent-page :default [& args]
   [not-found-page])
 
-(defn webly-app []
-  (fn []
-    (let [current-page @current
-          {:keys [css-links]} @webly-config]
-      [:div
-       (doall (map-indexed
-               (fn [i l] ^{:key i} [link-css l])
-               css-links))
+(defn css [css-links]
+  (println "css links:" css-links)
+  [:div
+   (doall (map-indexed
+           (fn [i l] ^{:key i} [link-css l])
+           css-links))
        ;[link-css "tailwindcss/dist/tailwind.css"]
        ;[link-css "@fortawesome/fontawesome-free/css/all.min.css"]
-       [modal-container]
-       [notifications-container]
-       (reagent-page current-page)])))
+   ])
+
+(defn webly-app []
+  (let [config (subscribe [:webly/config])]
+    (fn []
+      (let [current-page @current
+            {:keys [css-links]} @config]
+        [:div
+         [css css-links]
+         [google-analytics-container]
+         [modal-container]
+         [notifications-container]
+         (reagent-page current-page)]))))

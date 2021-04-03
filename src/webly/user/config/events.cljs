@@ -5,15 +5,15 @@
    [clojure.string :as str]
    [ajax.core :as ajax]
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
+   [webly.log :refer [timbre-config!]]
    [webly.user.notifications.core :refer [add-notification]]))
-
 
 ; load configuration
 
 (reg-event-fx
  :config/load
- (fn [{:keys [db]} _ after-config-load]
-   (info "loading configuration from server ..")
+ (fn [{:keys [db]} [_ after-config-load]]
+   (info "loading configuration from server  after-load:" after-config-load)
    {:db       db
     :http-xhrio {:method          :get
                  :uri             "/api/config"
@@ -27,6 +27,7 @@
  (fn [cofx [_ after-config-load config]]
    (let [fx {:db          (assoc-in (:db cofx) [:config] config)
              :dispatch [after-config-load]}]
+     (timbre-config! config)
      (info "config load-success: " config)
      (if after-config-load
        fx

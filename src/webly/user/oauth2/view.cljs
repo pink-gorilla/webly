@@ -1,11 +1,11 @@
-(ns webly.oauth2.view
+(ns webly.user.oauth2.view
   (:require
+   [cemerick.url :as url]
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [webly.oauth2.events] ; side-effects
    [webly.web.handler :refer [reagent-page]]
-   [webly.oauth2.events :refer [current]]
-   [cemerick.url :as url]
+   [webly.user.oauth2.events] ; side-effects
+   [webly.user.oauth2.subscriptions] ; side-effects
    ))
 
 ;; stolen from:
@@ -21,9 +21,9 @@
       [:i.fa {:class icon}]]
      [:span label]]]])
 
-(defn- login-button []
+(defn- login-button [service]
   [big-button
-   {:dispatch [:auth/login :foursquare]
+   {:dispatch [:auth/login service]
     :icon "fa-foursquare"}
    "Log In to Foursquare"])
 
@@ -34,27 +34,12 @@
     :class "is-warning"}
    "Log Out of Foursquare"])
 
-(defn- logged-out-page []
-  [:div.container.content
-   [:h1.title "Log In to Foursquare"]
-   [:div
-    [:p "To log in to foursquare, hit the link below. You'll be redirected to foursquare to authorize the "
-     "application, after which you'll be returned to Haunting Refrain."]
-    [login-button]]])
-
-(defn- logged-in-page []
-  [:div.container.content
-   [:h1.title "Foursquare"]
-   [:div
-    [:p "Your browser has been authenticated with Foursquare. To log out, use this button:"]
-    [logout-button]]])
-
 (defn foursquare-page []
   (let [logged-in (rf/subscribe [:auth/logged-in? :foursquare])]
     (fn []
       (if @logged-in
-        [logged-in-page]
-        [logged-out-page]))))
+        [logout-button]
+        [login-button]))))
 
 (defn hello-page
   "This page is the entry point into hr when the user returns from foursquare authentication."
@@ -62,9 +47,6 @@
   (rf/dispatch [:auth/parse-token :foursquare])
   (fn []
     [:div.container.content ""]))
-
-
-
 
 (defn auth-login []
   [:span.bg-red-700.pt-2.p-2
@@ -76,16 +58,13 @@
                      )}
     "Github login"]])
 
-
 (def bc (js/BroadcastChannel. "oauth2_redirect_channel"))
 
 (defn window-data []
   (let [url (-> (.. js/window -location -href)
-      (url/url))]
-  {:anchor (url/query->map (:anchor url))
-   :query (:query url)  }))
-
-
+                (url/url))]
+    {:anchor (url/query->map (:anchor url))
+     :query (:query url)}))
 
 (defn oauth-redirect [provider]
   (let [state (r/atom :LOGGING_IN)]
@@ -95,8 +74,7 @@
                              (let [wd (window-data)
                                    ;a @current
                                    ;r (.handleRedirect a)
-                                   r :SUCCESS                                      
-                                   ]
+                                   r :SUCCESS]
                                (println "window data:" wd)
                                (.postMessage bc (pr-str (merge {:provider provider} wd)))
                                (if (= r "SUCCESS")
@@ -110,9 +88,7 @@
 
 (defmethod reagent-page :oauth2/redirect [{:keys [route-params query-params handler] :as args}]
   (let [{:keys [provider]} route-params
-        provider-kw (keyword provider)
-        ]
-  (println "redirect: " args)
-  [oauth-redirect provider-kw]
-  ))
+        provider-kw (keyword provider)]
+    (println "redirect: " args)
+    [oauth-redirect provider-kw]))
 

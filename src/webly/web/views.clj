@@ -1,7 +1,10 @@
 (ns webly.web.views
   (:require
    [clojure.string :as str]
-   [hiccup.page :as page]))
+   [hiccup.page :as page]
+   [webly.config :refer [config-atom]]
+   [webly.user.analytics.google-tag :refer [script-tag-src script-tag-config]]
+   [webly.user.tenx :refer [tenx-script]]))
 
 ;; CSS
 
@@ -43,7 +46,8 @@
 
 ;; APP
 
-(defn head [title icon css-extern]
+
+(defn head [title icon css-extern google-analytics]
   [:head
    [:meta {:http-equiv "Content-Type"
            :content "text/html; charset=utf-8"}]
@@ -51,7 +55,11 @@
            :content "width=device-width, initial-scale=1.0"}]
    [:title title]
    [:link {:rel "shortcut icon" :href icon}]
-   [:script "var CLOSURE_UNCOMPILED_DEFINES = {\"re_frame.trace.trace_enabled_QMARK_\":true};"]
+
+   (tenx-script)
+
+   (script-tag-src google-analytics)
+   (script-tag-config google-analytics)
 
    ; css
    ;(css "/r/tailwindcss/dist/tailwind.css") (frontend side)
@@ -66,20 +74,19 @@
    body-loading-style])
 
 (defn layout [webly-config page]
-  (let [{:keys [title start icon css-extern]} webly-config]
+  (let [{:keys [title start icon css-extern google-analytics]} webly-config]
     (page/html5
-     (head title icon css-extern)
+     (head title icon css-extern google-analytics)
      [:body.loading
       loading
       [:div#webly page]
       [:div  ; .w-screen.h-screen
        [:script {:src "/r/main.js"
                  :type "text/javascript"
-                 :onload start}]
-       #_[:script {:type "text/javascript"} start]]])))
+                 :onload start}]]])))
 
-(defn app-page [webly-config csrf-token]
-  (layout @webly-config 
+(defn app-page [csrf-token]
+  (layout @config-atom
           [:div
            [:div#sente-csrf-token {:data-csrf-token csrf-token}]
            [:div#app]]))

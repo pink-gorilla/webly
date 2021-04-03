@@ -55,7 +55,8 @@
  (fn [{:keys [db]} [_ filename]]
    (let [url  (str "/r/gorillamd/" filename)
          _ (info "loading md from :" url)]
-     {:db   (-> db
+     {:dispatch [:ga/event "md" "load" filename]
+      :db   (-> db
                 (assoc-in [:markdown :showing :file] filename)
                 (assoc-in [:markdown :showing :doc] :markdown/loading)) ; notebook view on loading
       :http-xhrio {:method          :get

@@ -8,6 +8,11 @@
 
   :min-lein-version "2.9.4" ; nrepl 0.7.0
 
+  :jvm-opts ["-Dtrust_all_cert=true"
+               ;"-Djavax.net.ssl.trustStore=/home/andreas/.keystore"
+             ]
+
+
   :prep-tasks ["css" ; copies tailwind css, so it ends up as resources 
                "google-fonts"
                "md"]
@@ -77,6 +82,8 @@
 
                  [day8.re-frame/http-fx "0.2.1"  ; reframe based http requests
                   :exclusions [[re-frame]]] ; a more modern reframe comes from webly
+
+                 [keybind "2.2.0"]
                  ;shadow
                  ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
                 ; [thheller/shadow-cljs "2.8.81"]

@@ -1,19 +1,13 @@
-(ns webly.user.config.config
+(ns webly.config
   (:require
    [clojure.java.io :as io]
    [cprop.core :refer [load-config]]
-   [cprop.source :refer [from-env from-system-props from-resource from-file]]
-   [ring.util.response :refer [response]]
-   [webly.web.handler :refer [make-handler add-ring-handler]]
-   [webly.web.middleware :refer [wrap-api-handler]]))
+   [cprop.source :refer [from-env from-system-props from-resource from-file]]))
 
 (def config-atom (atom {}))
 
-(defn config-handler
-  [_]
-  (response @config-atom))
-
-(add-ring-handler :webly/config (wrap-api-handler config-handler))
+(defn get-in-config [path]
+  (get-in @config-atom path))
 
 (defn from-file-exists [filename]
   (if (.exists (io/file filename))
@@ -40,12 +34,10 @@
       ;(cli-args) 
     ]))
 
-
 (defn load-config! []
   (let [config (load-config-cprop)]
     (println "config: " config)
     (reset! config-atom config)))
-
 
 (comment
 

@@ -4,7 +4,6 @@
    [clojure.string :refer [split]]
    [taoensso.timbre :as timbre :refer [tracef debugf info infof warnf errorf info]]
    [ring.util.response :as res])
-
   (:import
    (java.net URL)))
 
