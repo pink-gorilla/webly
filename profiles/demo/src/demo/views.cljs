@@ -3,7 +3,9 @@
    [re-frame.core :refer [dispatch]]
    [webly.web.handler :refer [reagent-page]]
    [webly.web.routes :refer [goto! current query-params]]
-   [webly.user.notifications.core :refer [add-notification]]))
+   [webly.user.notifications.core :refer [add-notification]]
+   [webly.user.oauth2.view :refer [tokens-view]]
+   ))
 
 (defn show-dialog-demo []
   (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
@@ -44,6 +46,9 @@
    [:p [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/login :google])} "google login via popup"]]
    [:p [:a.bg-blue-300 {:href "/oauth2/github/token?code=99"} "api test: github code ->token"]]
     ; [:p [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]
+
+   [tokens-view]   
+   
    ])
 
 (defn demo-dialog []

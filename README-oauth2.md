@@ -1,5 +1,6 @@
 # oauth2
 
+# credentials generation (clientId + clientSecret)
 
 ## github credentials
   https://github.com/settings/applications/1149314
@@ -24,4 +25,8 @@
 
 
 ## github
-- github oauth2 auth-token endpoint has cors issue.
+- github oauth2 auth-token endpoint has cors issue. therefore ring handler with auth endpoint exists
+- scopes: https://docs.github.com/en/developers/apps/scopes-for-oauth-apps
+- https://docs.github.com/en/rest/reference/users
+
+

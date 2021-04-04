@@ -28,7 +28,7 @@
    :github {:authorizationUri "https://github.com/login/oauth/authorize"
             :accessTokenUri "https://github.com/login/oauth/access_token"
             :accessTokenResponseKey "id_token"
-            :scope           "user:email gist"
+            :scope           "user:email gist repo"
             ;:redirectUri "http://localhost:8000/oauth2/redirect/github"
             :parse parse-github
             :parse-dispatch [:github/code->token]}

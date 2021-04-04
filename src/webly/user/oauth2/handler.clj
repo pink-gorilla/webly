@@ -1,10 +1,11 @@
 (ns webly.user.oauth2.handler
   (:require
-   [taoensso.timbre :as timbre :refer [info]]
+   [taoensso.timbre :as timbre :refer [info error]]
    [ring.util.response :as res]
    [ajax.core :as ajax]
    [webly.config :refer [get-in-config]]
    [webly.web.handler :refer [add-ring-handler]]
+   [webly.web.middleware :refer [wrap-api-handler]]
    [webly.user.oauth2.middleware :refer [wrap-oauth wrapx]]))
 
 (defn handler-auth [request]
@@ -26,23 +27,23 @@
   (let [p (promise)
         {:keys [clientId clientSecret]} (get-in-config [:oauth2 :github])
         code (get-in req [:params :code])]
-
-    (println "getting access token for code : " code " clientId: " clientId)
+    (info "getting github access token for code :" code "clientId:" clientId)
     (ajax/POST "https://github.com/login/oauth/access_token"
       :params {:client_id	 clientId
                :client_secret clientSecret
                :code code}
-      :format (ajax/json-request-format);  {:keywords? true})
+      :format (ajax/json-request-format) ;  {:keywords? false})
       :timeout 25000                     ;; optional see API docs
       :response-format (ajax/json-response-format); {:keywords? true})
       :handler (fn [res]
-                 (println "github auth: " res)
+                 (info "github access-token success: " res)
                  (deliver p res))
       :error-handler (fn [res]
-                       (println "github auth error: " res)
+                       (error "github access-token code " code " error: " res)
                        (deliver p res)))
 
-    (merge {:body "hi"} @p)))
+    (res/response @p)
+    ))
 
 (comment
   (handler-github-redirect {})
@@ -52,6 +53,6 @@
 
 (def handler-github-redirect-wrapped
   (-> handler-github-redirect
-      wrapx))
+      wrap-api-handler))
 
 (add-ring-handler :webly/oauth2-github handler-github-redirect-wrapped)

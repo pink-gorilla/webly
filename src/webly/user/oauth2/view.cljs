@@ -92,3 +92,11 @@
     (println "redirect: " args)
     [oauth-redirect provider-kw]))
 
+
+(defn tokens-view []
+  (let [tokens (rf/subscribe [:oauth2/tokens])]
+    (fn []
+      [:div.bg-orange-200
+       [:p "oauth2 tokens"]
+       [:p (pr-str @tokens)]])))
+
