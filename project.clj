@@ -8,7 +8,7 @@
 
   :min-lein-version "2.9.4" ; nrepl 0.7.0
 
-  :jvm-opts ["-Dtrust_all_cert=true"
+  :jvm-opts ["-Dtrust_all_cert=true" ; used when ssl certs are fucked up
                ;"-Djavax.net.ssl.trustStore=/home/andreas/.keystore"
              ]
 
@@ -44,7 +44,7 @@
                  [org.clojure/core.async "1.3.610"]
                  [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
                  [clojure.java-time "0.3.2"]
-
+      
                  ; encoding
                  [org.clojure/data.json "1.0.0"]
                  [luminus-transit "0.1.2"]

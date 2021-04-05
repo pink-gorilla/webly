@@ -1,7 +1,7 @@
 (ns webly.user.app.app
   (:require
    [reagent.dom]
-   [taoensso.timbre :refer [info]]
+   [taoensso.timbre :refer-macros [info]]
    [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db]]
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.app.views :refer [webly-app]]
@@ -24,8 +24,6 @@
 (defn mount-app []
   (reagent.dom/render [webly-app]
                       (.getElementById js/document "app")))
-
-
 
 ;; see:
 ;; https://shadow-cljs.github.io/docs/UsersGuide.html#_lifecycle_hooks
@@ -54,25 +52,24 @@
   (dispatch [:ga/event {:category "webly" :action "mounted" :label 77 :value 13}])
   (webly.user.app.app/mount-app))
 
-;(after-load)
-
 (reg-event-db
  :webly/app-after-config-load
  (fn [db [_]]
-   (info "webly config after-load")
-   (dispatch [:ga/init])
-   (dispatch [:keybindings/init])
-   (dispatch [:markdown/init])
-   (dispatch [:markdown/load-index])
+   (let [start-user-app (get-in db [:config :start-user-app])]
+     (info "webly config after-load")
+     (dispatch [:ga/init])
+     (dispatch [:keybindings/init])
+     (dispatch [:markdown/init])
+     (dispatch [:markdown/load-index])
+     (when start-user-app
+       (dispatch start-user-app)))
 
    db))
-
-(defn start [routes]
-  (dispatch [:config/load :webly/app-after-config-load])
-  (dispatch [:bidi/init routes]))
 
 (defn webly-run! [user-routes-api user-routes-app]
   (let [routes (make-routes-frontend user-routes-app)] ; user-routes-api
     (info "webly-run!  ...")
-    (start routes)
+    (dispatch [:reframe10x-init])
+    (dispatch [:bidi/init routes])
+    (dispatch [:config/load :webly/app-after-config-load])
     (mount-app)))

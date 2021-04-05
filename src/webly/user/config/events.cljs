@@ -5,6 +5,7 @@
    [clojure.string :as str]
    [ajax.core :as ajax]
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
+   [webly.prefs :refer [pref]]
    [webly.log :refer [timbre-config!]]
    [webly.user.notifications.core :refer [add-notification]]))
 
@@ -14,7 +15,7 @@
  :config/load
  (fn [{:keys [db]} [_ after-config-load]]
    (info "loading configuration from server  after-load:" after-config-load)
-   {:db       db
+   {:db       (assoc-in db [:pref] (pref))
     :http-xhrio {:method          :get
                  :uri             "/api/config"
                  :timeout         5000                     ;; optional see API docs

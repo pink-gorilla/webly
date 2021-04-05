@@ -1,0 +1,11 @@
+(ns webly.user.tenx.view
+  (:require
+   [taoensso.timbre :refer [warn]]
+   [webly.prefs :refer [if-pref-fn]]))
+
+(defn tenx-script []
+  (if-pref-fn :tenx
+              [:script "var CLOSURE_UNCOMPILED_DEFINES = {\"re_frame.trace.trace_enabled_QMARK_\":true};"]
+              [:div.no-tenx]))
+
+

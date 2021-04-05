@@ -1,22 +1,23 @@
 {:title "webly"
  :icon "/r/webly/favicon.ico"
- :start  "webly.web.app.after-load (); "
-         ; most web-apps can leave this at default values
- :prefix "/r/" ; resource route prefix
-
  :css-links  ; css from resources 
- ["tailwindcss/dist/tailwind.css"
-  "@fortawesome/fontawesome-free/css/all.min.css"
-  "fonts-google/fonts.css"
-  "webly/prose.css"]
-
- :css-extern ; css from external sites 
- [;"http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic"
+["tailwindcss/dist/tailwind.css"
+ "@fortawesome/fontawesome-free/css/all.min.css"
+ "fonts-google/fonts.css"
+ "webly/prose.css"]
+:css-extern ; css from external sites 
+[;"http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic"
                       ;"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
                       ;"https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300"
                       ;"https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
-  ]
+ ]
+ 
+ ; no need to change this:
+ :bundle-entry  "webly.web.app.after-load ();"
+ :prefix "/r/" ; resource route prefix ; most web-apps can leave this at default values
 
+ 
+ ; creds
  :oauth2 {:github {:clientId        ""
                    :clientSecret    ""}
           :google {:clientId        ""

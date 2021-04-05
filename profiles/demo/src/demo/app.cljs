@@ -4,7 +4,9 @@
    [taoensso.timbre :as timbre :refer [info]]
    [webly.user.app.app :refer [webly-run!]]
    [demo.routes :refer [demo-routes-api demo-routes-app]]
-   [demo.views] ; side-effects   
+   ; side-effects 
+   [demo.views]   
+   [demo.events]
    ))
 
 (defn ^:export start []

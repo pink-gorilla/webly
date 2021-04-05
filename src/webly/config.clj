@@ -5,7 +5,7 @@
    [cprop.core :refer [load-config]]
    [cprop.source :refer [from-env from-system-props from-resource from-file]]))
 
-(def config-atom (atom {}))
+(defonce config-atom (atom {}))
 
 (defn get-in-config [path]
   (get-in @config-atom path))

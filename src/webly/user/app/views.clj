@@ -74,7 +74,7 @@
    body-loading-style])
 
 (defn layout [webly-config page]
-  (let [{:keys [title start icon css-extern google-analytics]} webly-config]
+  (let [{:keys [title bundle-entry icon css-extern google-analytics]} webly-config]
     (page/html5
      (head title icon css-extern google-analytics)
      [:body.loading
@@ -83,7 +83,7 @@
       [:div  ; .w-screen.h-screen
        [:script {:src "/r/main.js"
                  :type "text/javascript"
-                 :onload start}]]])))
+                 :onload bundle-entry}]]])))
 
 (defn app-page [csrf-token]
   (layout @config-atom

@@ -2,7 +2,8 @@
   (:require
    [taoensso.timbre :as timbre :refer [info]]
    [shadow.cljs.devtools.config :as config]
-   [webly.config :refer [get-in-config]]))
+   [webly.config :refer [get-in-config]]
+   [webly.prefs :refer [if-pref-fn prefs-atom]]))
 
 (defn get-shadow-server-config-edn []
   (let [c (-> (config/load-cljs-edn)
@@ -34,6 +35,12 @@
          (watch* build-config opts)
          :watching))))
 
+(defn build-ns-aliases []
+  (println @prefs-atom)
+  (if-pref-fn :tenx
+              {'webly.user.tenx.events 'webly.user.tenx.events-on}
+              {'webly.user.tenx.events 'webly.user.tenx.events-off}))
+
 (defn shadow-config [lein-profile handler frontend-ns]
   (let [dev-http-port (get-in-config [:shadow :dev-http :port])
         http-port (get-in-config [:shadow :http :port])
@@ -56,6 +63,8 @@
                       :modules {:main {:entries [frontend-ns]}}
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")
                     ;           :after-load (symbol "webly.web.app/after-load")}
+                      :build-options    {:ns-aliases (build-ns-aliases)}
+
                       :compiler-options {:optimizations :simple
                                          :output-feature-set :es8 ; this should fix vega polyfill problems
                                          }
