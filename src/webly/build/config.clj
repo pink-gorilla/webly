@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer [info]]
    [shadow.cljs.devtools.config :as config]
-   [webly.config :refer [webly-config]]))
+   [webly.config :refer [get-in-config]]))
 
 (defn get-shadow-server-config-edn []
   (let [c (-> (config/load-cljs-edn)
@@ -35,10 +35,10 @@
          :watching))))
 
 (defn shadow-config [lein-profile handler frontend-ns]
-  (let [dev-http-port (get-in @webly-config [:shadow :dev-http :port])
-        http-port (get-in @webly-config [:shadow :http :port])
-        http-host (get-in @webly-config [:shadow :http :host])
-        nrepl-port (get-in @webly-config [:shadow :nrepl :port])]
+  (let [dev-http-port (get-in-config [:shadow :dev-http :port])
+        http-port (get-in-config [:shadow :http :port])
+        http-host (get-in-config [:shadow :http :host])
+        nrepl-port (get-in-config [:shadow :nrepl :port])]
     {;:cache-root ".shadow-cljs"
      :lein {:profile lein-profile}
      :dev-http {dev-http-port {;:root "public" ; shadow does not need to serve resources

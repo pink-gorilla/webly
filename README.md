@@ -10,7 +10,27 @@
 lein demo
 ```
 
-The demo runs a webserver on port 9000.
+The demo runs a webserver on port 8000.
+
+
+```
+lein test-demo
+```
+
+Run unit tests (they need the demo profile)
+
+```
+lein build
+```
+
+Build cljs bundle, and output bundle stats
+
+```
+lein run-web 
+```
+
+Serves website from precompiled bundle.
+
 
 **Demonstrates**
 - loading animation

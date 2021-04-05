@@ -1,0 +1,42 @@
+{:title "webly"
+ :icon "/r/webly/favicon.ico"
+ :start  "webly.web.app.after-load (); "
+         ; most web-apps can leave this at default values
+ :prefix "/r/" ; resource route prefix
+
+ :css-links  ; css from resources 
+ ["tailwindcss/dist/tailwind.css"
+  "@fortawesome/fontawesome-free/css/all.min.css"
+  "fonts-google/fonts.css"
+  "webly/prose.css"]
+
+ :css-extern ; css from external sites 
+ [;"http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic"
+                      ;"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
+                      ;"https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300"
+                      ;"https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
+  ]
+
+ :oauth2 {:github {:clientId        ""
+                   :clientSecret    ""}
+          :google {:clientId        ""
+                   :clientSecret    ""}}
+
+ :dev-mode true
+
+ :shadow {:dev-http {:port 8000}
+          :http {:port 8001 :host "localhost"}
+          :nrepl {:port 8002}}
+
+ :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
+                   [#{"*"} :info]]
+ 
+ :keybindings 
+ ; https://github.com/piranha/keybind
+ ; shift, ctrl, alt, win, cmd, defmod, "left" "right"
+; "meta-shift-l" "alt-shift-p" "ctrl-shift-left" "ctrl-shift-right"
+  [{:kb "alt-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
+   {:kb "esc"     :handler [:modal/close]            :desc "Dialog Close"} ; for ALL dialogs!
+   {:kb "alt-g t" :handler [:reframe10x-toggle] :desc "10x visibility toggle"}]
+ 
+ }

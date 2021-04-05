@@ -19,7 +19,10 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/project.clj') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-    - name: Install dependencies
+    - name: Install dependencies npm
+      run: |
+        npm install    
+    - name: Install dependencies jar
       run: |
         npm install
         lein deps

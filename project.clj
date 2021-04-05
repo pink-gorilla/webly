@@ -1,4 +1,4 @@
-(defproject org.pinkgorilla/webly "0.0.34-SNAPSHOT"
+(defproject org.pinkgorilla/webly "0.1.0-SNAPSHOT"
   :description "web (server / reagent) helper library."
   :url "https://github.com/pink-gorilla/webly"
   :deploy-repositories [["releases" {:url "https://clojars.org/repo"
@@ -8,9 +8,14 @@
 
   :min-lein-version "2.9.4" ; nrepl 0.7.0
 
+  :jvm-opts ["-Dtrust_all_cert=true"
+               ;"-Djavax.net.ssl.trustStore=/home/andreas/.keystore"
+             ]
+
+
   :prep-tasks ["css" ; copies tailwind css, so it ends up as resources 
                "google-fonts"
-               ] 
+               "md"]
 
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
@@ -21,11 +26,6 @@
                   ["vcs" "commit" "Begin %s"]
                   ["vcs" "push"]]
 
-  :target-path  "target/jar"
-  :source-paths ["src"]
-  :test-paths ["test"]
-  :resource-paths  ["resources"  ; webly resources (svg/img)
-                    "target/node_modules"] ; css png resources from npm modules (tailwind)
 
   :managed-dependencies [[joda-time "2.10.6"]
                          [clj-time "0.15.2"]
@@ -67,6 +67,9 @@
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [luminus/ring-ttl-session "0.3.3"]
                  [ring-oauth2 "0.1.5"]
+                 [prone "2019-07-08"] ; exception middleware
+                 [ring/ring-devel "1.7.1"] ; reload middleware
+
 
                  ; routing
                  [bidi "2.1.6"]
@@ -79,7 +82,13 @@
                                                 cljsjs/react-dom]]
                  [re-frame "1.0.0"]
                  [cljs-ajax "0.8.0"] ; needed for re-frame/http-fx
-                 [day8.re-frame/http-fx "0.2.1"] ; reframe based http requests
+
+                 [day8.re-frame/http-fx "0.2.1"  ; reframe based http requests
+                  :exclusions [[re-frame]]] ; a more modern reframe comes from webly
+
+                 [keybind "2.2.0"]
+
+                 [day8.re-frame/re-frame-10x "0.6.2"]
 
                  ;shadow
                  ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
@@ -89,12 +98,25 @@
                  [org.clojure/clojurescript "1.10.773"]
 
                  #_[district0x.re-frame/google-analytics-fx "1.0.0"
-                    :exclusions [re-frame]]]
+                    :exclusions [re-frame]]
+
+                 [resauce "0.1.0"] ; resources
+                 [cprop "0.1.17"]]
+
+  :target-path  "target/jar"
+  :source-paths ["src"]
+  :test-paths ["test"]
+  :resource-paths  ["resources"  ; webly resources (svg/img)
+                    "target/node_modules"] ; css png resources from npm modules (tailwind)
+
+
 
   :profiles {:demo {; unit tests use demo profile for resource tests
                    ; so the demo serves tw puroses
                    ; 1. ilustrate links in web-app
                    ; 2. run unit tests 
+                    :dependencies [#_[org.pinkgorilla/gorilla-ui "0.2.34" ; brings pinkie
+                                      :exclusions [org.clojure/clojurescript]]]
                     :source-paths ["profiles/demo/src"]
                     :resource-paths  ["target/webly"
                                       "profiles/demo/resources"]}
@@ -126,27 +148,35 @@
             "google-fonts"  ^{:doc "Installs google fonts in resources"}
             ["shell" "./scripts/get-fonts.sh"]
 
-            "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
-            ["with-profile" "+demo" "test"]
+            "md"  ^{:doc "Copies markdown files to resources"}
+            ["shell" "./scripts/copy-md.sh"]
 
             ;; SHADOW-CLJS (for testing purposes only)
 
-            "shadow-build"  ^{:doc "compiles bundle"}
-            ["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "compile" "webly"]
+            ;"shadow-build"  ^{:doc "compiles bundle"}
+            ;["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "compile" "webly"]
 
-            "shadow-watch"  ^{:doc "compiles bundle"}
-            ["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "watch" "webly"]
+            ;"shadow-watch"  ^{:doc "compiles bundle"}
+            ;["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "watch" "webly"]
 
-            ;; APP 
+            ;; WEBLY 
+
+            ; "build-dev"  ^{:doc "compiles bundle via webly"}
+            ; ["with-profile" "+demo" "run" "-m" "webly.build-cli" "compile" "+demo" "demo.app/handler" "demo.app"]
+
+            ; "build-prod"  ^{:doc "compiles bundle via webly"}
+            ; ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+demo" "demo.app/handler" "demo.app"]
+
+             ;; DEMO 
+
+            "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
+            ["with-profile" "+demo" "test"]
 
             "demo"  ^{:doc "compiles & runs demo app and serves via webserver."}
             ["with-profile" "+demo" "run" "-m" "demo.app" "watch"]
 
-            "build-dev"  ^{:doc "compiles bundle via webly"}
-            ["with-profile" "+demo" "run" "-m" "webly.build-cli" "compile" "+demo" "demo.app/handler" "demo.app"]
-
-            "build-prod"  ^{:doc "compiles bundle via webly"}
-            ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+demo" "demo.app/handler" "demo.app"]
+            "build"  ^{:doc "compiles & runs demo app and serves via webserver."}
+            ["with-profile" "+demo" "run" "-m" "demo.app" "release"]
 
             "run-web"  ^{:doc "runs compiled bundle on shadow dev server"}
             ["with-profile" "+demo" "run" "-m" "demo.app" "run"]})

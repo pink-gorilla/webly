@@ -1,27 +1,20 @@
-(ns demo.routes
-  (:require
-   [webly.web.resources :refer [resource-handler]]
-   [webly.oauth2.routes :refer [routes-oauth2]]))
+(ns demo.routes)
 
 (def demo-routes-api
-  {"time"  {:get  :api/time}
-   "test"  {:post  :api/test}})
+  {"time"   {:get :api/time}
+   "test"   {:get :api/test
+             :post :api/test  ; used in unit-test
+             }})
 
 (def demo-routes-app
-  {""          :demo/main
-   "help"      :demo/help
+  {""        :demo/main
+   "help"    :demo/help
    ["party/" :location] :demo/party
-   "save"      :demo/save ; there is no handler defined for this on purpose
-   "oauth2/github/landing" :demo/user})
+   "save"    :demo/save-non-existing ; there is no handler defined for this on purpose
+   })
 
-(def demo-routes-frontend
-  ["/" demo-routes-app])
 
-(def demo-routes-backend
-  ["/" {""        demo-routes-app
-        "api/"    demo-routes-api
-        "oauth2/" routes-oauth2
-        "r"       resource-handler}])
+
 
 
 

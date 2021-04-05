@@ -1,7 +1,11 @@
-(ns webly.oauth2.view
+(ns webly.user.oauth2.view
   (:require
+   [cemerick.url :as url]
+   [reagent.core :as r]
    [re-frame.core :as rf]
-   [webly.oauth2.events] ; side-effects
+   [webly.web.handler :refer [reagent-page]]
+   [webly.user.oauth2.events] ; side-effects
+   [webly.user.oauth2.subscriptions] ; side-effects
    ))
 
 ;; stolen from:
@@ -17,9 +21,9 @@
       [:i.fa {:class icon}]]
      [:span label]]]])
 
-(defn- login-button []
+(defn- login-button [service]
   [big-button
-   {:dispatch [:auth/login :foursquare]
+   {:dispatch [:auth/login service]
     :icon "fa-foursquare"}
    "Log In to Foursquare"])
 
@@ -30,27 +34,12 @@
     :class "is-warning"}
    "Log Out of Foursquare"])
 
-(defn- logged-out-page []
-  [:div.container.content
-   [:h1.title "Log In to Foursquare"]
-   [:div
-    [:p "To log in to foursquare, hit the link below. You'll be redirected to foursquare to authorize the "
-     "application, after which you'll be returned to Haunting Refrain."]
-    [login-button]]])
-
-(defn- logged-in-page []
-  [:div.container.content
-   [:h1.title "Foursquare"]
-   [:div
-    [:p "Your browser has been authenticated with Foursquare. To log out, use this button:"]
-    [logout-button]]])
-
 (defn foursquare-page []
   (let [logged-in (rf/subscribe [:auth/logged-in? :foursquare])]
     (fn []
       (if @logged-in
-        [logged-in-page]
-        [logged-out-page]))))
+        [logout-button]
+        [login-button]))))
 
 (defn hello-page
   "This page is the entry point into hr when the user returns from foursquare authentication."
@@ -58,11 +47,6 @@
   (rf/dispatch [:auth/parse-token :foursquare])
   (fn []
     [:div.container.content ""]))
-
-
-; [:button.github {:on-click (fn [_] (set! (.-location js/window) "/github-login"))}
-;          "Login with Github"]]
-
 
 (defn auth-login []
   [:span.bg-red-700.pt-2.p-2
@@ -74,4 +58,10 @@
                      )}
     "Github login"]])
 
+(defn tokens-view []
+  (let [tokens (rf/subscribe [:oauth2/tokens])]
+    (fn []
+      [:div.bg-orange-200
+       [:p "oauth2 tokens"]
+       [:p (pr-str @tokens)]])))
 

@@ -5,15 +5,21 @@
    [bidi.bidi]
    [bidi.ring]
    [webly.web.handler :refer [make-handler]]
+   [webly.user.app.handler :refer [app-handler]]
    ;[webly.web.resources] ; side-effects
-   [demo.routes :refer [demo-routes-backend demo-routes-frontend]]))
+   [demo.routes :refer [demo-routes-api demo-routes-app]]
+   [webly.user.app.routes :refer [make-routes-backend make-routes-frontend]]))
 
-(def handler (make-handler demo-routes-backend demo-routes-frontend))
+(def routes-backend (make-routes-backend demo-routes-app demo-routes-api))
+(def routes-frontend (make-routes-frontend demo-routes-app))
+
+(def handler (make-handler app-handler routes-backend routes-frontend))
 
 (defn GET [url]
   (handler (mock-request :get url)))
 
 (defn content-type [res]
+  ;(println "checking content-type for :" res)
   (get-in res [:headers "Content-Type"]))
 
 
