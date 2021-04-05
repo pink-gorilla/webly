@@ -3,8 +3,25 @@
    [clojure.walk]
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [re-frame.core :refer [subscribe dispatch]]
-   [pinkgorilla.ui.ui.markdown :refer [markdown]]
+   ;[pinkgorilla.ui.ui.markdown :refer [markdown]]
+   ["marked" :as marked]
    [webly.web.handler :refer [reagent-page]]))
+
+
+; stolen from gorilla-ui
+; but we dont want dependency to it in webly.
+(defn ^{:category :ui}
+  markdown
+  "reagent markdown render component
+   usage:
+    [markdown markdown-string]"
+  [md]
+  (if (nil? md) ; marked will crash on (nil? md), so we catch nil. 
+    [:p "Empty Markdown"]
+    [:div.gorilla-markdown
+     {:dangerouslySetInnerHTML
+      {:__html (marked md)}}]))
+
 
 (defn markdown-view [document]
   [:div.free-markup.prose

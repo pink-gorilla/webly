@@ -4,7 +4,7 @@
    [hiccup.page :as page]
    [webly.config :refer [config-atom]]
    [webly.user.analytics.google-tag :refer [script-tag-src script-tag-config]]
-   [webly.user.tenx :refer [tenx-script]]))
+   [webly.user.tenx.view :refer [tenx-script]]))
 
 ;; CSS
 

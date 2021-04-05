@@ -17,7 +17,9 @@
    [webly.user.analytics.events]
    [webly.user.oauth2.page] ; reagent-page: oauth2 redirect
    [webly.user.oauth2.events]
-   [webly.user.oauth2.subscriptions]))
+   [webly.user.oauth2.subscriptions]
+   [webly.user.tenx.events]
+   ))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]

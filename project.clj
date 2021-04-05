@@ -84,6 +84,9 @@
                   :exclusions [[re-frame]]] ; a more modern reframe comes from webly
 
                  [keybind "2.2.0"]
+
+                 [day8.re-frame/re-frame-10x "0.6.2"]
+
                  ;shadow
                  ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
                 ; [thheller/shadow-cljs "2.8.81"]
@@ -109,8 +112,9 @@
                    ; so the demo serves tw puroses
                    ; 1. ilustrate links in web-app
                    ; 2. run unit tests 
-                    :dependencies [[org.pinkgorilla/gorilla-ui "0.2.34" ; brings pinkie
-                                    :exclusions [org.clojure/clojurescript]]]
+                    :dependencies [#_[org.pinkgorilla/gorilla-ui "0.2.34" ; brings pinkie
+                                    :exclusions [org.clojure/clojurescript]]
+                                   ]
                     :source-paths ["profiles/demo/src"]
                     :resource-paths  ["target/webly"
                                       "profiles/demo/resources"]}

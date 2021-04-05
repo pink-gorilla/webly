@@ -77,7 +77,10 @@
 (defn main []
   [:div
    [:h1 "webly demo"]
+   
    [:p [link-dispatch [:bidi/goto :ui/markdown :file "webly.md"] "webly docs"]]
+   [:p [link-dispatch [ :reframe10x-toggle] "tenx-toggle"]]
+
    [demo-routing]
    [demo-dialog]
    [demo-oauth]])
