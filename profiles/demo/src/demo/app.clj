@@ -12,5 +12,5 @@
   [mode]
   (let [lein-profile "+demo"
         mode (or mode "watch")]
-    (webly-run! mode lein-profile  demo-routes-api demo-routes-app)))
+    (webly-run! mode lein-profile demo-routes-api demo-routes-app)))
 

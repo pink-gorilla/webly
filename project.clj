@@ -151,27 +151,32 @@
             "md"  ^{:doc "Copies markdown files to resources"}
             ["shell" "./scripts/copy-md.sh"]
 
-            "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
-            ["with-profile" "+demo" "test"]
-
             ;; SHADOW-CLJS (for testing purposes only)
 
-            "shadow-build"  ^{:doc "compiles bundle"}
-            ["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "compile" "webly"]
+            ;"shadow-build"  ^{:doc "compiles bundle"}
+            ;["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "compile" "webly"]
 
-            "shadow-watch"  ^{:doc "compiles bundle"}
-            ["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "watch" "webly"]
+            ;"shadow-watch"  ^{:doc "compiles bundle"}
+            ;["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "watch" "webly"]
 
-            ;; APP 
+            ;; WEBLY 
+
+            ; "build-dev"  ^{:doc "compiles bundle via webly"}
+            ; ["with-profile" "+demo" "run" "-m" "webly.build-cli" "compile" "+demo" "demo.app/handler" "demo.app"]
+
+            ; "build-prod"  ^{:doc "compiles bundle via webly"}
+            ; ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+demo" "demo.app/handler" "demo.app"]
+
+             ;; DEMO 
+
+            "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
+            ["with-profile" "+demo" "test"]
 
             "demo"  ^{:doc "compiles & runs demo app and serves via webserver."}
             ["with-profile" "+demo" "run" "-m" "demo.app" "watch"]
 
-            "build-dev"  ^{:doc "compiles bundle via webly"}
-            ["with-profile" "+demo" "run" "-m" "webly.build-cli" "compile" "+demo" "demo.app/handler" "demo.app"]
-
-            "build-prod"  ^{:doc "compiles bundle via webly"}
-            ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+demo" "demo.app/handler" "demo.app"]
+            "build"  ^{:doc "compiles & runs demo app and serves via webserver."}
+            ["with-profile" "+demo" "run" "-m" "demo.app" "release"]
 
             "run-web"  ^{:doc "runs compiled bundle on shadow dev server"}
             ["with-profile" "+demo" "run" "-m" "demo.app" "run"]})

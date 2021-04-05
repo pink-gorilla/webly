@@ -19,6 +19,19 @@ lein test-demo
 
 Run unit tests (they need the demo profile)
 
+```
+lein build
+```
+
+Build cljs bundle, and output bundle stats
+
+```
+lein run-web 
+```
+
+Serves website from precompiled bundle.
+
+
 **Demonstrates**
 - loading animation
 - navigation links to registered handlers (and error for unregistered handler)
