@@ -2,7 +2,9 @@
 
 (def demo-routes-api
   {"time"   {:get :api/time}
-   "test"   {:get :api/test}})
+   "test"   {:get :api/test
+             :post :api/test  ; used in unit-test
+             }})
 
 (def demo-routes-app
   {""        :demo/main

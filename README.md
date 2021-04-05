@@ -12,6 +12,13 @@ lein demo
 
 The demo runs a webserver on port 8000.
 
+
+```
+lein test-demo
+```
+
+Run unit tests (they need the demo profile)
+
 **Demonstrates**
 - loading animation
 - navigation links to registered handlers (and error for unregistered handler)
