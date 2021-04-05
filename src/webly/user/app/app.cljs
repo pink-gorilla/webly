@@ -10,22 +10,34 @@
    [webly.web.events-bidi]
    [webly.user.config.events]
    [webly.user.config.subscription]
-   [webly.user.dialog] ; side-effects
+   [webly.user.dialog]
+   [webly.user.keybindings.events]
+   [webly.user.analytics.events]
    [webly.user.markdown.subscriptions]
    [webly.user.markdown.events]
    [webly.user.markdown.page] ; reagent-page: md 
-   [webly.user.analytics.events]
    [webly.user.oauth2.page] ; reagent-page: oauth2 redirect
    [webly.user.oauth2.events]
    [webly.user.oauth2.subscriptions]
-   [webly.user.tenx.events]
-   ))
+   [webly.user.tenx.events]))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]
                       (.getElementById js/document "app")))
 
+
+
+;; see:
+;; https://shadow-cljs.github.io/docs/UsersGuide.html#_lifecycle_hooks
+;; https://code.thheller.com/blog/shadow-cljs/2019/08/25/hot-reload-in-clojurescript.html
+
+;; configuration is done EITHER
+;; - EITHER via METADATA
+;; - OR shadow-cljs.edn :devtools section   
+
 ;; before-reload is a good place to stop application stuff before we reload.
+
+
 (defn ^:dev/before-load
   before-load []
   (info "before-load"))
@@ -49,6 +61,7 @@
  (fn [db [_]]
    (info "webly config after-load")
    (dispatch [:ga/init])
+   (dispatch [:keybindings/init])
    (dispatch [:markdown/init])
    (dispatch [:markdown/load-index])
 

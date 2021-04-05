@@ -67,6 +67,9 @@
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [luminus/ring-ttl-session "0.3.3"]
                  [ring-oauth2 "0.1.5"]
+                 [prone "2019-07-08"] ; exception middleware
+                 [ring/ring-devel "1.7.1"] ; reload middleware
+
 
                  ; routing
                  [bidi "2.1.6"]
@@ -113,8 +116,7 @@
                    ; 1. ilustrate links in web-app
                    ; 2. run unit tests 
                     :dependencies [#_[org.pinkgorilla/gorilla-ui "0.2.34" ; brings pinkie
-                                    :exclusions [org.clojure/clojurescript]]
-                                   ]
+                                      :exclusions [org.clojure/clojurescript]]]
                     :source-paths ["profiles/demo/src"]
                     :resource-paths  ["target/webly"
                                       "profiles/demo/resources"]}

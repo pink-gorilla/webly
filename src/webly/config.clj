@@ -1,6 +1,7 @@
 (ns webly.config
   (:require
    [clojure.java.io :as io]
+   [taoensso.timbre  :refer [info]]
    [cprop.core :refer [load-config]]
    [cprop.source :refer [from-env from-system-props from-resource from-file]]))
 
@@ -23,7 +24,7 @@
 ; https://github.com/tolitius/cprop
 (defn- load-config-cprop []
   (load-config
-   :resource "webly/config.edn" ; otherwise it would search for confg.edn 
+   :resource "webly/config.edn" ; otherwise it would search for config.edn 
    :merge
    [;(from-resource "webly/config.edn")
     (from-file-exists "config.edn")
@@ -36,7 +37,7 @@
 
 (defn load-config! []
   (let [config (load-config-cprop)]
-    (println "config: " config)
+    (info "webly-config: " config)
     (reset! config-atom config)))
 
 (comment

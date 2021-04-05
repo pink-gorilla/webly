@@ -10,6 +10,8 @@
 
 ; stolen from gorilla-ui
 ; but we dont want dependency to it in webly.
+
+
 (defn ^{:category :ui}
   markdown
   "reagent markdown render component
@@ -21,7 +23,6 @@
     [:div.gorilla-markdown
      {:dangerouslySetInnerHTML
       {:__html (marked md)}}]))
-
 
 (defn markdown-view [document]
   [:div.free-markup.prose

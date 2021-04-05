@@ -4,8 +4,8 @@
    [taoensso.timbre :refer-macros [debug info error]]
    [re-frame.core :refer [reg-event-db reg-sub dispatch]]
    [webly.user.notifications.core :refer [add-notification]]
-   [pinkgorilla.notebook-ui.keybindings.init :refer [init-keybindings!]]
-   [pinkgorilla.notebook-ui.keybindings.component :refer [keybindings-dialog]]))
+   [webly.user.keybindings.init :refer [init-keybindings!]]
+   [webly.user.keybindings.component :refer [keybindings-dialog]]))
 
 (def clean-search
   {:highlight     0
@@ -14,8 +14,9 @@
 
 (reg-event-db
  :keybindings/init
- (fn [db [_ keybindings]]
-   (let [db (or db {})]
+ (fn [db [_]]
+   (let [db (or db {})
+         keybindings (or (get-in db [:config :keybindings]) [])]
      (info "keybinding init ..")
      (init-keybindings! keybindings)
      (assoc-in db

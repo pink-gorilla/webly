@@ -17,19 +17,19 @@
   true)
 
 ;(defn configure-10x! []
-  (println "Adding 10x event handlers ..")
+(println "Adding 10x event handlers ..")
 
-  (println "hiding re-frame-10x panel")
-  (.setItem js/localStorage "day8.re-frame-10x.show-panel" "false")
+(println "hiding re-frame-10x panel")
+(.setItem js/localStorage "day8.re-frame-10x.show-panel" "false")
 
-  (reg-event-db
-   :reframe10x-toggle
-   (fn [db _]
-     (let [visible (not (get-in db [:dev :ten10x-visible?]))
-           _ (println "reframe-10x visible: " visible)
+(reg-event-db
+ :reframe10x-toggle
+ (fn [db _]
+   (let [visible (not (get-in db [:dev :ten10x-visible?]))
+         _ (println "reframe-10x visible: " visible)
         ; _ (.setItem js/localStorage "day8.re-frame-10x.show-panel" (str visible))
-           _ (day8.re-frame-10x/show-panel! visible)] ; https://github.com/day8/re-frame-10x/pull/210s
-       (assoc-in db [:dev :ten10x-visible?] visible))))
+         _ (day8.re-frame-10x/show-panel! visible)] ; https://github.com/day8/re-frame-10x/pull/210s
+     (assoc-in db [:dev :ten10x-visible?] visible))))
 
 
 ;)

@@ -2,9 +2,7 @@
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :refer [reg-event-db]]
-   [webly.user.analytics.google-tag :refer [send-event]]
-   ;[district0x.re-frame.google-analytics-fx]
-   ))
+   [webly.user.analytics.google-tag :refer [send-event]]))
 
 (reg-event-db
  :ga/init
