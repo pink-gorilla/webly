@@ -1,4 +1,4 @@
-(ns webly.web.views
+(ns webly.user.app.views
   (:require
    [clojure.string :as str]
    [hiccup.page :as page]

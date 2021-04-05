@@ -5,10 +5,11 @@
    [bidi.bidi]
    [bidi.ring]
    [webly.web.handler :refer [make-handler]]
+   [webly.user.app.app :refer [app-handler]]
    ;[webly.web.resources] ; side-effects
    [demo.routes :refer [demo-routes-backend demo-routes-frontend]]))
 
-(def handler (make-handler demo-routes-backend demo-routes-frontend))
+(def handler (make-handler app-handler demo-routes-backend demo-routes-frontend))
 
 (defn GET [url]
   (handler (mock-request :get url)))

@@ -24,8 +24,7 @@
    (let [{:keys [enabled]} (get-in db [:config :google-analytics])
          data {:event_category category
                :event_label label
-               :value value
-               }]
+               :value value}]
      (when enabled
        (info "ga event" category)
        ;(gtag "event" (name category)); label value (clj->js fields-object)

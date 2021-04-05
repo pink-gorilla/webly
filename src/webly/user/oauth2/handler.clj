@@ -42,8 +42,7 @@
                        (error "github access-token code " code " error: " res)
                        (deliver p res)))
 
-    (res/response @p)
-    ))
+    (res/response @p)))
 
 (comment
   (handler-github-redirect {})

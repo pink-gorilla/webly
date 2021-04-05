@@ -27,24 +27,38 @@
      (dispatch x))))
 
 
+(defn link-fn [fun text]
+  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
+   {:on-click fun} text])
+
+(defn link-dispatch [rf-evt text]
+  (link-fn #(dispatch rf-evt) text))
+
+(defn link-href [href text]
+  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
+   {:href href} text])
+
+
 (defn demo-routing []
   [:div.bg-blue-400.m-5 {:class "w-1/4"}
    [:p.text-4xl "bidi routing demo"]
    [:p [:a.bg-green-300 {:on-click #(g! :demo/help)} "help!"]]
-   [:p [:a.bg-red-300 {:on-click #(g! :demo/save)} "save-as (test for not implemented)"]]
+   [:p [:a.bg-red-300 {:on-click #(g! :demo/save-non-existing)} "save-as (test for not implemented)"]]
 
    [:p [:a.bg-green-300 {:on-click #(g! :demo/party :location "Vienna")} "party in vienna (test for route-params)"]]
    [:p [:a.bg-green-300 {:on-click #(g! :demo/party :location "Bali" :query-params {:expected-guests 299})} "party in Bali (test for query-params)"]]
-   
-   [:p [:a.bg-blue-300 {:href "/api/time"} "api time"]]
+
+   [:p [link-href "/api/test" "demo api test"]]
+   [:p [link-href "/api/time" "demo api time"]]
+
    ])
 
 (defn demo-oauth []
   [:div.bg-blue-400.m-5 {:class "w-1/4"}
    [:p.text-4xl "oauth2"]
-   [:p [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/login :github])} "github login via popup"]]
-   [:p [:a.bg-blue-300 {:on-click #(dispatch [:oauth2/login :google])} "google login via popup"]]
-   [:p [:a.bg-blue-300 {:href "/oauth2/github/token?code=99"} "api test: github code ->token"]]
+   [:p [link-dispatch [:oauth2/login :github] "github login via popup"]]
+   [:p [link-dispatch [:oauth2/login :google] "google login via popup"]]
+   [:p [link-href "/oauth2/github/token?code=99" "api test: github code ->token"]]
     ; [:p [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]
 
    [tokens-view]   
@@ -55,19 +69,17 @@
   [:div.bg-blue-400.m-5 {:class "w-1/4"}
    [:p.text-4xl "dialog"]
    [:ol
-    [:li [:p {:on-click #(add-notification "welcome to wonderland")} "show notification"]]
-    [:li [:p {:on-click #(add-notification :danger "something bad happened")} "show notification - error"]]
-    [:li [:p {:on-click show-dialog-demo} "show dialog"]]]])
+    [:li [link-fn #(add-notification "welcome to wonderland") "show notification"]]
+    [:li [link-fn #(add-notification :danger "something bad happened") "show notification - error"]]
+    [:li [link-fn show-dialog-demo "show dialog"]]]])
 
 
 (defn main []
   [:div
    [:h1 "webly demo"]
+   [:p [link-dispatch [:bidi/goto :ui/markdown :file "webly.md"] "webly docs"]]
    [demo-routing]
    [demo-dialog]
-    [:p [:a {;;:href (link :ui/markdown {:file "notebookui.md"})
-             ;:on-click #(goto! :ui/markdown :file "notebookui.md")
-              :on-click #(dispatch [:bidi/goto :ui/markdown :file "webly.md"])} "markdown help"]]
    [demo-oauth]])
 
 (defmethod reagent-page :demo/main [& args]

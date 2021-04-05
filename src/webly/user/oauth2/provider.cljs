@@ -47,7 +47,7 @@
      (info "github code -> token .. code: " code " clientId " clientId)
      {:db       db
       :http-xhrio {:method          :get
-                   :uri            "/oauth2/github/token" ;  "https://github.com/login/oauth/access_token"
+                   :uri            "/api/oauth2/github/token" ;  "https://github.com/login/oauth/access_token"
                    :params {;:client_id	 clientId
                             ;:client_secret clientSecret
                             :code code}

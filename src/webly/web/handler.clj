@@ -4,8 +4,7 @@
    [taoensso.timbre :refer [debug info error]]
    [ring.util.response :as response]
    [bidi.bidi :as bidi]
-   [bidi.ring]
-   [webly.web.app :refer [app-handler]]))
+   [bidi.ring]))
 
 (defn html-response [html]
   (response/content-type
@@ -19,30 +18,99 @@
 (defn add-ring-handler [key handler]
   (swap! handler-registry assoc key handler))
 
-(defn frontend? [routes-frontend handler-kw]
-  (try
-    (bidi/path-for routes-frontend handler-kw)
-    (catch Exception e
-      (error "exception in determining bidi/path-for for " handler-kw " ex:" e)
-      true)))
 
-(defn get-handler
-  [routes-frontend handler-kw]
-  (when (keyword? handler-kw) ;resources havea wrapped handler
-    (debug "get-handler:" handler-kw))
+; not found handler
+
+
+(def not-found-body "<h1>  bummer, not found </h1")
+
+(defn not-found-handler [req]
+  (response/not-found not-found-body))
+
+(add-ring-handler :webly/not-found not-found-handler)
+
+
+; server request serving
+
+
+(defn get-handler-backend
+  [handler-kw]
+  (when (keyword? handler-kw) ;resources have a wrapped handler
+    (debug "get-handler-backend:" handler-kw))
   (if (keyword? handler-kw)
     (if-let [handler (handler-kw @handler-registry)]
       handler
-      (if (frontend? routes-frontend handler-kw)
-        (do (debug "get-handler: rendering web-app for frontend-route")
-            app-handler)
-        (do (error "handler-registry does not contain handler for: " handler-kw)
-            nil)))
+      (do (error "handler-registry does not contain handler for: " handler-kw)
+          nil))
     handler-kw))
 
+(defn get-handler-frontend [app-handler routes-frontend path req]
+  (debug "frontend?" path)
+  (let [{:keys [handler route-params] :as match-context}
+        (bidi/match-route* routes-frontend path req)]
+    (when handler
+      (info "serving app-bundle initial location: " handler)
+      app-handler)))
+
 (defn make-handler
-  [routes-backend routes-frontend]
-  (bidi.ring/make-handler routes-backend (partial get-handler routes-frontend)))
+  "Create a Ring handler from the route definition data
+  structure. Matches a handler from the uri in the request, and invokes
+  it with the request as a parameter."
+  [app-handler routes-backend routes-frontend]
+  (assert routes-backend "Cannot create a Ring handler with a nil Route(s) parameter")
+  (fn [{:keys [uri path-info] :as req}]
+    (let [path (or path-info uri)
+          {:keys [handler route-params] :as match-context}
+          (bidi/match-route* routes-backend path req)
+          handler-f (if handler
+                      (get-handler-backend handler)
+                      (get-handler-frontend app-handler routes-frontend path req))
+          handler-f (if handler-f
+                      handler-f
+                      not-found-handler)]
+      (when handler-f
+        (bidi.ring/request
+         handler-f
+         (-> req
+             (update-in [:params] merge route-params)
+             (update-in [:route-params] merge route-params))
+         (apply dissoc match-context :handler (keys req)))))))
+
+
+;; OLD CODE
+
+
+(comment
+
+  (defn frontend? [routes-frontend handler-kw]
+    (try
+      (bidi/path-for routes-frontend handler-kw)
+      (catch Exception e
+        (error "exception in determining bidi/path-for for " handler-kw " ex:" e)
+        true)))
+
+  (defn get-handler-old
+    [app-handler routes-frontend handler-kw]
+    (when (keyword? handler-kw) ;resources have a wrapped handler
+      (debug "get-handler:" handler-kw))
+    (if (keyword? handler-kw)
+      (if-let [handler (handler-kw @handler-registry)]
+        handler
+        (if (frontend? routes-frontend handler-kw)
+          (do (debug "get-handler: rendering web-app for frontend-route")
+              app-handler)
+          (do (error "handler-registry does not contain handler for: " handler-kw)
+              nil)))
+      handler-kw))
+
+  (defn make-handler-old
+    [app-handler routes-backend routes-frontend]
+    (bidi.ring/make-handler routes-backend (partial get-handler-old app-handler routes-frontend)))
+
+;
+  )
+
+; testing:
 
 (comment
   ; (bidi.ring/->ResourcesMaybe {:prefix "public"})

@@ -2,7 +2,6 @@
   (:require
    [re-frame.core :refer [reg-sub]]))
 
-
 (reg-sub
  :oauth2/tokens
  (fn [db [_]]

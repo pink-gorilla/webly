@@ -1,4 +1,4 @@
-(ns webly.web.app
+(ns webly.user.app.handler
   (:require
    [clojure.string]
    [taoensso.timbre :refer [debug info error]]
@@ -6,11 +6,12 @@
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [bidi.bidi :as bidi]
    [bidi.ring]
-
    [webly.web.middleware :refer [wrap-webly]]
-   [webly.web.views :refer [app-page]]))
+   [webly.user.app.views :refer [app-page]]))
+
 
 ; CSRF TOKEN
+
 
 (defn get-csrf-token []
   ; Another option:
@@ -39,3 +40,4 @@
 (def app-handler
   (-> app-handler-raw
       wrap-webly))
+

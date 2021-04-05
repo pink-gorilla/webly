@@ -1,19 +1,23 @@
-(ns webly.web.app
+(ns webly.user.app.app
   (:require
    [reagent.dom]
    [taoensso.timbre :refer [info]]
    [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db]]
+   [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
+   [webly.user.app.views :refer [webly-app]]
 
-    ; side-effects
-   [webly.web.views :refer [webly-app]]
-   [webly.user.dialog] ; side-effects
+   ; side-effects
    [webly.web.events-bidi]
    [webly.user.config.events]
+   [webly.user.config.subscription]
+   [webly.user.dialog] ; side-effects
    [webly.user.markdown.subscriptions]
    [webly.user.markdown.events]
-   [webly.user.markdown.view] ; bidi route registration
+   [webly.user.markdown.page] ; reagent-page: md 
    [webly.user.analytics.events]
-   [webly.user.config.subscription]))
+   [webly.user.oauth2.page] ; reagent-page: oauth2 redirect
+   [webly.user.oauth2.events]
+   [webly.user.oauth2.subscriptions]))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]
@@ -34,7 +38,7 @@
 
   (info "mounting webly-app ..")
   (dispatch [:ga/event {:category "webly" :action "mounted" :label 77 :value 13}])
-  (webly.web.app/mount-app))
+  (webly.user.app.app/mount-app))
 
 ;(after-load)
 
@@ -52,4 +56,8 @@
   (dispatch [:config/load :webly/app-after-config-load])
   (dispatch [:bidi/init routes]))
 
-
+(defn webly-run! [user-routes-api user-routes-app]
+  (let [routes (make-routes-frontend user-routes-app)] ; user-routes-api
+    (info "webly-run!  ...")
+    (start routes)
+    (mount-app)))

@@ -1,4 +1,4 @@
-(ns webly.user.markdown.view
+(ns webly.user.markdown.page
   (:require
    [clojure.walk]
    [taoensso.timbre :as timbre :refer [debug info warn error]]
@@ -8,7 +8,7 @@
 
 (defn markdown-view [document]
   [:div.free-markup.prose
-   [:link {:rel "stylesheet" :href "/r/notebook-ui/prose.css"}]
+   [:link {:rel "stylesheet" :href "/r/webly/prose.css"}]
    [markdown document]])
 
 (defn err [document message]
