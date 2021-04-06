@@ -138,6 +138,8 @@
   :aliases {"bump-version"
             ["change" "version" "leiningen.release/bump-version"]
 
+            ;; copy resources
+
             "css"  ^{:doc "Copies npm package dependencies that are not managed by shadow-cljs"}
             ["shell" "./scripts/copy_res.sh"]
 
