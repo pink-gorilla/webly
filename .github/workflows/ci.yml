@@ -43,4 +43,5 @@ jobs:
         # Default 10000 not enough for us
         #
         export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"
+        git diff
         lein release
