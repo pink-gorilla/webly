@@ -10,6 +10,7 @@
    (java.net URL)))
 
 (defn file [^URL input]
+  (info "processing md resource: " input)
   (-> input
       (.getPath)
       (split #"/")
