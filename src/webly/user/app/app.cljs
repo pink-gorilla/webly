@@ -68,9 +68,10 @@
    db))
 
 (defn webly-run! [user-routes-api user-routes-app]
-  (let [routes (make-routes-frontend user-routes-app)] ; user-routes-api
+  (let [routes-frontend (make-routes-frontend user-routes-app)
+        routes-backend (make-routes-backend user-routes-app user-routes-api)]
     (info "webly-run! ...")
     (dispatch [:reframe10x-init])
-    (dispatch [:bidi/init routes])
+    (dispatch [:bidi/init routes-frontend routes-backend])
     (dispatch [:config/load :webly/app-after-config-load])
     (mount-app)))

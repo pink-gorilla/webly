@@ -9,12 +9,15 @@
   (:import
    (java.net URL)))
 
-(defn file [^URL input]
+(defn file [;^URL 
+            input]
   (info "processing md resource: " input)
-  (-> input
-      (.getPath)
-      (split #"/")
-      (last)))
+  (let [str (if (string? input)
+              input
+              (.getPath input))] ; resources of current project are passed as urls, of jars as strings 
+    (-> str
+        (split #"/")
+        (last))))
 
 (defn get-md-files []
   (map file

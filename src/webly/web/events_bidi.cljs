@@ -7,15 +7,15 @@
 
 (reg-event-db
  :bidi/init
- (fn [db [_ new-routes]]
+ (fn [db [_ routes-frontend routes-backend]]
    (info "bidi init ..")
-   (reset! routes new-routes)
-   (info "bidi routes are: " new-routes)
+   (reset! routes routes-frontend)
+   (info "bidi routes-frontend are: " routes-frontend)
    (let [db (or db {})]
      (info "starting pushy")
      (pushy/start! history) ; link url => state
      (set-initial-query-params)
-     (assoc db :bidi new-routes))))
+     (assoc-in db [:bidi] {:client routes-frontend :server routes-backend}))))
 
 (reg-event-fx
  :bidi/goto
