@@ -1,7 +1,7 @@
 (ns webly.config
   (:require
    [clojure.java.io :as io]
-   [taoensso.timbre  :refer [info]]
+   [taoensso.timbre  :refer [debug info error]]
    [cprop.core :refer [load-config]]
    [cprop.source :refer [from-env from-system-props from-resource from-file]]))
 
@@ -35,9 +35,31 @@
       ;(cli-args) 
     ]))
 
+(defn res-str [str]
+  (debug "resolving keybindings var: " str)
+  (if-let [sym (symbol str)]
+    (if-let [r (resolve sym)]
+      (if-let [kb (var-get r)] kb [])
+      [])
+    []))
+
+(defn resolve-config-keybindings
+  "in case kb are specified as an array in config, dont replace"
+  [config]
+  (let [str (:keybindings config)]
+    (if (and (not (nil? str))
+             (string? str))
+      (if-let [kb (res-str str)]
+        (do (info "keybindings resolved to: " kb)
+            (assoc config :keybindings kb))
+        config)
+      config)))
+
 (defn load-config! []
-  (let [config (load-config-cprop)]
-    (info "webly-config: " config)
+  (let [config (load-config-cprop)
+        _ (info "webly-config: " config)
+        config (resolve-config-keybindings config)]
+
     (reset! config-atom config)))
 
 (comment

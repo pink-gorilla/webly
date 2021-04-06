@@ -1,14 +1,8 @@
 ;; Copy to creds.edn and set your private values.
-{:oauth2 {:github 
-   {
-    ; list your github oauth apps:
-    ;https://github.com/settings/applications/
-    
-    ; register new oauth app
-    ; https://github.com/settings/developers
-    ; callback url is: localhost:8000/oauth2/github/callback    
-    
-    ;github oauth callback needs a URL; this URL is different for prod and dev, so we need different creds 
-    :client-id        ""
-    :client-secret    ""}  
-   }}
+{:oauth2 {:github {:client-id        ""
+                   :client-secret    ""}
+          :google {:clientId ""
+                   :clientSecret ""}}
+ :google-analytics {:enabled true
+                    :id ""
+                    :debug? true}}

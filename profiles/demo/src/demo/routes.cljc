@@ -1,12 +1,12 @@
 (ns demo.routes)
 
-(def demo-routes-api
+(def routes-api
   {"time"   {:get :api/time}
    "test"   {:get :api/test
              :post :api/test  ; used in unit-test
              }})
 
-(def demo-routes-app
+(def routes-app
   {""        :demo/main
    "help"    :demo/help
    ["party/" :location] :demo/party

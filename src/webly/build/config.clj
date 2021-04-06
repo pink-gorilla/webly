@@ -41,15 +41,17 @@
               {'webly.user.tenx.events 'webly.user.tenx.events-on}
               {'webly.user.tenx.events 'webly.user.tenx.events-off}))
 
-(defn shadow-config [lein-profile handler frontend-ns]
-  (let [dev-http-port (get-in-config [:shadow :dev-http :port])
+(defn shadow-config []
+  (let [{:keys [lein-cljs-profile ns-cljs-app ring-handler]} (get-in-config [:webly])
+        ring-handler (symbol ring-handler)
+        dev-http-port (get-in-config [:shadow :dev-http :port])
         http-port (get-in-config [:shadow :http :port])
         http-host (get-in-config [:shadow :http :host])
         nrepl-port (get-in-config [:shadow :nrepl :port])]
     {;:cache-root ".shadow-cljs"
-     :lein {:profile lein-profile}
+     :lein {:profile lein-cljs-profile}
      :dev-http {dev-http-port {;:root "public" ; shadow does not need to serve resources
-                               :handler handler}}
+                               :handler ring-handler}}
      :http {:port http-port  ; shadow dashboard
             :host http-host}
      :nrepl {:port nrepl-port
@@ -60,7 +62,7 @@
      :builds {:webly {:target :browser
                       :output-dir "target/webly/public"
                       :asset-path "/r"
-                      :modules {:main {:entries [frontend-ns]}}
+                      :modules {:main {:entries ns-cljs-app}}
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")
                     ;           :after-load (symbol "webly.web.app/after-load")}
                       :build-options    {:ns-aliases (build-ns-aliases)}

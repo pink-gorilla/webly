@@ -12,7 +12,10 @@
     "react-dom": "16.14.0",
     "react-dom-factories": "1.0.2",
     "react-highlight.js": "1.0.7",
-    "tailwindcss": "1.5.1"
+    "tailwindcss": "1.5.1",
+    "karma": "^4.4.1",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-cljs-test": "^0.1.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "5.14.0",

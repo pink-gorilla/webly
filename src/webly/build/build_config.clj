@@ -48,6 +48,9 @@
       ; hot reloading
       :watch ;(watch-api)
       (watch-cli)
+
+      :ci
+      (shadow/release :ci opts)
      ; 
       )))
 

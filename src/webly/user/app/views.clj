@@ -74,7 +74,8 @@
    body-loading-style])
 
 (defn layout [webly-config page]
-  (let [{:keys [title bundle-entry icon css-extern google-analytics]} webly-config]
+  (let [{:keys [webly google-analytics]} webly-config
+        {:keys [title bundle-entry icon css-extern]} webly]
     (page/html5
      (head title icon css-extern google-analytics)
      [:body.loading

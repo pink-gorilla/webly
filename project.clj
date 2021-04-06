@@ -169,9 +169,6 @@
 
              ;; DEMO 
 
-            "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
-            ["with-profile" "+demo" "test"]
-
             "demo"  ^{:doc "compiles & runs demo app and serves via webserver."}
             ["with-profile" "+demo" "run" "-m" "demo.app" "watch"]
 
@@ -179,4 +176,17 @@
             ["with-profile" "+demo" "run" "-m" "demo.app" "release"]
 
             "run-web"  ^{:doc "runs compiled bundle on shadow dev server"}
-            ["with-profile" "+demo" "run" "-m" "demo.app" "run"]})
+            ["with-profile" "+demo" "run" "-m" "demo.app" "run"]
+            
+            ;; Unit Tests  
+                              
+            "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
+            ["with-profile" "+demo" "test"]                         
+            
+            "build-test"  ^{:doc "compiles ci unit tests."}
+            ["with-profile" "+demo" "run" "-m" "demo.app" "ci"]
+
+            "test-js" ^{:doc "run unit test JavaScript."}
+            ["do" "build-test" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]
+
+             })

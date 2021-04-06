@@ -31,7 +31,7 @@
   (let [config (subscribe [:webly/config])]
     (fn []
       (let [current-page @current
-            {:keys [css-links]} @config]
+            {:keys [css-links]} (:webly @config)]
         [:div
          [css css-links]
          [modal-container]

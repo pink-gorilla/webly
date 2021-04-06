@@ -12,7 +12,7 @@
     :body html}
    "text/html"))
 
-(def handler-registry
+(defonce handler-registry
   (atom {}))
 
 (defn add-ring-handler [key handler]

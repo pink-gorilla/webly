@@ -7,20 +7,18 @@
    [webly.build.build-config] ; shadow via generated config file
    ))
 
-(defn build [mode lein-profile handler frontend-ns]
+(defn build [mode]
   (load-config!)
   (timbre-config! (get-in-config [:timbre-loglevel]))
-  (info "webly " mode "handler:" handler "frontend-ns:" frontend-ns)
-  (let [config (shadow-config lein-profile handler frontend-ns)]
+  (info "webly build: " mode)
+  (let [config (shadow-config)]
     (info "shadow-config: " config)
     (webly.build.build-config/build mode config)))
 
 (defn build-cli
-  [mode lein-profile handler frontend-ns]
-  (let [mode (keyword mode)
-        handler (symbol handler)
-        frontend-ns (symbol frontend-ns)]
-    (build mode lein-profile handler frontend-ns)))
+  [mode]
+  (let [mode (keyword mode)]
+    (build mode)))
 
 ;(comment
   ;(get-shadow-server-config)

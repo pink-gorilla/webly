@@ -3,6 +3,6 @@
    [webly.build :refer [build-cli]]))
 
 (defn -main
-  [mode lein-profile handler frontend-ns]
-  (println "webly.build-cli -main" mode lein-profile handler frontend-ns)
-  (build-cli mode lein-profile handler frontend-ns))
+  [mode build-id]
+  (println "webly.build-cli -main" mode build-id)
+  (build-cli mode build-id))

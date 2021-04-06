@@ -28,5 +28,5 @@
 - github oauth2 auth-token endpoint has cors issue. therefore ring handler with auth endpoint exists
 - scopes: https://docs.github.com/en/developers/apps/scopes-for-oauth-apps
 - https://docs.github.com/en/rest/reference/users
-
-
+- github oauth callback needs a URL; this URL is different for prod and dev, so we need different creds
+- ;:redirectUri "http://localhost:8000/oauth2/google/token"
