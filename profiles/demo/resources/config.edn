@@ -1,0 +1,17 @@
+{:webly {:title "Webly Demo"
+         :lein-cljs-profile "+demo"
+         :ns-cljs-app [demo.app]
+         :bundle-entry  "demo.app.start ();"
+         :start-user-app [:demo/start]
+         :user-routes-app "demo.routes/routes-app"
+         :user-routes-api "demo.routes/routes-api"}
+
+ :google-analytics {:enabled true
+                    :id "UA-154548494-1" ; not a secret 
+                    :debug? true}
+
+ :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
+                   [#{"*"} :debug]]
+
+ ;
+ }

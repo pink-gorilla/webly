@@ -28,7 +28,7 @@
                     :id ""
                     :debug? false}
 
- ; creds
+ ; creds (set them in creds.edn resource)
  :oauth2 {:github {:clientId        ""
                    :clientSecret    ""}
           :google {:clientId        ""

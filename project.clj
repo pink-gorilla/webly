@@ -70,7 +70,6 @@
                  [prone "2019-07-08"] ; exception middleware
                  [ring/ring-devel "1.7.1"] ; reload middleware
 
-
                  ; routing
                  [bidi "2.1.6"]
                  [clj-commons/pushy "0.3.10"]
@@ -96,9 +95,6 @@
                  [thheller/shadow-cljs "2.10.19"]
                  [thheller/shadow-cljsjs "0.0.21"]
                  [org.clojure/clojurescript "1.10.773"]
-
-                 #_[district0x.re-frame/google-analytics-fx "1.0.0"
-                    :exclusions [re-frame]]
 
                  [resauce "0.1.0"] ; resources
                  [cprop "0.1.17"]]

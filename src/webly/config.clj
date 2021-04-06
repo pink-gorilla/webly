@@ -26,9 +26,9 @@
   (load-config
    :resource "webly/config.edn" ; otherwise it would search for config.edn 
    :merge
-   [;(from-resource "webly/config.edn")
-    (from-file-exists "config.edn")
+   [(from-file-exists "config.edn")   ; user config/creds (files)
     (from-file-exists "creds.edn")
+    (from-resource-exists "config.edn")  ; user config/creds (resources)
     (from-resource-exists "creds.edn")
     ;(from-system-props)
     ;(from-env)

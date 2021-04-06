@@ -2,7 +2,4 @@
 {:oauth2 {:github {:client-id        ""
                    :client-secret    ""}
           :google {:clientId ""
-                   :clientSecret ""}}
- :google-analytics {:enabled true
-                    :id ""
-                    :debug? true}}
+                   :clientSecret ""}}}
