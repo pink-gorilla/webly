@@ -1,7 +1,7 @@
 (ns webly.user.app.app
   (:require
    [reagent.dom]
-   [taoensso.timbre :refer-macros [info]]
+   [taoensso.timbre :refer-macros [info warn]]
    [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db]]
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.app.views :refer [webly-app]]
@@ -61,14 +61,15 @@
      (dispatch [:keybindings/init])
      (dispatch [:markdown/init])
      (dispatch [:markdown/load-index])
-     (when start-user-app
-       (dispatch start-user-app)))
-
+     (if start-user-app
+       (do (info "starting user app: " start-user-app)
+           (dispatch start-user-app))
+       (warn "no user app startup defined.")))
    db))
 
 (defn webly-run! [user-routes-api user-routes-app]
   (let [routes (make-routes-frontend user-routes-app)] ; user-routes-api
-    (info "webly-run!  ...")
+    (info "webly-run! ...")
     (dispatch [:reframe10x-init])
     (dispatch [:bidi/init routes])
     (dispatch [:config/load :webly/app-after-config-load])

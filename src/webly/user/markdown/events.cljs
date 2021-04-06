@@ -37,10 +37,9 @@
  :markdown/load-index-error
  (fn
    [db [_ response-body]]
-   (let [content (:content response-body)
-         _ (error "Content Only:\n" content)]
-     (assoc-in db [:markdown :error-index]
-               {:error response-body}))))
+   (let [content (:content response-body)]
+     (error ":markdown/load-index-error content: " content)
+     (assoc-in db [:markdown :error-index] {:error response-body}))))
 
 (reg-event-db
  :markdown/load-index-success
