@@ -6,11 +6,11 @@
    [webly.web.resources]
    [webly.web.handler]
 
-   [demo.routes :refer [demo-routes-api demo-routes-app]]
+   [demo.routes :refer [routes-api routes-app]]
    [webly.user.app.routes :refer [make-routes-backend make-routes-frontend]]))
 
-(def routes-backend (make-routes-backend demo-routes-app demo-routes-api))
-(def routes-frontend (make-routes-frontend demo-routes-app))
+(def routes-backend (make-routes-backend routes-app routes-api))
+(def routes-frontend (make-routes-frontend routes-app))
 
 (deftest handler->path []
   (is (= (bidi/path-for routes-frontend :demo/main) "/"))

@@ -176,7 +176,7 @@
             
             ;; Unit Tests  
                               
-            "test-demo"  ^{:doc "run unit tests (they need demo profile)"}
+            "test-clj"  ^{:doc "run unit tests (they need demo profile)"}
             ["with-profile" "+demo" "test"]                         
             
             "build-test"  ^{:doc "compiles ci unit tests."}

@@ -7,30 +7,19 @@
 # UI demo
 
 ```
-lein demo
+lein demo            ; The demo runs a webserver on port 8000. "shadow-cljs watch" mode
 ```
 
-The demo runs a webserver on port 8000.
-
-
 ```
-lein test-demo
+lein build           ; Build cljs bundle, and output bundle stats
+lein run-web         ; Serves website from precompiled bundle.
 ```
 
-Run unit tests (they need the demo profile)
+```
+lein test-clj        ; Run unit tests - clj
+lein test-js         ; Run unit tests - js
 
 ```
-lein build
-```
-
-Build cljs bundle, and output bundle stats
-
-```
-lein run-web 
-```
-
-Serves website from precompiled bundle.
-
 
 **Demonstrates**
 - loading animation
