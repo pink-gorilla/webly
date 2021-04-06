@@ -25,9 +25,8 @@
           :http {:port 8001 :host "localhost"}
           :nrepl {:port 8002}}
 
- :google-analytics {:enabled false
-                    :id ""
-                    :debug? false}
+ :google-analytics {:enabled true
+                    :id "UA-154548494-1"} ; not a secret 
 
  ; creds (set them in creds.edn resource)
  :oauth2 {:github {:clientId        ""

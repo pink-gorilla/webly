@@ -24,7 +24,7 @@
                :event_label label
                :value value}]
      (when enabled
-       (info "ga event" category)
+       (info "ga send event" category)
        ;(gtag "event" (name category)); label value (clj->js fields-object)
        (send-event action data)))
    db))
