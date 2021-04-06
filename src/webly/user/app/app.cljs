@@ -55,7 +55,7 @@
 (reg-event-db
  :webly/app-after-config-load
  (fn [db [_]]
-   (let [start-user-app (get-in db [:config :start-user-app])]
+   (let [start-user-app (get-in db [:config :webly :start-user-app])]
      (info "webly config after-load")
      (dispatch [:ga/init])
      (dispatch [:keybindings/init])
