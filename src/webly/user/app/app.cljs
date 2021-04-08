@@ -2,7 +2,7 @@
   (:require
    [reagent.dom]
    [taoensso.timbre :refer-macros [info warn]]
-   [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db]]
+   [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db reg-sub]]
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.app.views :refer [webly-app]]
 
@@ -53,10 +53,21 @@
   (webly.user.app.app/mount-app))
 
 (reg-event-db
+ :webly/status
+ (fn [db [_ status]]
+   (assoc db :webly/status status)))
+
+(reg-sub
+ :webly/status
+ (fn [db _]
+   (get-in db [:webly/status])))
+
+(reg-event-db
  :webly/app-after-config-load
  (fn [db [_]]
    (let [start-user-app (get-in db [:config :webly :start-user-app])]
      (info "webly config after-load")
+     (dispatch [:webly/status :configuring-app])
      (dispatch [:ga/init])
      (dispatch [:keybindings/init])
      (dispatch [:markdown/init])
@@ -64,7 +75,9 @@
      (if start-user-app
        (do (info "starting user app: " start-user-app)
            (dispatch start-user-app))
-       (warn "no user app startup defined.")))
+       (warn "no user app startup defined."))
+     ;(dispatch [:webly/status :running])
+     )
    db))
 
 (defn webly-run! [user-routes-api user-routes-app]
@@ -72,6 +85,8 @@
         routes-backend (make-routes-backend user-routes-app user-routes-api)]
     (info "webly-run! ...")
     (dispatch [:reframe10x-init])
+    (dispatch [:webly/status :route-init])
     (dispatch [:bidi/init routes-frontend routes-backend])
+    (dispatch [:webly/status :loading-config])
     (dispatch [:config/load :webly/app-after-config-load])
     (mount-app)))
