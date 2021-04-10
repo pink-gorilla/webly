@@ -22,7 +22,7 @@
       {})))
 
 ; https://github.com/tolitius/cprop
-(defn- load-config-cprop []
+(defn- load-config-cprop [user-config]
   (load-config
    :resource "webly/config.edn" ; otherwise it would search for config.edn 
    :merge
@@ -30,6 +30,7 @@
     (from-file-exists "creds.edn")
     (from-resource-exists "config.edn")  ; user config/creds (resources)
     (from-resource-exists "creds.edn")
+    (or user-config {}) ; used in lein-pinkgorilla
     ;(from-system-props)
     ;(from-env)
       ;(cli-args) 
@@ -55,12 +56,15 @@
         config)
       config)))
 
-(defn load-config! []
-  (let [config (load-config-cprop)
-        _ (info "webly-config: " config)
-        config (resolve-config-keybindings config)]
+(defn load-config!
+  ([]
+   (load-config {}))
+  ([user-config]
+   (let [config (load-config-cprop user-config)
+         _ (info "webly-config: " config)
+         config (resolve-config-keybindings config)]
 
-    (reset! config-atom config)))
+     (reset! config-atom config))))
 
 (comment
 
