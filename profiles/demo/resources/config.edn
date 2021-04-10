@@ -11,5 +11,8 @@
  :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
                    [#{"*"} :debug]]
 
+ :settings {:use-localstorage  true  ; allow user to change settings via localstorage
+            :bongo 777}
+
  ;
  }

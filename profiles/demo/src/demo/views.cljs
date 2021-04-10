@@ -1,11 +1,11 @@
 (ns demo.views
   (:require
-   [re-frame.core :refer [dispatch]]
+   [re-frame.core :refer [dispatch subscribe]]
    [webly.web.handler :refer [reagent-page]]
    [webly.web.routes :refer [goto! current query-params]]
    [webly.user.notifications.core :refer [add-notification]]
    [webly.user.oauth2.view :refer [tokens-view]]
-   ))
+   [webly.user.settings.local-storage :refer [ls-get ls-set!]]))
 
 (defn show-dialog-demo []
   (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
@@ -49,9 +49,7 @@
    [:p [:a.bg-green-300 {:on-click #(g! :demo/party :location "Bali" :query-params {:expected-guests 299})} "party in Bali (test for query-params)"]]
 
    [:p [link-href "/api/test" "demo api test"]]
-   [:p [link-href "/api/time" "demo api time"]]
-
-   ])
+   [:p [link-href "/api/time" "demo api time"]]])
 
 (defn demo-oauth []
   [:div.bg-blue-400.m-5 {:class "w-1/4"}
@@ -61,9 +59,7 @@
    [:p [link-href "/oauth2/github/token?code=99" "api test: github code ->token"]]
     ; [:p [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]
 
-   [tokens-view]   
-   
-   ])
+   [tokens-view]])
 
 (defn demo-dialog []
   [:div.bg-blue-400.m-5 {:class "w-1/4"}
@@ -74,16 +70,28 @@
     [:li [link-fn show-dialog-demo "show dialog"]]]])
 
 
+(defn demo-settings []
+  (let [s (subscribe [:settings])]
+    (fn []
+      [:div.bg-blue-400.m-5 {:class "w-1/4"}
+       [:p.text-4xl "settings"]
+       [:p (pr-str @s)]
+       ;[link-fn #(ls-set! :webly {:willy 789}) "reset localstorage to :willy 789"]
+       [link-fn #(dispatch [:settings/set :bongo 123]) " set bongo to 123"]
+       [link-fn #(dispatch [:settings/set :bongo 456]) " set bongo to 456"]])))
+
 (defn main []
   [:div
    [:h1 "webly demo"]
-   
+
    [:p [link-dispatch [:bidi/goto :ui/markdown :file "webly.md"] "webly docs"]]
-   [:p [link-dispatch [ :reframe10x-toggle] "tenx-toggle"]]
+   [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]
 
    [demo-routing]
    [demo-dialog]
-   [demo-oauth]])
+   [demo-oauth]
+   [demo-settings]
+   ])
 
 (defmethod reagent-page :demo/main [& args]
   [main])

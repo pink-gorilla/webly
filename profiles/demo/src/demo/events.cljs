@@ -10,7 +10,7 @@
    (dispatch [:ga/event {:category "webly-demo" :action "started" :label 77 :value 13}])
    (.setTimeout js/window (fn []
                             (info "webly demo started.")
-                            (dispatch [:webly/status :running])) 15000)
+                            (dispatch [:webly/status :running])) 5000)
 
    db))
 

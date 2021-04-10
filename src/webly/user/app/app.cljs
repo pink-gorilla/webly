@@ -19,7 +19,9 @@
    [webly.user.oauth2.page] ; reagent-page: oauth2 redirect
    [webly.user.oauth2.events]
    [webly.user.oauth2.subscriptions]
-   [webly.user.tenx.events]))
+   [webly.user.tenx.events]
+   [webly.user.settings.subscriptions]
+   [webly.user.settings.events]))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]
@@ -70,6 +72,7 @@
      (dispatch [:webly/status :configuring-app])
      (dispatch [:ga/init])
      (dispatch [:keybindings/init])
+     (dispatch [:settings/init])
      (dispatch [:markdown/init])
      (dispatch [:markdown/load-index])
      (if start-user-app

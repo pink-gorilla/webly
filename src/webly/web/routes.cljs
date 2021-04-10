@@ -6,6 +6,10 @@
     [pushy.core :as pushy]
     [cemerick.url :as url]))
 
+;; take some tricksfrom this 
+;; https://github.com/timgilbert/haunting-refrain-posh/blob/develop/src/cljs/haunting_refrain/fx/navigation.cljs
+
+
 ; query param handling
 ; bidi does not handle query params
 ; idea how to solve the problem:
@@ -116,3 +120,12 @@
         (pushy/set-token! history url))
       (do (set-query-params {})
           (pushy/set-token! history base-url)))))
+
+
+;; not yet used
+;; todo : hard redirects for backend routes or exernal links
+
+
+(defn hard-redirect! [history place]
+  (pushy/stop! history)
+  (set! (.-location js/window) place))

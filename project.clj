@@ -98,6 +98,7 @@
 
                  [resauce "0.1.0"] ; resources
                  [cprop "0.1.17"] ; config management
+                 [akiroz.re-frame/storage "0.1.4"] ; localstorage 
                  ]
 
   :target-path  "target/jar"
