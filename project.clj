@@ -97,7 +97,8 @@
                  [org.clojure/clojurescript "1.10.773"]
 
                  [resauce "0.1.0"] ; resources
-                 [cprop "0.1.17"]]
+                 [cprop "0.1.17"] ; config management
+                 ]
 
   :target-path  "target/jar"
   :source-paths ["src"]

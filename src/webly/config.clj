@@ -23,18 +23,28 @@
 
 ; https://github.com/tolitius/cprop
 (defn- load-config-cprop [user-config]
-  (load-config
-   :resource "webly/config.edn" ; otherwise it would search for config.edn 
-   :merge
-   [(from-file-exists "config.edn")   ; user config/creds (files)
-    (from-file-exists "creds.edn")
-    (from-resource-exists "config.edn")  ; user config/creds (resources)
-    (from-resource-exists "creds.edn")
-    (or user-config {}) ; used in lein-pinkgorilla
-    ;(from-system-props)
-    ;(from-env)
-      ;(cli-args) 
-    ]))
+  (let [config-files (load-config
+                      :resource "webly/config.edn" ; otherwise it would search for config.edn 
+                      :merge
+                      [(from-file-exists "config.edn")   ; user config/creds (files)
+                       (from-file-exists "creds.edn")
+                       (from-resource-exists "config.edn")  ; user config/creds (resources)
+                       (from-resource-exists "creds.edn")
+                       (or user-config {}) ; used in lein-pinkgorilla
+                       ])
+        ks (keys config-files)
+        config (load-config
+                :merge
+                [config-files
+                 (from-system-props)
+                 (from-env) ; env otherwise has way too many settings
+                ;(cli-args) 
+                 ])
+        config (select-keys config ks)]
+    ;(info "keys: " ks)
+    ;(info "config:" config )
+    ;config-files
+    config))
 
 (defn res-str [str]
   (debug "resolving keybindings var: " str)
@@ -58,7 +68,7 @@
 
 (defn load-config!
   ([]
-   (load-config {}))
+   (load-config! {}))
   ([user-config]
    (let [config (load-config-cprop user-config)
          _ (info "webly-config: " config)
