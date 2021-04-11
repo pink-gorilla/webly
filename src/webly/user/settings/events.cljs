@@ -37,3 +37,13 @@
    (let [store (or store {})]
      {:db (assoc-in db [:settings k] v)
       :store (assoc store k v)})))
+
+(reg-event-fx
+ :settings/unset
+ [(inject-cofx :store)]
+ (fn [{:keys [db store]} [_ k]]
+   (info "unsetting setting " k)
+   (let [store (or store {})
+         settings (dissoc (:settings db) k)]
+     {:db (assoc-in db [:settings] settings)
+      :store (dissoc store k)})))
