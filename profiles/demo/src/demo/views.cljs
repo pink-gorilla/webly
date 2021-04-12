@@ -80,6 +80,19 @@
        [link-fn #(dispatch [:settings/set :bongo 123]) " set bongo to 123"]
        [link-fn #(dispatch [:settings/set :bongo 456]) " set bongo to 456"]])))
 
+
+(defn demo-ws []
+  (let [t (subscribe [:demo/time])
+        c (subscribe [:ws/connected?])
+        ]
+    (fn []
+      [:div.bg-blue-400.m-5 {:class "w-1/4"}
+       [:p.text-4xl "websocket"]
+       [:p (str "connected:" (if @c @c "not connected"))]
+       [:p (str "time: " (if @t @t " no time received :-("))]
+       [link-fn #(dispatch [:ws/send [:demo/xxx [123 456 789]]]) " send unimplemented ws event request"]
+     ])))
+
 (defn main []
   [:div
    [:h1 "webly demo"]
@@ -91,6 +104,7 @@
    [demo-dialog]
    [demo-oauth]
    [demo-settings]
+   [demo-ws]
    ])
 
 (defmethod reagent-page :demo/main [& args]

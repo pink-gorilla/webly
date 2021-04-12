@@ -1,0 +1,71 @@
+(ns webly.profile
+  (:require
+   [taoensso.timbre :as timbre :refer [info error]]
+   [webly.config :refer [load-config! get-in-config config-atom]]
+   [webly.prefs :refer [prefs-atom]]
+   [webly.log :refer [timbre-config!]]))
+
+(defonce profiles
+  {:ci          {:prefs   {:tenx false}
+                 :bundle {:shadow-verbose false
+                          :cljs-build :ci
+                          :shadow-mode :release
+                          :size-report false}}
+
+   :release     {:prefs   {:tenx false}
+                 :bundle {:shadow-verbose false
+                          :cljs-build :webly
+                          :shadow-mode :release ; production build - no source maps
+                          :size-report true}}
+
+   :compile     {:prefs   {:tenx true}
+                 :bundle {:shadow-verbose false
+                          :cljs-build :webly
+                          :shadow-mode :compile  ; compile has source maps
+                          :size-report true}}
+
+   :watch       {:prefs   {:tenx true}
+                 :bundle {:shadow-verbose false
+                          :cljs-build :webly
+                          :shadow-mode :compile
+                          :size-report false}
+                 :server {:type :shadow
+                          :wrap-handler-reload false}}
+
+   :jetty       {:prefs   {:tenx true}
+                 :server {:type :jetty
+                          :wrap-handler-reload false}}
+
+   :undertow    {:server {:type :undertow
+                          :wrap-handler-reload false}}})
+
+(defn str->profile [profile-str]
+  (let [p (keyword profile-str)]
+    (get profiles p)))
+
+(defn server? [profile-str]
+  (let [p (str->profile profile-str)]
+    (:server p)))
+
+(defn get-build-prefs [profile]
+  (let [p (get-in profile [:prefs])]
+    (or p {})))
+
+(defn profiles-available []
+  (->> profiles
+       keys
+       (map name)
+       (into [])))
+
+(defn setup-profile [profile-name]
+  (load-config!)
+  (timbre-config! (get-in-config [:timbre-loglevel]))
+  (let [profile (str->profile profile-name)]
+    (if (or (nil? profile-name) (not profile))
+      (error "no profile. valid profiles are: " (profiles-available))
+      (do
+        (info "webly profile-name: " profile-name " profile: " profile)
+        (swap! config-atom merge {:profile profile})
+        (swap! prefs-atom merge (get-build-prefs profile))
+        (info "prefs: " @prefs-atom)))
+    profile))

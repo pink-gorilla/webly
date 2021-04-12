@@ -7,12 +7,17 @@
 # UI demo
 
 ```
-lein demo            ; The demo runs a webserver on port 8000. "shadow-cljs watch" mode
+lein webly watch     ; The demo runs a webserver on port 8000. "shadow-cljs watch" mode
 ```
 
 ```
-lein build           ; Build cljs bundle, and output bundle stats
-lein run-web         ; Serves website from precompiled bundle.
+lein webly compile  ; Build cljs bundle, and output bundle stats
+lein webly jetty     ; Serves website from precompiled bundle.
+```
+
+```
+lein webly release   ; Build cljs bundle, and output bundle stats. no tenx. no source-maps
+lein webly jetty     ; Serves website from precompiled bundle.
 ```
 
 ```
