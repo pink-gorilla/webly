@@ -24,7 +24,14 @@
  :shadow {:dev-http {:port 8000}
           :http {:port 8001 :host "localhost"}
           :nrepl {:port 8002}}
+ 
+ :web-server     {:port 8000
+                  :host "0.0.0.0"}
+ :web-server-api {:port 8007
+                  :host "0.0.0.0"}
 
+ :jetty-ws {"/api/chsk" :ws/chsk-get}
+ 
  :google-analytics {:enabled true
                     :id "UA-154548494-1"} ; not a secret 
 
@@ -41,4 +48,6 @@
 
 
  :settings {:use-localstorage  false}
+
+ 
  }

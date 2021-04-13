@@ -21,7 +21,8 @@
    [webly.user.oauth2.subscriptions]
    [webly.user.tenx.events]
    [webly.user.settings.subscriptions]
-   [webly.user.settings.events]))
+   [webly.user.settings.events]
+   [webly.ws.events]))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]
@@ -75,6 +76,7 @@
      (dispatch [:settings/init])
      (dispatch [:markdown/init])
      (dispatch [:markdown/load-index])
+     (dispatch [:ws/init])
      (if start-user-app
        (do (info "starting user app: " start-user-app)
            (dispatch start-user-app))

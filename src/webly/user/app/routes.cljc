@@ -8,7 +8,11 @@
    "oauth2/" {"github/token"  {:get :webly/oauth2-github}
               ; "redirect/" 
               ;  ["redirect/" :provider] {:get :oauth2/redirect}
-              }})
+              }
+   ; ws
+   "token"  :ws/token
+   "chsk"  {:get  :ws/chsk-get
+            :post :ws/chsk-post}})
 
 (def webly-routes-app
   {["md/" :file] :ui/markdown

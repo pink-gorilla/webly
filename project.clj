@@ -8,14 +8,14 @@
 
   :min-lein-version "2.9.4" ; nrepl 0.7.0
 
-  :jvm-opts ["-Dtrust_all_cert=true" ; used when ssl certs are fucked up
-               ;"-Djavax.net.ssl.trustStore=/home/andreas/.keystore"
-             ]
+  ;:jvm-opts ["-Dtrust_all_cert=true" ; used when ssl certs are fucked up
+  ;             ;"-Djavax.net.ssl.trustStore=/home/andreas/.keystore"
+  ;           ]
 
 
-  :prep-tasks ["css" ; copies tailwind css, so it ends up as resources 
-               "google-fonts"
-               "md"]
+  ;:prep-tasks ["css" ; copies tailwind css, so it ends up as resources 
+  ;             "google-fonts"
+  ;             "md"]
 
   :release-tasks [["vcs" "assert-committed"]
                   ["bump-version" "release"]
@@ -44,7 +44,7 @@
                  [org.clojure/core.async "1.3.610"]
                  [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
                  [clojure.java-time "0.3.2"]
-      
+
                  ; encoding
                  [org.clojure/data.json "1.0.0"]
                  [luminus-transit "0.1.2"]
@@ -99,6 +99,18 @@
                  [resauce "0.1.0"] ; resources
                  [cprop "0.1.17"] ; config management
                  [akiroz.re-frame/storage "0.1.4"] ; localstorage 
+
+                 ; supported servers
+                 [info.sunng/ring-jetty9-adapter "0.14.0"]
+                 [luminus/ring-undertow-adapter "1.2.0"]
+                 [http-kit "2.5.3"]
+
+                 ; websockets
+                 [com.taoensso/sente "1.16.2"
+                  :exclusions [aleph
+                               org.clojure/core.async
+                               org.immutant
+                               info.sunng/ring-jetty9-adapter]] ;  websocket
                  ]
 
   :target-path  "target/jar"
@@ -151,6 +163,9 @@
             "md"  ^{:doc "Copies markdown files to resources"}
             ["shell" "./scripts/copy-md.sh"]
 
+            "prep-res"
+            ["do" ["css"] ["google-fonts"] ["md"]]
+
             ;; SHADOW-CLJS (for testing purposes only)
 
             ;"shadow-build"  ^{:doc "compiles bundle"}
@@ -159,34 +174,19 @@
             ;"shadow-watch"  ^{:doc "compiles bundle"}
             ;["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "watch" "webly"]
 
-            ;; WEBLY 
+            ;; DEMO 
 
-            ; "build-dev"  ^{:doc "compiles bundle via webly"}
-            ; ["with-profile" "+demo" "run" "-m" "webly.build-cli" "compile" "+demo" "demo.app/handler" "demo.app"]
-
-            ; "build-prod"  ^{:doc "compiles bundle via webly"}
-            ; ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+demo" "demo.app/handler" "demo.app"]
-
-             ;; DEMO 
-
-            "demo"  ^{:doc "compiles & runs demo app and serves via webserver."}
-            ["with-profile" "+demo" "run" "-m" "demo.app" "watch"]
-
-            "build"  ^{:doc "compiles & runs demo app and serves via webserver."}
-            ["with-profile" "+demo" "run" "-m" "demo.app" "release"]
-
-            "run-web"  ^{:doc "runs compiled bundle on shadow dev server"}
-            ["with-profile" "+demo" "run" "-m" "demo.app" "run"]
+            "webly"  ^{:doc "webly - add profile name"}
+            ["with-profile" "+demo" "run" "-m" "demo.app"]
             
             ;; Unit Tests  
-                              
+
             "test-clj"  ^{:doc "run unit tests (they need demo profile)"}
-            ["with-profile" "+demo" "test"]                         
-            
+            ["with-profile" "+demo" "test"]
+
             "build-test"  ^{:doc "compiles ci unit tests."}
             ["with-profile" "+demo" "run" "-m" "demo.app" "ci"]
 
             "test-js" ^{:doc "run unit test JavaScript."}
-            ["do" "build-test" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]
-
-             })
+            ["do" ["build-test"] 
+                  ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]})

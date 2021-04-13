@@ -30,6 +30,7 @@ jobs:
       run: lein cljfmt check
     - name: Run tests
       run: |
+        lein prep-res
         lein test-clj
     - name: Release
       env:
@@ -44,4 +45,6 @@ jobs:
         #
         export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"
         # git diff
+        lein prep-res
         lein release
+  

@@ -6,52 +6,48 @@
    [shadow.cljs.devtools.api :as shadow
     ;:refer [watch* worker-running?]
     ]
-   [shadow.cljs.devtools.server :as shadow-server]
+
    [webly.build.install-npm :refer [install-npm]]
    [webly.build.bundle-size :refer [generate-bundlesize-report]]))
 
 (defn generate-config [config]
   (spit "shadow-cljs.edn" (pr-str config)))
 
-(defn watch-api
-  {:shadow/requires-server true}
-  []
-  (let [opts {:verbose true}]
-    (shadow-server/start!)
-    (shadow/watch :webly opts)
-                    ;(shadow-server/stop!)
+#_(defn watch-api
+    {:shadow/requires-server true}
+    []
+    (let [opts {:verbose true}]
+      (shadow-server/start!)
+      (shadow/watch :webly opts)))
+
+(defn watch-cli [cljs-build]
+  (let [id  (name cljs-build)]
+    (info "watching " id)
+  ;(shadow.cljs.devtools.cli-actual/-main "watch" "webly")
+    (shadow.cljs.devtools.cli/-main "watch" id)))
+
+(defn build [profile shadow-config]
+  (generate-config shadow-config)
+  (let [{:keys [shadow-verbose cljs-build shadow-mode size-report]} (get profile :bundle)
+        shadow-opts {:verbose shadow-verbose}]
+
+    (install-npm shadow-config shadow-opts)
+
+    (case shadow-mode
+      :release (shadow/release cljs-build shadow-opts)  ; production build (onebundle file, no source-maps)
+      :compile (shadow/compile cljs-build shadow-opts) ; dev build (one bundle per ns, source-maps)
+      :watch (watch-cli cljs-build) ;(watch-api)  hot reloading
+      )
+
+    (when size-report
+      (info "creating size report ..")
+      (generate-bundlesize-report))
+
+     ; 
     ))
 
-(defn watch-cli []
-  ;(shadow.cljs.devtools.cli-actual/-main "watch" "webly")
-  (shadow.cljs.devtools.cli/-main "watch" "webly"))
 
-(defn build [mode config]
-  (generate-config config)
-  (let [opts {:verbose true}]
 
-    (install-npm config opts)
 
-    (case mode
-
-      ; production build (onebundle file, no source-maps)
-      :release (do (shadow/release :webly opts)
-                   (generate-bundlesize-report))
-
-      ; dev build (one bundle per ns, source-maps)
-      :compile (do (shadow/compile :webly opts)
-                   (generate-bundlesize-report))
-
-      ; shadow-web server with build bundle (release / compile)
-      :run (shadow-server/start!)
-
-      ; hot reloading
-      :watch ;(watch-api)
-      (watch-cli)
-
-      :ci
-      (shadow/release :ci opts)
-     ; 
-      )))
 
 

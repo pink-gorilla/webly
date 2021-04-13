@@ -7,6 +7,7 @@
    ; side-effects 
    [demo.views]   
    [demo.events]
+   [demo.time]
    ))
 
 (defn ^:export start []
