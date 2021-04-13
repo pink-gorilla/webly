@@ -188,4 +188,5 @@
             ["with-profile" "+demo" "run" "-m" "demo.app" "ci"]
 
             "test-js" ^{:doc "run unit test JavaScript."}
-            ["do" "build-test" ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]})
+            ["do" ["build-test"] 
+                  ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]})
