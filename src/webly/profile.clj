@@ -36,6 +36,10 @@
                  :server {:type :jetty
                           :wrap-handler-reload false}}
 
+   :httpkit      {:prefs   {:tenx true}
+                  :server {:type :httpkit
+                           :wrap-handler-reload false}}
+
    :undertow    {:server {:type :undertow
                           :wrap-handler-reload false}}})
 

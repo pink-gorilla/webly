@@ -4,6 +4,7 @@
    [taoensso.sente.packers.transit :as sente-transit]
    [taoensso.sente.server-adapters.undertow]
    [taoensso.sente.server-adapters.jetty9]
+   [taoensso.sente.server-adapters.http-kit]
    [taoensso.sente  :as sente]
    [webly.ws.id :refer [get-sente-session-uid]]
    [webly.ws.msg-handler :refer [event-msg-handler]]))
@@ -19,13 +20,16 @@
   (require '[taoensso.sente.server-adapters.jetty9])
   taoensso.sente.server-adapters.jetty9/get-sch-adapter)
 
-   ;[taoensso.sente.server-adapters.http-kit :refer [get-sch-adapter]]
-
+(defn httpkit []
+  (info "websocket mode: httpkit")
+  (require '[taoensso.sente.server-adapters.http-kit])
+  taoensso.sente.server-adapters.http-kit/get-sch-adapter)
 
 (defn get-adapter [server-type]
   (case server-type
     :undertow  (undertow)
-    :jetty (jetty)))
+    :jetty (jetty)
+    :httpkit (httpkit)))
 
 (reset! sente/debug-mode?_ true) ; Uncomment for extra debug info
 

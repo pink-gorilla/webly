@@ -100,9 +100,12 @@
                  [cprop "0.1.17"] ; config management
                  [akiroz.re-frame/storage "0.1.4"] ; localstorage 
 
-
+                 ; supported servers
                  [info.sunng/ring-jetty9-adapter "0.14.0"]
                  [luminus/ring-undertow-adapter "1.2.0"]
+                 [http-kit "2.5.3"]
+
+                 ; websockets
                  [com.taoensso/sente "1.16.2"
                   :exclusions [aleph
                                org.clojure/core.async
@@ -171,15 +174,7 @@
             ;"shadow-watch"  ^{:doc "compiles bundle"}
             ;["with-profile" "+demo" "run" "-m" "shadow.cljs.devtools.cli" "watch" "webly"]
 
-            ;; WEBLY 
-
-            ; "build-dev"  ^{:doc "compiles bundle via webly"}
-            ; ["with-profile" "+demo" "run" "-m" "webly.build-cli" "compile" "+demo" "demo.app/handler" "demo.app"]
-
-            ; "build-prod"  ^{:doc "compiles bundle via webly"}
-            ; ["with-profile" "+demo" "run" "-m" "webly.build-cli" "release" "+demo" "demo.app/handler" "demo.app"]
-
-             ;; DEMO 
+            ;; DEMO 
 
             "webly"  ^{:doc "webly - add profile name"}
             ["with-profile" "+demo" "run" "-m" "demo.app"]

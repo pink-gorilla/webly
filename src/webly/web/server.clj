@@ -11,6 +11,9 @@
    ;undertow
    [ring.adapter.undertow :refer [run-undertow]]
    ;
+   ;httpkit
+   [org.httpkit.server :as httpkit]
+
    [shadow.cljs.devtools.server :as shadow-server]))
 
 (defn run-jetty-server [ring-handler]
@@ -23,10 +26,14 @@
                            ;:join?  false        
                              })))
 
+(defn run-httpkit-server
+  [ring-handler port host]
+  (let [conn (init-ws! :httpkit)]
+    (info "starting httpkit web at " port host)
+    (httpkit/run-server ring-handler {:port port
+                                      :host host})))
 
 ; https://github.com/luminus-framework/ring-undertow-adapter
-
-
 (defn run-undertow-server [ring-handler port host]
   (require '[ring.adapter.undertow :refer [run-undertow]])
   (let [;run-undertow (resolve)
@@ -51,5 +58,6 @@
     (case server-type
       :jetty (run-jetty-server ring-handler)
       :undertow (run-undertow-server ring-handler port host)
+      :httpkit (run-httpkit-server ring-handler port host)
       :shadow (run-shadow-server)
       (error "run-server failed: server type not found: "))))
