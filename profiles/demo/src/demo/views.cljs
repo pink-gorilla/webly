@@ -41,7 +41,7 @@
 
 (defn demo-routing []
   [:div.bg-blue-400.m-5 {:class "w-1/4"}
-   [:p.text-4xl "bidi routing demo"]
+   [:p.text-4xl "bidi routes"]
    [:p [:a.bg-green-300 {:on-click #(g! :demo/help)} "help!"]]
    [:p [:a.bg-red-300 {:on-click #(g! :demo/save-non-existing)} "save-as (test for not implemented)"]]
 

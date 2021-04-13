@@ -27,10 +27,12 @@
    :watch       {:prefs   {:tenx true}
                  :bundle {:shadow-verbose false
                           :cljs-build :webly
-                          :shadow-mode :compile
+                          :shadow-mode :watch
                           :size-report false}
-                 :server {:type :shadow
-                          :wrap-handler-reload false}}
+                 :server {:type :jetty
+                          :wrap-handler-reload false
+                          :api true  ; 
+                          }}
 
    :jetty       {:prefs   {:tenx true}
                  :server {:type :jetty

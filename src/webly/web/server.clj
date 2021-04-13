@@ -16,25 +16,28 @@
 
    [shadow.cljs.devtools.server :as shadow-server]))
 
-(defn run-jetty-server [ring-handler]
-  (let [conn (init-ws! :jetty)
-        {:keys [port host]} (get-in-config [:web-server])]
+
+; https://github.com/sunng87/ring-jetty9-adapter
+
+
+(defn run-jetty-server [ring-handler port host api]
+  (let [conn (init-ws! :jetty)]
     (info "Starting Jetty web server at port " port " ..")
     (run-jetty ring-handler {:port port
+                             :host host
                              :websockets  {"/api/chsk" (wrap-webly (partial ws-handshake-handler conn))}
-                             :allow-null-path-info true
-                           ;:join?  false        
-                             })))
+                             :allow-null-path-info true ; omit the trailing slash from your URLs
+                             :join?  (if api false true)})))
 
 (defn run-httpkit-server
-  [ring-handler port host]
+  [ring-handler port host api]
   (let [conn (init-ws! :httpkit)]
     (info "starting httpkit web at " port host)
     (httpkit/run-server ring-handler {:port port
                                       :host host})))
 
 ; https://github.com/luminus-framework/ring-undertow-adapter
-(defn run-undertow-server [ring-handler port host]
+(defn run-undertow-server [ring-handler port host api]
   (require '[ring.adapter.undertow :refer [run-undertow]])
   (let [;run-undertow (resolve)
         conn (init-ws! :undertow)]
@@ -48,16 +51,19 @@
 
 (defn run-shadow-server []
   (let [conn (init-ws! :undertow)]
-    (shadow-server/start!)
+    ;(shadow-server/start!)
     ;(shadow-server/stop!)
     ))
 
 (defn run-server [ring-handler profile]
-  (let [server-type (get-in profile [:server :type])
-        {:keys [port host]} (get-in-config [:web-server])]
-    (case server-type
-      :jetty (run-jetty-server ring-handler)
-      :undertow (run-undertow-server ring-handler port host)
-      :httpkit (run-httpkit-server ring-handler port host)
-      :shadow (run-shadow-server)
+  (let [{:keys [type api wrap-handler-reload]} (get-in profile [:server])
+        web-server (if api :web-server-api :web-server)
+        {:keys [port host]} (get-in-config [web-server])]
+    (if api
+      (info "using web-server-api"))
+    (case type
+      :jetty (run-jetty-server ring-handler port host api)
+      :undertow (run-undertow-server ring-handler port host api)
+      :httpkit (run-httpkit-server ring-handler port host api)
+      ;:shadow (run-shadow-server)
       (error "run-server failed: server type not found: "))))

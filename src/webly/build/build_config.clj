@@ -21,8 +21,10 @@
       (shadow/watch :webly opts)))
 
 (defn watch-cli [cljs-build]
+  (let [id  (name cljs-build)]
+    (info "watching " id)
   ;(shadow.cljs.devtools.cli-actual/-main "watch" "webly")
-  (shadow.cljs.devtools.cli/-main "watch" (name cljs-build)))
+    (shadow.cljs.devtools.cli/-main "watch" id)))
 
 (defn build [profile shadow-config]
   (generate-config shadow-config)

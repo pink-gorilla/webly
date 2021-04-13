@@ -13,3 +13,14 @@
                           (str ":" port)
                           ""))]
     (str proto ":" (:host app-url) port-postfix (str/replace (:path app-url) #"[^/]*$" path))))
+
+(defn sente-ws-url [db]
+  (let [app-url (application-url)
+        {:keys [protocol host port]} app-url
+        proto (if (= protocol "http") "ws" "wss")
+        path "/api/chsk"
+        api (get-in db [:config :profile :server :api])
+        port-api (get-in db [:config :web-server-api :port])
+        port (if api port-api port)]
+    (str protocol "://" host ":" port path)))
+

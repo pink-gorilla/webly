@@ -1,6 +1,6 @@
 (ns webly.ws.adapter
   (:require
-   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof warnf errorf trace]]
+   [taoensso.timbre :as timbre :refer-macros [tracef debug debugf infof warnf errorf trace]]
    [taoensso.sente :as sente :refer [cb-success?]]
    [taoensso.sente.packers.transit :as sente-transit] ;; Optional, for Transit encoding
    [webly.ws.id :refer [?csrf-token]]
@@ -8,14 +8,19 @@
 
 ;; see: https://github.com/ptaoussanis/sente/blob/master/example-project/src/example/client.cljs
 
-(defn ws-init! [url]
-  (debugf "connecting sente websocket..")
+
+(defn ws-init! [path port]
+  (debug "connecting sente websocket.. " path port)
   (let [packer (sente-transit/get-transit-packer)
+        opts {:type :auto  ; :ajax
+              :packer packer}
+        opts (if port
+               (assoc opts :port port)
+               opts)
         {:keys [chsk ch-recv send-fn state]} (sente/make-channel-socket-client!
-                                              url ; Must match server Ring routing URL
+                                              path; Must match server Ring routing URL
                                               ?csrf-token
-                                              {:type :auto  ; :ajax
-                                               :packer packer})]
+                                              opts)]
     {:chsk chsk
      :ch-chsk ch-recv
      :chsk-send! send-fn

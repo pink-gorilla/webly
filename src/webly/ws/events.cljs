@@ -3,14 +3,16 @@
    [taoensso.timbre :refer-macros [debug info error]]
    [re-frame.core :refer [reg-event-db reg-event-fx reg-sub dispatch]]
    ;[webly.user.notifications.core :refer [add-notification]]
-   [webly.ws.core :refer [init-ws!]]))
+   [webly.ws.core :refer [init-ws!]]
+   [webly.user.helper :refer [sente-ws-url]]))
 
 (reg-event-db
  :ws/init
  (fn [db [_]]
-   (let [url "/api/chsk"]
-     (info "ws init: ")
-     (init-ws! url)
+   (let [api (get-in db [:config :profile :server :api])
+         port-api (get-in db [:config :web-server-api :port])
+         port (when api port-api)]
+     (init-ws! "/api/chsk" port)
      db)))
 
 ; [{:type :auto, :open? false, :ever-opened? false, :csrf-token "6zxUoCmfhv5lleMLfrHMgpChTHYecrY2TSswTz9YTrLLmm/bn7WWT+NCe4mbEFFfEg+gl/Zyobr7tdQX"} 

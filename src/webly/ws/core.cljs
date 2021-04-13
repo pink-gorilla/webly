@@ -7,8 +7,8 @@
 
 (defonce c (atom nil))
 
-(defn init-ws! [url]
-  (let [conn (ws-init! url)]
+(defn init-ws! [path port]
+  (let [conn (ws-init! path port)]
     (reset! c conn)
     (start-router! conn)
     (ws/start-heartbeats! conn)))
