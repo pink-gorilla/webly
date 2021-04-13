@@ -3,6 +3,7 @@
    [taoensso.timbre :as timbre :refer [info error]]
    [webly.config :refer [load-config! get-in-config config-atom]]
    [webly.web.middleware :refer [wrap-webly]]
+   [webly.web.handler :refer [handler-registry]]
    ; ws
    [webly.ws.core :refer [init-ws!]]
    [webly.ws.handler :refer [ws-handshake-handler]]
@@ -16,16 +17,22 @@
 
    [shadow.cljs.devtools.server :as shadow-server]))
 
-
-; https://github.com/sunng87/ring-jetty9-adapter
-
+(defn jetty-ws-map []
+  (let [jetty-ws (get-in-config [:jetty-ws])
+        v  (map (fn [[route kw]]
+                  [route (get @handler-registry kw)])
+                jetty-ws)]
+    (info "jetty ws map:" jetty-ws)
+    (into {} v)))
 
 (defn run-jetty-server [ring-handler port host api]
-  (let [conn (init-ws! :jetty)]
-    (info "Starting Jetty web server at port " port " ..")
+  ; https://github.com/sunng87/ring-jetty9-adapter  
+  (let [conn (init-ws! :jetty)
+        ws-map (jetty-ws-map)]
+    (info "Starting Jetty web server at port " port)
     (run-jetty ring-handler {:port port
                              :host host
-                             :websockets  {"/api/chsk" (wrap-webly (partial ws-handshake-handler conn))}
+                             :websockets ws-map ; {"/api/chsk" (wrap-webly (partial ws-handshake-handler conn))}
                              :allow-null-path-info true ; omit the trailing slash from your URLs
                              :join?  (if api false true)})))
 
