@@ -30,6 +30,7 @@ jobs:
       run: lein cljfmt check
     - name: Run tests
       run: |
+        lein prep-res
         lein test-clj
     - name: Release
       env:
