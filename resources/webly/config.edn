@@ -13,7 +13,7 @@
           ]
          :lein-cljs-profile "+dev"
          :ns-cljs-app [user-app.app]
-         :start-user-app [:demo/start]  ; after config loaded
+         :start-user-app [:webly/start-default]  ; after config loaded
          :user-routes-app "user-app.routes/routes-app"
          :user-routes-api "user-app.routes/routes-api"
          :bundle-entry  "webly.web.app.after-load ();" ; no need to change 

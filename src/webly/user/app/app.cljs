@@ -8,6 +8,7 @@
 
    ; side-effects
    [webly.web.events-bidi]
+   [webly.ws.events]
    [webly.user.config.events]
    [webly.user.config.subscription]
    [webly.user.dialog]
@@ -22,7 +23,7 @@
    [webly.user.tenx.events]
    [webly.user.settings.subscriptions]
    [webly.user.settings.events]
-   [webly.ws.events]))
+   [webly.user.app.events]))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]

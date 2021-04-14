@@ -60,9 +60,14 @@
    ;:user-config {}
    ;
      :builds {:webly {:target :browser
+                      :module-loader true
                       :output-dir "target/webly/public"
                       :asset-path "/r"
-                      :modules {:main {:entries ns-cljs-app}}
+                      :modules {:main     {:entries ns-cljs-app}
+                                :snippets {:entries ['snippets.snip]
+                                           :depends-on #{:main}}
+                                :docs {:entries ['webly.user.markdown.views]
+                                       :depends-on #{:main}}}
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")
                     ;           :after-load (symbol "webly.web.app/after-load")}
                       :build-options    {:ns-aliases (build-ns-aliases)}

@@ -4,7 +4,9 @@
   {"time"   {:get :api/time}
    "test"   {:get :api/test
              :post :api/test  ; used in unit-test
-             }})
+             }
+   "snippet"   {:get :api/snippet}
+   })
 
 (def routes-app
   {""        :demo/main
