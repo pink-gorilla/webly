@@ -14,7 +14,7 @@
 (def on-conn-chg (atom log-on-conn-chg))
 
 (defn- watch-conn [conn]
-  (let [{:keys connected-uids} conn]
+  (let [{:keys [connected-uids]} conn]
     (add-watch connected-uids :connected-uids
                (fn [_ _ old new]
                  (when (not= old new)
