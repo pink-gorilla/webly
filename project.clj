@@ -1,4 +1,4 @@
-(defproject org.pinkgorilla/webly "0.1.17-SNAPSHOT"
+(defproject org.pinkgorilla/webly "0.1.17"
   :description "web (server / reagent) helper library."
   :url "https://github.com/pink-gorilla/webly"
   :deploy-repositories [["releases" {:url "https://clojars.org/repo"
