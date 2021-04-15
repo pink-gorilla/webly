@@ -48,7 +48,7 @@
                  ; encoding
                  [org.clojure/data.json "1.0.0"]
                  [luminus-transit "0.1.2"]
-                 [cheshire "5.10.0"]  ; JSON parsings
+                 [cheshire "5.10.0"]  ; JSON parsings and pretty printing
                  [com.taoensso/encore "3.18.0"]
 
                  ; backend
@@ -111,6 +111,8 @@
                                org.clojure/core.async
                                org.immutant
                                info.sunng/ring-jetty9-adapter]] ;  websocket
+                 
+                 [fipp "0.6.23"] ; edn pretty printing
                  ]
 
   :target-path  "target/jar"
