@@ -19,13 +19,7 @@
 
 (defmethod -event-msg-handler :chsk/ws-ping
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
-  (infof ":chsk/ping: %s" event))
-
-(defmethod -event-msg-handler :ws/ping
-  [{:as req :keys [event id ?data ring-req ?reply-fn send-fn]}]
-  (debugf ":ws/ping: %s" event)
-  (ws-reply req [:ws/pong event]) ; send back as type pong the same ping event
-  )
+  (debugf ":chsk/ws-ping: %s" event))
 
 (defmethod -event-msg-handler :default
   [{:keys [event id ?data ring-req ?reply-fn send-fn] :as req}]

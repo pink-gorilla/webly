@@ -33,15 +33,11 @@
 
 (defmethod -event-msg-handler :chsk/ws-ping
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]
-  (infof ":chsk/ws-ping: %s" event))
-
-(defmethod -event-msg-handler :ws/pong
-  [{:as ev-msg :keys [event]}]
-  (errorf "xxxx ws pong: %s" event))
+  (debugf ":chsk/ws-ping: %s" event))
 
 (defmethod -event-msg-handler :default
   [{:as ev-msg :keys [event]}]
-  (errorf "Unhandled event: %s" event))
+  (errorf "Unhandled ws event: %s" event))
 
 ; msg-handler
 

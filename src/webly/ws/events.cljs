@@ -30,7 +30,6 @@
  :ws/state
  (fn [db [_ new-state-map old-state-map]]
    (debug "ws/state " new-state-map)
-   (info "ws/ws state: " new-state-map)
    (when (:first-open? new-state-map)
      (info "ws open (first-time): " new-state-map))
    (assoc db :ws new-state-map)))
@@ -39,12 +38,6 @@
  :ws/connected?
  (fn [db _]
    (get-in db [:ws :open?])))
-
-(reg-event-db
- :ws/pong
- (fn [db [_ data]]
-   (debug "ws pong: " data)
-   db))
 
 (reg-event-db
  :ws/unknown

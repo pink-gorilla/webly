@@ -24,19 +24,3 @@
      (if chsk-send!
        (chsk-send! data 5000 cb)  ; sente send callbacks dont work with reframe
        (error "chsk-send! not defined! " data)))))
-
-
-
-
-
-;; Heartbeat sender
-
-
-(defn start-heartbeats!
-  "setup a loop to broadcast an event to all connected users every second"
-  [conn]
-  (go-loop [i 0]
-    (<! (async/timeout 30000))
-    (send conn [:ws/ping {:i i}])
-    (recur (inc i))))
-
