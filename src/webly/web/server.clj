@@ -34,6 +34,7 @@
                              :host host
                              :websockets ws-map ; {"/api/chsk" (wrap-webly (partial ws-handshake-handler conn))}
                              :allow-null-path-info true ; omit the trailing slash from your URLs
+                             :ws-max-idle-time 3600000 ; important for nrepl middleware 
                              :join?  (if api false true)})))
 
 (defn run-httpkit-server
