@@ -3,6 +3,13 @@
    #?(:clj  [taoensso.timbre :refer [debug info warn error]])
    #?(:cljs  [taoensso.timbre :refer-macros [debug info warn error]])))
 
+
+
+
+;The syntax is :async true for tags that don't have a value, but you'll need to ensure that the :mode is set to :html. So:
+; (html {:mode :html} [:script {:async true}])
+; Note that if you use the html5 macro, the mode will automatically be set when rendering.
+
 (defn script-cljs [id]
   [:script {:async nil ; async not rendered. see: https://github.com/weavejester/hiccup/issues/182
             :type "text/javascript"
