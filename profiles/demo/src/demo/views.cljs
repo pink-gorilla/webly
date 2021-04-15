@@ -2,7 +2,7 @@
   (:require
    [re-frame.core :refer [dispatch subscribe]]
    [webly.web.handler :refer [reagent-page]]
-   [webly.web.routes :refer [goto! current query-params]]
+   [webly.web.routes :refer [goto! current]]
    [webly.user.notifications.core :refer [add-notification]]
    [webly.user.oauth2.view :refer [tokens-view]]
    [webly.user.settings.local-storage :refer [ls-get ls-set!]]))
@@ -42,11 +42,10 @@
 (defn demo-routing []
   [:div.bg-blue-400.m-5 {:class "w-1/4"}
    [:p.text-4xl "bidi routes"]
-   [:p [:a.bg-green-300 {:on-click #(g! :demo/help)} "help!"]]
-   [:p [:a.bg-red-300 {:on-click #(g! :demo/save-non-existing)} "save-as (test for not implemented)"]]
-
-   [:p [:a.bg-green-300 {:on-click #(g! :demo/party :location "Vienna")} "party in vienna (test for route-params)"]]
-   [:p [:a.bg-green-300 {:on-click #(g! :demo/party :location "Bali" :query-params {:expected-guests 299})} "party in Bali (test for query-params)"]]
+   [:p [link-dispatch [:bidi/goto :demo/help] "help!"]]
+   [:p [link-dispatch [:bidi/goto :demo/save-non-existing] "save-as (test for not implemented)"]]
+   [:p [link-dispatch [:bidi/goto :demo/party :location "Vienna"] "party in vienna (test for route-params)"]]
+   [:p [link-dispatch [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}] "party in Bali (test for query-params)"]]
 
    [:p [link-href "/api/test" "demo api test"]]
    [:p [link-href "/api/time" "demo api time"]]])

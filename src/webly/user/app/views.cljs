@@ -4,7 +4,7 @@
    [reagent.dom]
    [re-frame.core :refer [subscribe]]
    [webly.web.handler :refer [reagent-page]]
-   [webly.web.routes :refer [current query-params]]
+   [webly.web.routes :refer [current]]
    [webly.user.config.core :refer [link-css]]
    [webly.user.dialog :refer [modal-container]]
    [webly.user.notifications.dialog :refer [notifications-container]]))

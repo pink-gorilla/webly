@@ -3,7 +3,7 @@
    [taoensso.timbre :refer-macros [info]]
    [re-frame.core :refer [reg-event-db reg-event-fx]]
    [pushy.core :as pushy]
-   [webly.web.routes :refer [routes set-initial-query-params history goto!]]))
+   [webly.web.routes :refer [routes history goto!]])) ;set-initial-query-params
 
 (reg-event-db
  :bidi/init
@@ -14,15 +14,14 @@
    (let [db (or db {})]
      (info "starting pushy")
      (pushy/start! history) ; link url => state
-     (set-initial-query-params)
+     ;(set-initial-query-params)
      (assoc-in db [:bidi] {:client routes-frontend :server routes-backend}))))
 
 (reg-event-fx
  :bidi/goto
  (fn [_ [_ handler & params]]
-   (info "bidi goto handler: " handler " params: " params)
    (if (> (count params) 0)
-     (do (info "goto! (params): "  (concat [handler] params))
+     (do (info "bidi/goto! (params): "  (concat [handler] params))
          (apply goto! (concat [handler] params)))
-     (do (info "goto! (no-params)" handler)
+     (do (info "bidi/goto! (no-params)" handler)
          (goto! handler)))))
