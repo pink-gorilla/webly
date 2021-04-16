@@ -12,3 +12,5 @@ function sendcallback (provider)
   console.log ("sending back: " + msg)
   bc.postMessage(msg); 
 }
+
+// window.location.hash = '';

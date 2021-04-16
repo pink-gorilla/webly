@@ -2,30 +2,13 @@
   (:require
    [re-frame.core :refer [dispatch subscribe]]
    [webly.web.handler :refer [reagent-page]]
-   [webly.web.routes :refer [goto! current]]
    [webly.user.notifications.core :refer [add-notification]]
-   [webly.user.oauth2.view :refer [tokens-view]]
+   [webly.user.oauth2.view :refer [tokens-view user-button]]
    [webly.user.settings.local-storage :refer [ls-get ls-set!]]))
 
 (defn show-dialog-demo []
   (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
              :small]))
-
-
-;(def g! goto!)
-
-
-; g! does the same as goto! but dispatches reframe bidi/goto event
-(defn g!
-  ([handler]
-   (println "dispatching bidi/goto (no-args): " handler)
-   (dispatch [:bidi/goto handler]))
-  ([handler & args]
-   (println "g! with-args: handler:" handler "args: " args)
-   (let [x (into [:bidi/goto handler] args)]
-     (println "dispatching bidi/goto (args): " x)
-     (dispatch x))))
-
 
 (defn link-fn [fun text]
   [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
@@ -53,6 +36,8 @@
 (defn demo-oauth []
   [:div.bg-blue-400.m-5 {:class "w-1/4"}
    [:p.text-4xl "oauth2"]
+   [user-button :github]
+   [user-button :google]
    [:p [link-dispatch [:oauth2/login :github] "github login via popup"]]
    [:p [link-dispatch [:oauth2/login :google] "google login via popup"]]
    [:p [link-href "/oauth2/github/token?code=99" "api test: github code ->token"]]
@@ -112,7 +97,7 @@
 (defn help []
   [:div
    [:h1 "webly help"]
-   [:a.bg-green-300 {:on-click #(g! :demo/main)} "main"]
+   [:p [link-dispatch [:bidi/goto  :demo/main] "main"]]
    [:h1 "help!"]
    [:p "a moon image should show below. this is a test for webly resource handler."]
    [:img {:src "/r/moon.jpg"}]])
