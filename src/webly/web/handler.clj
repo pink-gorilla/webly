@@ -18,9 +18,7 @@
 (defn add-ring-handler [key handler]
   (swap! handler-registry assoc key handler))
 
-
 ; not found handler
-
 
 (def not-found-body "<h1>  bummer, not found </h1")
 
@@ -29,9 +27,7 @@
 
 (add-ring-handler :webly/not-found not-found-handler)
 
-
 ; server request serving
-
 
 (defn get-handler-backend
   [handler-kw]
@@ -77,40 +73,8 @@
          (apply dissoc match-context :handler (keys req)))))))
 
 
-;; OLD CODE
-
-
-(comment
-
-  (defn frontend? [routes-frontend handler-kw]
-    (try
-      (bidi/path-for routes-frontend handler-kw)
-      (catch Exception e
-        (error "exception in determining bidi/path-for for " handler-kw " ex:" e)
-        true)))
-
-  (defn get-handler-old
-    [app-handler routes-frontend handler-kw]
-    (when (keyword? handler-kw) ;resources have a wrapped handler
-      (debug "get-handler:" handler-kw))
-    (if (keyword? handler-kw)
-      (if-let [handler (handler-kw @handler-registry)]
-        handler
-        (if (frontend? routes-frontend handler-kw)
-          (do (debug "get-handler: rendering web-app for frontend-route")
-              app-handler)
-          (do (error "handler-registry does not contain handler for: " handler-kw)
-              nil)))
-      handler-kw))
-
-  (defn make-handler-old
-    [app-handler routes-backend routes-frontend]
-    (bidi.ring/make-handler routes-backend (partial get-handler-old app-handler routes-frontend)))
-
-;
-  )
-
 ; testing:
+
 
 (comment
   ; (bidi.ring/->ResourcesMaybe {:prefix "public"})

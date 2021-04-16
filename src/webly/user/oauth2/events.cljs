@@ -6,7 +6,8 @@
    [reagent.core :as r]
    [re-frame.core :refer [reg-event-fx reg-event-db dispatch]]
    ["oauth2-popup-flow" :refer [OAuth2PopupFlow]]
-   [webly.user.oauth2.provider :refer [providers]]))
+   [webly.user.oauth2.provider :refer [providers]]
+   [webly.user.oauth2.redirect :refer [register-callback]]))
 
 (defn clear-error [state]
   (assoc-in state [:user-auth :error] nil))
@@ -92,11 +93,22 @@
 
 ; https://stackoverflow.com/questions/28230845/communication-between-tabs-or-windows
 ; https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API
-(def bc (js/BroadcastChannel. "oauth2_redirect_channel"))
+;(def bc (js/BroadcastChannel. "oauth2_redirect_channel"))
 
-(set! (.. bc -onmessage)
-      (fn [ev]
+#_(set! (.. bc -onmessage)
+        (fn [ev]
         ;(println "chan msg: " (js->clj ev))
-        (let [data (read-string (. ev -data))]
-          (println "chan data: " data)
-          (dispatch [:oauth2/redirect data]))))
+          (let [data (read-string (. ev -data))]
+            (println "chan data: " data)
+            (dispatch [:oauth2/redirect data]))))
+
+(defn oauth-redirect-dispatch [data]
+  (dispatch [:oauth2/redirect data]))
+
+(register-callback oauth-redirect-dispatch)
+
+(reg-event-fx
+ :oauth2/logout
+ (fn [{:keys [db]} [_ service]]
+   (let [new-db (update-in db [:token] dissoc service)]
+     {:db       new-db})))

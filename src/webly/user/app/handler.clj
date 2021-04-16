@@ -1,10 +1,8 @@
 (ns webly.user.app.handler
   (:require
    [clojure.string]
-   [taoensso.timbre :refer [debug info error]]
    [ring.util.response :as response]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
-   [bidi.bidi :as bidi]
    [bidi.ring]
    [webly.web.middleware :refer [wrap-webly]]
    [webly.user.app.views :refer [app-page]]))

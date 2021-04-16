@@ -71,7 +71,6 @@
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")
                     ;           :after-load (symbol "webly.web.app/after-load")}
                       :build-options    {:ns-aliases (build-ns-aliases)}
-
                       :compiler-options {:optimizations :simple
                                          :output-feature-set :es8 ; this should fix vega polyfill problems
                                          }

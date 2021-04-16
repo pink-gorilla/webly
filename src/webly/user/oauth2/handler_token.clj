@@ -1,4 +1,4 @@
-(ns webly.user.oauth2.handler
+(ns webly.user.oauth2.handler-token
   (:require
    [taoensso.timbre :as timbre :refer [info error]]
    [ring.util.response :as res]
@@ -6,22 +6,23 @@
    [webly.config :refer [get-in-config]]
    [webly.web.handler :refer [add-ring-handler]]
    [webly.web.middleware :refer [wrap-api-handler]]
-   [webly.user.oauth2.middleware :refer [wrap-oauth wrapx]]))
+   ;[webly.user.oauth2.middleware :refer [wrap-oauth wrapx]]
+   ))
 
-(defn handler-auth [request]
+#_(defn handler-auth [request]
   ; Once the user is authenticated, a new key is added to every request:
   ;   :oauth2/access-tokens
-  (println "oauth2 tokens: " (-> request :oauth2/access-tokens :github))
-  (let [github-token (:token (-> request :oauth2/access-tokens :github))
-        _ (println "github token: " github-token)]
+    (println "oauth2 tokens: " (-> request :oauth2/access-tokens :github))
+    (let [github-token (:token (-> request :oauth2/access-tokens :github))
+          _ (println "github token: " github-token)]
     ;(println (tentacles.gists/user-gists "awb99" {:oauth-token github-token}))
-    (res/response {:token github-token})))
+      (res/response {:token github-token})))
 
-(def handler-auth-wrapped
-  (-> handler-auth
-      wrap-oauth))
+;(def handler-auth-wrapped
+;  (-> handler-auth
+;      wrap-oauth))
 
-(add-ring-handler :webly/oauth2 handler-auth-wrapped)
+;(add-ring-handler :webly/oauth2 handler-auth-wrapped)
 
 (defn handler-github-redirect [req]
   (let [p (promise)

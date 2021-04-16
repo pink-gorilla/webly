@@ -27,18 +27,22 @@
                   ["vcs" "push"]]
 
 
-  :managed-dependencies [[joda-time "2.10.6"]
+  :managed-dependencies [[joda-time "2.10.10"]
                          [clj-time "0.15.2"]
-                         [com.fasterxml.jackson.core/jackson-core "2.11.2"]
+                         [com.fasterxml.jackson.core/jackson-core "2.12.3"]
                          [com.cognitect/transit-cljs "0.8.264"]
                          [com.cognitect/transit-clj "1.0.324"]
                          [com.cognitect/transit-java "1.0.343"]
-                         [org.apache.httpcomponents/httpcore "4.4.13"]
+                         [org.apache.httpcomponents/httpcore "4.4.14"]
                          [com.google.javascript/closure-compiler-unshaded "v20200719"]
                          [org.apache.httpcomponents/httpasyncclient "4.1.4"]
-                         [commons-codec "1.14"]
+                         [commons-codec "1.15"]
                          [com.google.code.findbugs/jsr305 "3.0.2"]
-                         [org.ow2.asm/asm "8.0.1"]]
+                         [org.ow2.asm/asm "8.0.1"]
+                         [org.clojure/tools.reader "1.3.5"] ; sente, sci, encore
+                         [cljsjs/react-dom "16.13.0-0"] ; reframe + reframe 10x
+                         [io.undertow/undertow-core "2.2.4.Final"] ; ring-undertow and shadow-cljs
+                         ]
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.async "1.3.610"]
@@ -46,43 +50,43 @@
                  [clojure.java-time "0.3.2"]
 
                  ; encoding
-                 [org.clojure/data.json "1.0.0"]
+                 [org.clojure/data.json "2.1.0"]
                  [luminus-transit "0.1.2"]
                  [cheshire "5.10.0"]  ; JSON parsings and pretty printing
                  [com.taoensso/encore "3.18.0"]
 
-                 ; backend
-                 [ring/ring-core "1.8.1"]
-                 [hiccup "1.0.5"]
-
-                 ; middlewares
+                 ; ring + middlewares
+                 [ring/ring-core "1.9.1"]
                  [ring/ring-anti-forgery "1.3.0"]
                  [ring-cors "0.1.13"]
                  [ring/ring-defaults "0.3.2"
                   :exclusions [javax.servlet/servlet-api]]
                  ;; [ring.middleware.logger "0.5.0"]
-                 [metosin/muuntaja "0.6.7"] ; 30x faster than ring-middleware-format
-                 [ring/ring-json "0.5.0"]
+                 [metosin/muuntaja "0.6.8"] ; 30x faster than ring-middleware-format
+                 [ring/ring-json "0.5.1"]
                  [ring-cljsjs "0.2.0"]
                  [bk/ring-gzip "0.3.0"] ; from oz
                  [luminus/ring-ttl-session "0.3.3"]
                  [ring-oauth2 "0.1.5"]
-                 [prone "2019-07-08"] ; exception middleware
-                 [ring/ring-devel "1.7.1"] ; reload middleware
+                 [prone "2020-01-17"] ; exception middleware
+                 [ring/ring-devel "1.9.2"] ; reload middleware
 
                  ; routing
                  [bidi "2.1.6"]
                  [clj-commons/pushy "0.3.10"]
                  [com.cemerick/url "0.1.1"]  ; url query-strings
 
+                 ; server side templating
+                 [hiccup "1.0.5"]
+
                  ; frontend
                  [reagent "0.10.0" :exclusions [org.clojure/tools.reader
                                                 cljsjs/react
                                                 cljsjs/react-dom]]
                  [re-frame "1.0.0"]
-                 [cljs-ajax "0.8.0"] ; needed for re-frame/http-fx
+                 [cljs-ajax "0.8.3"] ; needed for re-frame/http-fx
 
-                 [day8.re-frame/http-fx "0.2.1"  ; reframe based http requests
+                 [day8.re-frame/http-fx "0.2.3"  ; reframe based http requests
                   :exclusions [[re-frame]]] ; a more modern reframe comes from webly
 
                  [keybind "2.2.0"]
@@ -101,7 +105,7 @@
                  [akiroz.re-frame/storage "0.1.4"] ; localstorage 
 
                  ; supported servers
-                 [info.sunng/ring-jetty9-adapter "0.14.0"]
+                 [info.sunng/ring-jetty9-adapter "0.14.0"] ; last version with java 9
                  [luminus/ring-undertow-adapter "1.2.0"]
                  [http-kit "2.5.3"]
 
@@ -111,7 +115,7 @@
                                org.clojure/core.async
                                org.immutant
                                info.sunng/ring-jetty9-adapter]] ;  websocket
-                 
+
                  [fipp "0.6.23"] ; edn pretty printing
                  ]
 
@@ -180,7 +184,7 @@
 
             "webly"  ^{:doc "webly - add profile name"}
             ["with-profile" "+demo" "run" "-m" "demo.app"]
-            
+
             ;; Unit Tests  
 
             "test-clj"  ^{:doc "run unit tests (they need demo profile)"}
@@ -190,5 +194,5 @@
             ["with-profile" "+demo" "run" "-m" "demo.app" "ci"]
 
             "test-js" ^{:doc "run unit test JavaScript."}
-            ["do" ["build-test"] 
-                  ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]})
+            ["do" ["build-test"]
+             ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]})

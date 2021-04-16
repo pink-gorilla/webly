@@ -10,8 +10,9 @@
 ; (html {:mode :html} [:script {:async true}])
 ; Note that if you use the html5 macro, the mode will automatically be set when rendering.
 
+
 (defn script-cljs [id]
-  [:script {:async nil ; async not rendered. see: https://github.com/weavejester/hiccup/issues/182
+  [:script {:async true ; async not rendered. see: https://github.com/weavejester/hiccup/issues/182
             :type "text/javascript"
             :src (str "https://www.googletagmanager.com/gtag/js?id=" id)}])
 
@@ -24,8 +25,8 @@
   (let [{:keys [enabled id]} google-analytics-config]
     (if (and enabled id)
       (do (info "google analytics starting with google id: " id)
-          ;(script-cljs id)
-          (script-js id))
+          (script-cljs id)
+          #_(script-js id))
       (do
         (warn "no google analytics config!")
         [:div {:class "no-google-analytics-config"}]))))

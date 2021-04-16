@@ -63,8 +63,6 @@
 
    ; css
    ;(css "/r/tailwindcss/dist/tailwind.css") (frontend side)
-
-   ; fonts
    ;(css "http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic")
    ;(css "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic")
    ;(css "https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300")
@@ -77,6 +75,7 @@
   (let [{:keys [webly google-analytics]} webly-config
         {:keys [title bundle-entry icon css-extern]} webly]
     (page/html5
+     {:mode :html}
      (head title icon css-extern google-analytics)
      [:body.loading
       loading

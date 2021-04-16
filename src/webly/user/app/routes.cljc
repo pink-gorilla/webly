@@ -16,8 +16,8 @@
 
 (def webly-routes-app
   {["md/" :file] :ui/markdown
-   ["oauth2/redirect/" :provider] :oauth2/redirect})
-
+   ;["oauth2/redirect/" :provider] :oauth2/redirect  : either client OR server side
+   })
 (defn make-routes-frontend [user-routes-app]
   ["/" (merge webly-routes-app user-routes-app)])
 
@@ -26,6 +26,7 @@
         ;app-routes  (merge webly-routes-app user-routes-app)
         ]
     ["/" {"api/"    api-routes
+          ["oauth2/redirect/" :provider] :oauth2/redirect  ;  either client OR server side
        ; ""       app-routes
           "r"       resource-handler
         ;[true      :webly/not-found]  ; not working as we need to process frontend routes also

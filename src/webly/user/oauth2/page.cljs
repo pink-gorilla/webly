@@ -1,29 +1,18 @@
 (ns webly.user.oauth2.page
   (:require
-   [cemerick.url :as url]
    [reagent.core :as r]
-   [re-frame.core :as rf]
-   [webly.web.handler :refer [reagent-page]]))
-
-(def bc (js/BroadcastChannel. "oauth2_redirect_channel"))
-
-(defn window-data []
-  (let [url (-> (.. js/window -location -href)
-                (url/url))]
-    {:anchor (url/query->map (:anchor url))
-     :query (:query url)}))
+   [webly.web.handler :refer [reagent-page]]
+   [webly.user.oauth2.redirect :refer [sendcallback]]))
 
 (defn oauth-redirect [provider]
   (let [state (r/atom :LOGGING_IN)]
     (r/create-class
      {:component-did-mount (fn [this]
                              (println "redirect did mount..")
-                             (let [wd (window-data)
-                                   ;a @current
+                             (let [;a @current
                                    ;r (.handleRedirect a)
                                    r :SUCCESS]
-                               (println "window data:" wd)
-                               (.postMessage bc (pr-str (merge {:provider provider} wd)))
+                               (sendcallback provider)
                                (if (= r "SUCCESS")
                                  (reset! state :SUCCESS)
                                  (reset! state :FAILED))))
