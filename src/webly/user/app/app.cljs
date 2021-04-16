@@ -17,8 +17,9 @@
    [webly.user.markdown.subscriptions]
    [webly.user.markdown.events]
    [webly.user.markdown.page] ; reagent-page: md 
-   [webly.user.oauth2.page] ; reagent-page: oauth2 redirect
    [webly.user.oauth2.events]
+   [webly.user.oauth2.events-parse]
+   [webly.user.oauth2.request]
    [webly.user.oauth2.subscriptions]
    [webly.user.tenx.events]
    [webly.user.settings.subscriptions]

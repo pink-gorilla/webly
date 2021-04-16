@@ -1,43 +1,37 @@
 (ns webly.user.oauth2.middleware
   (:require
+   [taoensso.timbre :as timbre :refer [info error]]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
    [ring-ttl-session.core :refer [ttl-memory-store]]
    [ring.middleware.session :refer [wrap-session]]
    [ring.middleware.cookies :refer [wrap-cookies]]
    [ring.middleware.oauth2 :refer [wrap-oauth2]]
-   [webly.config :refer [get-in-config]]))
+   [webly.config :refer [get-in-config config-atom]]
+   [webly.user.oauth2.provider :refer [ring-oauth2-config]]))
 
-(defn oauth2-from-secrets []
-  (let [github (get-in-config [:oauth2 :github])
-        {:keys [clientId clientSecret]} github]
-    (println "oauth2 profile:" github)
-    (when (and clientId clientSecret)
-      {:github
-       {:authorize-uri    "https://github.com/login/oauth/authorize"
-        :access-token-uri "https://github.com/login/oauth/access_token"
-        :client-id        clientId
-        :client-secret    clientSecret
-        :scopes           ["user:email" "gist"]
-        :launch-uri       "/oauth2/github/auth"
-        :redirect-uri     "/oauth2/github/callback"
-        :landing-uri      "/oauth2/github/landing"}})))
+; https://github.com/weavejester/ring-oauth2 
 
-(let [p (oauth2-from-secrets)]
-  (if p
-    (def my-oauth-profiles p)
-    (def my-oauth-profiles {})))
+; we currently dont use ring-oauth2 because it makes sense for server-rendered pages
+; but we do use the same configuration maps in frontend so we currently just print the
+; config that we would use. This is helpful to see if we have client-ids and secrets and
+; to se that routes are configured correctly.
 
-  ; https://github.com/weavejester/ring-oauth2 
+(defn print-oauth2-config []
+  (let [config @config-atom
+        c (ring-oauth2-config config)]
+    (info "oauth config: " c)))
 
 (defn wrap-oauth [handler]
+  (let [config @config-atom
+        c (ring-oauth2-config config)]
   ;(wrap-oauth2 handler my-oauth-profiles)
-  (-> handler
-      (wrap-oauth2 my-oauth-profiles)
-      (wrap-defaults
-       (-> site-defaults
-           (assoc-in [:security :anti-forgery] false)
+    (-> handler
+        (wrap-oauth2 c)
+        (wrap-defaults
+         (-> site-defaults
+             (assoc-in [:security :anti-forgery] false)
             ;(assoc-in [:session :store] (ttl-memory-store (* 60 30)))
-           (assoc-in [:session :cookie-attrs :same-site] :lax)))))
+             (assoc-in [:session :cookie-attrs :same-site] :lax))))))
 
 ; wrap-oauth2 needs to be the first position!
 ; (defn wrap-base [handler]

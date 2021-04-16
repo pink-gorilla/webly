@@ -24,22 +24,28 @@
  :shadow {:dev-http {:port 8000}
           :http {:port 8001 :host "localhost"}
           :nrepl {:port 8002}}
- 
+
  :web-server     {:port 8000
                   :host "0.0.0.0"}
  :web-server-api {:port 8007
                   :host "0.0.0.0"}
 
  :jetty-ws {"/api/chsk" :ws/chsk-get}
- 
+
  :google-analytics {:enabled true
                     :id "UA-154548494-1"} ; not a secret 
 
  ; creds (set them in creds.edn resource)
- :oauth2 {:github {:clientId        ""
-                   :clientSecret    ""}
-          :google {:clientId        ""
-                   :clientSecret    ""}}
+ :oauth2 {:github {:client-id        ""
+                   :client-secret    ""
+                   :scopes          ["user:email" 
+                                     "gist" 
+                                     "repo"]}
+          :google {:client-id        ""
+                   :client-secret    ""
+                   :scopes          ["https://www.googleapis.com/auth/spreadsheets.readonly"
+                                     "https://www.googleapis.com/auth/drive.readonly" 
+                                     "https://www.googleapis.com/auth/userinfo.email"]}}
 
  :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
                    [#{"*"} :info]]
@@ -47,7 +53,4 @@
  :keybindings "webly.user.app.keybindings/default"
 
 
- :settings {:use-localstorage  false}
-
- 
- }
+ :settings {:use-localstorage  false}}

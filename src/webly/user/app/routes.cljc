@@ -6,7 +6,6 @@
   {"config" {:get :webly/config}
    "md"     {:get :api/md}
    "oauth2/" {"github/token"  {:get :webly/oauth2-github}
-              ; "redirect/" 
               ;  ["redirect/" :provider] {:get :oauth2/redirect}
               }
    ; ws

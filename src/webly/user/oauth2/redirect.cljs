@@ -7,10 +7,15 @@
 
 (def bc (js/BroadcastChannel. "webly_oauth2_redirect_channel"))
 
+(defn keywordize [my-map]
+  (into {}
+        (for [[k v] my-map]
+          [(keyword k) v])))
+
 (defn url-data [wurl]
   (let [url (url/url wurl)]
-    {:anchor (url/query->map (:anchor url))
-     :query (:query url)}))
+    {:anchor (keywordize (url/query->map (:anchor url)))
+     :query (keywordize (:query url))}))
 
 (defn register-callback [cb]
   (set! (.. bc -onmessage)

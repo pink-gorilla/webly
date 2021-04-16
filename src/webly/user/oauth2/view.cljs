@@ -1,8 +1,6 @@
 (ns webly.user.oauth2.view
   (:require
-   [re-frame.core :as rf :refer [dispatch subscribe]]
-   [webly.user.oauth2.events] ; side-effects
-   [webly.user.oauth2.subscriptions] ; side-effects
+   [re-frame.core :refer [dispatch subscribe]]
    [webly.user.tooltip :refer [with-tooltip]]))
 
 (defn header-ico [fa-icon rf-dispatch]
@@ -21,14 +19,14 @@
     "fas fa-user"))
 
 (defn user-button [service]
-  (let [logged-in (rf/subscribe [:oauth2/logged-in? service])]
+  (let [logged-in (subscribe [:oauth2/logged-in? service])]
     (fn [service]
       (if @logged-in
         [:span.text-green-800 [header-icon (service-icon service)  [:oauth2/logout service] "log out"]]
         [:span.text-red-500 [header-icon (service-icon service) [:oauth2/login service] "log in"]]))))
 
 (defn tokens-view []
-  (let [tokens (rf/subscribe [:oauth2/tokens])]
+  (let [tokens (subscribe [:oauth2/tokens])]
     (fn []
       [:div.bg-orange-200
        [:p "oauth2 tokens"]

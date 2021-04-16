@@ -65,7 +65,7 @@
 
 (defn setup-profile [profile-name]
   (load-config!)
-  (timbre-config! (get-in-config [:timbre-loglevel]))
+  (timbre-config! @config-atom)
   (let [profile (str->profile profile-name)]
     (if (or (nil? profile-name) (not profile))
       (error "no profile. valid profiles are: " (profiles-available))

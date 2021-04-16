@@ -9,6 +9,7 @@
    [webly.web.middleware-dev :refer [wrap-dev]]
    [webly.user.app.handler :refer [app-handler]]
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
+   [webly.user.oauth2.middleware :refer [print-oauth2-config]]
 
    ; side-effects
    [webly.user.config.handler]   ; handler: config
@@ -41,6 +42,7 @@
         wrap-handler-reload (get-in-config [:wrap-handler-reload])
         h (make-handler app-handler routes-backend routes-frontend)
         h (if wrap-handler-reload (wrap-dev h) h)]
+    (print-oauth2-config)
     (def ring-handler h)))
 
 (defn run-server-p [profile]
