@@ -192,9 +192,9 @@
             "test-clj"  ^{:doc "run unit tests (they need demo profile)"}
             ["with-profile" "+demo" "test"]
 
-            "build-test"  ^{:doc "compiles ci unit tests."}
-            ["with-profile" "+demo" "run" "-m" "demo.app" "ci"]
-
             "test-js" ^{:doc "run unit test JavaScript."}
-            ["do" ["build-test"]
-             ["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]]})
+            ["do" 
+             ["webly" "ci"]
+             ["shell" "npm" "test"]
+             ;["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]
+             ]})

@@ -15,6 +15,7 @@
 
 ; tailwind
   "tailwindcss" "2.1.1"
+  "autoprefixer" "^10.0.2" ; peer dependency of tailwind. actually needed?
 
   ; javascript unit tests 
   "karma" "^6.3.2"

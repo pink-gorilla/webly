@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.3",
+    "autoprefixer": "10.2.5",
     "create-react-class": "15.7.0",
     "highlight.js": "9.18.1",
     "karma": "6.3.2",

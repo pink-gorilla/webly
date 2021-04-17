@@ -21,3 +21,14 @@
   (when (not (.exists (io/file "package.json")))
     (info "auto creating package.json")
     (generate-config default-config)))
+
+(defn load-res [res-name]
+  (let [data-file (io/resource res-name)]
+    (slurp data-file)))
+
+(defn ensure-karma []
+  (let [file-name "karma.conf.js"]
+    (when (not (.exists (io/file file-name)))
+      (info "copying from resources: " file-name)
+      (let [content (load-res (str "webly/" file-name))]
+        (spit file-name content)))))

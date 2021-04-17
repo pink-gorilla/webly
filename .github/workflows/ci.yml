@@ -24,15 +24,19 @@ jobs:
         lein deps
     - name: Install dependencies npm
       run: |
-        # npm install    
         lein webly npm-install
+        npm install    
     - name: Check formatting
       run: lein cljfmt check
-    - name: Run tests
+    - name: Run tests - clj
       run: |
         # unit tests need google fonts for resource test
         lein google-fonts
         lein test-clj
+    - name: Run tests - js
+      run: |
+        # unit tests need google fonts for resource test
+        lein test-js
     - name: Release
       env:
         RELEASE_USERNAME: ${{ secrets.ReleaseUsername }}

@@ -7,7 +7,7 @@
    [shadow.cljs.devtools.api :as shadow
     ;:refer [watch* worker-running?]
     ]
-   [webly.build.package-json :refer [ensure-package-json]]
+   [webly.build.package-json :refer [ensure-package-json ensure-karma]]
    [webly.build.install-npm :refer [install-npm]]
    [webly.build.bundle-size :refer [generate-bundlesize-report]]
    [webly.date :refer [now-str]]))
@@ -45,6 +45,7 @@
 
     (ensure-package-json)
     (install-npm shadow-config shadow-opts)
+    (ensure-karma)
 
     (case shadow-mode
       :release (shadow/release cljs-build shadow-opts)  ; production build (onebundle file, no source-maps)
