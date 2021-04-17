@@ -18,6 +18,12 @@
                           :shadow-mode :release ; production build - no source maps
                           :size-report true}}
 
+   :npm-install  {:prefs   {:tenx false}
+                  :bundle {:shadow-verbose false
+                           :cljs-build :webly
+                           :shadow-mode nil ; no build, just npm install
+                           :size-report false}}
+
    :compile     {:prefs   {:tenx true}
                  :bundle {:shadow-verbose false
                           :cljs-build :webly

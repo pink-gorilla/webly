@@ -39,7 +39,9 @@
   (println @prefs-atom)
   (if-pref-fn :tenx
               {'webly.user.tenx.events 'webly.user.tenx.events-on}
-              {'webly.user.tenx.events 'webly.user.tenx.events-off}))
+              {'webly.user.tenx.events 'webly.user.tenx.events-off
+               ;'day8.re-frame.tracing 'day8.re-frame.tracing-stubs
+               }))
 
 (defn shadow-config []
   (let [{:keys [lein-cljs-profile ns-cljs-app ring-handler]} (get-in-config [:webly])

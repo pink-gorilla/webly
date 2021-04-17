@@ -5,7 +5,8 @@
 
 (defn tenx-script []
   (if-pref-fn :tenx
-              [:script "var CLOSURE_UNCOMPILED_DEFINES = {\"re_frame.trace.trace_enabled_QMARK_\":true};"]
+              [:script (str "var CLOSURE_UNCOMPILED_DEFINES = {\"re_frame.trace.trace_enabled_QMARK_\":true, "
+                            "\"day8.re_frame.tracing.trace_enabled_QMARK_\": true };")]
               [:div.no-tenx]))
 
 

@@ -19,3 +19,7 @@ Some web app metrics are useful to be tracked.
 - upgrade to gtag: https://developers.google.com/analytics/devguides/collection/gtagjs/migration
 
 
+## Piwik - free/libre analytics platform
+- JavaScript tracking client
+- https://piwik.org
+- a possible option?

@@ -37,8 +37,8 @@
                          [com.google.javascript/closure-compiler-unshaded "v20200719"]
                          [org.apache.httpcomponents/httpasyncclient "4.1.4"]
                          [commons-codec "1.15"]
-                         [com.google.code.findbugs/jsr305 "3.0.2"]
-                         [org.ow2.asm/asm "8.0.1"]
+                         ;[com.google.code.findbugs/jsr305 "3.0.2"]
+                         ;[org.ow2.asm/asm "8.0.1"]
                          [org.clojure/tools.reader "1.3.5"] ; sente, sci, encore
                          [cljsjs/react-dom "16.13.0-0"] ; reframe + reframe 10x
                          [io.undertow/undertow-core "2.2.4.Final"] ; ring-undertow and shadow-cljs
@@ -92,6 +92,8 @@
                  [keybind "2.2.0"]
 
                  [day8.re-frame/re-frame-10x "0.6.2"]
+                 [day8.re-frame/tracing "0.6.2"] ; https://github.com/day8/re-frame-debux
+                 ;[day8.re-frame/tracing-stubs "0.6.2"]
 
                  ;shadow
                  ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler will fail because shadow contains core.async which is not compatible with self hosted clojurescript

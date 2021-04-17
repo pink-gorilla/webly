@@ -22,3 +22,5 @@ creds.edn
 shadow-cljs.edn
 .calva
 .lsp/
+package.json
+package-lock.json

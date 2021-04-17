@@ -1,30 +1,20 @@
 (ns webly.build.build-config
   (:require
-   [taoensso.timbre :as timbre :refer [info]]
-   ;[cheshire.core :as cheshire]
+   [taoensso.timbre :as timbre :refer [info warn]]
    [fipp.clojure]
    [shadow.cljs.devtools.cli]
    ;[shadow.cljs.devtools.cli-actual]
    [shadow.cljs.devtools.api :as shadow
     ;:refer [watch* worker-running?]
     ]
+   [webly.build.package-json :refer [ensure-package-json]]
    [webly.build.install-npm :refer [install-npm]]
    [webly.build.bundle-size :refer [generate-bundlesize-report]]
    [webly.date :refer [now-str]]))
 
 ; fast, but no pretty-print (makes it difficult to detect bugs)
-
-
 #_(defn generate-config [config]
     (spit "shadow-cljs.edn" (pr-str config)))
-
-; only for json. keep here because we might need it for package.json writing.
-#_(defn generate-config [config]
-    (let [filename "shadow-cljs.edn"
-          my-pretty-printer (cheshire/create-pretty-printer
-                             (assoc cheshire/default-pretty-print-options
-                                    :indent-arrays? true))]
-      (spit filename (cheshire/generate-string config {:pretty my-pretty-printer}))))
 
 ; pretty, but slower
 (defn generate-config [config]
@@ -53,13 +43,14 @@
   (let [{:keys [shadow-verbose cljs-build shadow-mode size-report]} (get profile :bundle)
         shadow-opts {:verbose shadow-verbose}]
 
+    (ensure-package-json)
     (install-npm shadow-config shadow-opts)
 
     (case shadow-mode
       :release (shadow/release cljs-build shadow-opts)  ; production build (onebundle file, no source-maps)
       :compile (shadow/compile cljs-build shadow-opts) ; dev build (one bundle per ns, source-maps)
       :watch (watch-cli cljs-build) ;(watch-api)  hot reloading
-      )
+      (warn "not building cljs bundle"))
 
     (when size-report
       (info "creating size report ..")

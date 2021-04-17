@@ -1,37 +1,21 @@
 {
   "private": true,
   "scripts": {
-    "test": "cross-env NODE_ENV=development karma start --single-run"
+    "test": "karma start --single-run"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "5.15.3",
     "create-react-class": "15.7.0",
     "highlight.js": "9.18.1",
-    "marked": "0.7.0",
-    "oauth2-popup-flow": "1.1.0",
+    "karma": "6.3.2",
+    "karma-chrome-launcher": "3.1.0",
+    "karma-cljs-test": "0.1.0",
+    "marked": "2.0.3",
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-dom-factories": "1.0.2",
     "react-highlight.js": "1.0.7",
-    "tailwindcss": "1.5.1",
-    "karma": "^4.4.1",
-    "karma-chrome-launcher": "^3.1.0",
-    "karma-cljs-test": "^0.1.0"
+    "tailwindcss": "2.1.1"
   },
-  "devDependencies": {
-    "@fortawesome/fontawesome-free": "5.14.0",
-    "get-google-fonts": "^1.2.2",
-    "karma": "^5.1.0",
-    "karma-chrome-launcher": "^3.1.0",
-    "karma-cljs-test": "^0.1.0",
-    "@babel/preset-env": "^7.9.0",
-    "@babel/preset-typescript": "^7.9.0",
-    "@rollup/plugin-typescript": "^4.0.0",
-    "@types/jest": "^26.0.3",
-    "jest": "^26.1.0",
-    "jsdom": "^16.2.2",
-    "rollup": "^2.3.3",
-    "tslib": "^2.0.0",
-    "typedoc": "^0.17.4",
-    "typescript": "^3.8.3"
-  }
+  "devDependencies": {}
 }
