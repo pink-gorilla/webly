@@ -25,17 +25,21 @@ jobs:
     - name: Install dependencies npm
       run: |
         lein webly npm-install
+        # npm install should be redudant ?
         npm install    
+    - name: prepare resources
+      run: |
+        # unit tests need resources for resource test
+        lein prep-res
     - name: Check formatting
       run: lein cljfmt check
     - name: Run tests - clj
       run: |
-        # unit tests need google fonts for resource test
-        lein google-fonts
+        # unit tests need resources for resource test
         lein test-clj
     - name: Run tests - js
       run: |
-        # unit tests need google fonts for resource test
+        # unit tests need resources for resource test
         lein test-js
     - name: Release
       env:
