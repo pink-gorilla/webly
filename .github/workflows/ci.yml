@@ -19,20 +19,19 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/project.clj') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-    - name: Install dependencies npm
-      run: |
-        npm install    
     - name: Install dependencies jar
       run: |
-        npm install
         lein deps
+    - name: Install dependencies npm
+      run: |
+        # npm install    
         lein webly npm-install
     - name: Check formatting
       run: lein cljfmt check
     - name: Run tests
       run: |
         # unit tests need google fonts for resource test
-        lein prep-res
+        lein google-fonts
         lein test-clj
     - name: Release
       env:
