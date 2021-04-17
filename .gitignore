@@ -24,4 +24,4 @@ shadow-cljs.edn
 .lsp/
 package.json
 package-lock.json
-karma.conf.js
+/karma.conf.js
