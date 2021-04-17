@@ -44,8 +44,8 @@
         shadow-opts {:verbose shadow-verbose}]
 
     (ensure-package-json)
-    (install-npm shadow-config shadow-opts)
     (ensure-karma)
+    (install-npm shadow-config shadow-opts)
 
     (case shadow-mode
       :release (shadow/release cljs-build shadow-opts)  ; production build (onebundle file, no source-maps)

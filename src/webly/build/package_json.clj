@@ -27,8 +27,9 @@
     (slurp data-file)))
 
 (defn ensure-karma []
-  (let [file-name "karma.conf.js"]
+  (let [file-name "karma.conf.js"
+        res-name (str "webly/" file-name)]
     (when (not (.exists (io/file file-name)))
       (info "copying from resources: " file-name)
-      (let [content (load-res (str "webly/" file-name))]
+      (let [content (load-res res-name)]
         (spit file-name content)))))
