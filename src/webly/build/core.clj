@@ -7,7 +7,7 @@
 
 (defn build [profile]
   (let [bundle (get profile :bundle)
-        shadow-config (shadow-config)]
+        shadow-config (shadow-config profile)]
     (if bundle
       (do (info "building profile bundle" bundle)
           (info "shadow-config: " shadow-config)

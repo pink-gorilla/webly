@@ -31,7 +31,7 @@
                           :size-report true}}
 
    :watch       {:prefs   {:tenx true}
-                 :bundle {:shadow-verbose false
+                 :bundle {:shadow-verbose true
                           :cljs-build :webly
                           :shadow-mode :watch
                           :size-report false}

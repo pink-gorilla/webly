@@ -26,7 +26,9 @@ jobs:
       run: |
         lein webly npm-install
         # npm install should be redudant ?
-        npm install    
+        # npm install    
+        npm install --production=false
+
     - name: prepare resources
       run: |
         # unit tests need resources for resource test
