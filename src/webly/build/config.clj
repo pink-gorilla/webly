@@ -50,7 +50,9 @@
         http-port (get-in-config [:shadow :http :port])
         http-host (get-in-config [:shadow :http :host])
         nrepl-port (get-in-config [:shadow :nrepl :port])]
-    {;:cache-root ".shadow-cljs"
+    {:cache-root ".shadow-cljs"
+     :verbose true
+     ;:lein true
      :lein {:profile lein-cljs-profile}
      :dev-http {dev-http-port {;:root "public" ; shadow does not need to serve resources
                                :handler ring-handler}}
@@ -74,14 +76,20 @@
                     ;           :after-load (symbol "webly.web.app/after-load")}
                       :build-options    {:ns-aliases (build-ns-aliases)}
                       :compiler-options {:optimizations :simple
+                                        ; :optimizations   :none ;; Beware: releasing :none not supported by shadow
+                                         ;:pretty-print true
+                                        ;:keep-native-requires true
+                                         ;:closure-defines {re-highlight-demo.config/version "lein-git-inject/version"}
                                          :output-feature-set :es8 ; this should fix vega polyfill problems
                                          }
                     ;:build-id :webly
                     ;:js-options  {:minimize-require false ; module requires full name instead of index
-                    ;                                    ;:js-package-dirs ["packages/babel-worker/node_modules"]
-                    ;                                    ;:js-provider :require
+                    ;              ;:js-package-dirs ["packages/babel-worker/node_modules"]
+                    ;              ;:js-provider :require
+                      ;             :js-provider :closure
+                      ;            :js-provider :shadow                                            
                     ;                     }
                       }
-              :ci {:target :karma
-                   :output-to  "target/ci.js"
-                   :ns-regexp "-test$"}}}))
+              :ci     {:target :karma
+                       :output-to  "target/ci.js"
+                       :ns-regexp "-test$"}}}))

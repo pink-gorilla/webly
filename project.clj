@@ -44,7 +44,7 @@
                          [io.undertow/undertow-core "2.2.4.Final"] ; ring-undertow and shadow-cljs
                          ]
 
-  :dependencies [[org.clojure/clojure "1.10.1"]
+  :dependencies [[org.clojure/clojure "1.10.3"]
                  [org.clojure/core.async "1.3.610"]
                  [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
                  [clojure.java-time "0.3.2"]
@@ -53,10 +53,10 @@
                  [org.clojure/data.json "2.1.0"]
                  [luminus-transit "0.1.2"]
                  [cheshire "5.10.0"]  ; JSON parsings and pretty printing
-                 [com.taoensso/encore "3.18.0"]
+                 [com.taoensso/encore "3.19.0"]
 
                  ; ring + middlewares
-                 [ring/ring-core "1.9.1"]
+                 [ring/ring-core "1.9.2"]
                  [ring/ring-anti-forgery "1.3.0"]
                  [ring-cors "0.1.13"]
                  [ring/ring-defaults "0.3.2"
@@ -100,9 +100,9 @@
                 ; [thheller/shadow-cljs "2.8.81"]
                  [thheller/shadow-cljs "2.10.19"]
                  [thheller/shadow-cljsjs "0.0.21"]
-                 [org.clojure/clojurescript "1.10.773"]
+                 [org.clojure/clojurescript "1.10.844"]
 
-                 [resauce "0.1.0"] ; resources
+                 [resauce "0.2.0"] ; resources
                  [cprop "0.1.17"] ; config management
                  [akiroz.re-frame/storage "0.1.4"] ; localstorage 
 
