@@ -7,6 +7,9 @@
 
 (defonce config-atom (atom {}))
 
+(defmacro get-in-config-cljs [path]
+  (get-in @config-atom path))
+
 (defn get-in-config [path]
   (get-in @config-atom path))
 

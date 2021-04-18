@@ -16,14 +16,14 @@
 (defn style [s]
   (str/join ";" (map #(str (name %) ":" ((keyword %) s)) (keys s))))
 
-(def body-loading-style
-  [:style "body.loading {
-              background: url(/r/webly/loading-lemur.jpg) no-repeat center center fixed;
+(defn body-loading-style [loading-image-url]
+  [:style (str "body.loading {
+              background: url(" loading-image-url ") no-repeat center center fixed;
               -webkit-background-size: cover;
               -moz-background-size: cover;
               -o-background-size: cover;
               background-size: cover;
-            }"])
+            }")])
 
 (def loading
   [:div
@@ -47,7 +47,7 @@
 ;; APP
 
 
-(defn head [title icon css-extern google-analytics]
+(defn head [loading-image-url title icon css-extern google-analytics]
   [:head
    [:meta {:http-equiv "Content-Type"
            :content "text/html; charset=utf-8"}]
@@ -69,14 +69,14 @@
    ;(css "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css")
    (doall (map css css-extern))
 
-   body-loading-style])
+   (body-loading-style loading-image-url)])
 
 (defn layout [webly-config page]
   (let [{:keys [webly google-analytics]} webly-config
-        {:keys [title bundle-entry icon css-extern]} webly]
+        {:keys [title loading-image-url bundle-entry icon css-extern]} webly]
     (page/html5
      {:mode :html}
-     (head title icon css-extern google-analytics)
+     (head loading-image-url title icon css-extern google-analytics)
      [:body.loading
       loading
       [:div#webly page]

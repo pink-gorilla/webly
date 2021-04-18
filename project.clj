@@ -41,12 +41,13 @@
                          ;[org.ow2.asm/asm "8.0.1"]
                          [org.clojure/tools.reader "1.3.5"] ; sente, sci, encore
                          [cljsjs/react-dom "16.13.0-0"] ; reframe + reframe 10x
-                         [io.undertow/undertow-core "2.2.4.Final"] ; ring-undertow and shadow-cljs
+                         ;[io.undertow/undertow-core "2.2.4.Final"] ; ring-undertow and shadow-cljs
                          ]
 
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [org.clojure/core.async "1.3.610"]
                  [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
+                 [com.fzakaria/slf4j-timbre "0.3.21"] ; slf4j ->timbre adapter (used by jetty)
                  [clojure.java-time "0.3.2"]
 
                  ; encoding
@@ -96,10 +97,11 @@
                  ;[day8.re-frame/tracing-stubs "0.6.2"]
 
                  ;shadow
-                 ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler will fail because shadow contains core.async which is not compatible with self hosted clojurescript
-                ; [thheller/shadow-cljs "2.8.81"]
-                 [thheller/shadow-cljs "2.10.19"]
-                 [thheller/shadow-cljsjs "0.0.21"]
+                 ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler
+                 ; will fail because shadow contains core.async which is not compatible with 
+                 ; self hosted clojurescript
+                 [thheller/shadow-cljs "2.12.5"] ; 2.10.19
+                 ;[thheller/shadow-cljsjs "0.0.21"]  ; already referred to from shadow-cljs
                  [org.clojure/clojurescript "1.10.844"]
 
                  [resauce "0.2.0"] ; resources

@@ -1,5 +1,6 @@
 {:webly {:title "webly"
          :icon "/r/webly/favicon.ico"
+         :loading-image-url "/r/webly/loading-code.jpg" ;"/r/webly/loading-lemur.jpg"
          :css-links  ; css from resources 
          ["tailwindcss/dist/tailwind.css"
           "@fortawesome/fontawesome-free/css/all.min.css"
@@ -48,6 +49,7 @@
                                      "https://www.googleapis.com/auth/userinfo.email"]}}
 
  :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
+                   [#{"org.eclipse.jetty.*"} :info]
                    [#{"*"} :info]]
 
  :keybindings "webly.user.app.keybindings/default"

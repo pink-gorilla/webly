@@ -10,6 +10,7 @@
 
  :timbre-loglevel [[#{"webly.ws.*"} :info]
                    [#{"webly.user.*"} :info]
+                   [#{"org.eclipse.jetty.*"} :info]
                    [#{"*"} :debug]]
 
  :settings {:use-localstorage  true  ; allow user to change settings via localstorage
