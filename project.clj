@@ -50,7 +50,7 @@
                  [clojure.java-time "0.3.2"]
 
                  ; encoding
-                 [org.clojure/data.json "2.1.0"]
+                 [org.clojure/data.json "2.1.0"] ; https://github.com/thheller/shadow-cljs/issues/872
                  [luminus-transit "0.1.2"]
                  [cheshire "5.10.0"]  ; JSON parsings and pretty printing
                  [com.taoensso/encore "3.19.0"]
