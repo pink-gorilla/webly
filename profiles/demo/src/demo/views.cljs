@@ -21,9 +21,13 @@
   [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
    {:href href} text])
 
+(defn block [& children]
+  (into [:div.bg-blue-400.m-5.inline-block {:class "w-1/4"}]
+        children))
+
 
 (defn demo-routing []
-  [:div.bg-blue-400.m-5 {:class "w-1/4"}
+  [block
    [:p.text-4xl "bidi routes"]
    [:p [link-dispatch [:bidi/goto :demo/help] "help!"]]
    [:p [link-dispatch [:bidi/goto :demo/save-non-existing] "save-as (test for not implemented)"]]
@@ -34,7 +38,7 @@
    [:p [link-href "/api/time" "demo api time"]]])
 
 (defn demo-oauth []
-  [:div.bg-blue-400.m-5 {:class "w-1/4"}
+  [block
    [:p.text-4xl "oauth2"]
    [user-button :github]
    [user-button :google]
@@ -46,7 +50,7 @@
    [tokens-view]])
 
 (defn demo-dialog []
-  [:div.bg-blue-400.m-5 {:class "w-1/4"}
+  [block
    [:p.text-4xl "dialog"]
    [:ol
     [:li [link-fn #(add-notification "welcome to wonderland") "show notification"]]
@@ -57,7 +61,7 @@
 (defn demo-settings []
   (let [s (subscribe [:settings])]
     (fn []
-      [:div.bg-blue-400.m-5 {:class "w-1/4"}
+      [block
        [:p.text-4xl "settings"]
        [:p (pr-str @s)]
        ;[link-fn #(ls-set! :webly {:willy 789}) "reset localstorage to :willy 789"]
@@ -67,15 +71,19 @@
 
 (defn demo-ws []
   (let [t (subscribe [:demo/time])
-        c (subscribe [:ws/connected?])
-        ]
+        c (subscribe [:ws/connected?])]
     (fn []
-      [:div.bg-blue-400.m-5 {:class "w-1/4"}
+      [block
        [:p.text-4xl "websocket"]
        [:p (str "connected:" (if @c @c "not connected"))]
        [:p (str "time: " (if @t @t " no time received :-("))]
-       [link-fn #(dispatch [:ws/send [:demo/xxx [123 456 789]]]) " send unimplemented ws event request"]
-     ])))
+       [link-fn #(dispatch [:ws/send [:demo/xxx [123 456 789]]]) " send unimplemented ws event request"]])))
+
+(defn demo-kb []
+  [block
+   [:p.text-4xl "keybindings"]
+   [:p "press [alt-g k] to see keybindings"]
+   [:p "press [alt-g t] to toggle 10x"]])
 
 (defn main []
   [:div
@@ -89,6 +97,7 @@
    [demo-oauth]
    [demo-settings]
    [demo-ws]
+   [demo-kb]
    ])
 
 (defmethod reagent-page :demo/main [& args]

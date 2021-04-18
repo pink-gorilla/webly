@@ -32,7 +32,7 @@
 
 (defn palette-item [item active?]
   [:div
-   {:class (when active? "bg-orange-300")
+   {:class (when active? "bg-red-300")
     :ref #(when active? (scroll-into-view %))}
    [:li.flex.flex-row.items-stretch
     {:on-click #(dispatch-sync [:palette/action item])}

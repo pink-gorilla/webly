@@ -9,20 +9,22 @@
 
 (def clean-search
   {:highlight     0
-   :visible-items nil ;(:all-visible-commands palette)
+   :visible-items nil
    :query        ""})
+
+(defn- kb-from-config [db]
+  (or (get-in db [:config :keybindings]) []))
 
 (reg-event-db
  :keybindings/init
  (fn [db [_]]
    (let [db (or db {})
-         keybindings (or (get-in db [:config :keybindings]) [])]
+         keybindings (kb-from-config db)]
      (info "keybinding init ..")
      (init-keybindings! keybindings)
      (assoc-in db
                [:keybindings]
-               {:all keybindings
-                :search clean-search}))))
+               {:search clean-search}))))
 
 ; dialog visibility
 
@@ -61,7 +63,7 @@
 (reg-event-db
  :palette/filter-changed
  (fn [db [_ query]]
-   (let [all (get-in db [:keybindings :all])
+   (let [all (kb-from-config db)
          search-old (get-in db [:keybindings :search])
          visible (if (or (nil? query) (= query ""))
                    all
