@@ -42,6 +42,7 @@ jobs:
     - name: Run tests - js
       run: |
         # unit tests need resources for resource test
+        cat package.json
         lein test-js
     - name: Release
       env:
