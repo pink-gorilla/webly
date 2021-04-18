@@ -2,34 +2,36 @@
   (:require
    [taoensso.timbre :as log :refer [info infof]]
    [taoensso.sente.packers.transit :as sente-transit]
-   [taoensso.sente.server-adapters.undertow]
+  ; [taoensso.sente.server-adapters.undertow]
    [taoensso.sente.server-adapters.jetty9]
-   [taoensso.sente.server-adapters.http-kit]
+  ; [taoensso.sente.server-adapters.http-kit]
    [taoensso.sente  :as sente]
    [webly.ws.id :refer [get-sente-session-uid]]
    [webly.ws.msg-handler :refer [event-msg-handler]]))
 
-(defn undertow []
-  (info "websocket mode: undertow.")
-  (require '[taoensso.sente.server-adapters.undertow])
+#_(defn undertow []
+    (info "websocket mode: undertow.")
+    (require '[taoensso.sente.server-adapters.undertow])
 
-  taoensso.sente.server-adapters.undertow/get-sch-adapter)
+    taoensso.sente.server-adapters.undertow/get-sch-adapter)
 
 (defn jetty []
   (info "websocket mode: jetty.")
   (require '[taoensso.sente.server-adapters.jetty9])
   taoensso.sente.server-adapters.jetty9/get-sch-adapter)
 
-(defn httpkit []
-  (info "websocket mode: httpkit")
-  (require '[taoensso.sente.server-adapters.http-kit])
-  taoensso.sente.server-adapters.http-kit/get-sch-adapter)
+#_(defn httpkit []
+    (info "websocket mode: httpkit")
+    (require '[taoensso.sente.server-adapters.http-kit])
+    taoensso.sente.server-adapters.http-kit/get-sch-adapter)
 
 (defn get-adapter [server-type]
   (case server-type
-    :undertow  (undertow)
+    ;:undertow  (undertow)
     :jetty (jetty)
-    :httpkit (httpkit)))
+    ;:httpkit (httpkit)
+    ;
+    ))
 
 (reset! sente/debug-mode?_ true) ; Uncomment for extra debug info
 

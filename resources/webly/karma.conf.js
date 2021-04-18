@@ -1,3 +1,4 @@
+// automatically copied from webly resources
 module.exports = function (config) {
     config.set({
         browsers: ['ChromiumHeadless'],

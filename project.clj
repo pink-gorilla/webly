@@ -108,8 +108,8 @@
 
                  ; supported servers
                  [info.sunng/ring-jetty9-adapter "0.14.0"] ; last version with java 9
-                 [luminus/ring-undertow-adapter "1.2.0"]
-                 [http-kit "2.5.3"]
+                 ;[luminus/ring-undertow-adapter "1.2.0"]
+                 ;[http-kit "2.5.3"]
 
                  ; websockets
                  [com.taoensso/sente "1.16.2"
