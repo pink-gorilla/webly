@@ -1,4 +1,4 @@
-(defproject org.pinkgorilla/webly "0.1.33-SNAPSHOT"
+(defproject org.pinkgorilla/webly "0.2.1-SNAPSHOT"
   :description "web (server / reagent) helper library."
   :url "https://github.com/pink-gorilla/webly"
   :deploy-repositories [["releases" {:url "https://clojars.org/repo"
@@ -34,13 +34,13 @@
                          [com.cognitect/transit-clj "1.0.324"]
                          [com.cognitect/transit-java "1.0.343"]
                          [org.apache.httpcomponents/httpcore "4.4.14"]
-                         [com.google.javascript/closure-compiler-unshaded "v20200719"]
+                         ;[com.google.javascript/closure-compiler-unshaded "v20200719"]
                          [org.apache.httpcomponents/httpasyncclient "4.1.4"]
                          [commons-codec "1.15"]
-                         ;[com.google.code.findbugs/jsr305 "3.0.2"]
-                         ;[org.ow2.asm/asm "8.0.1"]
+                         [com.google.code.findbugs/jsr305 "3.0.2"]
+                         [org.ow2.asm/asm "9.1"]
                          [org.clojure/tools.reader "1.3.5"] ; sente, sci, encore
-                         [cljsjs/react-dom "16.13.0-0"] ; reframe + reframe 10x
+                         ;[cljsjs/react-dom "16.13.0-0"] ; reframe + reframe 10x
                          ;[io.undertow/undertow-core "2.2.4.Final"] ; ring-undertow and shadow-cljs
                          ]
 
@@ -81,10 +81,11 @@
                  [hiccup "1.0.5"]
 
                  ; frontend
-                 [reagent "0.10.0" :exclusions [org.clojure/tools.reader
-                                                cljsjs/react
-                                                cljsjs/react-dom]]
-                 [re-frame "1.0.0"]
+                 [reagent "1.0.0" :exclusions [org.clojure/tools.reader
+                                               ; cljsjs/react
+                                               ; cljsjs/react-dom
+                                               ]]
+                 [re-frame "1.2.0"]
                  [cljs-ajax "0.8.3"] ; needed for re-frame/http-fx
 
                  [day8.re-frame/http-fx "0.2.3"  ; reframe based http requests
@@ -92,7 +93,7 @@
 
                  [keybind "2.2.0"]
 
-                 [day8.re-frame/re-frame-10x "0.6.2"]
+                 [day8.re-frame/re-frame-10x "1.0.2"]
                  [day8.re-frame/tracing "0.6.2"] ; https://github.com/day8/re-frame-debux
                  ;[day8.re-frame/tracing-stubs "0.6.2"]
 

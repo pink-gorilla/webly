@@ -28,7 +28,7 @@
 (defn tokens-view []
   (let [tokens (subscribe [:oauth2/tokens])]
     (fn []
-      [:div.bg-orange-200
+      [:div.bg-yellow-200
        [:p "oauth2 tokens"]
        [:p (pr-str @tokens)]])))
 

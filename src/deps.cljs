@@ -14,13 +14,13 @@
 
             ; react
             "create-react-class" "^15.7.0"
-            "react" "^16.13.0"  ; reagent needs this version
-            "react-dom" "^16.13.0"  ; reagent needs this version
+            "react" "^17.0.1"  ; reagent needs this version
+            "react-dom" "^17.0.1"  ; reagent needs this version
             "react-dom-factories" "^1.0.2"
 
             ; markdown -> html renderer
             "marked" "^2.0.3"
-            ; "highlight.js": "9.18.1",
+           ; "highlight.js" "10.7."
             ; "react-highlight.js": "1.0.7",
 
   ;
