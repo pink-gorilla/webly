@@ -1,5 +1,6 @@
 (ns webly.user.oauth2.provider
   (:require
+   [clojure.string]
    [taoensso.timbre :as timbre :refer [info infof error]]
    [cemerick.url :refer [url url-encode]]))
 

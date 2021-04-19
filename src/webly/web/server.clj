@@ -68,7 +68,7 @@
   (let [{:keys [type api wrap-handler-reload]} (get-in profile [:server])
         web-server (if api :web-server-api :web-server)
         {:keys [port host]} (get-in-config [web-server])]
-    (if api
+    (when api
       (info "using web-server-api"))
     (case type
       :jetty (run-jetty-server ring-handler port host api)

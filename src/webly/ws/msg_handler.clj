@@ -30,7 +30,7 @@
 
 (defn event-msg-handler [{:keys [client-id id event ?data] :as req}]
   (debugf "WS RCVD: %s" event)
-  (if req
+  (when req
     (-event-msg-handler req)))
 
 ; {:client-id "591b690d-5633-48c3-884d-348bbcf5c9ca"

@@ -26,25 +26,25 @@
                   ["vcs" "commit" "Begin %s"]
                   ["vcs" "push"]]
 
-
-  :managed-dependencies [[joda-time "2.10.10"]
-                         [clj-time "0.15.2"]
-                         [com.fasterxml.jackson.core/jackson-core "2.12.3"]
-                         [com.cognitect/transit-cljs "0.8.264"]
-                         [com.cognitect/transit-clj "1.0.324"]
-                         [com.cognitect/transit-java "1.0.343"]
-                         [org.apache.httpcomponents/httpcore "4.4.14"]
-                         ;[com.google.javascript/closure-compiler-unshaded "v20200719"]
-                         [org.apache.httpcomponents/httpasyncclient "4.1.4"]
-                         [commons-codec "1.15"]
-                         [com.google.code.findbugs/jsr305 "3.0.2"]
-                         [org.ow2.asm/asm "9.1"]
-                         [org.clojure/tools.reader "1.3.5"] ; sente, sci, encore
-                         ;[cljsjs/react-dom "16.13.0-0"] ; reframe + reframe 10x
-                         ;[io.undertow/undertow-core "2.2.4.Final"] ; ring-undertow and shadow-cljs
+  :managed-dependencies [; managed deps does nott work here, as webly is used as a library.
+                         ; projects using webly would have to fix all the transient libs of webly
+                         ; on their own AGAIN.                         
+                         ; lein deps :tree conflicts need to be sorted out in :dependencies
                          ]
 
-  :dependencies [[org.clojure/clojure "1.10.3"]
+  :dependencies [; dependency conflict resolution
+                 [commons-codec "1.15"]
+                 [com.cognitect/transit-clj "1.0.324"] ; luminus-transit + httpfx + 
+                 [com.cognitect/transit-cljs "0.8.264"]
+                ;[com.cognitect/transit-java "1.0.343"]
+                 [com.fasterxml.jackson.core/jackson-core "2.12.3"] ; cheshire + jsonista
+                 [org.ow2.asm/asm "9.1"] ; core.asymc tools.reader
+                 [org.clojure/tools.reader "1.3.5"] ; sente+encore + shadow-cljs + sci
+                 [javax.xml.bind/jaxb-api "2.3.1"] ; transit/java + shadow-cljs 
+                ;[com.google.code.findbugs/jsr305 "3.0.2"]
+                 [borkdude/edamame "0.0.11-alpha.29"] ; clj-kodo and reframe
+
+                 [org.clojure/clojure "1.10.3"]
                  [org.clojure/core.async "1.3.610"]
                  [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
                  [com.fzakaria/slf4j-timbre "0.3.21"] ; slf4j ->timbre adapter (used by jetty)
@@ -54,8 +54,7 @@
                  [org.clojure/data.json "2.1.0"] ; https://github.com/thheller/shadow-cljs/issues/872
                  [luminus-transit "0.1.2"]
                  [cheshire "5.10.0"]  ; JSON parsings and pretty printing
-                 [com.taoensso/encore "3.19.0"]
-
+               
                  ; ring + middlewares
                  [ring/ring-core "1.9.2"]
                  [ring/ring-anti-forgery "1.3.0"]
@@ -101,7 +100,9 @@
                  ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler
                  ; will fail because shadow contains core.async which is not compatible with 
                  ; self hosted clojurescript
-                 [thheller/shadow-cljs "2.12.5"] ; 2.10.19
+                 [thheller/shadow-cljs "2.12.5"
+                  :exclusions [org.clojure/tools.reader ; outdated
+                               ]] 
                  ;[thheller/shadow-cljsjs "0.0.21"]  ; already referred to from shadow-cljs
                  [org.clojure/clojurescript "1.10.844"]
 
@@ -115,11 +116,11 @@
                  ;[http-kit "2.5.3"]
 
                  ; websockets
+                 [com.taoensso/encore "3.19.0"] ; sente exclude
                  [com.taoensso/sente "1.16.2"
-                  :exclusions [aleph
+                  :exclusions [com.taoensso/encore ; outdated
                                org.clojure/core.async
-                               org.immutant
-                               info.sunng/ring-jetty9-adapter]] ;  websocket
+                               ]]
 
                  [fipp "0.6.23"] ; edn pretty printing
                  ]
@@ -129,8 +130,6 @@
   :test-paths ["test"]
   :resource-paths  ["resources"  ; webly resources (svg/img)
                     "target/node_modules"] ; css png resources from npm modules (tailwind)
-
-
 
   :profiles {:demo {; unit tests use demo profile for resource tests
                    ; so the demo serves tw puroses
@@ -142,7 +141,7 @@
                     :resource-paths  ["target/webly"
                                       "profiles/demo/resources"]}
 
-             :dev {:dependencies [;[clj-kondo "2020.06.21"] ;
+             :dev {:dependencies [[clj-kondo "2021.03.31"] ; 
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   ;[lein-cloverage "1.1.2"]
@@ -176,6 +175,11 @@
 
             "prep-res"
             ["do" ["css"] ["google-fonts"] ["md"]]
+
+            "lint"  ^{:doc "Lint for dummies"}
+            ["clj-kondo"  
+             "--config" "clj-kondo.edn"
+             "--lint" "src/webly"]
 
             ;; SHADOW-CLJS (for testing purposes only)
 
