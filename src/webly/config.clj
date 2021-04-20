@@ -15,13 +15,15 @@
 
 (defn from-file-exists [filename]
   (if (.exists (io/file filename))
-    (from-file filename)
+    (do (info "loading webly config from file: " filename)
+        (from-file filename))
     {}))
 
 (defn from-resource-exists [name]
   (let [r (io/resource name)]
     (if r
-      (from-resource name)
+      (do (info "loading webly config from resource " name)
+          (from-resource name))
       {})))
 
 ; https://github.com/tolitius/cprop
