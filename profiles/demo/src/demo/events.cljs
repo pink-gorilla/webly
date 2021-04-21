@@ -15,3 +15,8 @@
 
    db))
 
+
+(reg-event-db
+ :oauth2/logged-in
+ (fn [db [_ provider]]
+   (info "logged in to: " provider)))

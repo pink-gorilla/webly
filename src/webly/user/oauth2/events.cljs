@@ -42,6 +42,7 @@
      (if access-token
        (do
          (dispatch [:request provider])
+         (dispatch [:oauth2/logged-in provider])
          (when oauth-window
            (.close oauth-window))
          (-> db

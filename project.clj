@@ -8,11 +8,6 @@
 
   :min-lein-version "2.9.4" ; nrepl 0.7.0
 
-  ;:jvm-opts ["-Dtrust_all_cert=true" ; used when ssl certs are fucked up
-  ;             ;"-Djavax.net.ssl.trustStore=/home/andreas/.keystore"
-  ;           ]
-
-
   ;:prep-tasks ["css" ; copies tailwind css, so it ends up as resources 
   ;             "google-fonts"
   ;             "md"]
