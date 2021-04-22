@@ -18,7 +18,7 @@
    {:db       (assoc-in db [:pref] (pref))
     :http-xhrio {:method          :get
                  :uri             "/api/config"
-                 :timeout         5000                     ;; optional see API docs
+                 :timeout         10000                     ;; optional see API docs
                  :response-format (ajax/transit-response-format) ;; IMPORTANT!: You must provide this.
                  :on-success      [:config/load-success after-config-load]
                  :on-failure      [:config/load-error]}}))
