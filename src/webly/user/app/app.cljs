@@ -19,6 +19,7 @@
    [webly.user.markdown.page] ; reagent-page: md 
    [webly.user.oauth2.events]
    [webly.user.oauth2.events-parse]
+   [webly.user.oauth2.request-login]
    [webly.user.oauth2.request]
    [webly.user.oauth2.subscriptions]
    [webly.user.tenx.events]

@@ -26,3 +26,10 @@
      ;(token-expired? token)
      (token? token)
      false)))
+
+(reg-sub
+ :oauth2/logged-in-email
+ (fn [db [_ service]]
+   (if-let [email (get-in db [:token service :email])]
+     email
+     "unknown email")))

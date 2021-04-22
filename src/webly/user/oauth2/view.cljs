@@ -19,10 +19,11 @@
     "fas fa-user"))
 
 (defn user-button [service]
-  (let [logged-in (subscribe [:oauth2/logged-in? service])]
+  (let [logged-in (subscribe [:oauth2/logged-in? service])
+        logged-in-email (subscribe [:oauth2/logged-in-email service])]
     (fn [service]
       (if @logged-in
-        [:span.text-green-800 [header-icon (service-icon service)  [:oauth2/logout service] "log out"]]
+        [:span.text-green-800 [header-icon (service-icon service)  [:oauth2/logout service] (str "log out: " @logged-in-email)]]
         [:span.text-red-500 [header-icon (service-icon service) [:oauth2/login service] "log in"]]))))
 
 (defn tokens-view []

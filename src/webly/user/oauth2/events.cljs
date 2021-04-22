@@ -1,5 +1,6 @@
 (ns webly.user.oauth2.events
   (:require
+   [clojure.set :refer [rename-keys]]
    [taoensso.timbre :refer-macros [info error]]
    [re-frame.core :refer [reg-event-fx reg-event-db dispatch]]
    [webly.user.notifications.core :refer [add-notification]]
@@ -28,8 +29,10 @@
 (defn safe [token]
   (if-let [access-token (:access_token token)]
     (-> token
-        (assoc :access-token access-token)
-        (dissoc :acess_token))
+        (rename-keys {:access_token :access-token})
+        ;(assoc :access-token access-token)
+        ;(dissoc :acess_token)
+        )
     token))
 
 (reg-event-db
@@ -41,8 +44,7 @@
      (info "saving token " provider token)
      (if access-token
        (do
-         (dispatch [:request provider])
-         (dispatch [:oauth2/logged-in provider])
+         (dispatch [:oauth2/get-user provider])
          (when oauth-window
            (.close oauth-window))
          (-> db
