@@ -20,7 +20,7 @@
 
 (defn user-button [service]
   (let [logged-in (subscribe [:oauth2/logged-in? service])
-        logged-in-email (subscribe [:oauth2/logged-in-email service])]
+        logged-in-email (subscribe [:oauth2/logged-in-email-or-user service])]
     (fn [service]
       (if @logged-in
         [:span.text-green-800 [header-icon (service-icon service)  [:oauth2/logout service] (str "log out: " @logged-in-email)]]

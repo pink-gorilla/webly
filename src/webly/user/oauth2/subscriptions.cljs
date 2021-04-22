@@ -28,8 +28,11 @@
      false)))
 
 (reg-sub
- :oauth2/logged-in-email
+ :oauth2/logged-in-email-or-user
  (fn [db [_ service]]
-   (if-let [email (get-in db [:token service :email])]
-     email
-     "unknown email")))
+   (let [email (get-in db [:token service :email])
+         user (get-in db [:token service :user])
+         eu (or email user)]
+     (if eu
+       eu
+       "unknown email"))))
