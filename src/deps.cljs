@@ -11,11 +11,13 @@
             "karma-chrome-launcher" "^3.1.0"
             "karma-cljs-test" "^0.1.0"
             ;"karma-junit-reporter"  "2.0.1"
+            ;"cross-env": "^6.0.3",
 
             ; react
             "create-react-class" "^15.7.0"
-            "react" "^17.0.1"  ; reagent needs this version
-            "react-dom" "^17.0.1"  ; reagent needs this version
+
+            ;"react" "^17.0.1"  ; reagent brings it in deps.cljs
+            ;"react-dom" "^17.0.1"  ; reagent brings it deps.cljs
             "react-dom-factories" "^1.0.2"
 
             ; markdown -> html renderer

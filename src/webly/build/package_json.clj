@@ -7,7 +7,9 @@
 
 (def default-config
   {:private true
-   :scripts {:test "karma start --single-run"}
+   :scripts {:test "karma start --single-run"
+             ;:test "cross-env NODE_ENV=development karma start --single-run"
+             }
    :dependencies {}
    :devDependencies {}})
 

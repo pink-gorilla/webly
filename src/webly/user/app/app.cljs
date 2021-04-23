@@ -44,7 +44,8 @@
 
 (defn ^:dev/before-load
   before-load []
-  (info "before-load"))
+  (info "before-load")
+  (dispatch [:webly/before-load]))
 
 (defn ^:dev/after-load
   after-load []

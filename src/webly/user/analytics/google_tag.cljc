@@ -3,13 +3,9 @@
    #?(:clj  [taoensso.timbre :refer [debug info warn error]])
    #?(:cljs  [taoensso.timbre :refer-macros [debug info warn error]])))
 
-
-
-
 ;The syntax is :async true for tags that don't have a value, but you'll need to ensure that the :mode is set to :html. So:
 ; (html {:mode :html} [:script {:async true}])
 ; Note that if you use the html5 macro, the mode will automatically be set when rendering.
-
 
 (defn script-cljs [id]
   [:script {:async true ; async not rendered. see: https://github.com/weavejester/hiccup/issues/182
@@ -38,7 +34,8 @@
        (str "window.dataLayer = window.dataLayer || [];
          function gtag(){dataLayer.push(arguments);}
          gtag('js', new Date());
-         gtag('config', '" id "');")]
+         gtag('config', '" id "', {cookie_flags: 'SameSite=None;Secure' }  );") ; https://stackoverflow.com/questions/62569419/how-to-set-secure-attribute-of-the-cookies-used-by-google-analytics-global-sit
+       ]
       [:div {:class "no-google-analytics-config"}])))
 
 #?(:cljs

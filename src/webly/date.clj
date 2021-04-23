@@ -1,12 +1,12 @@
 (ns webly.date
-  (:import java.util.Date)
-  (:import java.text.SimpleDateFormat)
-  (:import java.text.ParseException))
+  (:import
+   [java.util Date]
+   [java.text SimpleDateFormat])) ; ParseException
 
-(defn now [] (java.util.Date.))
+(defn now [] (Date.))
 
 (defn tostring [dt]
-  (.format (java.text.SimpleDateFormat. "yyyy-MM-dd HH:mm:ss") dt))
+  (.format (SimpleDateFormat. "yyyy-MM-dd HH:mm:ss") dt))
 
 (defn now-str []
   (tostring (now)))

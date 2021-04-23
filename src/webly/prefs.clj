@@ -1,18 +1,13 @@
 (ns webly.prefs
-  (:import java.util.Date)
-  (:import java.text.SimpleDateFormat)
-  (:import java.text.ParseException))
+  (:require
+   [webly.date :refer [now-str]]))
 
 (defonce prefs-atom (atom {}))
 
 ; add compile time to prefs
 
-(defn now [] (java.util.Date.))
 
-(defn tostring [dt]
-  (.format (java.text.SimpleDateFormat. "yyyy-MM-dd HH:mm") dt))
-
-(swap! prefs-atom assoc :compile-time (tostring (now)))
+(swap! prefs-atom assoc :compile-time (now-str))
 
 ; macros that are used in cljs:
 

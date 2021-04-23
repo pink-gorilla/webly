@@ -2,7 +2,7 @@
   (:require
    [resauce.core]
    [clojure.string :refer [split]]
-   [taoensso.timbre :as timbre :refer [tracef debugf info infof warnf errorf info]]
+   [taoensso.timbre :as timbre :refer [tracef debug debugf info infof warnf errorf info]]
    [ring.util.response :as res]
    [webly.web.middleware :refer [wrap-api-handler]]
    [webly.web.handler :refer [add-ring-handler]])
@@ -11,7 +11,7 @@
 
 (defn file [;^URL 
             input]
-  (info "processing md resource: " input)
+  (debug "processing md resource: " input)
   (let [str (if (string? input)
               input
               (.getPath input))] ; resources of current project are passed as urls, of jars as strings 
@@ -25,9 +25,9 @@
 
 (defn handler-md-files
   [req]
-  (info "handler-md-files")
+  (debug "handler-md-files")
   (let [n (get-md-files)]
-    (info "md files count: " (count n))
+    (info "handler-md-files - count: " (count n))
     (res/response {:data n})))
 
 (add-ring-handler :api/md (wrap-api-handler handler-md-files))

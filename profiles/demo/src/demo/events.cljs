@@ -1,6 +1,6 @@
 (ns demo.events
   (:require
-   [taoensso.timbre :as timbre :refer [info]]
+   [taoensso.timbre :as timbre :refer [info warn]]
    [re-frame.core :refer [reg-event-db dispatch]]))
 
 (reg-event-db
@@ -14,6 +14,13 @@
                             (dispatch [:webly/status :running])) 5000)
 
    db))
+
+
+(reg-event-db
+ :webly/before-load
+ (fn [db [_]]
+   (warn "webly/before-load: customize your app for lein webly watch..")
+ ))
 
 
 (reg-event-db
