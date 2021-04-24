@@ -11,6 +11,7 @@
    [webly.ws.events]
    [webly.user.status.events]
    [webly.user.css.events]
+   [webly.user.css.subscriptions]
    [webly.user.config.events]
    [webly.user.config.subscription]
    [webly.user.dialog]
