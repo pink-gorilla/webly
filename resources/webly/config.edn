@@ -1,17 +1,6 @@
 {:webly {:title "webly"
          :icon "/r/webly/favicon.ico"
          :loading-image-url "/r/webly/loading-code.jpg" ;"/r/webly/loading-lemur.jpg"
-         :css-links  ; css from resources 
-         ["tailwindcss/dist/tailwind.css"
-          "@fortawesome/fontawesome-free/css/all.min.css"
-          "fonts-google/fonts.css"
-          "webly/prose.css"]
-         :css-extern ; css from external sites 
-         [;"http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic|Lora:400,700,400italic,700italic"
-          ;"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"
-          ;"https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300"
-          ;"https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
-          ]
          :lein-cljs-profile "+dev"
          :ns-cljs-app [user-app.app]
          :start-user-app [:webly/start-default]  ; after config loaded
@@ -19,6 +8,7 @@
          :user-routes-api "user-app.routes/routes-api"
          :bundle-entry  "webly.web.app.after-load ();" ; no need to change 
          :ring-handler "webly.user.app.app/ring-handler" ; no need to change 
+         :css-extern ["tailwindcss/dist/tailwind.css"] ; css via bundle. prefer frontend!!
          }
 
  :prefix "/r/" ; resource route prefix ; most web-apps can leave this at default values

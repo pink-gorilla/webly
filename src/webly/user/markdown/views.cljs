@@ -25,7 +25,6 @@
 
 (defn markdown-view [document]
   [:div.free-markup.prose
-   [:link {:rel "stylesheet" :href "/r/webly/prose.css"}]
    [markdown document]])
 
 (defn err [document message]

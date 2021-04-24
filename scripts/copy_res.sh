@@ -27,3 +27,5 @@ cpr @fortawesome/fontawesome-free/css "*.*"
 # cp node_modules/@fortawesome/fontawesome-free/webfonts/*  target/node_modules/public/@fortawesome/fontawesome-free/webfonts
 cpr @fortawesome/fontawesome-free/webfonts "*.*"
 
+cpr @icon/fontisto-emoji "fontisto*.*"
+cpr @icon/fontisto-emoji/icons "*.svg"

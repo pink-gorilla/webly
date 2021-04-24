@@ -1,7 +1,7 @@
 {:npm-deps {; fonts
             "@fortawesome/fontawesome-free" "^5.14.0"
             "get-google-fonts" "^1.2.2"
-
+            "@icon/fontisto-emoji" "^3.0.4-alpha.0"
             ; tailwind
             "tailwindcss" "2.1.1"
             "autoprefixer" "^10.0.2" ; peer dependency of tailwind. actually needed?

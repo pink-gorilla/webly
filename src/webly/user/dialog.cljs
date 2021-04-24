@@ -53,7 +53,6 @@
   (let [modal (subscribe [:modal])]
     (fn []
       [:div
-       [link-css "webly/dialog.css"]
        (when (:show? @modal)
          [modal-panel @modal])])))
 

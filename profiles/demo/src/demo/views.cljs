@@ -1,10 +1,13 @@
 (ns demo.views
   (:require
+    [taoensso.timbre :refer-macros [debug info warn error]]
+   [reagent.core :as r]
    [re-frame.core :refer [dispatch subscribe]]
    [webly.web.handler :refer [reagent-page]]
    [webly.user.notifications.core :refer [add-notification]]
    [webly.user.oauth2.view :refer [tokens-view user-button]]
-   [webly.user.settings.local-storage :refer [ls-get ls-set!]]))
+   [webly.user.settings.local-storage :refer [ls-get ls-set!]]
+   [webly.user.emoji :refer [emoji]]))
 
 (defn show-dialog-demo []
   (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
@@ -85,20 +88,36 @@
    [:p "press [alt-g k] to see keybindings"]
    [:p "press [alt-g t] to toggle 10x"]])
 
+
+(defn demo-emoji []
+  (let [show (r/atom false)
+        ; this triggers loading of the emojii css
+        show! (fn []
+                (warn "showing emojii")
+                (dispatch [:css/set-theme-component :emoji true])
+                (reset! show true))]
+    (fn []
+      [block
+       [:p.text-4xl "css loader"]
+       [link-fn show! "show emoji"]
+       (when @show
+         [emoji "fiem-surprised"])])))
+
+
 (defn main []
   [:div
    [:h1 "webly demo"]
 
    [:p [link-dispatch [:bidi/goto :ui/markdown :file "webly.md"] "webly docs"]]
    [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]
-
+   
+   [demo-emoji]
    [demo-routing]
    [demo-dialog]
    [demo-oauth]
    [demo-settings]
    [demo-ws]
-   [demo-kb]
-   ])
+   [demo-kb]])
 
 (defmethod reagent-page :demo/main [& args]
   [main])

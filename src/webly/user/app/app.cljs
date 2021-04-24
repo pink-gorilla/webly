@@ -9,6 +9,8 @@
    ; side-effects
    [webly.web.events-bidi]
    [webly.ws.events]
+   [webly.user.status.events]
+   [webly.user.css.events]
    [webly.user.config.events]
    [webly.user.config.subscription]
    [webly.user.dialog]
@@ -25,7 +27,8 @@
    [webly.user.tenx.events]
    [webly.user.settings.subscriptions]
    [webly.user.settings.events]
-   [webly.user.app.events]))
+   [webly.user.app.events]
+   [webly.user.app.css :as webly-css]))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]
@@ -60,16 +63,6 @@
   (webly.user.app.app/mount-app))
 
 (reg-event-db
- :webly/status
- (fn [db [_ status]]
-   (assoc db :webly/status status)))
-
-(reg-sub
- :webly/status
- (fn [db _]
-   (get-in db [:webly/status])))
-
-(reg-event-db
  :webly/app-after-config-load
  (fn [db [_]]
    (let [start-user-app (get-in db [:config :webly :start-user-app])]
@@ -77,6 +70,7 @@
      (dispatch [:webly/status :configuring-app])
      (dispatch [:ga/init])
      (dispatch [:keybindings/init])
+     (dispatch [:css/add-components webly-css/components webly-css/config])
      (dispatch [:settings/init])
      (dispatch [:markdown/init])
      (dispatch [:markdown/load-index])
