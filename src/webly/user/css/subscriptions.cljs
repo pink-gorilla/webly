@@ -11,3 +11,9 @@
                current {}}}
          (get-in db [:theme])]
      (css-app available current))))
+
+(reg-sub
+ :css/theme-component
+ (fn [db [_ component]]
+   (get-in db [:theme :current component])))
+
