@@ -7,6 +7,6 @@
   (let [theme-link (fn [theme]
                      (gstring/format theme-base theme))
         add-theme (fn [acc theme]
-                    (println "adding:" theme)
+                    ;(println "adding:" theme)
                     (assoc acc theme [(theme-link theme)]))]
     (reduce add-theme m themes)))
