@@ -59,4 +59,8 @@ jobs:
         # git diff
         lein prep-res
         lein release
+    - name: CodeCoverage
+      run: |
+        lein cloverage
+        bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
   

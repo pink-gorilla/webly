@@ -53,6 +53,9 @@
            :content "text/html; charset=utf-8"}]
    [:meta {:name "viewport"
            :content "width=device-width, initial-scale=1.0"}]
+   ; <meta name= "author" content= "name" >
+   ; <meta name= "description" content= "description here" >
+   ; <meta name= "keywords" content= "keywords,here" >
    [:title title]
    [:link {:rel "shortcut icon" :href icon}]
 

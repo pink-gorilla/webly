@@ -139,7 +139,7 @@
              :dev {:dependencies [[clj-kondo "2021.03.31"] ; 
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
-                                  ;[lein-cloverage "1.1.2"]
+                                  [lein-cloverage "1.1.2"]
                                   [lein-shell "0.5.0"]
                                   [lein-ancient "0.6.15"]]
                    :aliases      {"clj-kondo" ["run" "-m" "clj-kondo.main"]}
