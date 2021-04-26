@@ -28,6 +28,7 @@ lein test-js         ; Run unit tests - js
 ```
 
 **Demonstrates**
+
 - loading animation
 - navigation links to registered handlers (and error for unregistered handler)
 - notifications
@@ -36,7 +37,6 @@ lein test-js         ; Run unit tests - js
 - oauth2
 
 # Features
-
 
 ## webly build 
   - this feature is available for apps that use webly
