@@ -33,24 +33,6 @@ Webly profiles:
 - run `lein webly ci`
 - run `npm test` (this script is auto created when your package.json get auto created)
 
-## reframe fx / cofx
-
-The differences are: fxs are pushed by an event, whereas, cofxs are pulled by an event.
-
-Examples of fx
-- Push data to a database
-- Push data to localStore/cookie
-- Push data to a third party service
-- Push message to js/alert
-- Push a function to JavaScript event queue, e.g. js/setInterval, js/setTimeout, js/Promise
-
-Example of cofx
-- Pull data from a database
-- Pull data from localStore/cookie
-- Pull data from a third party service
-- Pull current datetime from browser
-- Pull a random number
-
 ## Using NPM dependencies
 
 Add npm dependencies that you want to use into a clojure deps.cljs

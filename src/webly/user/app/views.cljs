@@ -28,7 +28,7 @@
         [status-page]))))
 
 (defn webly-app []
-  [:div.w-full.h-full
+  [:div; .w-full.h-full
    [modal-container]
    [notifications-container]
    [load-css]
