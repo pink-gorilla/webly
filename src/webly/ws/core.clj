@@ -57,8 +57,7 @@
 
 (comment
   ;(println "clients: " @connected-uids)
-
-  (send-all! [:pinkie/broadcast {:a 13}])
+  (send-all! [:demo/broadcast {:a 13}])
 
   ;
   )

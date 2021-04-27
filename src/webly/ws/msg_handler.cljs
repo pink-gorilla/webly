@@ -1,9 +1,6 @@
 (ns webly.ws.msg-handler
-  (:require-macros
-   [cljs.core.async.macros :as asyncm :refer [go go-loop]])
   (:require
-   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof warnf error errorf trace]]
-   [cljs.core.async :as async  :refer [<! >! put! chan]]
+   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof info  warnf error errorf trace]]
    [re-frame.core :refer [reg-event-db dispatch-sync dispatch]]
    [taoensso.encore :as encore :refer-macros [have have?]]))
 
@@ -28,7 +25,8 @@
 (defmethod -event-msg-handler :chsk/recv
   [{:as ev-msg :keys [?data]}]
   (if (vector? ?data)
-    (dispatch ?data)
+    (do (info "dispatching rcvd ws msg to reframe:" ?data)
+        (dispatch ?data))
     (error "ws rcvd. cannot dispatch. data no vector: " ?data)))
 
 (defmethod -event-msg-handler :chsk/ws-ping
