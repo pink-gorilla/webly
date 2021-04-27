@@ -61,6 +61,6 @@ jobs:
         lein release
     - name: CodeCoverage
       run: |
-        lein cloverage
+        lein with-profile +demo cloverage
         bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
   
