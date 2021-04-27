@@ -1,6 +1,6 @@
 (ns webly.ws.core
   (:require
-   [taoensso.timbre :as log :refer [error info]]
+   [taoensso.timbre :as log :refer [error info warn]]
    [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
    [webly.ws.adapter :refer [ws-init! start-router!]]
    [webly.ws.handler :refer [add-ws-handler]]
@@ -37,6 +37,23 @@
   (if @c
     (ws/send-all! @c data)
     (error "ws/send-all - not setup. data: " data)))
+
+(defn send-response [{:as ev-msg :keys [id ?data ring-req ?reply-fn send-fn]}
+                     msg-type
+                     response]
+  (let [session (:session ring-req)
+        uid (:uid session)]
+    (when (nil? ?reply-fn)
+      (error "reply-fn is nil. the client did chose to use messenging communication istead of req-res communication."))
+    (if (nil? uid)
+      (warn "ws request uid is nil. ring-session not configured correctly.")
+      (info "ws/uid: " uid))
+    (if response
+      (cond
+        ?reply-fn (?reply-fn [msg-type response])
+        uid (send! uid [msg-type response])
+        :else (error "Cannot send ws-response: neither ?reply-fn nor uid was set!"))
+      (error "Can not send ws-response for nil response. " msg-type))))
 
 (comment
   ;(println "clients: " @connected-uids)
