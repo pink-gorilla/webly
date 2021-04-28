@@ -19,4 +19,7 @@ string to map.
 - https://www.creative-tim.com/learning-lab/tailwind-starter-kit/presentation
 - https://tailwindcomponents.com/
 - http://www.heropatterns.com/
--
+- https://kitwind.io/products/kometa/components/headers
+- https://github.com/aniftyco/awesome-tailwindcss#ui-libraries-components--templates
+- https://emortlock.github.io/tailwind-react-ui/#navmenu
+- https://tailwindui.com/

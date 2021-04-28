@@ -43,7 +43,10 @@
                  [org.clojure/core.async "1.3.610"]
                  [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
                  [com.fzakaria/slf4j-timbre "0.3.21"] ; slf4j ->timbre adapter (used by jetty)
+
+                 ; time
                  [clojure.java-time "0.3.2"]
+                 [com.andrewmcveigh/cljs-time "0.5.2"]
 
                  ; encoding
                  [org.clojure/data.json "2.1.0"] ; https://github.com/thheller/shadow-cljs/issues/872

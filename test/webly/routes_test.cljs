@@ -1,7 +1,6 @@
-(ns webly.cljs-dummy-test
+(ns webly.routes-test
   (:require
    [cljs.test :refer-macros [async deftest is testing]]
-   [taoensso.timbre :refer-macros [info error]]
    [bidi.bidi :as bidi]))
 
 (def routes-frontend

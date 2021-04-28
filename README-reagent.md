@@ -5,6 +5,12 @@
 - https://blog.ducky.io/clojurescript/reagent/2016/05/11/reagent-dynamic-children/
 - - http://pschwarz.bicycle.io/json-to-edn/   json->edn converter 
 
+reagent context
+https://gist.github.com/mhuebert/d400701f7eddbc4fffa811c70178a8c1
+
+
+https://github.com/gadfly361/re-surface   reagent page structure
+
 
 ## reframe fx / cofx
 
