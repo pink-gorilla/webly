@@ -27,12 +27,14 @@
 
 (defn build [profile shadow-config]
   (write-shadow-config shadow-config)
-  (let [{:keys [shadow-verbose cljs-build shadow-mode size-report]} (get profile :bundle)
+  (let [{:keys [shadow-verbose cljs-build shadow-mode size-report npm-install]} (get profile :bundle)
         shadow-opts {:verbose shadow-verbose}]
 
     (ensure-package-json)
     (ensure-karma)
-    (install-npm shadow-config shadow-opts)
+    (when npm-install
+      (info "webly - npm install ..")
+      (install-npm shadow-config shadow-opts))
 
     (case shadow-mode
       :release (shadow/release cljs-build shadow-opts)  ; production build (onebundle file, no source-maps)

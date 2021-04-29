@@ -22,11 +22,10 @@
     (spit filename (cheshire/generate-string config {:pretty my-pretty-printer}))))
 
 (defn ensure-package-json []
-  ;(when (not (.exists (io/file "package.json")))
-  (info "auto creating package.json")
-  (io/delete-file "package-lock.json" true)
-  (generate-config default-config))
-;)
+  (when (not (.exists (io/file "package.json")))
+    (info "auto creating package.json")
+    (io/delete-file "package-lock.json" true)
+    (generate-config default-config)))
 
 (defn load-res [res-name]
   (let [data-file (io/resource res-name)]

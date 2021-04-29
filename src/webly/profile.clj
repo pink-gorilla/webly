@@ -22,7 +22,8 @@
                   :bundle {:shadow-verbose false
                            :cljs-build :webly
                            :shadow-mode nil ; no build, just npm install
-                           :size-report false}}
+                           :size-report false
+                           :npm-install true}}
 
    :compile     {:prefs   {:tenx true}
                  :bundle {:shadow-verbose false
