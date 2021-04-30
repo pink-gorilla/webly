@@ -52,7 +52,7 @@
                  [org.clojure/data.json "2.1.0"] ; https://github.com/thheller/shadow-cljs/issues/872
                  [luminus-transit "0.1.2"]
                  [cheshire "5.10.0"]  ; JSON parsings and pretty printing
-               
+
                  ; ring + middlewares
                  [ring/ring-core "1.9.2"]
                  [ring/ring-anti-forgery "1.3.0"]
@@ -100,7 +100,7 @@
                  ; self hosted clojurescript
                  [thheller/shadow-cljs "2.12.5"
                   :exclusions [org.clojure/tools.reader ; outdated
-                               ]] 
+                               ]]
                  ;[thheller/shadow-cljsjs "0.0.21"]  ; already referred to from shadow-cljs
                  [org.clojure/clojurescript "1.10.844"]
 
@@ -117,8 +117,7 @@
                  [com.taoensso/encore "3.19.0"] ; sente exclude
                  [com.taoensso/sente "1.16.2"
                   :exclusions [com.taoensso/encore ; outdated
-                               org.clojure/core.async
-                               ]]
+                               org.clojure/core.async]]
 
                  [fipp "0.6.23"] ; edn pretty printing
                  ]
@@ -126,8 +125,8 @@
   :target-path  "target/jar"
   :source-paths ["src"]
   :test-paths ["test"]
-  :resource-paths  ["resources"  ; webly resources (svg/img)
-                    "target/node_modules"] ; css png resources from npm modules (tailwind)
+  :resource-paths ["resources"  ; webly resources (svg/img)
+                   "target/node_modules"] ; css png resources from npm modules (tailwind)
 
   :profiles {:demo {; unit tests use demo profile for resource tests
                    ; so the demo serves tw puroses
@@ -175,7 +174,7 @@
             ["do" ["css"] ["google-fonts"] ["md"]]
 
             "lint"  ^{:doc "Lint for dummies"}
-            ["clj-kondo"  
+            ["clj-kondo"
              "--config" "clj-kondo.edn"
              "--lint" "src/webly"]
 
@@ -198,7 +197,7 @@
             ["with-profile" "+demo" "test"]
 
             "test-js" ^{:doc "run unit test JavaScript."}
-            ["do" 
+            ["do"
              ["webly" "ci"]
              ["shell" "npm" "test"]
              ;["shell" "./node_modules/karma/bin/karma" "start" "--single-run"]

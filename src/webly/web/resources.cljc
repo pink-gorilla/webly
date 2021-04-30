@@ -1,8 +1,8 @@
 (ns webly.web.resources
-  (:require
-   [clojure.string] ; no empty require for cljs
-   #?(:clj [bidi.ring])
-   #?(:clj [webly.web.handler :refer [add-ring-handler]])))
+  #?(:clj
+     (:require
+      [bidi.ring]
+      [webly.web.files])))
 
 ;; from: 
 ;; https://github.com/juxt/bidi/blob/master/README.md
@@ -15,13 +15,16 @@
 ;; Resources will return a 404 response if the resource cannot be found, while
 ;;  ResourcesMaybe will return nil, allowing subsequent routes to be tried.
 
+
 #?(:clj   (def resource-handler
             (bidi.ring/->ResourcesMaybe {:prefix "public"}))
    :cljs (def resource-handler :webly/resources))
 
-(def routes-resources
-  {"/r"  resource-handler ;resources (dedicated path so there is no overlap with api)
-   })
+#?(:clj   (def file-handler
+            (webly.web.files/->FilesMaybe {:dir "node_modules"}))
+   :cljs (def file-handler :webly/files))
+
+
 
 
 

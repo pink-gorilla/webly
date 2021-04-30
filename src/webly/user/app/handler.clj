@@ -5,6 +5,8 @@
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [bidi.ring]
    [webly.web.middleware :refer [wrap-webly]]
+   [webly.web.handler :refer [add-ring-handler]]
+
    [webly.user.app.views :refer [app-page]]))
 
 
@@ -38,4 +40,7 @@
 (def app-handler
   (-> app-handler-raw
       wrap-webly))
+
+(add-ring-handler :webly/app-bundle app-handler)
+
 

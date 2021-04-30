@@ -1,6 +1,6 @@
 (ns webly.user.app.routes
   (:require
-   [webly.web.resources :refer [resource-handler]]))
+   [webly.web.resources :refer [resource-handler file-handler]]))
 
 (def webly-routes-api
   {"config" {:get :webly/config}
@@ -26,8 +26,11 @@
         ]
     ["/" {"api/"    api-routes
           ["oauth2/redirect/" :provider] :oauth2/redirect  ;  either client OR server side
+
        ; ""       app-routes
           "r"       resource-handler
+          ["r"]     file-handler
+
         ;[true      :webly/not-found]  ; not working as we need to process frontend routes also
           }]))
 
