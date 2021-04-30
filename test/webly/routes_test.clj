@@ -33,7 +33,7 @@
 
 (deftest resource-routes []
   (is (not (= (:handler (GET "/r/webly/favicon.ico")) nil)))
-  (is (= (GET "/r/not-found.jpg") nil)))
+  (is (= (:handler (GET "/r/not-found.jpg")) nil)))
 
 
 
