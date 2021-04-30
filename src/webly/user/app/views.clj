@@ -4,14 +4,16 @@
    [hiccup.page :as page]
    [webly.config :refer [config-atom]]
    [webly.user.analytics.google-tag :refer [script-tag-src script-tag-config]]
-   [webly.user.tenx.view :refer [tenx-script]]))
+   [webly.user.tenx.view :refer [tenx-script]]
+   [webly.user.css.config :refer [link-css]]))
 
 ;; CSS
+
 
 (defn css [link]
   [:link {:rel "stylesheet"
           :type "text/css"
-          :href link}])
+          :href (link-css link)}])
 
 (defn style [s]
   (str/join ";" (map #(str (name %) ":" ((keyword %) s)) (keys s))))

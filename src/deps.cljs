@@ -3,7 +3,7 @@
             "get-google-fonts" "^1.2.2"
             "@icon/fontisto-emoji" "^3.0.4-alpha.0" ; this leads to warnings in dependent projects, perhapsdueto alpha text
             ; tailwind
-            "tailwindcss" "2.1.1"
+            "tailwindcss" "2.1.2"
             "autoprefixer" "^10.0.2" ; peer dependency of tailwind. actually needed?
 
             ; javascript unit tests 

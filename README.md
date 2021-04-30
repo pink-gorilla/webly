@@ -7,6 +7,7 @@
 # UI demo
 
 ```
+lein webly npm-install
 lein prep-res
 lein webly watch     ; The demo runs a webserver on port 8000. "shadow-cljs watch" mode
 ```

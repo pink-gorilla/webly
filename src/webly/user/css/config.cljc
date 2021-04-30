@@ -3,7 +3,8 @@
    [clojure.string :refer [starts-with?]]))
 
 (defn link-css [link]
-  (if (starts-with? link "http")
+  (if (or (starts-with? link "http")
+          (starts-with? link "/"))
     link
     (str "/r/" link)))
 
