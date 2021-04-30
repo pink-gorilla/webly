@@ -35,8 +35,6 @@
 
 (reset! sente/debug-mode?_ true) ; Uncomment for extra debug info
 
-;(defonce connected-uids atom {})
-
 (defn ws-init! [server-type]
   (let [get-sch-adapter (get-adapter server-type)
         packer (sente-transit/get-transit-packer)
@@ -53,9 +51,7 @@
      :ring-ajax-get-or-ws-handshake ajax-get-or-ws-handshake-fn
      :ring-ajax-post ajax-post-fn}))
 
-
 ; router
-
 
 (defonce router_ (atom nil))
 

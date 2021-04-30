@@ -1,7 +1,6 @@
 (ns webly.ws.core
   (:require
    [taoensso.timbre :as log :refer [error info warn]]
-   [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
    [webly.ws.adapter :refer [ws-init! start-router!]]
    [webly.ws.handler :refer [add-ws-handler]]
    [webly.ws.ws :as ws]))

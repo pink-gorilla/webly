@@ -1,12 +1,9 @@
 (ns webly.ws.ws
-  (:require-macros
-   [cljs.core.async.macros :as asyncm :refer [go go-loop]])
   (:require
-   [taoensso.timbre :as timbre :refer-macros [tracef debugf info infof warnf error errorf trace]]
-   [cljs.core.async :as async  :refer [<! >! put! chan]]
+   [taoensso.timbre :as timbre :refer-macros [debugf info error]]
    [re-frame.core :refer [dispatch]]))
 
-(defn cb-dispatch-to-reframe
+(defn- cb-dispatch-to-reframe
   [cb-reply]
   (debugf "dispatching ws callback reply: %s" cb-reply)
   (if (vector? cb-reply)

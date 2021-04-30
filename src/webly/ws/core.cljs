@@ -1,7 +1,7 @@
 (ns webly.ws.core
   (:require
-   [taoensso.timbre :refer-macros [debug info error]]
-   [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
+   [taoensso.timbre :refer-macros [debug info]]
+   [re-frame.core :as rf]
    [webly.ws.adapter :refer [ws-init! start-router!]]
    [webly.ws.ws :as ws]))
 
@@ -17,7 +17,7 @@
   (when data
     (ws/send @c data)))
 
-(reg-event-db
+(rf/reg-event-db
  :ws/send
  (fn [db [_ data]]
    (debug "ws send: " data)
