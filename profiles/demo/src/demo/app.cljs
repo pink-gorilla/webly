@@ -5,10 +5,11 @@
    [webly.user.app.app :refer [webly-run!]]
    [demo.routes :refer [routes-api routes-app]]
    ; side-effects 
-   [demo.views]   
    [demo.events]
    [demo.time]
-   ))
+   [demo.pages.main]
+   [demo.pages.help]
+   [demo.pages.party]))
 
 (defn ^:export start []
   (info "webly demo starting ...")

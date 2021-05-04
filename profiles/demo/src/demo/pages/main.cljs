@@ -1,4 +1,4 @@
-(ns demo.views
+(ns demo.pages.main
   (:require
     [taoensso.timbre :refer-macros [debug info warn error]]
    [reagent.core :as r]
@@ -122,30 +122,8 @@
 (defmethod reagent-page :demo/main [& args]
   [main])
 
-(defn help []
-  [:div
-   [:h1 "webly help"]
-   [:p [link-dispatch [:bidi/goto  :demo/main] "main"]]
-   [:h1 "help!"]
-   [:p "a moon image should show below. this is a test for webly resource handler."]
-   [:img {:src "/r/moon.jpg"}]])
-
-(defmethod reagent-page :demo/help [& args]
-  [help])
 
 
-(defn party [{:keys [route-params query-params handler]}]
-  (let [{:keys [location]} route-params
-        {:keys [expected-guests]} query-params]
-    [:div
-     [:h1 "There is a party in " location]
-     (if expected-guests
-       [:p "Expected Guests: " expected-guests]
-       [:p "We don't know how many guests to expect!"])
-     [:p "This is a test for bidi route/query parameters."]]))
-
-(defmethod reagent-page :demo/party [args]
-  [party args])
 
 
 
