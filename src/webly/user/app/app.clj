@@ -54,11 +54,14 @@
   (info "webly starting build:  " (:bundle profile))
   (build profile))
 
-(defn webly-run! [profile-name]
-  (let [profile (setup-profile profile-name)]
-    (if (:server profile)
-      (run-server-p profile)
-      (info "not running web server"))
-    (if (:bundle profile)
-      (build-p profile)
-      (info "not building bundle."))))
+(defn webly-run!
+  ([profile-name]
+   (webly-run! profile-name {}))
+  ([profile-name user-config]
+   (let [profile (setup-profile profile-name)]
+     (if (:server profile)
+       (run-server-p profile)
+       (info "not running web server"))
+     (if (:bundle profile)
+       (build-p profile)
+       (info "not building bundle.")))))

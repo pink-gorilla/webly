@@ -30,17 +30,17 @@
   :dependencies [; dependency conflict resolution
                  [commons-codec "1.15"]
                  [com.cognitect/transit-clj "1.0.324"] ; luminus-transit + httpfx + 
-                 [com.cognitect/transit-cljs "0.8.264"]
+                 [com.cognitect/transit-cljs "0.8.269"]
                 ;[com.cognitect/transit-java "1.0.343"]
                  [com.fasterxml.jackson.core/jackson-core "2.12.3"] ; cheshire + jsonista
                  [org.ow2.asm/asm "9.1"] ; core.asymc tools.reader
                  [org.clojure/tools.reader "1.3.5"] ; sente+encore + shadow-cljs + sci
                  [javax.xml.bind/jaxb-api "2.3.1"] ; transit/java + shadow-cljs 
                 ;[com.google.code.findbugs/jsr305 "3.0.2"]
-                 [borkdude/edamame "0.0.11-alpha.29"] ; clj-kodo and reframe
+                 [borkdude/edamame "0.0.11"] ; clj-kodo and reframe
 
                  [org.clojure/clojure "1.10.3"]
-                 [org.clojure/core.async "1.3.610"]
+                 [org.clojure/core.async "1.3.618"]
                  [com.taoensso/timbre "5.1.2"] ; clj/cljs logging
                  [com.fzakaria/slf4j-timbre "0.3.21"] ; slf4j ->timbre adapter (used by jetty)
 
@@ -54,7 +54,7 @@
                  [cheshire "5.10.0"]  ; JSON parsings and pretty printing
 
                  ; ring + middlewares
-                 [ring/ring-core "1.9.2"]
+                 [ring/ring-core "1.9.3"]
                  [ring/ring-anti-forgery "1.3.0"]
                  [ring-cors "0.1.13"]
                  [ring/ring-defaults "0.3.2"
@@ -67,7 +67,7 @@
                  [luminus/ring-ttl-session "0.3.3"]
                  [ring-oauth2 "0.1.5"]
                  [prone "2020-01-17"] ; exception middleware
-                 [ring/ring-devel "1.9.2"] ; reload middleware
+                 [ring/ring-devel "1.9.3"] ; reload middleware
 
                  ; routing
                  [bidi "2.1.6"]
@@ -109,7 +109,8 @@
                  [akiroz.re-frame/storage "0.1.4"] ; localstorage 
 
                  ; supported servers
-                 [info.sunng/ring-jetty9-adapter "0.14.0"] ; last version with java 9
+                 ; ; last version with java 9 : 0.14.0
+                 [info.sunng/ring-jetty9-adapter "0.15.1"] ; uses jetty 10.0.2
                  ;[luminus/ring-undertow-adapter "1.2.0"]
                  ;[http-kit "2.5.3"]
 
@@ -141,7 +142,7 @@
              :dev {:resource-paths  ["target/webly" ; for lein test
                                      "profiles/demo/resources"]
                    
-                   :dependencies [[clj-kondo "2021.03.31"] ; 
+                   :dependencies [[clj-kondo "2021.04.23"] ; 
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]
