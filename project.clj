@@ -28,6 +28,9 @@
                          ]
 
   :dependencies [; dependency conflict resolution
+                 [org.ow2.asm/asm-commons "9.0"] ; jetty and shadow
+                 [org.ow2.asm/asm-analysis "9.0"] ; jetty and shadow
+
                  [commons-codec "1.15"]
                  [com.cognitect/transit-clj "1.0.324"] ; luminus-transit + httpfx + 
                  [com.cognitect/transit-cljs "0.8.269"]
@@ -37,6 +40,7 @@
                  [org.clojure/tools.reader "1.3.5"] ; sente+encore + shadow-cljs + sci
                  [javax.xml.bind/jaxb-api "2.3.1"] ; transit/java + shadow-cljs 
                 ;[com.google.code.findbugs/jsr305 "3.0.2"]
+                 [org.slf4j/slf4j-api "2.0.0-alpha1"] ; jetty
                  [borkdude/edamame "0.0.11"] ; clj-kodo and reframe
 
                  [org.clojure/clojure "1.10.3"]
@@ -141,7 +145,7 @@
 
              :dev {:resource-paths  ["target/webly" ; for lein test
                                      "profiles/demo/resources"]
-                   
+
                    :dependencies [[clj-kondo "2021.04.23"] ; 
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
