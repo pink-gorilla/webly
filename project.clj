@@ -144,7 +144,9 @@
                                       "profiles/demo/resources"]}
 
              :dev {:resource-paths  ["target/webly" ; for lein test
-                                     "profiles/demo/resources"]
+                                     "profiles/demo/resources"
+                                     "profiles/test/resources"
+                                     ]
 
                    :dependencies [[clj-kondo "2021.04.23"]
                                   ; antq fucks up shadow-cljs

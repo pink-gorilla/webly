@@ -14,5 +14,5 @@
   [profile-name]
   (when (server? profile-name)
     (start-time-sender!))
-  (webly-run! profile-name))
+  (webly-run! profile-name "demo.edn"))
 

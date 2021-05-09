@@ -1,7 +1,7 @@
 (ns webly.web.server
   (:require
    [taoensso.timbre :as timbre :refer [info error]]
-   [webly.config :refer [load-config! get-in-config config-atom]]
+   [webly.config :refer [get-in-config]]
    [webly.web.middleware :refer [wrap-webly]]
    [webly.web.handler :refer [handler-registry]]
    ; ws

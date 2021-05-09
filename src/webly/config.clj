@@ -13,37 +13,53 @@
 (defn get-in-config [path]
   (get-in @config-atom path))
 
-(defn from-file-exists [filename]
-  (if (.exists (io/file filename))
-    (do (info "loading webly config from file: " filename)
-        (from-file filename))
+(defn load-from-file [filename]
+  (info "loading webly config from file:" filename)
+  (from-file filename))
+
+(defn load-from-resource [name]
+  (info "loading webly config from resource:" name)
+  (from-resource name))
+
+(defn from-map-file-res [config]
+  (cond
+    (nil? config)
+    {}
+
+    (map? config)
+    config
+
+    (.exists (io/file config))
+    (load-from-file config)
+
+    (io/resource config)
+    (load-from-resource config)
+
+    :else
     {}))
 
-(defn from-resource-exists [name]
-  (let [r (io/resource name)]
-    (if r
-      (do (info "loading webly config from resource " name)
-          (from-resource name))
-      {})))
 
 ; https://github.com/tolitius/cprop
-(defn- load-config-cprop [user-config]
-  (let [config-files (load-config
+
+
+(defn- load-config-cprop [app-config]
+  (let [app (if (vector? app-config)
+              (into [] (map from-map-file-res app-config))
+              [(from-map-file-res app-config)])
+        app-creds (into [] (conj app
+                                 (from-map-file-res "creds.edn")))
+        ;_ (info "app creds: " app-creds)
+        config-files (load-config
                       :resource "webly/config.edn" ; otherwise it would search for config.edn 
-                      :merge
-                      [(from-file-exists "config.edn")   ; user config/creds (files)
-                       (from-file-exists "creds.edn")
-                       (from-resource-exists "config.edn")  ; user config/creds (resources)
-                       (from-resource-exists "creds.edn")
-                       (or user-config {}) ; used in lein-pinkgorilla
-                       ])
+                      :merge app-creds)
+        ;_ (info "cf: " config-files)
         ks (keys config-files)
         config (load-config
+                :resource "webly/config.edn"
                 :merge
                 [config-files
                  (from-system-props)
                  (from-env) ; env otherwise has way too many settings
-                ;(cli-args) 
                  ])
         config (select-keys config ks)]
     ;(info "keys: " ks)
@@ -72,19 +88,11 @@
       config)))
 
 (defn load-config!
-  ([]
-   (load-config! {}))
-  ([user-config]
-   (let [config (load-config-cprop user-config)
-         _ (info "webly-config: " config)
-         config (resolve-config-keybindings config)]
+  [app-config]
+  (let [config (load-config-cprop app-config)
+        _ (info "webly-config: " config)
+        config (resolve-config-keybindings config)]
+    (reset! config-atom config)))
 
-     (reset! config-atom config))))
 
-(comment
-
-  (load-config)
-  (load-config!)
-  ;
-  )
 
