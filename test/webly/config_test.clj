@@ -1,7 +1,7 @@
 (ns webly.config-test
   (:require
    [clojure.test :refer [deftest is testing]]
-   [webly.config :refer [load-config! config-atom]]))
+   [webly.config :refer [load-config! config-atom add-config]]))
 
 (defn c [c]
   (reset! config-atom {})
@@ -26,3 +26,10 @@
   (is (= {:c 3}  (c "bongo.edn"))) ; strings as resources
   (is (= {:a 7 :c 3} (c [{:a 7} "bongo.edn"]))) ; strings as resources
   )
+
+(deftest add []
+  (is (= [{:a 1} {:a 2}]  (add-config {:a 1} {:a 2})))
+  (is (= [{:a 1} {:a 2}]  (add-config [{:a 1}] {:a 2})))
+  (is (= [{:a 1} {:a 2}]  (add-config [{:a 1}] [{:a 2}])))
+  (is (= [{:a 1} {:a 2}]  (add-config {:a 1} [{:a 2}]))))
+

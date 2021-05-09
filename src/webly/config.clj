@@ -94,5 +94,9 @@
         config (resolve-config-keybindings config)]
     (reset! config-atom config)))
 
+(defn add-config [app-config user-config]
+  (let [app-config (if (vector? app-config) app-config [app-config])
+        user-config (if (vector? user-config) user-config [user-config])]
+    (into [] (concat app-config user-config))))
 
 
