@@ -20,7 +20,7 @@
   color: blue;
   font-weight: 200; /* normal; */
   font-size: 24px;
-  margin-top: 2em;
+  margin-top: 0.25em;
 }
 .prose h2 {font-size: 20px;}
 .prose h3 {font-size: 18px;}
@@ -58,9 +58,9 @@
     list-style-position: inside;
     list-style-type : circle;
     list-style-image: none;
-    color: red;
-    margin: 5px;
-    padding: 5px;
+    /* color: red; */
+    margin: 0px;
+    padding: 0px;
   }
 
 .prose ul > li::before {

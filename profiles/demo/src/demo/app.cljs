@@ -7,9 +7,10 @@
    ; side-effects 
    [demo.events]
    [demo.time]
-   [demo.pages.main]
    [demo.pages.help]
-   [demo.pages.party]))
+   [demo.pages.party]
+   [demo.pages.prose]
+   [demo.pages.main]))
 
 (defn ^:export start []
   (info "webly demo starting ...")

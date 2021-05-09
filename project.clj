@@ -147,16 +147,17 @@
                                      "profiles/demo/resources"]
 
                    :dependencies [[clj-kondo "2021.04.23"]
-                                  [com.github.liquidz/antq "0.13.0"
-                                   :exclusions [org.apache.httpcomponents/httpclient
-                                                org.clojure/tools.cli]
-                                   ]
+                                  ; antq fucks up shadow-cljs
+                                  ;[com.github.liquidz/antq "0.13.0"
+                                   ;:exclusions [org.apache.httpcomponents/httpclient
+                                  ;              org.clojure/tools.cli]
+                                  ; ]
                                   [ring/ring-mock "0.4.0"]]
                    :plugins      [[lein-cljfmt "0.6.6"]
                                   [lein-cloverage "1.1.2"]
                                   [lein-shell "0.5.0"]
-                                  #_[lein-ancient "0.6.15"]]
-                   :aliases      {"outdated" ["run" "-m" "antq.core"]
+                                  [lein-ancient "0.6.15"]]
+                   :aliases      {;"outdated" ["run" "-m" "antq.core"]
                                   "clj-kondo" ["run" "-m" "clj-kondo.main"]}
                    :cloverage    {:codecov? true
                                   ;; In case we want to exclude stuff

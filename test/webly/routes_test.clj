@@ -6,7 +6,7 @@
    [webly.web.resources]
    [webly.web.handler]
 
-   [demo.routes :refer [routes-api routes-app]]
+   [webly.routes :refer [routes-api routes-app]]
    [webly.user.app.routes :refer [make-routes-backend make-routes-frontend]]))
 
 (def routes-backend (make-routes-backend routes-app routes-api))
