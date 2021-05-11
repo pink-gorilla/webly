@@ -17,7 +17,8 @@
 
 
 #?(:clj   (def resource-handler
-            (bidi.ring/->ResourcesMaybe {:prefix "public"}))
+            ;(bidi.ring/->ResourcesMaybe {:prefix "public"})
+            (webly.web.files/->ResourcesMaybe {:prefix "public"}))
    :cljs (def resource-handler :webly/resources))
 
 #?(:clj   (def file-handler
