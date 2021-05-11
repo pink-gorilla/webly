@@ -3,6 +3,23 @@
    [re-frame.core :as rf]
    [webly.web.handler :refer [reagent-page]]))
 
+
+; themeable css for party
+
+(def components
+  {:party {:blue  ["party-theme-blue.css"]
+           :red ["party-theme-red.css"]
+           :cool ["party-theme-cool.css"]
+           }})
+
+(def config
+  {:party :red})
+
+(rf/dispatch [:css/add-components components config])
+
+
+; ui helper   
+
 (defn link-fn [fun text]
   [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
    {:on-click fun} text])
@@ -17,10 +34,15 @@
 (defn party [{:keys [route-params query-params handler]}]
   (let [{:keys [location]} route-params
         {:keys [expected-guests]} query-params]
-    [:div
+    [:div.party
      [link-dispatch [:bidi/goto :demo/main] "main"]
      [:p "This is a test for bidi route/query parameters."]
-
+     
+     [:p "This is a test for theme css switching."]
+     [link-dispatch [:css/set-theme-component :party :red] "theme red"]
+     [link-dispatch [:css/set-theme-component :party :blue] "theme blue"]
+     [link-dispatch [:css/set-theme-component :party :cool] "theme cool"]
+     
      [:h1.text-3xl.text-blue-500 "There is a party in " location]
      (if expected-guests
        [:p "Expected Guests: " expected-guests]
