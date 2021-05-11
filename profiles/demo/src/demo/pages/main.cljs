@@ -112,6 +112,9 @@
    [:p [link-dispatch [:bidi/goto :ui/markdown :file "webly.md"] "webly docs"]]
    [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]
    
+   [link-dispatch [:css/set-theme-component :tailwind :light] "tailwind light"]
+   [link-dispatch [:css/set-theme-component :tailwind :dark] "tailwind dark"]
+
    [demo-emoji]
    [demo-routing]
    [demo-dialog]

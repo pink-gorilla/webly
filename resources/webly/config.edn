@@ -8,7 +8,8 @@
          :user-routes-api "user-app.routes/routes-api"
          :bundle-entry  "webly.web.app.after-load ();" ; no need to change 
          :ring-handler "webly.user.app.app/ring-handler" ; no need to change 
-         :css-extern ["tailwindcss/dist/tailwind.css"] ; css via bundle. prefer frontend!!
+         :css-extern [;"tailwindcss/dist/tailwind.css"
+                      ] ; css via bundle. prefer frontend!!
          }
 
  :prefix "/r/" ; resource route prefix ; most web-apps can leave this at default values

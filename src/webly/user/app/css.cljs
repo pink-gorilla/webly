@@ -8,7 +8,8 @@
 
 
 (def components
-  {:tailwind {true ["tailwindcss/dist/tailwind.css"]}
+  {:tailwind {:light ["tailwindcss/dist/tailwind.min.css"]
+              :dark ["tailwindcss/dist/tailwind-dark.min.css"]}
    :fonts    {true ["@fortawesome/fontawesome-free/css/all.min.css"
                     "fonts-google/fonts.css"]}
    :emoji    {true ["@icon/fontisto-emoji/fontisto-emoji.css"]}
@@ -16,7 +17,7 @@
    :prose    {true ["webly/prose.css"]}})
 
 (def config
-  {:tailwind true
+  {:tailwind :light ; true
    :fonts    true
    :emoji    false
    :webly    true
