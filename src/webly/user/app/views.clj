@@ -29,8 +29,8 @@
 
 (def loading
   [:div
-   [:script
-    "window.onload = function () {
+   #_[:script
+      "window.onload = function () {
         document.getElementById('spinner').remove();
         var bodyClasses = document.body.classList;
         if (bodyClasses.contains('loading')) {

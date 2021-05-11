@@ -63,11 +63,21 @@
   (dispatch [:ga/event {:category "webly" :action "mounted" :label 77 :value 13}])
   (webly.user.app.app/mount-app))
 
+(defn remove-spinner []
+  (let [spinner (.. js/document (getElementById "spinner"))
+        body-classes (.. js/document -body -classList)]
+    ;(println "spinner: " spinner)
+    ;(println "cl: " body-classes)
+    (.. spinner (remove))
+    (when (.contains body-classes "loading")
+      (.remove body-classes "loading"))))
+
 (reg-event-db
  :webly/app-after-config-load
  (fn [db [_]]
    (let [start-user-app (get-in db [:config :webly :start-user-app])]
      (info "webly config after-load")
+     (remove-spinner)
      (dispatch [:webly/status :configuring-app])
      (dispatch [:ga/init])
      (dispatch [:keybindings/init])
