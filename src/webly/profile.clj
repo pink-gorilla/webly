@@ -78,6 +78,7 @@
   [profile-name config]
   (load-config! config)
   (timbre-config! @config-atom)
+  (info "webly-config: " @config-atom)
   (let [profile (str->profile profile-name)]
     (if (or (nil? profile-name) (not profile))
       (error "no profile. valid profiles are: " (profiles-available))

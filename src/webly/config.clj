@@ -90,7 +90,6 @@
 (defn load-config!
   [app-config]
   (let [config (load-config-cprop app-config)
-        _ (info "webly-config: " config)
         config (resolve-config-keybindings config)]
     (reset! config-atom config)))
 
