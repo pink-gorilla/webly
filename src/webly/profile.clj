@@ -60,6 +60,10 @@
   (let [p (str->profile profile-str)]
     (:server p)))
 
+(defn compile? [profile-str]
+  (let [p (str->profile profile-str)]
+    (:bundle p)))
+
 (defn get-build-prefs [profile]
   (let [p (get-in profile [:prefs])]
     (or p {})))
