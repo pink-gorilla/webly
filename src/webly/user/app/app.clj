@@ -15,7 +15,6 @@
    [webly.user.config.handler]   ; handler: config
    [webly.user.oauth2.handler-token]   ; handler:  github-auth-token
    [webly.user.oauth2.handler-redirect]
-   [webly.user.markdown.handler] ; handler : md docs
    [webly.user.app.keybindings]))
 
 (defn resolve-name [str]

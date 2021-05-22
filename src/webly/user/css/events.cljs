@@ -15,11 +15,12 @@
 (reg-event-db
  :css/add-components
  (fn [db [_ components components-default-config]]
-   (info "css add-component: ")
-   (let [{:keys [available current]
+   (info "css add-component: " components-default-config)
+   (let [{:keys [theme]
+          :or {theme {}}} db
+         {:keys [available current]
           :or {available {}
-               current {}}}
-         (:theme db)
+               current {}}} theme
          theme {:available (merge available components)
                 :current (merge current components-default-config)}]
      (assoc db :theme theme))))

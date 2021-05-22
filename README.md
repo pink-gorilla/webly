@@ -1,8 +1,9 @@
 # Webly [![GitHub Actions status |pink-gorilla/webly](https://github.com/pink-gorilla/webly/workflows/CI/badge.svg)](https://github.com/pink-gorilla/webly/actions?workflow=CI)[![Clojars Project](https://img.shields.io/clojars/v/org.pinkgorilla/webly.svg)](https://clojars.org/org.pinkgorilla/webly)
 
-- This project is used in [Notebook](https://github.com/pink-gorilla/gorilla-notebook) and [Goldly](https://github.com/pink-gorilla/goldly).
 - Tools to build reagent/re-frame clojurescript web apps that are served from a clojure webserver.
 - **End Users** this project is not for you.
+- used in [Goldly](https://github.com/pink-gorilla/goldly) and [Notebook](https://github.com/pink-gorilla/notebook).
+
 
 # UI demo
 

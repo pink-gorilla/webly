@@ -1,7 +1,7 @@
 (ns webly.user.config.events
   "Events related configuration loading"
   (:require
-   [taoensso.timbre :refer-macros [info error]]
+   [taoensso.timbre :refer-macros [info infof error]]
    [clojure.string :as str]
    [ajax.core :as ajax]
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
@@ -14,8 +14,8 @@
 (reg-event-fx
  :config/load
  (fn [{:keys [db]} [_ after-config-load]]
-   (info "loading configuration from server  after-load:" after-config-load)
-   {:db       (assoc-in db [:pref] (pref))
+   (infof "loading config from server (dispatch after-load: %s)" after-config-load)
+   {:db   (assoc-in db [:pref] (pref))
     :http-xhrio {:method          :get
                  :uri             "/api/config"
                  :timeout         10000                     ;; optional see API docs
@@ -28,8 +28,8 @@
  (fn [cofx [_ after-config-load config]]
    (let [fx {:db          (assoc-in (:db cofx) [:config] config)
              :dispatch [after-config-load]}]
-     (timbre-config! config)
      (info "config load-success: " config)
+     (timbre-config! config)
      (if after-config-load
        fx
        (dissoc fx :dispatch)))))

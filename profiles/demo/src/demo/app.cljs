@@ -9,7 +9,6 @@
    [demo.time]
    [demo.pages.help]
    [demo.pages.party]
-   [demo.pages.prose]
    [demo.pages.main]))
 
 (defn ^:export start []

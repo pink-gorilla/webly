@@ -14,7 +14,7 @@
             :post :ws/chsk-post}})
 
 (def webly-routes-app
-  {["md/" :file] :ui/markdown
+  {;["md/" :file] :ui/markdown
    ;["oauth2/redirect/" :provider] :oauth2/redirect  : either client OR server side
    })
 (defn make-routes-frontend [user-routes-app]

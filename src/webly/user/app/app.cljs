@@ -7,6 +7,8 @@
    [webly.user.app.views :refer [webly-app]]
 
    ; side-effects
+   [day8.re-frame.http-fx]
+   [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
    [webly.web.events-bidi]
    [webly.ws.events]
    [webly.user.status.events]
@@ -17,9 +19,6 @@
    [webly.user.dialog]
    [webly.user.keybindings.events]
    [webly.user.analytics.events]
-   [webly.user.markdown.subscriptions]
-   [webly.user.markdown.events]
-   [webly.user.markdown.page] ; reagent-page: md 
    [webly.user.oauth2.events]
    [webly.user.oauth2.events-parse]
    [webly.user.oauth2.request-login]
@@ -83,8 +82,6 @@
      (dispatch [:keybindings/init])
      (dispatch [:css/add-components webly-css/components webly-css/config])
      (dispatch [:settings/init])
-     (dispatch [:markdown/init])
-     (dispatch [:markdown/load-index])
      (dispatch [:ws/init])
      (if start-user-app
        (do (info "starting user app: " start-user-app)

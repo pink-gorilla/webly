@@ -73,8 +73,9 @@
                       :modules {:main     {:entries ns-cljs-app}
                                 :snippets {:entries ['snippets.snip]
                                            :depends-on #{:main}}
-                                :docs {:entries ['webly.user.markdown.views]
-                                       :depends-on #{:main}}}
+                                ;:docs {:entries ['webly.user.markdown.views]
+                                ;       :depends-on #{:main}}
+                                }
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")
                     ;           :after-load (symbol "webly.web.app/after-load")}
                       :build-options    {:ns-aliases (build-ns-aliases)}

@@ -32,7 +32,6 @@
 (defn demo-routing []
   [block
    [:p.text-4xl "bidi routes"]
-   [:p [link-dispatch [:bidi/goto :demo/prose] "prose"]]
    [:p [link-dispatch [:bidi/goto :demo/help] "help!"]]
    [:p [link-dispatch [:bidi/goto :demo/save-non-existing] "save-as (test for not implemented)"]]
    [:p [link-dispatch [:bidi/goto :demo/party :location "Vienna"] "party in vienna (test for route-params)"]]
@@ -109,7 +108,6 @@
   [:div
    [:h1 "webly demo"]
 
-   [:p [link-dispatch [:bidi/goto :ui/markdown :file "webly.md"] "webly docs"]]
    [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]
    
    [link-dispatch [:css/set-theme-component :tailwind :light] "tailwind light"]

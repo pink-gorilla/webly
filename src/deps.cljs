@@ -21,11 +21,6 @@
             ;"react-dom" "^17.0.1"  ; reagent brings it deps.cljs
             "react-dom-factories" "^1.0.2"
 
-            ; markdown -> html renderer
-            "marked" "^2.0.3"
-           ; "highlight.js" "10.7."
-            ; "react-highlight.js": "1.0.7",
-
   ;
             }
  :npm-dev-deps {; this works with lein-shadow, but not with normal shadow-cljs
