@@ -41,6 +41,7 @@
 
  :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]
                    [#{"org.eclipse.jetty.*"} :info]
+                   [#{"webly.*"} :info]
                    [#{"*"} :info]]
 
  :keybindings "webly.user.app.keybindings/default"

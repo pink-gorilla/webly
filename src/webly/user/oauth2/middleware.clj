@@ -1,6 +1,6 @@
 (ns webly.user.oauth2.middleware
   (:require
-   [taoensso.timbre :as timbre :refer [info error]]
+   [taoensso.timbre :as timbre :refer [debug info error]]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
    [ring-ttl-session.core :refer [ttl-memory-store]]
    [ring.middleware.session :refer [wrap-session]]
@@ -19,7 +19,7 @@
 (defn print-oauth2-config []
   (let [config @config-atom
         c (ring-oauth2-config config)]
-    (info "oauth config: " c)))
+    (debug "oauth config: " c)))
 
 (defn wrap-oauth [handler]
   (let [config @config-atom

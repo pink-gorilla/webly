@@ -4,7 +4,7 @@
 
 (def webly-routes-api
   {"config" {:get :webly/config}
-   "md"     {:get :api/md}
+   ;"md"     {:get :api/md}
    "oauth2/" {"github/token"  {:get :webly/oauth2-github}
               ;  ["redirect/" :provider] {:get :oauth2/redirect}
               }

@@ -1,6 +1,6 @@
 (ns webly.build.core
   (:require
-   [taoensso.timbre  :refer [info warn]]
+   [taoensso.timbre  :refer [debug info warn]]
    [webly.build.config :refer [shadow-config]]
    [webly.build.build-config] ; shadow via generated config file
    ))
@@ -10,7 +10,7 @@
         shadow-config (shadow-config profile)]
     (if bundle
       (do (info "building profile bundle" bundle)
-          (info "shadow-config: " shadow-config)
+          (debug "shadow-config: " shadow-config) ; can be seen in generated shadow-cljs.edn
           (webly.build.build-config/build profile shadow-config))
       (warn "profile has no bundle"))))
 
