@@ -1,6 +1,6 @@
 (ns webly.build.config
   (:require
-   [taoensso.timbre :as timbre :refer [info]]
+   [taoensso.timbre :as timbre :refer [debug info]]
    [fipp.clojure]
    [shadow.cljs.devtools.config :as config]
    [webly.config :refer [get-in-config]]
@@ -38,7 +38,7 @@
          :watching))))
 
 (defn build-ns-aliases []
-  (println @prefs-atom)
+  (debug @prefs-atom)
   (if-pref-fn :tenx
               {'webly.user.tenx.events 'webly.user.tenx.events-on}
               {'webly.user.tenx.events 'webly.user.tenx.events-off

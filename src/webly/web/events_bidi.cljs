@@ -1,11 +1,11 @@
 (ns webly.web.events-bidi
   (:require
    [taoensso.timbre :refer-macros [info]]
-   [re-frame.core :refer [reg-event-db reg-event-fx]]
+   [re-frame.core :as rf]
    [pushy.core :as pushy]
    [webly.web.routes :refer [routes history goto!]])) ;set-initial-query-params
 
-(reg-event-db
+(rf/reg-event-db
  :bidi/init
  (fn [db [_ routes-frontend routes-backend]]
    (info "bidi init ..")
@@ -17,7 +17,7 @@
      ;(set-initial-query-params)
      (assoc-in db [:bidi] {:client routes-frontend :server routes-backend}))))
 
-(reg-event-fx
+(rf/reg-event-fx
  :bidi/goto
  (fn [_ [_ handler & params]]
    (if (> (count params) 0)
@@ -25,3 +25,8 @@
          (apply goto! (concat [handler] params)))
      (do (info "bidi/goto! (no-params)" handler)
          (goto! handler)))))
+
+(rf/reg-sub
+ :webly/routes
+ (fn [db _]
+   (get-in db [:bidi])))

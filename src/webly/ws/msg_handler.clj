@@ -29,7 +29,7 @@
     (ws-reply req [:ws/unknown event])))
 
 (defn event-msg-handler [{:keys [client-id id event ?data] :as req}]
-  (debugf "WS RCVD: %s" event)
+  (debugf "ws rcvd: evt: %s id: %s data: %s" event id ?data)
   (when req
     (-event-msg-handler req)))
 

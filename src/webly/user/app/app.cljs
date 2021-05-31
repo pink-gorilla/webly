@@ -11,6 +11,7 @@
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
    [webly.web.events-bidi]
    [webly.ws.events]
+   [webly.ws.core]
    [webly.user.status.events]
    [webly.user.css.events]
    [webly.user.css.subscriptions]

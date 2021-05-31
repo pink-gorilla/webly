@@ -8,7 +8,7 @@
 
  :google-analytics {:enabled true} ; set to false to disable google-analytics tracking.
 
- :timbre-loglevel [[#{"webly.ws.*"} :info]
+ :timbre-loglevel [[#{"webly.ws.*"} :debug]
                    [#{"webly.user.*"} :info]
                    [#{"webly.*"} :info]
                    [#{"org.eclipse.jetty.*"} :info]
