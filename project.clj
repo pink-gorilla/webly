@@ -140,10 +140,10 @@
                     :dependencies [#_[org.pinkgorilla/gorilla-ui "0.2.34" ; brings pinkie
                                       :exclusions [org.clojure/clojurescript]]]
                     :source-paths ["profiles/demo/src"]
-                    :resource-paths  ["target/webly"
+                    :resource-paths  [;"target/webly"
                                       "profiles/demo/resources"]}
 
-             :dev {:resource-paths  ["target/webly" ; for lein test
+             :dev {:resource-paths  [;"target/webly" ; for lein test
                                      "profiles/demo/resources"
                                      "profiles/test/resources"
                                      ]

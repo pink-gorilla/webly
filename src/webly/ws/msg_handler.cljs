@@ -1,6 +1,6 @@
 (ns webly.ws.msg-handler
   (:require
-   [taoensso.timbre :as timbre :refer-macros [tracef debugf infof info  warnf error errorf trace]]
+   [taoensso.timbre :as timbre :refer-macros [tracef debug debugf infof info  warnf error errorf trace]]
    [re-frame.core :as rf]
    [taoensso.encore :as encore :refer-macros [have have?]]))
 
@@ -29,7 +29,7 @@
 (defmethod -event-msg-handler :chsk/recv
   [{:as ev-msg :keys [?data]}]
   (if (= ?data [:chsk/ws-ping])
-    (info "ws-ping.")
+    (debug "ws-ping rcvd.")
     (if (vector? ?data)
       (do (info "dispatching rcvd ws msg to reframe:" ?data)
           (rf/dispatch ?data))

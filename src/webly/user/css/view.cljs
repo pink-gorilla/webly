@@ -1,6 +1,6 @@
 (ns webly.user.css.view
   (:require
-   [taoensso.timbre :as timbre :refer [debugf infof warn warnf errorf]]
+   [taoensso.timbre :as timbre :refer [debugf info infof warn warnf errorf]]
    [reagent.core :as r]
    [re-frame.core :as rf]
    [webly.user.css.subscriptions]))
@@ -27,7 +27,7 @@
     (fn [css-links]
       (into [:<>]
             (map-indexed (fn [i l]
-                           ^{:key i}
+                           ^{:key l}
                            [css-link-load-cb l inc-counter set-error]) css-links)))))
 
 ; https://presumably.de/reagent-mysteries-part-4-children-and-other-props.html
@@ -38,5 +38,5 @@
   (let [css-links (rf/subscribe [:css/app-theme-links])]
     (fn []
       (when (not (empty? @css-links))
-        (warn "css has changed to: " @css-links)
+        (info "css has changed to: " @css-links)
         [load-css-links @css-links]))))

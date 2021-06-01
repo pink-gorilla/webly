@@ -105,7 +105,8 @@
 
 
 (defn main []
-  [:div
+  [:div.dark 
+  [:div {:class "dark:bg-gray-800 bg-yellow-300 text-gray-900 dark:text-white"}
    [:h1 "webly demo"]
 
    [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]
@@ -119,7 +120,7 @@
    [demo-oauth]
    [demo-settings]
    [demo-ws]
-   [demo-kb]])
+   [demo-kb]]])
 
 (defmethod reagent-page :demo/main [& args]
   [main])

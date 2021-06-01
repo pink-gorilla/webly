@@ -21,11 +21,13 @@
             (webly.web.files/->ResourcesMaybe {:prefix "public"}))
    :cljs (def resource-handler :webly/resources))
 
-#?(:clj   (def file-handler
+#?(:clj   (def file-handler-nodejs
             (webly.web.files/->FilesMaybe {:dir "node_modules"}))
-   :cljs (def file-handler :webly/files))
+   :cljs (def file-handler-nodejs :webly/files-nodejs))
 
-
+#?(:clj   (def file-handler-bundel
+            (webly.web.files/->FilesMaybe {:dir "target/webly/public"}))
+   :cljs (def file-handler-bundel :webly/files-bundel))
 
 
 
