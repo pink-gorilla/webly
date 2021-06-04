@@ -82,7 +82,7 @@
     (if (and (not (nil? str))
              (string? str))
       (if-let [kb (res-str str)]
-        (do (info "keybindings resolved to: " kb)
+        (do (debug "keybindings resolved to: " kb)
             (assoc config :keybindings kb))
         config)
       config)))
