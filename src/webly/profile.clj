@@ -3,7 +3,8 @@
    [taoensso.timbre :as timbre :refer [info error]]
    [webly.config :refer [load-config! config-atom]]
    [webly.prefs :refer [prefs-atom]]
-   [webly.log :refer [timbre-config!]]))
+   [webly.log :refer [timbre-config!]]
+   [webly.status :refer [write-status]]))
 
 (defonce profiles
   {:ci          {:prefs   {:tenx false}
@@ -78,7 +79,8 @@
   [profile-name config]
   (load-config! config)
   (timbre-config! @config-atom)
-  (info "webly-config: " @config-atom)
+  ;(info "webly-config: " @config-atom) 
+  (write-status "config" @config-atom)
   (let [profile (str->profile profile-name)]
     (if (or (nil? profile-name) (not profile))
       (error "no profile. valid profiles are: " (profiles-available))

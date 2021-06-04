@@ -25,4 +25,4 @@ shadow-cljs.edn
 package.json
 package-lock.json
 /karma.conf.js
-webly-routes.edn
+.webly

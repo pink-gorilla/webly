@@ -9,7 +9,7 @@
   (let [bundle (get profile :bundle)
         shadow-config (shadow-config profile)]
     (if bundle
-      (do (info "building profile bundle" bundle)
+      (do (info "building bundle: " bundle)
           (debug "shadow-config: " shadow-config) ; can be seen in generated shadow-cljs.edn
           (webly.build.build-config/build profile shadow-config))
       (warn "profile has no bundle"))))
