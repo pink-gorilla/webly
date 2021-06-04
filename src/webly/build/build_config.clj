@@ -9,7 +9,7 @@
     ]
    [webly.build.package-json :refer [ensure-package-json ensure-karma]]
    [webly.build.install-npm :refer [install-npm]]
-   [webly.build.config :refer [write-shadow-config]]
+   [webly.writer :refer [write-shadow-config]]
    [webly.build.bundle-size :refer [generate-bundlesize-report]]))
 
 #_(defn watch-api

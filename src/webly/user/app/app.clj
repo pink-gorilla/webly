@@ -1,7 +1,7 @@
 (ns webly.user.app.app
   (:require
    [taoensso.timbre :as timbre :refer [debug info error]]
-   [webly.status :refer [write-status]]
+   [webly.writer :refer [write-status]]
    [webly.config :refer [get-in-config config-atom]]
    [webly.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]

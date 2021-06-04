@@ -4,7 +4,7 @@
    [webly.config :refer [load-config! config-atom]]
    [webly.prefs :refer [prefs-atom]]
    [webly.log :refer [timbre-config!]]
-   [webly.status :refer [write-status]]))
+   [webly.writer :refer [write-status]]))
 
 (defonce profiles
   {:ci          {:prefs   {:tenx false}
@@ -18,6 +18,13 @@
                           :cljs-build :webly
                           :shadow-mode :release ; production build - no source maps
                           :size-report true}}
+
+   :release-adv  {:prefs   {:tenx false}
+                  :bundle {:shadow-verbose false
+                           :cljs-build :webly
+                           :shadow-mode :release ; production build - no source maps
+                           :advanced true
+                           :size-report true}}
 
    :npm-install  {:prefs   {:tenx false}
                   :bundle {:shadow-verbose false
