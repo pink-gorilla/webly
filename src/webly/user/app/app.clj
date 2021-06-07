@@ -25,6 +25,37 @@
       (error "could not resolve route symbol: " str))
     (var-get (resolve sym))))
 
+(defn resolve-routes [routes]
+  (try
+    (info "resolving route symbol: " routes)
+    (if-let [r (var-get (resolve routes))]
+      (do
+        (info "routes: " r)
+        (swap! config-atom assoc-in [:webly :routes] r)
+        r)
+      (error "routes symbol [" routes "] could not get resolved!"))
+    (catch Exception e
+      (error "Exception resolving routes: services: " (pr-str e)))))
+
+(defn get-routes []
+  (let [routes (get-in-config [:webly :routes])]
+    (if (symbol? routes)
+      (resolve-routes routes)
+      routes)))
+
+(defn start-services [profile]
+  (let [start-service (get-in-config [:webly :start-service])]
+    (if start-service
+      (do (info "starting services : " (:server profile))
+          (try
+            (info "start-service:" start-service)
+            (if-let [f (resolve start-service)]
+              (f)
+              (error "services symbol [" start-service "] could not get resolved!"))
+            (catch Exception e
+              (error "Exception starting services: " (pr-str e)))))
+      (warn "no services defined."))))
+
 (defn create-ring-handler
   "creates a ring-handler
    uses configuration in webly-config to do so
@@ -32,13 +63,9 @@
    "
   []
   (debug "webly creating ring handler.. ")
-  (let [{:keys [user-routes-app user-routes-api]} (get-in-config [:webly])
-        _ (debug "api-routes-sym:" user-routes-api "app-routes-sym:" user-routes-app)
-        user-routes-app (resolve-name user-routes-app)
-        user-routes-api (resolve-name user-routes-api)
-        ;_ (info "user-api-routes:" user-routes-api "user-app-routes:" user-routes-app)
-        routes-backend (make-routes-backend user-routes-app user-routes-api)
-        routes-frontend (make-routes-frontend user-routes-app)
+  (let [routes (get-routes)
+        routes-backend (make-routes-backend (:app routes) (:api routes))
+        routes-frontend (make-routes-frontend (:app routes))
         ;_ (info "all-api-routes:" routes-backend "all-app-routes:" routes-frontend)
         wrap-handler-reload (get-in-config [:wrap-handler-reload])
         h (make-handler app-handler routes-backend routes-frontend)

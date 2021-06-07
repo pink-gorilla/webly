@@ -43,10 +43,15 @@
                ;'day8.re-frame.tracing 'day8.re-frame.tracing-stubs
                }))
 
+(defn ns-cljs-webly [ns-cljs]
+  (let [ns-cljs (or ns-cljs [])]
+    (into []
+          (concat '[webly.user.app.app] ns-cljs))))
+
 (defn shadow-config [profile]
   (let [advanced? (get-in profile [:bundle :advanced])
         shadow-verbose (get-in profile [:bundle :shadow-verbose])
-        {:keys [#_lein-cljs-profile ns-cljs-app ring-handler]} (get-in-config [:webly])
+        {:keys [#_lein-cljs-profile ns-cljs ring-handler]} (get-in-config [:webly])
         ring-handler (symbol ring-handler)
         dev-http-port (get-in-config [:shadow :dev-http :port])
         http-port (get-in-config [:shadow :http :port])
@@ -69,7 +74,7 @@
                       :module-loader true
                       :output-dir "target/webly/public"
                       :asset-path "/r"
-                      :modules {:main     {:entries ns-cljs-app}
+                      :modules {:main     {:entries (ns-cljs-webly ns-cljs)}
                                 :snippets {:entries ['snippets.snip]
                                            :depends-on #{:main}}
                                 ;:docs {:entries ['webly.user.markdown.views]

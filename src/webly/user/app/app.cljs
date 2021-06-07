@@ -72,13 +72,20 @@
     (when (.contains body-classes "loading")
       (.remove body-classes "loading"))))
 
+(defn setup-bidi [user-routes-api user-routes-app]
+  (let [routes-frontend (make-routes-frontend user-routes-app)
+        routes-backend (make-routes-backend user-routes-app user-routes-api)]
+    (dispatch [:bidi/init routes-frontend routes-backend])))
+
 (reg-event-db
  :webly/app-after-config-load
  (fn [db [_]]
-   (let [start-user-app (get-in db [:config :webly :start-user-app])]
+   (let [routes (get-in db [:config :webly :routes])
+         start-user-app (get-in db [:config :webly :start-user-app])]
      (info "webly config after-load")
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
+     (setup-bidi (:api routes) (:app routes))
      (dispatch [:ga/init])
      (dispatch [:keybindings/init])
      (dispatch [:css/add-components webly-css/components webly-css/config])
@@ -92,13 +99,14 @@
      )
    db))
 
-(defn webly-run! [user-routes-api user-routes-app]
-  (let [routes-frontend (make-routes-frontend user-routes-app)
-        routes-backend (make-routes-backend user-routes-app user-routes-api)]
-    (info "webly-run! ...")
-    (dispatch [:reframe10x-init])
-    (dispatch [:webly/status :route-init])
-    (dispatch [:bidi/init routes-frontend routes-backend])
-    (dispatch [:webly/status :loading-config])
-    (dispatch [:config/load :webly/app-after-config-load])
-    (mount-app)))
+(defn webly-run! [& args] ; & args is for legacy reasons
+  (info "webly-run! ...")
+  (dispatch [:reframe10x-init])
+  (dispatch [:webly/status :route-init])
+    ;(setup-bidi user-routes-api user-routes-app)
+  (dispatch [:webly/status :loading-config])
+  (dispatch [:config/load :webly/app-after-config-load])
+  (mount-app))
+
+(defn ^:export start []
+  (webly-run!))

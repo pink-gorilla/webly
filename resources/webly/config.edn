@@ -1,20 +1,27 @@
-{:webly {:title "webly"
-         :icon "/r/webly/favicon.ico"
-         :loading-image-url "/r/webly/loading-code.jpg" ;"/r/webly/loading-lemur.jpg"
-         ;:lein-cljs-profile "+dev"
-         :ns-cljs-app [user-app.app]
-         :start-user-app [:webly/start-default]  ; after config loaded
-         :user-routes-app "user-app.routes/routes-app"
-         :user-routes-api "user-app.routes/routes-api"
-         :bundle-entry  "webly.web.app.after-load ();" ; no need to change 
+{:webly {; clj
+         :ns-clj []
+         :start-service nil
+
+         ; routes
+         :routes {:app {} :api {}}
+
+         ; webly client-server app:
+         :webly-bundle-entry  "webly.user.app.app.start ();" ; no need to change 
          :ring-handler "webly.user.app.app/ring-handler" ; no need to change 
+          ; cljs
+         :ns-cljs []
+         ; user app:
+         :title "webly"
+         :icon "/r/webly/favicon.ico"
+         :loading-image-url "/r/webly/loading-code.jpg" ; no need to change  ;"/r/webly/loading-lemur.jpg"
+         :start-user-app [:webly/start-default]  ; after config loaded
          :css-extern [;"tailwindcss/dist/tailwind.css"
-                      ] ; css via bundle. prefer frontend!!
+] ; css via bundle. prefer frontend!!
          }
 
  :prefix "/r/" ; resource route prefix ; most web-apps can leave this at default values
  :shadow {:dev-http {:port 8000}
-          :http {:port 8001 :host "0.0.0.0" }; "localhost"}
+          :http {:port 8001 :host "0.0.0.0"}; "localhost"}
           :nrepl {:port 8002}}
 
  :web-server     {:port 8000
@@ -30,13 +37,13 @@
  ; creds (set them in creds.edn resource)
  :oauth2 {:github {:client-id        ""
                    :client-secret    ""
-                   :scopes          ["user:email" 
-                                     "gist" 
+                   :scopes          ["user:email"
+                                     "gist"
                                      "repo"]}
           :google {:client-id        ""
                    :client-secret    ""
                    :scopes          ["https://www.googleapis.com/auth/spreadsheets.readonly"
-                                     "https://www.googleapis.com/auth/drive.readonly" 
+                                     "https://www.googleapis.com/auth/drive.readonly"
                                      "https://www.googleapis.com/auth/userinfo.email"]}}
 
  :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :debug]

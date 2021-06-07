@@ -72,7 +72,7 @@
 
 (defn layout [webly-config page]
   (let [{:keys [webly google-analytics]} webly-config
-        {:keys [title loading-image-url bundle-entry icon css-extern]} webly]
+        {:keys [title loading-image-url webly-bundle-entry icon css-extern]} webly]
     (page/html5
      {:mode :html}
      (head loading-image-url title icon css-extern google-analytics)
@@ -82,7 +82,7 @@
       [:div  ; .w-screen.h-screen
        [:script {:src "/r/main.js"
                  :type "text/javascript"
-                 :onload bundle-entry}]]])))
+                 :onload webly-bundle-entry}]]])))
 
 (defn app-page [csrf-token]
   (layout @config-atom
