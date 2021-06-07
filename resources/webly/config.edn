@@ -1,7 +1,7 @@
 {:webly {:title "webly"
          :icon "/r/webly/favicon.ico"
          :loading-image-url "/r/webly/loading-code.jpg" ;"/r/webly/loading-lemur.jpg"
-         :lein-cljs-profile "+dev"
+         ;:lein-cljs-profile "+dev"
          :ns-cljs-app [user-app.app]
          :start-user-app [:webly/start-default]  ; after config loaded
          :user-routes-app "user-app.routes/routes-app"

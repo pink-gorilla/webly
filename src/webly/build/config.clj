@@ -46,7 +46,7 @@
 (defn shadow-config [profile]
   (let [advanced? (get-in profile [:bundle :advanced])
         shadow-verbose (get-in profile [:bundle :shadow-verbose])
-        {:keys [lein-cljs-profile ns-cljs-app ring-handler]} (get-in-config [:webly])
+        {:keys [#_lein-cljs-profile ns-cljs-app ring-handler]} (get-in-config [:webly])
         ring-handler (symbol ring-handler)
         dev-http-port (get-in-config [:shadow :dev-http :port])
         http-port (get-in-config [:shadow :http :port])
@@ -55,7 +55,7 @@
     {:cache-root ".shadow-cljs"
      :verbose (if shadow-verbose true false)
      ;:lein true
-     :lein {:profile lein-cljs-profile}
+     :lein {} ; :profile lein-cljs-profile}
      :dev-http {dev-http-port {;:root "public" ; shadow does not need to serve resources
                                :handler ring-handler}}
      :http {:port http-port  ; shadow dashboard

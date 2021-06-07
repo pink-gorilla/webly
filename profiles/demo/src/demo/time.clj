@@ -7,7 +7,8 @@
 
 (defn start-time-sender!
   []
+  (info "starting time sender..")
   (go-loop []
-    (<! (async/timeout 500000))
+    (<! (async/timeout 5000))
     (send-all! [:demo/time (now-str)])
     (recur)))

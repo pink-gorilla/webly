@@ -205,7 +205,8 @@
             ;; DEMO 
 
             "webly"  ^{:doc "webly - add profile name"}
-            ["with-profile" "+demo" "run" "-m" "demo.app"]
+            ["with-profile" "+demo" "run" "-m" "webly.user.app.app" "demo.edn"]
+
 
             ;; Unit Tests  
 

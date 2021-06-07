@@ -1,10 +1,15 @@
 {:webly {:title "Webly Demo"
-         :lein-cljs-profile "+demo"
+         ;:lein-cljs-profile "+demo"
          :ns-cljs-app [demo.app]
          :bundle-entry  "demo.app.start ();"
          :start-user-app [:demo/start]
          :user-routes-app "demo.routes/routes-app"
-         :user-routes-api "demo.routes/routes-api"}
+         :user-routes-api "demo.routes/routes-api"
+         :ns-clj [demo.routes
+                  demo.handler
+                  demo.time]
+         :start-service demo.time/start-time-sender!
+         }
 
  :google-analytics {:enabled true} ; set to false to disable google-analytics tracking.
 

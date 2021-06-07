@@ -1,9 +1,9 @@
 (ns webly.user.app.app
   (:require
-   [taoensso.timbre :as timbre :refer [debug info error]]
+   [taoensso.timbre :as timbre :refer [debug info warn error]]
    [webly.writer :refer [write-status]]
    [webly.config :refer [get-in-config config-atom]]
-   [webly.profile :refer [setup-profile server?]]
+   [webly.profile :refer [setup-profile server? setup-config]]
    [webly.build.core :refer [build]]
    [webly.web.server :refer [run-server]]
    [webly.web.handler :refer [make-handler]]
@@ -16,7 +16,8 @@
    [webly.user.config.handler]   ; handler: config
    [webly.user.oauth2.handler-token]   ; handler:  github-auth-token
    [webly.user.oauth2.handler-redirect]
-   [webly.user.app.keybindings]))
+   [webly.user.app.keybindings])
+  (:gen-class))
 
 (defn resolve-name [str]
   (let [sym (symbol str)]
@@ -47,7 +48,36 @@
     (print-oauth2-config)
     (def ring-handler h)))
 
+(defn require-log [n]
+  (info "requiring:" n)
+  (require [n]))
+
+(defn require-ns-clj []
+  (let [ns-clj (get-in-config [:webly :ns-clj])]
+    (if ns-clj
+      (try
+        (info "requiring ns-clj:" ns-clj)
+        (doall
+         (map require-log ns-clj))
+        (catch Exception e
+          (error "Exception requiring ns-clj: " (pr-str e))))
+      (warn "no ns-clj defined."))))
+
+(defn start-services [profile]
+  (let [start-service (get-in-config [:webly :start-service])]
+    (if start-service
+      (do (info "starting services : " (:server profile))
+          (try
+            (info "start-service:" start-service)
+            (if-let [f (resolve start-service)]
+              (f)
+              (error "services symbol [" start-service "] could not get resolved!"))
+            (catch Exception e
+              (error "Exception starting services: " (pr-str e)))))
+      (warn "no services defined."))))
+
 (defn run-server-p [profile]
+  (start-services profile)
   (info "webly starting webserver : " (:server profile))
   (create-ring-handler)
   (run-server ring-handler profile))
@@ -58,10 +88,24 @@
 
 (defn webly-run!
   [profile-name config]
-  (let [profile (setup-profile profile-name config)]
+  (setup-config config)
+  (let [profile (setup-profile profile-name)]
+    (require-ns-clj)
     (if (:server profile)
       (run-server-p profile)
       (info "not running web server"))
     (if (:bundle profile)
       (build-p profile)
       (info "not building bundle."))))
+
+(defn webly-run [{:keys [profile config]}]
+  (webly-run! profile config))
+
+(defn -main ; for lein alias
+  ([]
+   (webly-run {}))
+  ([profile]
+   (webly-run {:profile profile}))
+  ([config profile]   ; when config and profile are passed, config first (because profile then can get changed in cli)
+   (webly-run {:profile profile
+               :config config})))

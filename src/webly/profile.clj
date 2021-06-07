@@ -82,12 +82,16 @@
        (map name)
        (into [])))
 
-(defn setup-profile
-  [profile-name config]
+(defn setup-config
+  [config]
   (load-config! config)
   (timbre-config! @config-atom)
   ;(info "webly-config: " @config-atom) 
-  (write-status "config" @config-atom)
+  (write-status "config" @config-atom))
+
+(defn setup-profile
+  [profile-name]
+
   (let [profile (str->profile profile-name)]
     (if (or (nil? profile-name) (not profile))
       (error "no profile. valid profiles are: " (profiles-available))
