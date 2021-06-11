@@ -7,23 +7,27 @@
 
 (def c (atom nil))
 
-(defn- watch-conn-impl [conn cb]
+(def watcher-cbs (atom []))
+
+(defn- watch-conn-start [conn]
   (let [{:keys [connected-uids]} conn]
     (add-watch connected-uids :connected-uids
                (fn [_ _ old new]
                  (when (not= old new)
-                   (cb old new))))))
-(defn watch-conn [cb]
-  (let [conn @c]
-    (watch-conn-impl conn cb)))
+                   (doall (for [cb @watcher-cbs]
+                            (cb old new))))))))
 
-(defn log-conn-chg [old new]
+(defn watch-conn [cb]
+  (swap! watcher-cbs conj cb))
+
+(defn- log-conn-chg [old new]
   (info "conn chg: old:" old "new: " new))
 
 (defn init-ws! [server-type]
   (let [conn (ws-init! server-type)]
     (reset! c conn)
     (watch-conn log-conn-chg)
+    (watch-conn-start conn)
     (start-router! conn)
     (add-ws-handler conn)))
 
