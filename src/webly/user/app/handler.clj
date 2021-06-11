@@ -6,7 +6,6 @@
    [bidi.ring]
    [webly.web.middleware :refer [wrap-webly]]
    [webly.web.handler :refer [add-ring-handler]]
-
    [webly.user.app.views :refer [app-page]]))
 
 

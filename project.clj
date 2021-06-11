@@ -134,10 +134,11 @@
                    "target/node_modules"] ; css png resources from npm modules (tailwind)
 
   :profiles {:demo {; unit tests use demo profile for resource tests
-                   ; so the demo serves tw puroses
+                   ; so the demo serves two puroses
                    ; 1. ilustrate links in web-app
                    ; 2. run unit tests 
-                    :dependencies [#_[org.pinkgorilla/gorilla-ui "0.2.34" ; brings pinkie
+                    :dependencies [[org.pinkgorilla/ui-repl "0.0.7"] ; http cors test
+                                   #_[org.pinkgorilla/gorilla-ui "0.2.34" ; brings pinkie
                                       :exclusions [org.clojure/clojurescript]]]
                     :source-paths ["profiles/demo/src"]
                     :resource-paths  [;"target/webly"

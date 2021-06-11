@@ -5,15 +5,14 @@
    [clojure.string]
    [ring.util.response :refer [response]]
    [ring.middleware.cors :refer [wrap-cors]]
-   [ring.middleware.cljsjs :refer [wrap-cljsjs]]
+   ;[ring.middleware.cljsjs :refer [wrap-cljsjs]]
    [ring.middleware.gzip :refer [wrap-gzip]]
    [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
    [ring.middleware.keyword-params :refer [wrap-keyword-params]]
    [ring.middleware.params :refer [wrap-params]]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
    [ring.middleware.session :refer [wrap-session]]
-   ;[ring.middleware.format :refer [wrap-restful-format]]
-   [muuntaja.middleware :refer [wrap-format]]
+   [muuntaja.middleware :refer [wrap-format]] ; 30x faster than ring.middleware.format
    [ring.middleware.json :refer [wrap-json-response]]))
 
 
@@ -27,15 +26,6 @@
       ;; since they're not compatible with this middleware
         ((if (:websocket? request) handler wrapped) request))))
 
-#_(defn wrap-api-handler
-    "a wrapper for JSON API calls
-   from pinkgorilla notebook
-   "
-    [handler]
-    (-> handler
-        (wrap-defaults api-defaults)
-        (wrap-restful-format :formats [:json :transit-json :edn])))
-
 (defn wrap-api-handler ; from gorilla-explore
   "a wrapper for restful API calls"
   [handler]
@@ -44,10 +34,6 @@
       (wrap-keyword-params)
       (wrap-params)
       (wrap-format) ; muuntaja https://github.com/metosin/muuntaja
-      #_(wrap-restful-format :formats [:json
-                                     ;:json-kw 
-                                       :transit-json
-                                       :edn])
       ;(wrap-json-response)
       ;(wrap-gzip)
       ))
@@ -59,13 +45,11 @@
   [handler]
   (-> handler ; middlewares execute from bottom -> up
       (wrap-anti-forgery)
-
       (wrap-defaults api-defaults)
       (wrap-keyword-params)
       (wrap-params)
       ;(wrap-cljsjs)
       (wrap-format) ; muuntaja
-      ;(wrap-restful-format :formats [:json :transit-json :edn])
       (wrap-gzip)))
 
 #_(defn wrap-ws [handler]
@@ -113,10 +97,7 @@
        ; needed to query remote apis from cljs
       #_(wrap-cors :access-control-allow-origin [#".*"]
                    :access-control-allow-methods [:get :put :post :delete])
-
-      (wrap-cljsjs)
+      ;(wrap-cljsjs)
       (wrap-gzip)))
 
-;; Add necessary Ring middleware:
-;      ring.middleware.keyword-params/wrap-keyword-params
-;ring.middleware.params/wrap-params
+
