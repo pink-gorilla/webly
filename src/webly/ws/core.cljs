@@ -1,6 +1,6 @@
 (ns webly.ws.core
   (:require
-   [taoensso.timbre :refer-macros [debug info]]
+   [taoensso.timbre :refer-macros [debug info error]]
    [re-frame.core :as rf]
    [webly.ws.adapter :refer [ws-init! start-router!]]
    [webly.ws.ws :as ws]))
@@ -12,16 +12,31 @@
     (reset! c conn)
     (start-router! conn)))
 
-(defn send! [data]
-  (info "sending: " data)
-  (when data
-    (ws/send @c data)))
+(defn send!
+  ([data]
+   (when data
+     (info "sending (no cb): " data)
+     (try
+       (ws/send @c data)
+       (catch :default e
+         (error "exception sending to ws: " e)))))
+  ([data cb timeout]
+   (when data
+     (info "sending (cb): " data)
+     (try
+       (ws/send @c data cb timeout)
+       (catch :default e
+         (error "exception sending to ws: " e))))))
 
 (rf/reg-event-db
  :ws/send
- (fn [db [_ data]]
-   (debug "ws send: " data)
-   (send! data)
-   (debug "ws data sent!")
+ (fn [db v]
+   (case (count v)
+     2 (let [[_ data] v]
+         (info "ws send (no cb): " data)
+         (send! data))
+     4 (let [[_ data cb timeout] v]
+         (info "ws send (cb): " data)
+         (send! data cb timeout))
+     (error ":ws/send bad format: " v))
    db))
-

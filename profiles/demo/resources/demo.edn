@@ -29,10 +29,10 @@
 
  :google-analytics {:enabled true} ; set to false to disable google-analytics tracking.
 
- :timbre-loglevel [[#{"webly.ws.*"} :info]
-                   [#{"webly.user.*"} :info]
-                   [#{"webly.*"} :info]
-                   [#{"org.eclipse.jetty.*"} :info]
+ :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
+                   [#{"webly.ws.*"} :debug]
+                   [#{"webly.user.*"} :debug]
+                   [#{"webly.*"} :debug]
                    [#{"*"} :debug]]
 
  :settings {:use-localstorage  true  ; allow user to change settings via localstorage

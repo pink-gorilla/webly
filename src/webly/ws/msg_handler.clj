@@ -1,11 +1,29 @@
 (ns webly.ws.msg-handler
   (:require
-   [taoensso.timbre :refer [tracef debugf info infof warnf error errorf]]))
+   [taoensso.timbre :refer [tracef debugf info infof warn warnf error errorf]]))
 
 (defn ws-reply [{:keys [event id ?data ring-req ?reply-fn send-fn] :as req}
                 res]
   (when ?reply-fn
     (?reply-fn res)))
+
+(defn send-response [{:as ev-msg :keys [id ?data ring-req ?reply-fn uid send-fn]}
+                     msg-type response]
+  ;(let [session (:session ring-req)
+        ;uid (:uid session)
+   ;     ]
+  ;(when (nil? ?reply-fn)
+   ; (warn "reply-fn is nil. the client did chose to use messenging communication istead of req-res communication."))
+    ;(warn "ws/session: " session)
+    ;(if (nil? uid)
+    ;  (warn "ws request uid is nil. ring-session not configured correctly.")
+    ;  (info "ws/uid: " uid))
+  (if (and msg-type response)
+    (cond
+      ?reply-fn (?reply-fn [msg-type response])
+      uid (send-fn uid [msg-type response])
+      :else (error "Cannot send ws-response: neither ?reply-fn nor uid was set!"))
+    (error "Can not send ws-response - msg-type and response have to be set, msg-type:" msg-type "response: " response)))
 
 (defmulti -event-msg-handler :id)
 
@@ -26,7 +44,7 @@
   (let [session (:session ring-req)
         uid (:uid session)]
     (errorf "ws event of unknown type. Please implement (-event-handler %s) event: %s" id event)
-    (ws-reply req [:ws/unknown event])))
+    (send-response req :ws/unknown event)))
 
 (defn event-msg-handler [{:keys [client-id id event ?data] :as req}]
   (debugf "ws rcvd: evt: %s id: %s data: %s" event id ?data)

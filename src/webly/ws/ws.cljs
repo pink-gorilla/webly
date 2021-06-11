@@ -14,10 +14,14 @@
 
 (defn send
   ([conn data]
-   (send conn data cb-dispatch-to-reframe))
-  ([conn data cb]
    (let [{:keys [chsk-send!]} conn]
      (debug "chsk-send!")
      (if chsk-send!
-       (chsk-send! data 5000 cb)  ; sente send callbacks dont work with reframe
-       (error "chsk-send! not defined! " data)))))
+       (chsk-send! data)  ; sente send callbacks dont work with reframe
+       (error "chsk-send! not defined! cannot send: " data))))
+  ([conn data cb timeout]
+   (let [{:keys [chsk-send!]} conn]
+     (debug "chsk-send!")
+     (if chsk-send!
+       (chsk-send! data timeout cb)  ; sente send callbacks dont work with reframe
+       (error "chsk-send! not defined! cannot send: " data)))))
