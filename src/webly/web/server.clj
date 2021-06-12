@@ -1,6 +1,7 @@
 (ns webly.web.server
   (:require
-   [taoensso.timbre :as timbre :refer [info error]]
+   [taoensso.timbre :as timbre :refer [info warn error]]
+   [clojure.repl]
    [webly.config :refer [get-in-config]]
    [webly.web.middleware :refer [wrap-webly]]
    [webly.web.handler :refer [handler-registry]]
@@ -16,6 +17,7 @@
   ; [org.httpkit.server :as httpkit]
 
    ;[shadow.cljs.devtools.server :as shadow-server]
+   ;[webly.web.hooks]
    ))
 
 (defn jetty-ws-map []
@@ -64,10 +66,25 @@
     ;(shadow-server/stop!)
       ))
 
+(defn stop-server []
+  (println "Shutting down...")
+  (warn "stopping server!")
+  (Thread/sleep 5999))
+
+(defn stop-server-repl [_]
+  (println "Shutting down repl...")
+  ;(warn "stopping server!")
+  (Thread/sleep 300)
+  (println "sleep done")
+  (Thread/sleep 300)
+  (System/exit 0))
+
 (defn run-server [ring-handler profile]
   (let [{:keys [type api wrap-handler-reload]} (get-in profile [:server])
         web-server (if api :web-server-api :web-server)
         {:keys [port host]} (get-in-config [web-server])]
+    (.addShutdownHook (Runtime/getRuntime) (Thread. stop-server))
+    (clojure.repl/set-break-handler! stop-server-repl)
     (when api
       (info "using web-server-api"))
     (case type
