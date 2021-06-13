@@ -56,7 +56,10 @@
                  [org.clojure/data.json "2.1.0"] ; https://github.com/thheller/shadow-cljs/issues/872
                  [luminus-transit "0.1.2"]
                  [cheshire "5.10.0"]  ; JSON parsings and pretty printing
-
+                 [io.replikativ/incognito "0.2.7"
+                   :exclusions [com.cognitect/fress]
+                  ]
+                 
                  ; ring + middlewares
                  [ring/ring-core "1.9.3"]
                  [ring/ring-anti-forgery "1.3.0"]
