@@ -7,7 +7,8 @@
   ; [taoensso.sente.server-adapters.http-kit]
    [taoensso.sente  :as sente]
    [webly.ws.id :refer [get-sente-session-uid]]
-   [webly.ws.msg-handler :refer [event-msg-handler]]))
+   [webly.ws.msg-handler :refer [event-msg-handler]]
+   [webly.web.encoding :as e]))
 
 #_(defn undertow []
     (info "websocket mode: undertow.")
@@ -37,7 +38,7 @@
 
 (defn ws-init! [server-type]
   (let [get-sch-adapter (get-adapter server-type)
-        packer (sente-transit/get-transit-packer)
+        packer (sente-transit/get-transit-packer :json e/encode e/decode)
         chsk-server (sente/make-channel-socket-server!
                      (get-sch-adapter)
                      {:packer packer

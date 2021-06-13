@@ -7,9 +7,11 @@
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
    [webly.prefs :refer [pref]]
    [webly.log :refer [timbre-config!]]
-   [webly.user.notifications.core :refer [add-notification]]))
+   [webly.user.notifications.core :refer [add-notification]]
+   [webly.web.encoding :refer [decode]]))
 
 ; load configuration
+
 
 (reg-event-fx
  :config/load
@@ -19,7 +21,7 @@
     :http-xhrio {:method          :get
                  :uri             "/api/config"
                  :timeout         10000                     ;; optional see API docs
-                 :response-format (ajax/transit-response-format) ;; IMPORTANT!: You must provide this.
+                 :response-format (ajax/transit-response-format :json decode) ;; IMPORTANT!: You must provide this.
                  :on-success      [:config/load-success after-config-load]
                  :on-failure      [:config/load-error]}}))
 

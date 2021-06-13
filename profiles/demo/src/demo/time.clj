@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :as log :refer [tracef debugf info infof warnf error errorf]]
    [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
-   [webly.date :refer [now-str now]]
+   [webly.date :refer [now-str now  now-local]]
    [webly.ws.core :refer [send-all! send-response connected-uids]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]))
 
@@ -30,3 +30,9 @@
   [{:as req :keys [event id ?data ring-req ?reply-fn send-fn]}]
   (infof ":time/now: %s" event)
   (send-response req :demo/time-date (now)))
+
+
+(defmethod -event-msg-handler :time/now-date-local
+  [{:as req :keys [event id ?data ring-req ?reply-fn send-fn]}]
+  (infof ":time/now: %s" event)
+  (send-response req :demo/time-date-local ( now-local)))

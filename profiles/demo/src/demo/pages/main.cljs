@@ -92,7 +92,9 @@
        [link-fn #(dispatch [:ws/send [:ws/status []] print-status 5000]) " request ws status"]
        [link-fn #(dispatch [:ws/send [:demo/xxx [123 456 789]]]) " send unimplemented ws event request"]
        [link-fn #(dispatch [:ws/send [:time/now-date []] set-time-date 5000]) " request time (as date)"]
-       
+       [link-fn #(dispatch [:ws/send [:time/now-date-local []] set-time-date 5000]) " request time (as date local)"]
+
+
        ])))
 
 (defn demo-kb []

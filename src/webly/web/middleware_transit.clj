@@ -1,17 +1,16 @@
 (ns webly.web.middleware-transit
   (:require
    [cognitect.transit :as transit]
-   [luminus-transit.time :as time]
+   ;[webly.web.encoding-time :as time]
+   [webly.web.encoding :as e]
    [muuntaja.core :as m]))
 
-; from clojurewb.
-
-(def instance
+(def muuntaja
   (m/create
    (-> m/default-options
        (update-in
         [:formats "application/transit+json" :decoder-opts]
-        (partial merge time/time-deserialization-handlers))
+        (partial merge e/decode))
        (update-in
         [:formats "application/transit+json" :encoder-opts]
-        (partial merge time/time-serialization-handlers)))))
+        (partial merge e/encode)))))

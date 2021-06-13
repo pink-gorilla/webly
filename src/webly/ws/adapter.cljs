@@ -3,9 +3,11 @@
    [taoensso.timbre :as timbre :refer-macros [tracef debug debugf infof warnf errorf trace]]
    [taoensso.sente :as sente :refer [cb-success?]]
    [taoensso.sente.packers.transit :as sente-transit] ;; Optional, for Transit encoding
-   [webly.ws.msg-handler :refer [event-msg-handler]]))
+   [webly.ws.msg-handler :refer [event-msg-handler]]
+   [webly.web.encoding :as e]))
 
 ;; see: https://github.com/ptaoussanis/sente/blob/master/example-project/src/example/client.cljs
+
 
 (def ?csrf-token
   (when-let [el (.getElementById js/document "sente-csrf-token")]
@@ -13,7 +15,7 @@
 
 (defn ws-init! [path port]
   (debug "connecting sente websocket.. " path port)
-  (let [packer (sente-transit/get-transit-packer)
+  (let [packer (sente-transit/get-transit-packer :json e/encode e/decode)
         opts {:type :auto  ; :ajax
               :packer packer}
         opts (if port

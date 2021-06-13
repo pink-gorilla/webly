@@ -3,6 +3,7 @@
    It is handler transformation, not routing related."
   (:require
    [clojure.string]
+   [taoensso.timbre :refer [debug info error]]
    [ring.util.response :refer [response]]
    [ring.middleware.cors :refer [wrap-cors]]
    ;[ring.middleware.cljsjs :refer [wrap-cljsjs]]
@@ -13,7 +14,8 @@
    [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
    [ring.middleware.session :refer [wrap-session]]
    [muuntaja.middleware :refer [wrap-format]] ; 30x faster than ring.middleware.format
-   [ring.middleware.json :refer [wrap-json-response]]))
+   [ring.middleware.json :refer [wrap-json-response]]
+   [webly.web.middleware-transit :refer [muuntaja]]))
 
 
 ;from clojurewb - good example for middleware for websocket requests
@@ -26,31 +28,28 @@
       ;; since they're not compatible with this middleware
         ((if (:websocket? request) handler wrapped) request))))
 
+(defn wrap-fallback-exception
+  [handler]
+  (fn [request]
+    (try
+      (handler request)
+      (catch Exception e
+        (error "exception in api call: " e)
+        {:status 500 :body "Something isn't quite right..."}))))
+
 (defn wrap-api-handler ; from gorilla-explore
   "a wrapper for restful API calls"
   [handler]
   (-> handler ; middlewares execute from bottom -> up
+      ;(wrap-anti-forgery)
       ;(wrap-defaults api-defaults)
       (wrap-keyword-params)
       (wrap-params)
-      (wrap-format) ; muuntaja https://github.com/metosin/muuntaja
+      ;(wrap-format) ; muuntaja https://github.com/metosin/muuntaja
+      (wrap-format muuntaja)
       ;(wrap-json-response)
       ;(wrap-gzip)
-      ))
-
-(defn wrap-stateful-api-handler
-  "a wrapper for JSON API calls
-   from pinkgorilla notebook
-   "
-  [handler]
-  (-> handler ; middlewares execute from bottom -> up
-      (wrap-anti-forgery)
-      (wrap-defaults api-defaults)
-      (wrap-keyword-params)
-      (wrap-params)
-      ;(wrap-cljsjs)
-      (wrap-format) ; muuntaja
-      (wrap-gzip)))
+      wrap-fallback-exception))
 
 #_(defn wrap-ws [handler]
     (-> handler
