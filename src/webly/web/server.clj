@@ -67,16 +67,14 @@
       ))
 
 (defn stop-server []
-  (println "Shutting down...")
-  (warn "stopping server!")
-  (Thread/sleep 5999))
+  (println "stop-server ..")
+  (warn "stop-server ..")
+  (Thread/sleep 500))
 
 (defn stop-server-repl [_]
-  (println "Shutting down repl...")
-  ;(warn "stopping server!")
-  (Thread/sleep 300)
-  (println "sleep done")
-  (Thread/sleep 300)
+  (println "stop-server-repl ..")
+  (warn "stop-server-repl ..")
+  (Thread/sleep 500)
   (System/exit 0))
 
 (defn run-server [ring-handler profile]
