@@ -4,7 +4,6 @@
 
 ;; LocalStorage Helpers
 
-
 (defn ls-set! [k v]
   (.setItem js/localStorage (pr-str k) (pr-str v)))
 

@@ -20,10 +20,7 @@
   (let [filename (str ".webly/" name ".edn")]
     (write filename data)))
 
-
-
 ; fast, but no pretty-print (makes it difficult to detect bugs)
-
 
 #_(defn write-shadow-config [config]
     (spit "shadow-cljs.edn" (pr-str config)))

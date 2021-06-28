@@ -22,9 +22,7 @@
   ;(println "checking content-type for :" res)
   (get-in res [:headers "Content-Type"]))
 
-
 ; resource handler
-
 
 (testing "ResourcesMaybe"
   (let [foo (bidi.ring/->ResourcesMaybe {:id :foo})

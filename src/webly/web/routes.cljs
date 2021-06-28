@@ -6,10 +6,8 @@
     [pushy.core :as pushy]
     [cemerick.url :as url]))
 
-
 ; bidi does not handle query params
 ; idea how to solve the problem:nhttps://github.com/juxt/bidi/issues/51
-
 
 (defn window-query-params []
   (info "window query params: href: " (.. js/window -location -href))
@@ -20,7 +18,6 @@
 
 ;; not yet used
 ;; todo : hard redirects for backend routes or exernal links
-
 
 (defonce routes (r/atom nil))
 
@@ -54,11 +51,7 @@
 ;; take some tricks from this 
 ;; https://github.com/timgilbert/haunting-refrain-posh/blob/develop/src/cljs/haunting_refrain/fx/navigation.cljs
 
-
-
-
 ; pushy
-
 
 (defn- path->route
   [routes path-with-qp & {:as options}]
@@ -106,7 +99,6 @@
 
 ; bidi swagger:
 ; https://github.com/pink-junkjard/bidi-swagger
-
 
 ;(def query-params (r/atom nil))
 

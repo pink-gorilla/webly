@@ -4,12 +4,10 @@
    [taoensso.timbre :as timbre :refer [info infof error]]
    [cemerick.url :refer [url url-encode]]))
 
-
 ;{"token_type" "Bearer", 
 ;"access_token" "ya29.a0AfH6SMD4K4sFxQ8LaWVOv_gPteXEdmGjRIFlWXxtJ7z0trs5p6bpoNmQ3ebN", 
 ;"scope" "https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/spreadsheets.readonly",
 ; "expires_in" "3599"}
-
 
 (defn parse-google [{:keys [anchor]}]
   {:access-token (:access_token anchor)
@@ -21,11 +19,9 @@
 (defn parse-github [{:keys [query]}]
   {:code (:code query)})
 
-
 ;{:scope "openid profile"
 ;   :responseType "id_token"
 ;   :accessTokenResponseKey "id_token"
-
 
 (def providers
   {:github {:authorize-uri "https://github.com/login/oauth/authorize"
@@ -105,8 +101,6 @@
         str
         ;url-encode
         )))
-
-
 ;  scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&
  ;include_granted_scopes=true&
 ; response_type=token&

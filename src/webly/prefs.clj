@@ -6,7 +6,6 @@
 
 ; add compile time to prefs
 
-
 (swap! prefs-atom assoc :compile-time (now-str))
 
 ; macros that are used in cljs:

@@ -17,10 +17,8 @@
     (debugf "ws state: %s" new-state-map)
     (rf/dispatch [:ws/state new-state-map old-state-map])))
 
-
 ;; This is the main event handler; If we want to do cool things with other kinds of data 
 ;; going back and forth, this is where we'll inject it.
-
 
 (defmethod -event-msg-handler :chsk/ws-ping
   [{:as ev-msg :keys [event id ?data ring-req ?reply-fn send-fn]}]

@@ -7,7 +7,6 @@
 ; stolen from:
 ; https://github.com/benhowell/re-frame-modal
 
-
 ; todo: incorporate this
 ; https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/vue/modals/small
 

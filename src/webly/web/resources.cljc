@@ -15,7 +15,6 @@
 ;; Resources will return a 404 response if the resource cannot be found, while
 ;;  ResourcesMaybe will return nil, allowing subsequent routes to be tried.
 
-
 #?(:clj   (def resource-handler
             ;(bidi.ring/->ResourcesMaybe {:prefix "public"})
             (webly.web.files/->ResourcesMaybe {:prefix "public"}))

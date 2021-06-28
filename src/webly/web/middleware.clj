@@ -17,9 +17,7 @@
    [ring.middleware.json :refer [wrap-json-response]]
    [webly.web.middleware-transit :refer [muuntaja]]))
 
-
 ;from clojurewb - good example for middleware for websocket requests
-
 
 #_(defn wrap-formats2 [handler]
     (let [wrapped (-> handler wrap-params (wrap-format formats/instance))]
@@ -64,7 +62,6 @@
       ;(wrap-session)
       ;(wrap-json-response)
         (wrap-gzip))) ;oz 
-
 
 (defn allow-cross-origin
   "Middleware function to allow cross origin requests from browsers.

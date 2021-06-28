@@ -22,9 +22,7 @@
 
 (defrecord Bar [a b])
 
-
 ;; edn
-
 
 (defmethod print-method Bar [v ^java.io.Writer w]
   (.write w (str "#webly.routes-tag-test.Bar" (into {} v))))
@@ -37,16 +35,12 @@
                     pr-str
                     (read-string-safe {'webly.routes-tag-test.Bar map->Bar}))))))
 
-
 ;; transit
-
 
 (def write-handlers (atom {'webly.routes-tag-test.Bar (fn [bar] bar)}))
 (def read-handlers (atom {'webly.routes_tag_test.Bar map->Bar}))
 
-
 ; fails because records get converted to map
-
 
 (deftest transit-test []
   (let [t (map->Bar {:a [1 2 3] :b {:c "Fooos"}})]
@@ -62,10 +56,7 @@
               t2 (transit/read reader)]
           (is (= t t2)))))))
 
-
-
 ; transit bidi
-
 
 (def write-handlers2 (atom {'bidi.bidi.TaggedMatch (fn [bar] bar)}))
 (def read-handlers2 (atom {'bidi.bidi.TaggedMatch bidi.bidi/map->TaggedMatch}))

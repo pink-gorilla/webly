@@ -16,7 +16,6 @@
 ;'authorization: Bearer YOUR_ACCESS_TOKEN' 
 ;$ curl -H "Authorization: token OAUTH-TOKEN" https://api.github.com
 
-
 (reg-event-fx
  :request
  (fn [{:keys [db]} [_ provider uri success]]
@@ -35,7 +34,6 @@
 
   ;:format (ajax/json-request-format) ;  {:keywords? false})
   ;:response-format; {:keywords? true})
-
 
 (defn err-msg [res]
   (or (get-in res [:response :error :message])

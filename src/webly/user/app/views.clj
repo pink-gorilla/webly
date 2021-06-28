@@ -9,7 +9,6 @@
 
 ;; CSS
 
-
 (defn css [link]
   [:link {:rel "stylesheet"
           :type "text/css"
@@ -47,7 +46,6 @@
                          :margin "-60px 0 0 -60px"})}]])
 
 ;; APP
-
 
 (defn head [loading-image-url title icon css-extern google-analytics]
   [:head

@@ -17,10 +17,5 @@
   (is (= (unpack p
                  (pack p  d)) d)))
 
-
-
-
-
-
- ;   (unpack tp (pack tp [:chsk/ws-ping "foo"]))
+;   (unpack tp (pack tp [:chsk/ws-ping "foo"]))
  ;   (enc/read-edn (enc/pr-edn ))))

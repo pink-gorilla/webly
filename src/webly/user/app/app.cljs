@@ -45,7 +45,6 @@
 
 ;; before-reload is a good place to stop application stuff before we reload.
 
-
 (defn ^:dev/before-load
   before-load []
   (info "before-load")

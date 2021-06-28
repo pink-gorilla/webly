@@ -72,9 +72,7 @@
              (update-in [:route-params] merge route-params))
          (apply dissoc match-context :handler (keys req)))))))
 
-
 ; testing:
-
 
 (comment
   ; (bidi.ring/->ResourcesMaybe {:prefix "public"})

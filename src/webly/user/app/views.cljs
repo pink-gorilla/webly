@@ -11,10 +11,16 @@
    [webly.user.notifications.dialog :refer [notifications-container]]
    [webly.user.status.subscriptions] ; side-effects
    ))
+(defn available-pages []
+  (->> (methods reagent-page)
+       keys
+       (remove #(= :default %))
+       (into [])))
 
 (defn not-found-page []
   [:div.bg-red-500.m-5
-   [:h1 "Bummer, reagent-handler not found!"]
+   [:h1 (str "page " (:handler @current) " - not found!")]
+   [:p "Available pages: " (pr-str (available-pages))]
    [:p "Current Page:" (str @current)]])
 
 (defmethod reagent-page :default [& args]

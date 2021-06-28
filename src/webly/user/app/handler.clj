@@ -8,9 +8,7 @@
    [webly.web.handler :refer [add-ring-handler]]
    [webly.user.app.views :refer [app-page]]))
 
-
 ; CSRF TOKEN
-
 
 (defn get-csrf-token []
   ; Another option:

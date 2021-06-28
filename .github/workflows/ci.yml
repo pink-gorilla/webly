@@ -7,60 +7,66 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Cache Maven dependencies
-      uses: actions/cache@v1
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/project.clj') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
-    - name: Install dependencies jar
+        fetch-depth: 0
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Prepare java
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.14
+    - name: Install clojure tools
+      uses: DeLaGuardo/setup-clojure@3.5
+      with:
+        # Install just one or all simultaneously
+        cli: 1.10.3.882 # Clojure CLI based on tools.deps
+        #lein: 2.9.1     # or use 'latest' to always provision latest version of leiningen
+        #boot: 2.8.3     # or use 'latest' to always provision latest version of boot
+    - name: test-clj
+      run: clojure -M:test
+    - name: js build
       run: |
-        lein deps
-    - name: Install dependencies npm
-      run: |
-        lein webly npm-install
-        # npm install should be redudant ?
-        # npm install    
-        npm install --production=false
-
-    - name: prepare resources
-      run: |
-        # unit tests need resources for resource test
-        lein prep-res
-    - name: Check formatting
-      run: lein cljfmt check
-    - name: Run tests - clj
-      run: |
-        # unit tests need resources for resource test
-        lein test-clj
-    - name: Run tests - js
-      run: |
-        # unit tests need resources for resource test
-        cat package.json
-        lein test-js
+         clojure -X:ci
+    - name: test-cljs
+      run: npm test
+    - name: clj-fmt
+      if: ${{ matrix.os != 'windows-latest' }}
+      run: clojure -M:cljfmt
+      shell: bash
+    #- name: show git tag
+    #  run: clojure -M:garamond
+    #- name: clj-kondo
+    #  run: clojure -M:lint
+    #- name: cloverage
+    #  run: clojure -M:cloverage
     - name: Release
+      if: success()
+      # if: github.event_name == 'push'
       env:
-        RELEASE_USERNAME: ${{ secrets.ReleaseUsername }}
-        RELEASE_PASSWORD: ${{ secrets.ReleasePassword }}
+        CLOJARS_USERNAME: ${{ secrets.ReleaseUsername }}
+        CLOJARS_PASSWORD: ${{ secrets.ReleasePassword }}
+        CODECOV_TOKEN: ${{ secrets.CodecovToken }}
       run: |
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
-        #
-        # Could not transfer metadata foo:bar/maven-metadata.xml from/to releases (https://clojars.org/repo): Read timed out
-        # Default 10000 not enough for us
-        #
-        export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"
-        # git diff
-        lein prep-res
-        lein release
-    - name: CodeCoverage
-      run: |
-        lein with-profile +demo cloverage
-        bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
-  
+      #
+      # Could not transfer metadata foo:bar/maven-metadata.xml from/to releases (https://clojars.org/repo): Read timed out
+      # Default 10000 not enough for us
+      # export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"
+        ./scripts/prep-res.sh
+        clojure -M:release --patch
+        git push --tags
+      #  clojure -M:release tag --minor
+      #  clojure -M:release pom
+      #  clojure -M:release jar
+      # clojure -M:release deploy
+      # lein release
+      # bash <(curl -s https://codecov.io/bash)
+      # lein with-profile +relay-jetty cloverage
+      #  bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json

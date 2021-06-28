@@ -8,7 +8,6 @@
 
 ;; see: https://github.com/ptaoussanis/sente/blob/master/example-project/src/example/client.cljs
 
-
 (def ?csrf-token
   (when-let [el (.getElementById js/document "sente-csrf-token")]
     (.getAttribute el "data-csrf-token")))

@@ -24,11 +24,9 @@
   (unresolve-handler [this m]
     (when (= this (:handler m)) "")))
 
-
 ; copied from bidi.
 ; but bidi forgot to wrap not modified
 ; https://github.com/juxt/bidi/issues/208
-
 
 (defrecord ResourcesMaybe [options]
   bidi/Matched

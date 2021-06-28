@@ -6,7 +6,6 @@
 
 ; stolen from gorilla-notebook env/dev
 
-
 (defn wrap-dev [handler]
   (warn "dev-mode: wrapping ring-handler with reload and exceptions")
   (-> handler

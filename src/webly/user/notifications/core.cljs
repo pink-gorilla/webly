@@ -5,7 +5,6 @@
 ;; stolen from:
 ;; https://github.com/baskeboler/cljs-karaoke-client/blob/master/src/main/cljs_karaoke/notifications.cljs
 
-
 ; todo: make it more tailwind like
 ; ; https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/react/alerts
 

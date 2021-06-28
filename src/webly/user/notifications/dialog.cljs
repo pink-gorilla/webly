@@ -10,7 +10,6 @@
 ;; stolen from:
 ;; https://github.com/baskeboler/cljs-karaoke-client/blob/master/src/main/cljs_karaoke/notifications.cljs
 
-
 ;.notification:hover {
 ;    opacity: 1;
 ;} 

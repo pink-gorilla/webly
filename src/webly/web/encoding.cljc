@@ -3,10 +3,8 @@
    [webly.web.encoding-bidi :as bidi]
    [webly.web.encoding-time :as time]))
 
-
 ; another encoding option:
 ; https://nextjournal.com/schmudde/java-time
-
 
 (def decode
   {:handlers

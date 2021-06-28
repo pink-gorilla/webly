@@ -14,8 +14,6 @@
           (webly.build.build-config/build profile shadow-config))
       (warn "profile has no bundle"))))
 
-
-
 ;(comment
   ;(get-shadow-server-config)
   ;(get-config :demo)

@@ -12,7 +12,6 @@
 
 ; load configuration
 
-
 (reg-event-fx
  :config/load
  (fn [{:keys [db]} [_ after-config-load]]

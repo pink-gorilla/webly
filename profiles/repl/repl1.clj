@@ -1,17 +1,12 @@
 (ns repl1
-  (:require 
-   [bidi.bidi :as bidi]
-   )
-  )
-
-
+  (:require
+   [bidi.bidi :as bidi]))
 
 (def routes
   ["/" {"" :demo/main
         "x" :demo/bongo
         "y" {:matched :demo/y :tag :uu}
-        "z" (bidi/tag :demo/z :bongo)
-        }])
+        "z" (bidi/tag :demo/z :bongo)}])
 
 (meta  (bidi/tag :demo/z :bongo))
 

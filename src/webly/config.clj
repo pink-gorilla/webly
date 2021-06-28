@@ -38,9 +38,7 @@
     :else
     {}))
 
-
 ; https://github.com/tolitius/cprop
-
 
 (defn- load-config-cprop [app-config]
   (let [app (if (vector? app-config)
