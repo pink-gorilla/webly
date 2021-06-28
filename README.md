@@ -24,9 +24,8 @@
 Clone this repo and run:
 
 ```
-lein webly npm-install
-lein prep-res
-lein webly watch     ; The demo runs a webserver on port 8000. "shadow-cljs watch" mode
+./scripts/prep-res.sh
+clojure -X:webly     ; The demo runs a webserver on port 8000. "shadow-cljs watch" mode
 ```
 
 The source code of the demo is in **profiles/demo**.
@@ -34,13 +33,13 @@ The source code of the demo is in **profiles/demo**.
 If this was your app, after you are finished developing it, you might compile it:
 
 ```
-lein webly compile  ; Build cljs bundle, and output bundle stats
-lein webly jetty     ; Serves website from precompiled bundle.
+clojure -X:webly :profile '"compile"' ; Build cljs bundle, and output bundle stats
+clojure -X:webly :profile '"jetty"'   ; Serves website from precompiled bundle.
 ```
 
 ```
-lein webly release   ; Build cljs bundle, and output bundle stats. no tenx. no source-maps
-lein webly jetty     ; Serves website from precompiled bundle.
+clojure -X:webly :profile '"release"' ; Build cljs bundle, output bundle stats. no tenx. no source-maps
+clojure -X:webly :profile '"jetty"'   ; Serves website from precompiled bundle.
 ```
 
 # features:
@@ -116,17 +115,10 @@ Add npm dependencies that you want to use into a clojure deps.cljs
 Sometimes github repo and npm module do not match. 
 Check this to see what goes on:  https://unpkg.com/@ricokahler/oauth2-popup-flow@2.0.0-alpha.1/index.js
 
+## unit tests
+- clj `clojure -X:test`
+- cljs: `./scripts/test-cljs.sh`
 
-
-## cljs unit tests
-- run `lein webly ci`
-- run `npm test` (this script is auto created when your package.json get auto created)
-
-```
-lein test-clj        ; Run unit tests - clj
-lein test-js         ; Run unit tests - js
-
-```
 
 
 
