@@ -30,6 +30,9 @@ jobs:
         #boot: 2.8.3     # or use 'latest' to always provision latest version of boot
     - name: test-clj
       run: clojure -M:test
+    - name: prep res
+      run: |
+         ./scripts/prep-res.sh
     - name: js build
       run: |
          clojure -X:ci
@@ -55,11 +58,6 @@ jobs:
       run: |
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
-      #
-      # Could not transfer metadata foo:bar/maven-metadata.xml from/to releases (https://clojars.org/repo): Read timed out
-      # Default 10000 not enough for us
-      # export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"
-        ./scripts/prep-res.sh
         clojure -M:release --patch
         git push --tags
       #  clojure -M:release tag --minor
@@ -70,3 +68,7 @@ jobs:
       # bash <(curl -s https://codecov.io/bash)
       # lein with-profile +relay-jetty cloverage
       #  bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
+      #
+      # Could not transfer metadata foo:bar/maven-metadata.xml from/to releases (https://clojars.org/repo): Read timed out
+      # Default 10000 not enough for us
+      # export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"
