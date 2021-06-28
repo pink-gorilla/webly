@@ -28,11 +28,11 @@ jobs:
         cli: 1.10.3.882 # Clojure CLI based on tools.deps
         #lein: 2.9.1     # or use 'latest' to always provision latest version of leiningen
         #boot: 2.8.3     # or use 'latest' to always provision latest version of boot
-    - name: test-clj
-      run: clojure -M:test
     - name: prep res
       run: |
          ./scripts/prep-res.sh
+    - name: test-clj
+      run: clojure -M:test
     - name: js build
       run: |
          clojure -X:ci
