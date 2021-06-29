@@ -22,6 +22,7 @@
          :ns-cljs [demo.pages.main
                    demo.pages.help
                    demo.pages.party
+                   demo.pages.job
                    demo.time
                    demo.events]
          :title "Webly Demo"

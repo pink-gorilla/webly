@@ -1,4 +1,7 @@
-(ns demo.routes)
+(ns demo.routes
+  (:require
+   [bidi.bidi :as bidi]
+  ))
 
 (def routes
   {:api {"time"   {:get :api/time}
@@ -12,6 +15,9 @@
           "help"    :demo/help
           "prose"   :demo/prose
           ["party/" :location] :demo/party
+          "job"     (bidi/tag :demo/job :wunderbar)
+          "job2"     (bidi/tag :demo/job {:flags 3 
+                                          :context :wunderbar})
           "save"    :demo/save-non-existing ; there is no handler defined for this on purpose
           }})
 

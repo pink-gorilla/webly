@@ -14,7 +14,6 @@
    (let [db (or db {})]
      (info "starting pushy")
      (pushy/start! history) ; link url => state
-     ;(set-initial-query-params)
      (assoc-in db [:bidi] {:client routes-frontend :server routes-backend}))))
 
 (rf/reg-event-fx

@@ -60,14 +60,17 @@
                           (map (fn [[k v]] [(keyword k) v]))
                           (into {}))
         match (bidi/match-route* routes path options)] ;     ;(bidi/match-route @routes path)
-    ;(info "match: " match)  ; weird {} ...  {{} nil, :route-params {:location "Bali"}, :handler :demo/party}
+    ;(info "match: " match) 
+    ; {{} nil, 
+    ;   :route-params {:location "Bali"}, 
+    ;   :handler :demo/party
+    ;   :tag  :wunderbar}
     (if match
-      (let [handler (:handler match)
-            route-params (:route-params match) ;(dissoc match :handler)
+      (let [{:keys [handler route-params tag]} match
             route {:handler handler
                    :query-params query-params
-                   :route-params (or route-params {})}]
-        ;(info "path->route " path-with-qp "route: " route)
+                   :route-params (or route-params {})
+                   :tag (or tag nil)}]
         route)
       (do (error "no route found for " path-with-qp)
           {:handler :webly/unknown-route

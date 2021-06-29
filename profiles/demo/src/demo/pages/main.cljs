@@ -28,7 +28,6 @@
   (into [:div.bg-blue-400.m-5.inline-block {:class "w-1/4"}]
         children))
 
-
 (defn demo-routing []
   [block
    [:p.text-4xl "bidi routes"]
@@ -40,6 +39,9 @@
    [:p [link-dispatch [:bidi/goto :demo/party :location "Vienna"] "party in vienna (test for route-params)"]]
    [:p [link-dispatch [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}] "party in Bali (test for query-params)"]]
 
+   [:p [link-dispatch [:bidi/goto "/job"] "job! (test of bidi tags)"]]
+   [:p [link-dispatch [:bidi/goto "/job2"] "job2! (test of bidi tags)"]]
+   
    [:p [link-href "/api/test" "demo api test"]]
    [:p [link-href "/api/time" "demo api time"]]])
 

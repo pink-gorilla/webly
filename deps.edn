@@ -79,9 +79,9 @@
                        "profiles/test/resources"]
          :extra-deps {io.github.cognitect-labs/test-runner
                       {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                       :sha "9e35c979860c75555adaff7600070c60004a0f44"}
+                       :sha "62ef1de18e076903374306060ac0e8a752e57c86"}
                       ring/ring-mock {:mvn/version "0.4.0"}
-                      org.pinkgorilla/ui-repl {:mvn/version "0.0.10"} ; http cors test
+                      org.pinkgorilla/ui-repl {:mvn/version "0.0.11"} ; http cors test
                       }
          :main-opts ["-m" "cognitect.test-runner"]
          :exec-fn cognitect.test-runner.api/test}
@@ -129,7 +129,7 @@
   ; 2. run unit tests 
   :webly {:extra-paths ["profiles/demo/src"
                         "profiles/demo/resources"]
-          :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.10"}} ; http cors test
+          :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.11"}} ; http cors test
           :exec-fn webly.user.app.app/webly-run
           :exec-args {:profile "watch"
                       :config "demo.edn"}}
@@ -138,7 +138,7 @@
                      "profiles/demo/src"
                      "profiles/demo/resources"
                      "profiles/test/resources"]
-       :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.10"}} ; http cors test
+       :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.11"}} ; http cors test
        :exec-fn webly.user.app.app/webly-run
        :exec-args {:profile "ci"
                    :config "demo.edn"}}
