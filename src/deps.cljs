@@ -19,7 +19,7 @@
             "react-dom-factories" "^1.0.2"
 
             ; since reagent 1.1, reagent no longer brings react and react-dom
-            "react" "^17.0.1"  
-            "react-dom" "^17.0.1"  
+            "react" "^17.0.1"
+            "react-dom" "^17.0.1"
    ;
             }}
