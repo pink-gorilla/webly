@@ -67,12 +67,10 @@
       ))
 
 (defn stop-server []
-  (println "stop-server ..")
   (warn "stop-server ..")
   (Thread/sleep 500))
 
 (defn stop-server-repl [_]
-  (println "stop-server-repl ..")
   (warn "stop-server-repl ..")
   (Thread/sleep 500)
   (System/exit 0))

@@ -16,18 +16,10 @@
 
             ; react
             "create-react-class" "^15.7.0"
-
-            ;"react" "^17.0.1"  ; reagent brings it in deps.cljs
-            ;"react-dom" "^17.0.1"  ; reagent brings it deps.cljs
             "react-dom-factories" "^1.0.2"
 
-  ;
-            }
- :npm-dev-deps {; this works with lein-shadow, but not with normal shadow-cljs
-                ;"shadow-cljs"           "2.12.4"
-
-                ; javascript unit tests 
-                ;"karma" "^6.3.2"
-                ;"karma-chrome-launcher" "^3.1.0"
-                ;"karma-cljs-test" "^0.1.0"
-                }}
+            ; since reagent 1.1, reagent no longer brings react and react-dom
+            "react" "^17.0.1"  
+            "react-dom" "^17.0.1"  
+   ;
+            }}
