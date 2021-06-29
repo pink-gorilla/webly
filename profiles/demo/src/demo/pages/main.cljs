@@ -32,7 +32,10 @@
 (defn demo-routing []
   [block
    [:p.text-4xl "bidi routes"]
-   [:p [link-dispatch [:bidi/goto :demo/help] "help!"]]
+   [:p [link-dispatch [:bidi/goto "/help"] "help! (as an url)"]]
+   [:p [link-dispatch [:bidi/goto "https://google.com"] "google"]]
+   [:p [link-dispatch [:bidi/goto :demo/help] "help! (map with optional args))"]]
+   
    [:p [link-dispatch [:bidi/goto :demo/save-non-existing] "save-as (test for not implemented)"]]
    [:p [link-dispatch [:bidi/goto :demo/party :location "Vienna"] "party in vienna (test for route-params)"]]
    [:p [link-dispatch [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}] "party in Bali (test for query-params)"]]

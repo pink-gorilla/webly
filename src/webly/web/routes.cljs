@@ -7,7 +7,7 @@
     [cemerick.url :as url]))
 
 ; bidi does not handle query params
-; idea how to solve the problem:nhttps://github.com/juxt/bidi/issues/51
+; idea how to solve the problem: https://github.com/juxt/bidi/issues/51
 
 (defn window-query-params []
   (info "window query params: href: " (.. js/window -location -href))
@@ -111,13 +111,9 @@
     (reduce add {} pairs)))
 
 (defn goto! [handler & params]
-  (let [;_ (info "goto! " handler "params: " params)
-        params-map (params->map params) ; params is a map without {} example:  :a 1 :b 2  
+  (let [params-map (params->map params) ; params is a map without {} example:  :a 1 :b 2  
         route-params (dissoc params-map :query-params)
         query-params (:query-params params-map)
-        ;_ (info "m-route" m-route)
-        ;route-params (map->params m-route)
-        ;_ (info "p-route" p-route)
         route {:handler handler
                :route-params route-params
                :query-params (or query-params {})}
@@ -127,4 +123,13 @@
     (pushy/set-token! history url)))
 
 (defn nav! [url]
-  (set! (.-location js/window) url))
+  (let [{:keys [handler] :as h} (path->route @routes url {})]
+    (info "h: " h) ; {:handler :demo/help, :query-params {}, :route-params {}}
+    (if (= handler :webly/unknown-route)
+      (set! (.-location js/window) url)
+      (do (reset! current h)
+          (pushy/set-token! history url)))))
+
+
+
+
