@@ -1,10 +1,8 @@
 (ns webly.profile
   (:require
    [taoensso.timbre :as timbre :refer [info error]]
-   [webly.config :refer [load-config! config-atom]]
-   [webly.prefs :refer [prefs-atom]]
-   [webly.log :refer [timbre-config!]]
-   [webly.writer :refer [write-status]]))
+   [webly.config :refer [config-atom]]
+   [webly.prefs :refer [prefs-atom]]))
 
 (defonce profiles
   {:ci          {:prefs   {:tenx false}
@@ -82,16 +80,8 @@
        (map name)
        (into [])))
 
-(defn setup-config
-  [config]
-  (load-config! config)
-  (timbre-config! @config-atom)
-  ;(info "webly-config: " @config-atom) 
-  (write-status "config" @config-atom))
-
 (defn setup-profile
   [profile-name]
-
   (let [profile (str->profile profile-name)]
     (if (or (nil? profile-name) (not profile))
       (error "no profile. valid profiles are: " (profiles-available))

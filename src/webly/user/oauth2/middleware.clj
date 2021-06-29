@@ -7,6 +7,7 @@
    [ring.middleware.cookies :refer [wrap-cookies]]
    [ring.middleware.oauth2 :refer [wrap-oauth2]]
    [webly.config :refer [get-in-config config-atom]]
+   [webly.writer :refer [write-status]]
    [webly.user.oauth2.provider :refer [ring-oauth2-config]]))
 
 ; https://github.com/weavejester/ring-oauth2 
@@ -19,7 +20,8 @@
 (defn print-oauth2-config []
   (let [config @config-atom
         c (ring-oauth2-config config)]
-    (debug "oauth config: " c)))
+     ;(debug "oauth config: " c)
+    (write-status "oauth2" c)))
 
 (defn wrap-oauth [handler]
   (let [config @config-atom

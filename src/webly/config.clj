@@ -5,7 +5,9 @@
    [clojure.edn :as edn]
    [cprop.core :refer [load-config]]
    [cprop.source :refer [from-env from-system-props from-resource from-file]]
-   [webly.encoding.edn :as e]))
+   [webly.encoding.edn :as e]
+   [webly.log :refer [timbre-config!]]
+   [webly.writer :refer [write-status]]))
 
 (defonce config-atom (atom {}))
 
@@ -93,8 +95,9 @@
     (if (and (not (nil? str))
              (string? str))
       (if-let [kb (res-str str)]
-        (do (debug "keybindings resolved to: " kb)
-            (assoc config :keybindings kb))
+        (do ;(debug "keybindings resolved to: " kb)
+          (write-status "keybindings" kb)
+          (assoc config :keybindings kb))
         config)
       config)))
 
@@ -102,7 +105,9 @@
   [app-config]
   (let [config (load-config-cprop app-config)
         config (resolve-config-keybindings config)]
-    (reset! config-atom config)))
+    (reset! config-atom config)
+    (write-status "config" @config-atom)
+    (timbre-config! @config-atom)))
 
 (defn add-config [app-config user-config]
   (let [app-config (if (vector? app-config) app-config [app-config])

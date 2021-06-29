@@ -2,8 +2,8 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [webly.writer :refer [write-status]]
-   [webly.config :refer [get-in-config config-atom]]
-   [webly.profile :refer [setup-profile server? setup-config]]
+   [webly.config :refer [get-in-config config-atom load-config!]]
+   [webly.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]
    [webly.web.server :refer [run-server]]
    [webly.web.handler :refer [make-handler]]
@@ -115,7 +115,9 @@
 
 (defn webly-run!
   [profile-name config]
-  (setup-config config)
+  (when (empty? @config-atom)
+    (warn "config is empty.. loading config now!")
+    (load-config! config))
   (let [profile (setup-profile profile-name)]
     (require-ns-clj)
     (if (:server profile)
