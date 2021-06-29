@@ -1,13 +1,12 @@
-(ns webly.sente-packer-test
+(ns webly.encoding-sente-packer-test
   (:require
    [taoensso.timbre :as log :refer [info infof]]
    [taoensso.sente.packers.transit :as sente-transit :refer [get-transit-packer]]
    [clojure.test :refer [deftest is testing]]
    [taoensso.sente.interfaces :as interfaces :refer (pack unpack)]
-   [webly.web.encoding :as e]
+   [webly.encoding.transit :as e]
    [webly.date :refer [now-local]]))
 
-(println "encode: " e/encode)
 (def p (get-transit-packer :json e/encode e/decode))
 
 (def d (now-local))

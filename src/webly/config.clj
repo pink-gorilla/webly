@@ -2,8 +2,10 @@
   (:require
    [clojure.java.io :as io]
    [taoensso.timbre  :refer [debug info error]]
+   [clojure.edn :as edn]
    [cprop.core :refer [load-config]]
-   [cprop.source :refer [from-env from-system-props from-resource from-file]]))
+   [cprop.source :refer [from-env from-system-props from-resource from-file]]
+   [webly.encoding.edn :as e]))
 
 (defonce config-atom (atom {}))
 
@@ -13,13 +15,24 @@
 (defn get-in-config [path]
   (get-in @config-atom path))
 
+(defn read-config-hack [input]
+  (info "reading.. hack!")
+  (edn/read-string
+   {:readers e/config}
+   (slurp input)))
+
 (defn load-from-file [filename]
   (info "loading webly config from file:" filename)
-  (from-file filename))
+  ;(with-redefs [*data-readers* e/config
+  ;              cprop.source/read-config read-config-hack]
+  (binding [*data-readers* e/config]
+    (from-file filename)))
 
 (defn load-from-resource [name]
   (info "loading webly config from resource:" name)
-  (from-resource name))
+  ;(with-redefs [cprop.source/read-config read-config-hack]
+  (binding [*data-readers* e/config]
+    (from-resource name)))
 
 (defn from-map-file-res [config]
   (cond

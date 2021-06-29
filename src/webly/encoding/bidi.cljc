@@ -1,4 +1,4 @@
-(ns webly.web.encoding-bidi
+(ns webly.encoding.bidi
   (:require
    #?(:clj [bidi.bidi]
       :cljs [bidi.bidi :refer [TaggedMatch]])

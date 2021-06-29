@@ -1,10 +1,15 @@
-(ns webly.web.encoding
+(ns webly.encoding.transit
   (:require
-   [webly.web.encoding-bidi :as bidi]
-   [webly.web.encoding-time :as time]))
+   [webly.encoding.bidi :as bidi]
+   [webly.encoding.time :as time]))
 
 ; another encoding option:
 ; https://nextjournal.com/schmudde/java-time
+
+; transit encoding is used in
+; - ring middleware (muuntaja)
+; - websocket (sente packer)
+; - cljs ajax requests ()
 
 (def decode
   {:handlers

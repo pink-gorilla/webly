@@ -2,7 +2,9 @@
          ; routes can be a map or a symbol.
          ; if you do lots of merging of routes, you might prefer a symbol
          :routes demo.routes/routes
-         #_:routes #_{:api {"time"   {:get :api/time}
+         :routes2 {:api {"time"   {:get :api/time}
+                        "timejava"   {:get :api/time-java}
+                        "biditest"   {:get :api/bidi-test}
                         "test"   {:get :api/test
                                   :post :api/test  ; used in unit-test
                                   }
@@ -11,6 +13,8 @@
                         "help"    :demo/help
                         "prose"   :demo/prose
                         ["party/" :location] :demo/party
+                        "job"     #bidi.bidi.TaggedMatch{:matched  :demo/job :tag :wunderbar}
+                        "job2"    #bidi.bidi.TaggedMatch{:matched :demo/job :tag {:flags 3 :context :wunderbar}}
                         "save"    :demo/save-non-existing ; there is no handler defined for this on purpose
                         }}
          ; clj

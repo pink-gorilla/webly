@@ -4,7 +4,7 @@
    [taoensso.sente :as sente :refer [cb-success?]]
    [taoensso.sente.packers.transit :as sente-transit] ;; Optional, for Transit encoding
    [webly.ws.msg-handler :refer [event-msg-handler]]
-   [webly.web.encoding :as e]))
+   [webly.encoding.transit :as e]))
 
 ;; see: https://github.com/ptaoussanis/sente/blob/master/example-project/src/example/client.cljs
 

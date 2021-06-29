@@ -1,4 +1,4 @@
-(ns webly.web.encoding-time
+(ns webly.encoding.time
   (:require
    [cognitect.transit :as transit]
    #?@(:cljs

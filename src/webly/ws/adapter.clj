@@ -8,7 +8,7 @@
    [taoensso.sente  :as sente]
    [webly.ws.id :refer [get-sente-session-uid]]
    [webly.ws.msg-handler :refer [event-msg-handler]]
-   [webly.web.encoding :as e]))
+   [webly.encoding.transit :as e]))
 
 #_(defn undertow []
     (info "websocket mode: undertow.")
