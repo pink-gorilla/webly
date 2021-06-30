@@ -30,7 +30,7 @@
     (info "resolving route symbol: " routes)
     (if-let [r (var-get (resolve routes))]
       (do
-        (info "routes: " r)
+        (debug "routes: " r)
         (swap! config-atom assoc-in [:webly :routes] r)
         r)
       (error "routes symbol [" routes "] could not get resolved!"))
@@ -89,19 +89,6 @@
         (catch Exception e
           (error "Exception requiring ns-clj: " (pr-str e))))
       (warn "no ns-clj defined."))))
-
-(defn start-services [profile]
-  (let [start-service (get-in-config [:webly :start-service])]
-    (if start-service
-      (do (info "starting services : " (:server profile))
-          (try
-            (info "start-service:" start-service)
-            (if-let [f (resolve start-service)]
-              (f)
-              (error "services symbol [" start-service "] could not get resolved!"))
-            (catch Exception e
-              (error "Exception starting services: " (pr-str e)))))
-      (warn "no services defined."))))
 
 (defn run-server-p [profile]
   (start-services profile)
