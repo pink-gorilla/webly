@@ -7,10 +7,16 @@
 (reg-event-db
  :css/init
  (fn [db [_]]
-   (info "css init: ")
-   (assoc db :theme {:available {}
-                     :current {}})
-   db))
+   (let [theme (get-in db [:config :webly :themes])
+         {:keys [available current]
+          :or {available {}
+               current {}}}
+         (or theme {})
+         theme-safe {:available available
+                     :current current}]
+     (info "css init: " theme-safe)
+     (assoc db :theme theme-safe)
+     db)))
 
 (reg-event-db
  :css/add-components

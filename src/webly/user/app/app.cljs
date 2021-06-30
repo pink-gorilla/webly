@@ -87,6 +87,7 @@
      (setup-bidi (:api routes) (:app routes))
      (dispatch [:ga/init])
      (dispatch [:keybindings/init])
+     (dispatch [:css/init])
      (dispatch [:css/add-components webly-css/components webly-css/config])
      (dispatch [:settings/init])
      (dispatch [:ws/init])

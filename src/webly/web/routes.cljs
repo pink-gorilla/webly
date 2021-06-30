@@ -1,6 +1,6 @@
  (ns webly.web.routes
    (:require
-    [taoensso.timbre :refer-macros [info error]]
+    [taoensso.timbre :refer-macros [info infof error]]
     [reagent.core :as r]
     [bidi.bidi :as bidi]
     [pushy.core :as pushy]
@@ -47,6 +47,10 @@
       (str url-handler "?" (url/map->query query-params)))))
 
 (defonce current (r/atom nil))
+(defn reset-current! [trigger match]
+  (when (not (= match @current))
+    (info "reset-current! " match "trigger: " trigger)
+    (reset! current match)))
 
 ;; take some tricks from this 
 ;; https://github.com/timgilbert/haunting-refrain-posh/blob/develop/src/cljs/haunting_refrain/fx/navigation.cljs
@@ -79,8 +83,7 @@
 (declare hard-redirect)
 
 (defn pushy-goto! [match]
-  (info "pushy/goto: " match)
-  (reset! current match)
+  (reset-current! "pushy/goto" match)
   (when (=  :webly/unknown-route (:handler match))
     (hard-redirect (:url match))))
 
@@ -103,8 +106,6 @@
 ; bidi swagger:
 ; https://github.com/pink-junkjard/bidi-swagger
 
-;(def query-params (r/atom nil))
-
 ; goto! 
 
 (defn- params->map [params]
@@ -115,22 +116,24 @@
 
 (defn goto! [handler & params]
   (let [params-map (params->map params) ; params is a map without {} example:  :a 1 :b 2  
-        route-params (dissoc params-map :query-params)
-        query-params (:query-params params-map)
+        ; _ (error "params map: " params-map)
+        route-params (dissoc params-map :query-params :tag)
+        query-params (or (:query-params params-map) {})
+        tag (:tag params-map)
         route {:handler handler
                :route-params route-params
-               :query-params (or query-params {})}
+               :query-params query-params
+               :tag tag}
         url (route->url route)]
-    (info "bidi/goto! route:" route "url:" url)
-    (reset! current route)
+    (reset-current! "bidi/goto!" route)
     (pushy/set-token! history url)))
 
 (defn nav! [url]
   (let [{:keys [handler] :as h} (path->route @routes url {})]
-    (info "h: " h) ; {:handler :demo/help, :query-params {}, :route-params {}}
+    (info "nav!: " h) ; {:handler :demo/help, :query-params {}, :route-params {}}
     (if (= handler :webly/unknown-route)
       (set! (.-location js/window) url)
-      (do (reset! current h)
+      (do (reset-current! "bidi/goto!" h)
           (pushy/set-token! history url)))))
 
 

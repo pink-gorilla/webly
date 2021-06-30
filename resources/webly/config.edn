@@ -17,7 +17,10 @@
          :css-extern [] ; css via bundle. prefer frontend!!
 
          ; routes
-         :routes {:app {} :api {}}
+         :routes {:app {} 
+                  :api {}}
+         :theme {:available {}
+                 :current {}}
 ;
          }
 
