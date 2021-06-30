@@ -27,7 +27,7 @@
   [not-found-page])
 
 (defn page-viewer [current]
-  (reagent-page current)) ; multimethod fix
+  ^{:key @current} [reagent-page @current]) ; multimethod fix
 
 ; https://stackoverflow.com/questions/33299746/why-are-multi-methods-not-working-as-functions-for-reagent-re-frame
 ; ^{:key @current-route} [pages @current-route]
@@ -37,7 +37,7 @@
     (fn []
       (if @show?
         ;(reagent-page @current)
-        [page-viewer @current]
+        [page-viewer current]
         [status-page]))))
 
 (defn webly-app []
