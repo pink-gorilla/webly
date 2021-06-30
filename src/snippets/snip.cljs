@@ -1,7 +1,8 @@
-(ns snippets.snip)
+(ns snippets.snip
+  (:require
+   [taoensso.timbre :refer-macros [debug info warn error]]))
 
-(println "snip")
-
-(defn a [b c]
+(defn add [b c]
+  (info "snippet add " b c)
   (+ b c))
 

@@ -71,7 +71,8 @@
                             ;:exclusions [com.taoensso/encore ; outdated
                             ;             org.clojure/core.async]
                             }
-        fipp/fipp {:mvn/version "0.6.23"} ; edn pretty printing  }
+        fipp/fipp {:mvn/version "0.6.23"} ; edn pretty printing  
+        lambdaisland/deep-diff2 {:mvn/version "2.0.108"} ; differ
         }
  :aliases
  {:garamond

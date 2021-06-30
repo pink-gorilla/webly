@@ -1,8 +1,7 @@
 (ns webly.user.dialog
   (:require-macros [reagent.ratom :refer [reaction]])
   (:require
-   [re-frame.core :refer [reg-sub-raw reg-event-db dispatch subscribe]]
-   [webly.user.config.core :refer [link-css]]))
+   [re-frame.core :refer [reg-sub-raw reg-event-db dispatch subscribe]]))
 
 ; stolen from:
 ; https://github.com/benhowell/re-frame-modal

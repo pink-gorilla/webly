@@ -1,6 +1,7 @@
 (ns demo.pages.main
   (:require
-    [taoensso.timbre :refer-macros [debug info warn error]]
+   [taoensso.timbre :refer-macros [debug info warn error]]
+   [shadow.lazy :as lazy]
    [reagent.core :as r]
    [re-frame.core :refer [dispatch subscribe]]
    [webly.web.handler :refer [reagent-page]]
@@ -34,14 +35,14 @@
    [:p [link-dispatch [:bidi/goto "/help"] "help! (as an url)"]]
    [:p [link-dispatch [:bidi/goto "https://google.com"] "google"]]
    [:p [link-dispatch [:bidi/goto :demo/help] "help! (map with optional args))"]]
-   
+
    [:p [link-dispatch [:bidi/goto :demo/save-non-existing] "save-as (test for not implemented)"]]
    [:p [link-dispatch [:bidi/goto :demo/party :location "Vienna"] "party in vienna (test for route-params)"]]
    [:p [link-dispatch [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}] "party in Bali (test for query-params)"]]
 
    [:p [link-dispatch [:bidi/goto "/job"] "job! (test of bidi tags)"]]
    [:p [link-dispatch [:bidi/goto "/job2"] "job2! (test of bidi tags)"]]
-   
+
    [:p [link-href "/api/test" "demo api test"]]
    [:p [link-href "/api/time" "demo api time"]]])
 
@@ -66,6 +67,19 @@
     [:li [link-fn show-dialog-demo "show dialog"]]]])
 
 
+(def x (lazy/loadable snippets.snip/add))
+
+(defn handle-load [fun]
+  (info "result: " (fun 2 7)))
+
+
+(defn module-fun []
+  (info "module fun..")
+  ; https://code.thheller.com/blog/shadow-cljs/2019/03/03/code-splitting-clojurescript.html
+  ; https://clojureverse.org/t/shadow-lazy-convenience-wrapper-for-shadow-loader-cljs-loader/3841
+  (lazy/load x handle-load))
+
+
 (defn demo-settings []
   (let [s (subscribe [:settings])]
     (fn []
@@ -74,19 +88,18 @@
        [:p (pr-str @s)]
        ;[link-fn #(ls-set! :webly {:willy 789}) "reset localstorage to :willy 789"]
        [link-fn #(dispatch [:settings/set :bongo 123]) " set bongo to 123"]
-       [link-fn #(dispatch [:settings/set :bongo 456]) " set bongo to 456"]])))
+       [link-fn #(dispatch [:settings/set :bongo 456]) " set bongo to 456"]
+       [link-fn module-fun "call module fun"]])))
 
 
 (defn print-status [x]
-  (warn "status: " x)
-  )
+  (warn "status: " x))
 
 (defn demo-ws []
   (let [t (subscribe [:demo/time])
         c (subscribe [:ws/connected?])
         tdt (r/atom nil)
-        set-time-date (fn [[t v]] (reset! tdt v))
-        ]
+        set-time-date (fn [[t v]] (reset! tdt v))]
     (fn []
       [block
        [:p.text-4xl "websocket"]
@@ -97,16 +110,18 @@
        [link-fn #(dispatch [:ws/send [:ws/status []] print-status 5000]) " request ws status"]
        [link-fn #(dispatch [:ws/send [:demo/xxx [123 456 789]]]) " send unimplemented ws event request"]
        [link-fn #(dispatch [:ws/send [:time/now-date []] set-time-date 5000]) " request time (as date)"]
-       [link-fn #(dispatch [:ws/send [:time/now-date-local []] set-time-date 5000]) " request time (as date local)"]
-
-
-       ])))
+       [link-fn #(dispatch [:ws/send [:time/now-date-local []] set-time-date 5000]) " request time (as date local)"]])))
 
 (defn demo-kb []
   [block
    [:p.text-4xl "keybindings"]
    [:p "press [alt-g k] to see keybindings"]
-   [:p "press [alt-g t] to toggle 10x"]])
+   [:p "press [alt-g t] to toggle 10x"]
+   [:p "press [alt-g 1] to goto main"]
+   [:p "press [alt-g 2] to goto party (vienna)"]
+   [:p "press [alt-g 3] to goto help"]
+   [:p "press [alt-g 4] to goto job"]
+   [:p "press [alt-g 5] to goto party (bali)"]])
 
 
 (defn demo-emoji []
@@ -124,23 +139,24 @@
          [emoji "fiem-surprised"])])))
 
 
+
 (defn main []
-  [:div.dark 
-  [:div {:class "dark:bg-gray-800 bg-yellow-300 text-gray-900 dark:text-white"}
-   [:h1 "webly demo"]
+  [:div.dark
+   [:div {:class "dark:bg-gray-800 bg-yellow-300 text-gray-900 dark:text-white"}
+    [:h1 "webly demo"]
 
-   [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]
-   
-   [link-dispatch [:css/set-theme-component :tailwind :light] "tailwind light"]
-   [link-dispatch [:css/set-theme-component :tailwind :dark] "tailwind dark"]
+    [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]
 
-   [demo-emoji]
-   [demo-routing]
-   [demo-dialog]
-   [demo-oauth]
-   [demo-settings]
-   [demo-ws]
-   [demo-kb]]])
+    [link-dispatch [:css/set-theme-component :tailwind :light] "tailwind light"]
+    [link-dispatch [:css/set-theme-component :tailwind :dark] "tailwind dark"]
+
+    [demo-emoji]
+    [demo-routing]
+    [demo-dialog]
+    [demo-oauth]
+    [demo-settings]
+    [demo-ws]
+    [demo-kb]]])
 
 (defmethod reagent-page :demo/main [& args]
   [main])

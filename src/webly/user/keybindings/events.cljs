@@ -1,12 +1,11 @@
 (ns webly.user.keybindings.events
   (:require
    [clojure.string :as str]
-   [taoensso.timbre :refer-macros [debug info error]]
+   [taoensso.timbre :refer-macros [debug debugf info error]]
    [re-frame.core :refer [reg-event-db reg-sub dispatch]]
    [webly.user.notifications.core :refer [add-notification]]
    [webly.user.keybindings.init :refer [init-keybindings!]]
    [webly.user.keybindings.component :refer [keybindings-dialog]]))
-
 (def clean-search
   {:highlight     0
    :visible-items nil
@@ -20,7 +19,7 @@
  (fn [db [_]]
    (let [db (or db {})
          keybindings (kb-from-config db)]
-     (info "keybinding init ..")
+     (debug "keybinding init ..")
      (init-keybindings! keybindings)
      (assoc-in db
                [:keybindings]
@@ -90,7 +89,7 @@
 (defn highlight-action [db]
   (let [palette (get-in db [:keybindings :search])
         {:keys [highlight visible-items]} palette
-        _ (info "action highlight: " highlight " count:" (count visible-items))
+        _ (debugf "action highlight: %s count: %s" highlight (count visible-items))
         item (when
               (not-empty visible-items)
                (nth visible-items highlight))]

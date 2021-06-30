@@ -2,21 +2,23 @@
          :ns-clj [webly.user.app.keybindings] ; to resolve keybindings
          :start-service nil
 
-         ; routes
-         :routes {:app {} :api {}}
+         ; cljs
+         :ns-cljs []
 
-         ; webly client-server app:
+         ; webly client-server app
          :webly-bundle-entry  "webly.user.app.app.start ();" ; no need to change 
          :ring-handler "webly.user.app.app/ring-handler" ; no need to change 
-          ; cljs
-         :ns-cljs []
-         ; user app:
+         :loading-image-url "/r/webly/loading-code.jpg" ; no need to change  ;"/r/webly/loading-lemur.jpg"
+
+         ; user app
          :title "webly"
          :icon "/r/webly/favicon.ico"
-         :loading-image-url "/r/webly/loading-code.jpg" ; no need to change  ;"/r/webly/loading-lemur.jpg"
          :start-user-app [:webly/start-default]  ; after config loaded
-         :css-extern [;"tailwindcss/dist/tailwind.css"
-] ; css via bundle. prefer frontend!!
+         :css-extern [] ; css via bundle. prefer frontend!!
+
+         ; routes
+         :routes {:app {} :api {}}
+;
          }
 
  :prefix "/r/" ; resource route prefix ; most web-apps can leave this at default values

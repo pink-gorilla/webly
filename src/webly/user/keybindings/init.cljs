@@ -5,9 +5,7 @@
    [keybind.core :as key]))
 
 ; https://github.com/piranha/keybind
-
 (def current (atom 0))
-
 (defn id []
   (swap! current inc)
   (keyword (str @current)))
