@@ -19,30 +19,6 @@
    [webly.user.app.keybindings])
   (:gen-class))
 
-(defn resolve-name [str]
-  (let [sym (symbol str)]
-    (when (nil? sym)
-      (error "could not resolve route symbol: " str))
-    (var-get (resolve sym))))
-
-(defn resolve-routes [routes]
-  (try
-    (info "resolving route symbol: " routes)
-    (if-let [r (var-get (resolve routes))]
-      (do
-        (debug "routes: " r)
-        (swap! config-atom assoc-in [:webly :routes] r)
-        r)
-      (error "routes symbol [" routes "] could not get resolved!"))
-    (catch Exception e
-      (error "Exception resolving routes: services: " (pr-str e)))))
-
-(defn get-routes []
-  (let [routes (get-in-config [:webly :routes])]
-    (if (symbol? routes)
-      (resolve-routes routes)
-      routes)))
-
 (defn start-services [profile]
   (let [start-service (get-in-config [:webly :start-service])]
     (if start-service
@@ -63,7 +39,7 @@
    "
   []
   (debug "webly creating ring handler.. ")
-  (let [routes (get-routes)
+  (let [routes (get-in-config [:webly :routes])
         routes-backend (make-routes-backend (:app routes) (:api routes))
         routes-frontend (make-routes-frontend (:app routes))
         ;_ (info "all-api-routes:" routes-backend "all-app-routes:" routes-frontend)
@@ -74,21 +50,6 @@
     (write-status "routes" {:frontend routes-frontend :backend routes-backend})
     (print-oauth2-config)
     (def ring-handler h)))
-
-(defn require-log [n]
-  (info "requiring:" n)
-  (require [n]))
-
-(defn require-ns-clj []
-  (let [ns-clj (get-in-config [:webly :ns-clj])]
-    (if ns-clj
-      (try
-        (info "requiring ns-clj:" ns-clj)
-        (doall
-         (map require-log ns-clj))
-        (catch Exception e
-          (error "Exception requiring ns-clj: " (pr-str e))))
-      (warn "no ns-clj defined."))))
 
 (defn run-server-p [profile]
   (start-services profile)
@@ -106,7 +67,6 @@
     (warn "config is empty.. loading config now!")
     (load-config! config))
   (let [profile (setup-profile profile-name)]
-    (require-ns-clj)
     (if (:server profile)
       (run-server-p profile)
       (info "not running web server"))

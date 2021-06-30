@@ -1,5 +1,5 @@
 {:webly {; clj
-         :ns-clj []
+         :ns-clj [webly.user.app.keybindings] ; to resolve keybindings
          :start-service nil
 
          ; routes
@@ -51,7 +51,6 @@
                    [#{"webly.*"} :info]
                    [#{"*"} :info]]
 
- :keybindings "webly.user.app.keybindings/default"
-
+ :keybindings webly.user.app.keybindings/default
 
  :settings {:use-localstorage  false}}
