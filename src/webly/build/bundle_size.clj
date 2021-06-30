@@ -8,7 +8,7 @@
   (shadow.cljs.build-report/generate
    :webly
    {:print-table true
-    :report-file "target/webly/public/bundlesizereport.html"}))
+    :report-file ".webly/bundlesizereport.html"}))
 
 
 

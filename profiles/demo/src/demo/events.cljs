@@ -11,7 +11,7 @@
    ; simulate a slow bundle load time, so we can see the ui
    (.setTimeout js/window (fn []
                             (info "webly demo started.")
-                            (dispatch [:webly/status :running])) 5000)
+                            (dispatch [:webly/status :running])) 50)
 
    db))
 

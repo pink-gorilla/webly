@@ -68,11 +68,11 @@
 
 (defn stop-server []
   (warn "stop-server ..")
-  (Thread/sleep 300))
+  (Thread/sleep 100))
 
 (defn stop-server-repl [_]
   (warn "stop-server-repl ..")
-  (Thread/sleep 300)
+  (Thread/sleep 100)
   (System/exit 0))
 
 (defn run-server [ring-handler profile]

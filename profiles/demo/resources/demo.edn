@@ -32,13 +32,13 @@
          :title "Webly Demo"
          :start-user-app [:demo/start]}
 
- :google-analytics {:enabled true} ; set to false to disable google-analytics tracking.
+ :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
  :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
-                   [#{"webly.ws.*"} :debug]
-                   [#{"webly.user.*"} :debug]
-                   [#{"webly.*"} :debug]
-                   [#{"*"} :debug]]
+                   [#{"webly.ws.*"} :info]
+                   [#{"webly.user.*"} :info]
+                   [#{"webly.*"} :info]
+                   [#{"*"} :info]]
 
  :settings {:use-localstorage  true  ; allow user to change settings via localstorage
             :bongo 777}

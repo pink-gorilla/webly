@@ -47,6 +47,16 @@
                           :api true  ; 
                           }}
 
+   :watch2       {:prefs   {:tenx false}
+                  :bundle {:shadow-verbose true
+                           :cljs-build :webly
+                           :shadow-mode :watch
+                           :size-report false}
+                  :server {:type :jetty
+                           :wrap-handler-reload false
+                           :api true  ; 
+                           }}
+
    :jetty       {:prefs   {:tenx true}
                  :server {:type :jetty
                           :wrap-handler-reload false}}

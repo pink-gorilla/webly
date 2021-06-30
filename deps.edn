@@ -19,7 +19,7 @@
         ring/ring-core {:mvn/version "1.9.3"}
         ring/ring-anti-forgery {:mvn/version "1.3.0"}
         ring-cors/ring-cors {:mvn/version "0.1.13"}
-        ring/ring-defaults {:mvn/version "0.3.2"
+        ring/ring-defaults {:mvn/version "0.3.3"
                             :exclusions [javax.servlet/servlet-api]}
         ;; {ring.middleware.logger "0.5.0"}
         metosin/muuntaja {:mvn/version "0.6.8"} ; 30x faster than ring-middleware-format
@@ -27,7 +27,7 @@
         bk/ring-gzip {:mvn/version "0.3.0"} ; from oz
         luminus/ring-ttl-session {:mvn/version "0.3.3"}
         ring-oauth2/ring-oauth2 {:mvn/version "0.1.5"}
-        prone/prone {:mvn/version "2020-01-17"} ; exception middleware
+        prone/prone {:mvn/version "2021-04-23"} ; exception middleware
         ring/ring-devel {:mvn/version "1.9.3"} ; reload middleware
         ; routing
         bidi/bidi {:mvn/version "2.1.6"}
@@ -37,12 +37,12 @@
         hiccup/hiccup {:mvn/version "1.0.5"}
         ; frontend
         reagent/reagent {:mvn/version "1.1.0" ;:exclusions [org.clojure/tools.reader]
-                         } ; https://github.com/reagent-project/reagent
+} ; https://github.com/reagent-project/reagent
         re-frame/re-frame {:mvn/version "1.2.0"}
         cljs-ajax/cljs-ajax {:mvn/version "0.8.3"} ; needed for re-frame/http-fx
         day8.re-frame/http-fx {:mvn/version "0.2.3"  ; reframe based http requests
                                ;:exclusions [re-frame/re-frame]
-                               } ; a more modern reframe comes from webly
+} ; a more modern reframe comes from webly
         keybind/keybind {:mvn/version "2.2.0"}
         day8.re-frame/re-frame-10x {:mvn/version  "1.1.8"} ;; https://github.com/day8/re-frame-10x
         day8.re-frame/tracing {:mvn/version  "0.6.2"} ; https://github.com/day8/re-frame-debux
@@ -53,7 +53,7 @@
         ; self hosted clojurescript
         thheller/shadow-cljs {:mvn/version "2.14.5"
                               ;:exclusions [org.clojure/tools.reader] ; outdated
-                                           }
+                              }
         ;{thheller/shadow-cljsjs "0.0.21"}  ; already referred to from shadow-cljs
         org.clojure/clojurescript {:mvn/version "1.10.866"}
 
@@ -74,19 +74,7 @@
         fipp/fipp {:mvn/version "0.6.23"} ; edn pretty printing  }
         }
  :aliases
- {:test {:extra-paths ["test"
-                       "profiles/demo/resources"
-                       "profiles/test/resources"]
-         :extra-deps {io.github.cognitect-labs/test-runner
-                      {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                       :sha "62ef1de18e076903374306060ac0e8a752e57c86"}
-                      ring/ring-mock {:mvn/version "0.4.0"}
-                      org.pinkgorilla/ui-repl {:mvn/version "0.0.11"} ; http cors test
-                      }
-         :main-opts ["-m" "cognitect.test-runner"]
-         :exec-fn cognitect.test-runner.api/test}
-
-  :garamond
+ {:garamond
   {:main-opts ["-m" "garamond.main"]
    :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
 
@@ -119,7 +107,7 @@
              :main-opts ["-m" "antq.core"]}
 
   :check {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
-                                        :sha "0ca84df1357d71429243b99908303f45a934654c"}}
+                                        :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
           :main-opts ["-m" "clj-check.check"]}
 
   ; demo
@@ -127,18 +115,31 @@
   ; so the demo serves two puroses
   ; 1. ilustrate links in web-app
   ; 2. run unit tests 
+
+  :test {:extra-paths ["test"
+                       "profiles/demo/resources"
+                       "profiles/test/resources"]
+         :extra-deps {io.github.cognitect-labs/test-runner
+                      {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                       :sha "62ef1de18e076903374306060ac0e8a752e57c86"}
+                      ring/ring-mock {:mvn/version "0.4.0"}
+                      org.pinkgorilla/ui-repl {:mvn/version "0.0.13"} ; http cors test
+                      }
+         :main-opts ["-m" "cognitect.test-runner"]
+         :exec-fn cognitect.test-runner.api/test}
+
   :webly {:extra-paths ["profiles/demo/src"
                         "profiles/demo/resources"]
-          :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.11"}} ; http cors test
+          :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.13"}} ; http cors test
           :exec-fn webly.user.app.app/webly-run
-          :exec-args {:profile "watch"
+          :exec-args {:profile "watch2"  ;watch2 - 10x disabled
                       :config "demo.edn"}}
 
   :ci {:extra-paths ["test"
                      "profiles/demo/src"
                      "profiles/demo/resources"
                      "profiles/test/resources"]
-       :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.11"}} ; http cors test
+       :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.13"}} ; http cors test
        :exec-fn webly.user.app.app/webly-run
        :exec-args {:profile "ci"
                    :config "demo.edn"}}
