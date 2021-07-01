@@ -124,14 +124,14 @@
                       {:git/url "https://github.com/cognitect-labs/test-runner.git"
                        :sha "62ef1de18e076903374306060ac0e8a752e57c86"}
                       ring/ring-mock {:mvn/version "0.4.0"}
-                      org.pinkgorilla/ui-repl {:mvn/version "0.0.13"} ; http cors test
+                      org.pinkgorilla/ui-repl {:mvn/version "0.0.17"} ; http cors test
                       }
          :main-opts ["-m" "cognitect.test-runner"]
          :exec-fn cognitect.test-runner.api/test}
 
   :webly {:extra-paths ["profiles/demo/src"
                         "profiles/demo/resources"]
-          :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.13"}} ; http cors test
+          :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.17"}} ; http cors test
           :exec-fn webly.user.app.app/webly-run
           :exec-args {:profile "watch2"  ;watch2 - 10x disabled
                       :config "demo.edn"}}
@@ -140,7 +140,7 @@
                      "profiles/demo/src"
                      "profiles/demo/resources"
                      "profiles/test/resources"]
-       :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.13"}} ; http cors test
+       :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.17"}} ; http cors test
        :exec-fn webly.user.app.app/webly-run
        :exec-args {:profile "ci"
                    :config "demo.edn"}}

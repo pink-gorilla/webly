@@ -1,7 +1,7 @@
 (ns webly.user.config.events
   "Events related configuration loading"
   (:require
-   [taoensso.timbre :refer-macros [info infof error]]
+   [taoensso.timbre :refer-macros [debug info infof error]]
    [clojure.string :as str]
    [ajax.core :as ajax]
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
@@ -29,8 +29,9 @@
  (fn [cofx [_ after-config-load config]]
    (let [fx {:db          (assoc-in (:db cofx) [:config] config)
              :dispatch [after-config-load]}]
-     (info "config load-success: " config)
+     (info "config load-success!")
      (timbre-config! config)
+     (debug "config: " config)
      (if after-config-load
        fx
        (dissoc fx :dispatch)))))

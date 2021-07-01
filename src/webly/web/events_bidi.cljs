@@ -1,6 +1,6 @@
 (ns webly.web.events-bidi
   (:require
-   [taoensso.timbre :refer-macros [info]]
+   [taoensso.timbre :refer-macros [debug info]]
    [re-frame.core :as rf]
    [pushy.core :as pushy]
    [webly.web.routes :refer [routes history goto! nav!]])) ;set-initial-query-params
@@ -10,7 +10,7 @@
  (fn [db [_ routes-frontend routes-backend]]
    (info "bidi init ..")
    (reset! routes routes-frontend)
-   (info "bidi routes-frontend are: " routes-frontend)
+   (debug "bidi routes-frontend are: " routes-frontend)
    (let [db (or db {})]
      (info "starting pushy")
      (pushy/start! history) ; link url => state
