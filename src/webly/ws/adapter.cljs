@@ -1,6 +1,6 @@
 (ns webly.ws.adapter
   (:require
-   [taoensso.timbre :as timbre :refer-macros [tracef debug debugf infof warnf errorf trace]]
+   [taoensso.timbre :as timbre :refer-macros [tracef debug debugf infof warn warnf errorf trace]]
    [taoensso.sente :as sente :refer [cb-success?]]
    [taoensso.sente.packers.transit :as sente-transit] ;; Optional, for Transit encoding
    [webly.ws.msg-handler :refer [event-msg-handler]]
@@ -37,8 +37,8 @@
 
 (defn sente-csrf-warning []
   (if ?csrf-token
-    (println "CSRF token detected in HTML, great!")
-    (println "CSRF token NOT detected in HTML, default Sente config will reject requests")))
+    (debug "CSRF token detected in HTML, great!")
+    (warn "CSRF token NOT detected in HTML, default Sente config will reject requests")))
 
 (defn start-router! [conn]
   (let [{:keys [ch-chsk]} conn]

@@ -40,7 +40,8 @@
  (fn [db [_ new-state-map old-state-map]]
    (debug "ws/state " new-state-map)
    (when (:first-open? new-state-map)
-     (info "ws open (first-time): " new-state-map))
+     (info "ws open (first-time): " new-state-map)
+     (rf/dispatch [:ws/open-first]))
    (assoc db :ws new-state-map)))
 
 (rf/reg-sub
