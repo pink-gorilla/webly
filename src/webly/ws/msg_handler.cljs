@@ -29,7 +29,8 @@
   (if (= ?data [:chsk/ws-ping])
     (debug "ws-ping rcvd.")
     (if (vector? ?data)
-      (do (info "dispatching rcvd ws msg to reframe:" ?data)
+      (do (info "dispatching rcvd ws msg to reframe:" (first ?data))
+          (debug "dispatching rcvd ws msg to reframe:" ?data)
           (rf/dispatch ?data))
       (error "ws rcvd. cannot dispatch. data no vector: " ?data))))
 
