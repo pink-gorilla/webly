@@ -10,10 +10,9 @@
                ;"key" key -- :watcher
                      ;"atom" atom -- a
                (write-status "config" new-state)
-               (info "config changed: ")
+               (debug "config changed: ")
                    ;  "old-state" old-state
                    ;  "new-state" new-state
-
-               (let [d (ddiff/diff old-state new-state)]
-                 ;(info d)
+               ; too verbose for many modules
+               #_(let [d (ddiff/diff old-state new-state)]
                  (ddiff/pretty-print d)))))
