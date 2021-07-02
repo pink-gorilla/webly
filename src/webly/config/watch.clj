@@ -15,4 +15,4 @@
                    ;  "new-state" new-state
                ; too verbose for many modules
                #_(let [d (ddiff/diff old-state new-state)]
-                 (ddiff/pretty-print d)))))
+                   (ddiff/pretty-print d)))))
