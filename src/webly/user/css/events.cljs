@@ -7,7 +7,7 @@
 (reg-event-db
  :css/init
  (fn [db [_]]
-   (let [theme (get-in db [:config :webly :themes])
+   (let [theme (get-in db [:config :webly :theme])
          {:keys [available current]
           :or {available {}
                current {}}}
