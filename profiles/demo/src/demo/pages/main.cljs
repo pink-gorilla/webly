@@ -9,8 +9,7 @@
    [webly.user.oauth2.view :refer [tokens-view user-button]]
    [webly.user.settings.local-storage :refer [ls-get ls-set!]]
    [webly.user.emoji :refer [emoji]]
-   [demo.helper.ui :refer [link-dispatch link-href link-fn block]]
-   ))
+   [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 (defn show-dialog-demo []
   (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
@@ -19,8 +18,7 @@
 
 
 (defn demo-routing []
-  [block
-   [:p.text-4xl "bidi routes"]
+  [block2 "bidi routes"
    [:p [link-dispatch [:bidi/goto "/help"] "help! (as an url)"]]
    [:p [link-dispatch [:bidi/goto "https://google.com"] "google"]]
    [:p [link-dispatch [:bidi/goto :demo/help] "help! (map with optional args))"]]
@@ -36,8 +34,7 @@
    [:p [link-href "/api/time" "demo api time"]]])
 
 (defn demo-oauth []
-  [block
-   [:p.text-4xl "oauth2"]
+  [block2 "oauth2"
    [user-button :github]
    [user-button :google]
    [:p [link-dispatch [:oauth2/login :github] "github login via popup"]]
@@ -50,18 +47,15 @@
 (def compile-error
   [:span.bg-green-600.m-3
    [:p.text-red-900 "compile error:" [:b "symbol banana not known"]]
-   [:p "line: 12 col: 28"]
-   ]
-  )
+   [:p "line: 12 col: 28"]])
 
 (defn demo-dialog []
-  [block
-   [:p.text-4xl "dialog"]
+  [block2 "dialog"
    [:ol
     [:li [link-fn #(add-notification "welcome to wonderland") "show notification"]]
     [:li [link-fn #(add-notification :error "something bad happened") "show notification - error"]]
     [:li [link-fn #(add-notification :error compile-error 0) "show compile error"]]
- 
+
     [:li [link-fn show-dialog-demo "show dialog"]]]])
 
 
@@ -81,13 +75,15 @@
 (defn demo-settings []
   (let [s (subscribe [:settings])]
     (fn []
-      [block
-       [:p.text-4xl "settings"]
+      [block2 "settings"
        [:p (pr-str @s)]
        ;[link-fn #(ls-set! :webly {:willy 789}) "reset localstorage to :willy 789"]
        [link-fn #(dispatch [:settings/set :bongo 123]) " set bongo to 123"]
        [link-fn #(dispatch [:settings/set :bongo 456]) " set bongo to 456"]
-       [link-fn module-fun "call module fun"]])))
+       [link-fn module-fun "call module fun"]
+       [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]
+
+       ])))
 
 
 (defn print-status [x]
@@ -99,8 +95,7 @@
         tdt (r/atom nil)
         set-time-date (fn [[t v]] (reset! tdt v))]
     (fn []
-      [block
-       [:p.text-4xl "websocket"]
+      [block2 "websocket"
        [:p (str "connected:" (if @c @c "not connected"))]
        [:p (str "time: " (if @t @t " no time received :-("))]
        [:p "time as date: " (when @tdt (str @tdt))]
@@ -111,8 +106,7 @@
        [link-fn #(dispatch [:ws/send [:time/now-date-local []] set-time-date 5000]) " request time (as date local)"]])))
 
 (defn demo-kb []
-  [block
-   [:p.text-4xl "keybindings"]
+  [block2 "keybindings"
    [:p "press [alt-g k] to see keybindings"]
    [:p "press [alt-g t] to toggle 10x"]
    [:p "press [alt-g 1] to goto main"]
@@ -122,7 +116,7 @@
    [:p "press [alt-g 5] to goto party (bali)"]])
 
 
-(defn demo-emoji []
+(defn demo-css []
   (let [show (r/atom false)
         ; this triggers loading of the emojii css
         show! (fn []
@@ -130,25 +124,25 @@
                 (dispatch [:css/set-theme-component :emoji true])
                 (reset! show true))]
     (fn []
-      [block
-       [:p.text-4xl "css loader"]
-       [link-fn show! "show emoji"]
-       (when @show
-         [emoji "fiem-surprised"])])))
+      [block2 "css loader"
+       [:div.flex.flex-col
+        [link-dispatch [:css/set-theme-component :tailwind :light] "tailwind light"]
+        [link-dispatch [:css/set-theme-component :tailwind :dark] "tailwind dark"]
+        [link-fn show! "show emoji"]
+        [link-dispatch [:css/add-components
+                        {:bad {true  ["non-existing.css"]}}
+                        {:bad :true}]
+         "add non existing css"]
+        (if @show
+          [emoji "fiem-surprised"]
+          [:span "emoji not loaded"])]])))
 
 
 
 (defn main []
   [:div.dark
-   [:div {:class "dark:bg-gray-800 bg-yellow-300 text-gray-900 dark:text-white"}
-    [:h1 "webly demo"]
-
-    [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]
-
-    [link-dispatch [:css/set-theme-component :tailwind :light] "tailwind light"]
-    [link-dispatch [:css/set-theme-component :tailwind :dark] "tailwind dark"]
-
-    [demo-emoji]
+   [:div {:class "dark:bg-gray-800 bg-yellow-300 text-gray-900 dark:text-white grid grid-cols-4"}
+    [demo-css]
     [demo-routing]
     [demo-dialog]
     [demo-oauth]

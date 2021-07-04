@@ -6,11 +6,11 @@
    [bidi.bidi :as bidi]
    [bidi.ring]))
 
-(defn html-response [html]
-  (response/content-type
-   {:status 200
-    :body html}
-   "text/html"))
+#_(defn html-response [html]
+    (response/content-type
+     {:status 200
+      :body html}
+     "text/html"))
 
 (defonce handler-registry
   (atom {}))

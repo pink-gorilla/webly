@@ -25,7 +25,7 @@
           #_(script-js id))
       (do
         (warn "no google analytics config!")
-        [:div {:class "no-google-analytics-config"}]))))
+        [:div {:class "no-google-analytics-config-tag"}]))))
 
 (defn script-tag-config [google-analytics-config]
   (let [{:keys [enabled id]} google-analytics-config]
@@ -36,7 +36,7 @@
          gtag('js', new Date());
          gtag('config', '" id "', {cookie_flags: 'SameSite=None;Secure' }  );") ; https://stackoverflow.com/questions/62569419/how-to-set-secure-attribute-of-the-cookies-used-by-google-analytics-global-sit
        ]
-      [:div {:class "no-google-analytics-config"}])))
+      [:div {:class "no-google-analytics-config-config"}])))
 
 #?(:cljs
    ; gtag("event", "sign_up", {"method": "email" });

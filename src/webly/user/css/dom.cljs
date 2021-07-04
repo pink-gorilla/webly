@@ -1,32 +1,45 @@
-(ns webly.user.css.dom)
+(ns webly.user.css.dom
+  (:require
+   [taoensso.timbre :refer-macros [debugf infof warn warnf errorf]]))
+(defn ^:export on-link-load [& x]
+  (debugf "css loaded: %s" x))
 
-; var link = document.createElement ('link');
-;link.rel  = 'stylesheet';
-;link.href = cssURL;
-;document.head.appendChild (link);
+(defn ^:export on-link-error [& x]
+  (errorf "css load error: %s" x))
 
-;var head  = document.getElementsByTagName('head')[0];
-;    var link  = document.createElement('link');
-;    link.id   = cssId;
-;    link.rel  = 'stylesheet';
-;    link.type = 'text/css';
-;    link.href = 'http://website.com/css/stylesheet.css';
-;    link.media = 'all';
-;    head.appendChild(link);
-
-; curently not used
-; reagent view works fine.
-
-(defn add-css [href]
-  (let [_ (println "adding css: " href)
-        head (.-head js/document)
+(defn add-css-link [href]
+  (debugf "adding css: %s" href)
+  (let [head (.-head js/document)
         href (clj->js href)
         link (.createElement js/document "link")]
     (.setAttribute link "href" href)
     (.setAttribute link "rel" "stylesheet")
     (.setAttribute link "type" "text/css")
-    (println "link: " href)
+    (.setAttribute link "class" "webly")
+    (.setAttribute link "onload" (str "webly.user.css.dom.on_link_load ('" href "')"))
+    (.setAttribute link "onerror"  (str "webly.user.css.dom.on_link_error ('" href "')"))
+    ;(println "link: " href)
     (.appendChild head link)))
 
+(defn existing-css []
+  (let [links (.querySelectorAll js/document "link.webly")
+        get-link (fn [link] (.getAttribute link "href"))]
+    (map get-link links)))
 
+(defn remove-css-link [href]
+  (when-let [elem (.querySelector js/document (str "link.webly[href='" href "']"))]
+    (let [parent (.-parentElement elem)]
+      ;(error "link: " elem "parent: " parent)
+      (debugf "removing css: %s" href)
+      (.removeChild parent elem))))
+
+(defn update-css [current]
+  (let [current-set (into #{} current)
+        existing (existing-css)
+        existing-set (into #{} existing)
+        css-add (filter #(not (contains? existing-set %)) current)
+        css-remove (filter #(not (contains? current-set %)) existing)]
+    (infof "css current %s add: %s remove: %s " current css-add css-remove)
+    (doall (map add-css-link css-add))
+    (doall (map remove-css-link css-remove))))
 

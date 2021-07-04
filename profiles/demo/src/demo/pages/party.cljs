@@ -1,7 +1,10 @@
 (ns demo.pages.party
   (:require
+   [reagent.core :as r]
    [re-frame.core :as rf]
-   [webly.web.handler :refer [reagent-page]]))
+   [webly.web.handler :refer [reagent-page]]
+   [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]
+   ))
 
 
 ; themeable css for party
@@ -15,25 +18,14 @@
 (def config
   {:party :red})
 
-(rf/dispatch [:css/add-components components config])
 
 
-; ui helper   
-
-(defn link-fn [fun text]
-  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
-   {:on-click fun} text])
-
-(defn link-dispatch [rf-evt text]
-  (link-fn #(rf/dispatch rf-evt) text))
-
-(defn link-href [href text]
-  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
-   {:href href} text])
-
-(defn party [{:keys [route-params query-params handler]}]
-  (let [{:keys [location]} route-params
-        {:keys [expected-guests]} query-params]
+(defn party [location expected-guests]
+   (let [first (r/atom true)]
+     (fn [location expected-guests]
+       (when @first 
+          (rf/dispatch [:css/add-components components config])
+          (reset! first false))
     [:div.party
      [link-dispatch [:bidi/goto :demo/main] "main"]
      [:p "This is a test for bidi route/query parameters."]
@@ -49,7 +41,9 @@
        [:p "We don't know how many guests to expect!"])
 
      [:a {:href "/party/kabul"}
-      [:p.bg-red-400.m-3 "best pary link ever!"]]]))
+      [:p.bg-red-400.m-3 "best pary link ever!"]]])))
 
-(defmethod reagent-page :demo/party [args]
-  [party args])
+(defmethod reagent-page :demo/party [{:keys [handler route-params query-params ]}]
+    (let [{:keys [location]} route-params
+        {:keys [expected-guests]} query-params]
+  [party location expected-guests]))

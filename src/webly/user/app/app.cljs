@@ -28,8 +28,7 @@
    [webly.user.tenx.events]
    [webly.user.settings.subscriptions]
    [webly.user.settings.events]
-   [webly.user.app.events]
-   [webly.user.app.css :as webly-css]))
+   [webly.user.app.events]))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]
@@ -88,7 +87,6 @@
      (dispatch [:ga/init])
      (dispatch [:keybindings/init])
      (dispatch [:css/init])
-     (dispatch [:css/add-components webly-css/components webly-css/config])
      (dispatch [:settings/init])
      (dispatch [:ws/init])
      (if start-user-app

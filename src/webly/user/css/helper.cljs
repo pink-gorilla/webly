@@ -3,7 +3,10 @@
    [goog.string :as gstring]
    [goog.string.format]))
 
-(defn add-themes [m theme-base themes]
+(defn add-themes
+  "this helper fuction makes it easier to add multiple theme css files whose
+   name depends on the theme name. Used in babashka in ui-code and others"
+  [m theme-base themes]
   (let [theme-link (fn [theme]
                      (gstring/format theme-base theme))
         add-theme (fn [acc theme]

@@ -15,6 +15,8 @@
   [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
    {:href href} text])
 
-(defn block [& children]
-  (into [:div.bg-blue-400.m-5.inline-block {:class "w-1/4"}]
-        children))
+(defn block2 [name & children]
+  (->  [:div.bg-blue-400.m-5.inline-block
+             [:p.text-4xl.mb-5 name]
+             ]
+   (into children)))

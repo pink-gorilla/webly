@@ -1,7 +1,7 @@
 (ns webly.user.css.events
   (:require
    [taoensso.timbre :refer-macros [info error]]
-   [clojure.string :as str]
+   ;[clojure.string :as str]
    [re-frame.core :as rf]))
 
 (rf/reg-event-db

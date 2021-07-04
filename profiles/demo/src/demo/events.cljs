@@ -15,11 +15,10 @@
 
    db))
 
-
 (reg-event-db
  :webly/before-load
  (fn [db [_]]
-   (warn "webly/before-load: customize your app for lein webly watch..")
+   (warn "add reframe event :webly/before-load for custom reloading during development")
  ))
 
 

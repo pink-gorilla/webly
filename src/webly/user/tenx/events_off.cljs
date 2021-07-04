@@ -17,5 +17,5 @@
 (reg-event-db
  :reframe10x-toggle
  (fn [db _]
-   (add-notification :danger "tenx not included in bundle!")
+   (add-notification :error "tenx not included in bundle!")
    db))
