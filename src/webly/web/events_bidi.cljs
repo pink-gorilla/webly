@@ -17,6 +17,13 @@
      (assoc-in db [:bidi] {:client routes-frontend :server routes-backend}))))
 
 (rf/reg-event-fx
+ :bidi/goto-raw
+ (fn [_ [_ match]]
+   (info "bidi/goto-raw: " match)
+   (goto! match)
+   nil))
+
+(rf/reg-event-fx
  :bidi/goto
  (fn [_ [_ handler_or_url & params]]
    (if (string? handler_or_url)
