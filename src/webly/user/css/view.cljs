@@ -15,11 +15,11 @@
 
 (defn load-css []
   ;(info "existing links: " (existing-css))
-  (let [css-links (rf/subscribe [:css/app-theme-links])]
+  (let [configured? (rf/subscribe [:webly/status-of :configured?])
+        css-links (rf/subscribe [:css/app-theme-links])]
     (fn []
-      (when (not (empty? @css-links))
+      (when (and @configured?
+                 (not (empty? @css-links)))
         ;(info "css has changed to: " @css-links)
-        (update-css @css-links)
-        [:div.webly-css-loader]
-        ;[load-css-links @css-links]
-        ))))
+        (update-css @css-links))
+      [:div.webly-css-loader])))

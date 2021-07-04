@@ -2,7 +2,7 @@
   (:require
    [clojure.string :as str]
    [hiccup.page :as page]
-   [taoensso.timbre :refer [info error]]
+   [taoensso.timbre :refer [debug info error]]
    [webly.config :refer [config-atom]]
    [webly.user.analytics.google-tag :refer [script-tag-src script-tag-config]]
    [webly.user.tenx.view :refer [tenx-script]]
@@ -20,7 +20,7 @@
   (let [theme (get-in webly-config [:webly :theme])
         {:keys [available current]} theme
         css-links (css-app available current)]
-    (info "css links: " css-links)
+    (debug "css links: " css-links)
     (doall (map css-link css-links))))
 
 ;; loading spinner

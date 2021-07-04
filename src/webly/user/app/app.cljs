@@ -89,6 +89,9 @@
      (dispatch [:css/init])
      (dispatch [:settings/init])
      (dispatch [:ws/init])
+
+     (dispatch [:webly/set-status :configured? true])
+
      (if start-user-app
        (do (info "starting user app: " start-user-app)
            (dispatch start-user-app))
@@ -101,7 +104,6 @@
   (info "webly-run! ...")
   (dispatch [:reframe10x-init])
   (dispatch [:webly/status :route-init])
-    ;(setup-bidi user-routes-api user-routes-app)
   (dispatch [:webly/status :loading-config])
   (dispatch [:config/load :webly/app-after-config-load])
   (mount-app))

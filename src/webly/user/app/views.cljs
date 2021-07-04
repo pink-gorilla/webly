@@ -36,7 +36,6 @@
   (let [show? (subscribe [:webly/status-show-app])]
     (fn []
       (if @show?
-        ;(reagent-page @current)
         [page-viewer current]
         [status-page]))))
 
