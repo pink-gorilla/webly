@@ -8,26 +8,15 @@
    [webly.user.notifications.core :refer [add-notification]]
    [webly.user.oauth2.view :refer [tokens-view user-button]]
    [webly.user.settings.local-storage :refer [ls-get ls-set!]]
-   [webly.user.emoji :refer [emoji]]))
+   [webly.user.emoji :refer [emoji]]
+   [demo.helper.ui :refer [link-dispatch link-href link-fn block]]
+   ))
 
 (defn show-dialog-demo []
   (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
              :small]))
 
-(defn link-fn [fun text]
-  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
-   {:on-click fun} text])
 
-(defn link-dispatch [rf-evt text]
-  (link-fn #(dispatch rf-evt) text))
-
-(defn link-href [href text]
-  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
-   {:href href} text])
-
-(defn block [& children]
-  (into [:div.bg-blue-400.m-5.inline-block {:class "w-1/4"}]
-        children))
 
 (defn demo-routing []
   [block
@@ -58,12 +47,21 @@
 
    [tokens-view]])
 
+(def compile-error
+  [:span.bg-green-600.m-3
+   [:p.text-red-900 "compile error:" [:b "symbol banana not known"]]
+   [:p "line: 12 col: 28"]
+   ]
+  )
+
 (defn demo-dialog []
   [block
    [:p.text-4xl "dialog"]
    [:ol
     [:li [link-fn #(add-notification "welcome to wonderland") "show notification"]]
-    [:li [link-fn #(add-notification :danger "something bad happened") "show notification - error"]]
+    [:li [link-fn #(add-notification :error "something bad happened") "show notification - error"]]
+    [:li [link-fn #(add-notification :error compile-error 0) "show compile error"]]
+ 
     [:li [link-fn show-dialog-demo "show dialog"]]]])
 
 
