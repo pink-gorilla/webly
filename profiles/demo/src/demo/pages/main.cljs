@@ -7,6 +7,7 @@
    [webly.web.handler :refer [reagent-page]]
    [webly.user.notifications.core :refer [add-notification]]
    [webly.user.oauth2.view :refer [tokens-view user-button]]
+   [webly.user.app.views :refer [refresh-page]]
    [webly.user.settings.local-storage :refer [ls-get ls-set!]]
    [webly.user.emoji :refer [emoji]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
@@ -42,7 +43,10 @@
      "job2! (test of bidi tags)"]
 
     [link-href "/api/test" "demo api test"]
-    [link-href "/api/time" "demo api time"]]])
+    [link-href "/api/time" "demo api time"]
+    [link-fn refresh-page "refresh page"]
+    
+    ]])
 
 ;; OAUTH
 (defn demo-oauth []
