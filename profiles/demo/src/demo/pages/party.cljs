@@ -41,7 +41,7 @@
        [:p "We don't know how many guests to expect!"])
 
      [:a {:href "/party/kabul"}
-      [:p.bg-red-400.m-3 "best pary link ever!"]]])))
+      [:p.bg-red-400.m-3 "secret party"]]])))
 
 (defmethod reagent-page :demo/party [{:keys [handler route-params query-params ]}]
     (let [{:keys [location]} route-params

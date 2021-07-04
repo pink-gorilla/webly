@@ -114,6 +114,12 @@
               (assoc m k v))]
     (reduce add {} pairs)))
 
+(defn goto-route! [route]
+  (let [url (route->url route)]
+    (infof "bidi/goto route: %s url: %s" route url)
+    (reset-current! "goto-route" route)
+    (pushy/set-token! history url)))
+
 (defn goto! [handler & params]
   (let [params-map (params->map params) ; params is a map without {} example:  :a 1 :b 2  
         ; _ (error "params map: " params-map)
@@ -123,10 +129,8 @@
         route {:handler handler
                :route-params route-params
                :query-params query-params
-               :tag tag}
-        url (route->url route)]
-    (reset-current! "bidi/goto!" route)
-    (pushy/set-token! history url)))
+               :tag tag}]
+    (goto-route! route)))
 
 (defn nav! [url]
   (let [{:keys [handler] :as h} (path->route @routes url {})]

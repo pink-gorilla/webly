@@ -11,28 +11,40 @@
    [webly.user.emoji :refer [emoji]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
-(defn show-dialog-demo []
-  (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
-             :small]))
 
-
+;; BIDI ROUTING
 
 (defn demo-routing []
   [block2 "bidi routes"
-   [:p [link-dispatch [:bidi/goto "/help"] "help! (as an url)"]]
-   [:p [link-dispatch [:bidi/goto "https://google.com"] "google"]]
-   [:p [link-dispatch [:bidi/goto :demo/help] "help! (map with optional args))"]]
+   [:div.flex.flex-col
+    [link-dispatch [:bidi/goto "/help"]
+     "help! (as an url)"]
+    [link-dispatch [:bidi/goto "https://google.com"]
+     "google"]
+    [link-dispatch [:bidi/goto :demo/help]
+     "help! (map with optional args))"]
 
-   [:p [link-dispatch [:bidi/goto :demo/save-non-existing] "save-as (test for not implemented)"]]
-   [:p [link-dispatch [:bidi/goto :demo/party :location "Vienna"] "party in vienna (test for route-params)"]]
-   [:p [link-dispatch [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}] "party in Bali (test for query-params)"]]
+    [link-dispatch [:bidi/goto :demo/save-non-existing]
+     "save-as (test for not implemented)"]
+    [link-dispatch [:bidi/goto :demo/party :location "Vienna"]
+     "party in vienna (test for route-params)"]
+    [link-dispatch [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}]
+     "party in Bali (test for query-params)"]
+    [link-dispatch [:bidi/goto-route {:handler :demo/party 
+                                    :route-params {:location "Panama"}
+                                    :query-params {:expected-guests 44}
+                                    :tag nil}]
+     "party in Panama (test for goto-route)"]
 
-   [:p [link-dispatch [:bidi/goto "/job"] "job! (test of bidi tags)"]]
-   [:p [link-dispatch [:bidi/goto "/job2"] "job2! (test of bidi tags)"]]
+    [link-dispatch [:bidi/goto "/job"]
+     "job! (test of bidi tags)"]
+    [link-dispatch [:bidi/goto "/job2"]
+     "job2! (test of bidi tags)"]
 
-   [:p [link-href "/api/test" "demo api test"]]
-   [:p [link-href "/api/time" "demo api time"]]])
+    [link-href "/api/test" "demo api test"]
+    [link-href "/api/time" "demo api time"]]])
 
+;; OAUTH
 (defn demo-oauth []
   [block2 "oauth2"
    [user-button :github]
@@ -44,10 +56,15 @@
 
    [tokens-view]])
 
+;; DIALOG
 (def compile-error
   [:span.bg-green-600.m-3
    [:p.text-red-900 "compile error:" [:b "symbol banana not known"]]
    [:p "line: 12 col: 28"]])
+
+(defn show-dialog-demo []
+  (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
+             :small]))
 
 (defn demo-dialog []
   [block2 "dialog"
@@ -55,15 +72,13 @@
     [:li [link-fn #(add-notification "welcome to wonderland") "show notification"]]
     [:li [link-fn #(add-notification :error "something bad happened") "show notification - error"]]
     [:li [link-fn #(add-notification :error compile-error 0) "show compile error"]]
-
     [:li [link-fn show-dialog-demo "show dialog"]]]])
 
-
+;; LAZY LOAD
 (def x (lazy/loadable snippets.snip/add))
 
 (defn handle-load [fun]
   (info "result: " (fun 2 7)))
-
 
 (defn module-fun []
   (info "module fun..")
@@ -80,12 +95,11 @@
        ;[link-fn #(ls-set! :webly {:willy 789}) "reset localstorage to :willy 789"]
        [link-fn #(dispatch [:settings/set :bongo 123]) " set bongo to 123"]
        [link-fn #(dispatch [:settings/set :bongo 456]) " set bongo to 456"]
-       [link-fn module-fun "call module fun"]
-       [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]
-
-       ])))
+       [link-fn module-fun "layy load call module fun"]
+       [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]])))
 
 
+; WEBSOCKET
 (defn print-status [x]
   (warn "status: " x))
 
@@ -116,6 +130,7 @@
    [:p "press [alt-g 5] to goto party (bali)"]])
 
 
+; CSS
 (defn demo-css []
   (let [show (r/atom false)
         ; this triggers loading of the emojii css

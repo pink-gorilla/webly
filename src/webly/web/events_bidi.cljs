@@ -3,7 +3,7 @@
    [taoensso.timbre :refer-macros [debug info]]
    [re-frame.core :as rf]
    [pushy.core :as pushy]
-   [webly.web.routes :refer [routes history goto! nav!]])) ;set-initial-query-params
+   [webly.web.routes :refer [routes history goto! goto-route! nav!]])) ;set-initial-query-params
 
 (rf/reg-event-db
  :bidi/init
@@ -17,10 +17,10 @@
      (assoc-in db [:bidi] {:client routes-frontend :server routes-backend}))))
 
 (rf/reg-event-fx
- :bidi/goto-raw
+ :bidi/goto-route
  (fn [_ [_ match]]
-   (info "bidi/goto-raw: " match)
-   (goto! match)
+   (debug "bidi/goto-route: " match)
+   (goto-route! match)
    nil))
 
 (rf/reg-event-fx
@@ -29,9 +29,9 @@
    (if (string? handler_or_url)
      (nav! handler_or_url)
      (if (> (count params) 0)
-       (do (info "bidi/goto! (params): "  (concat [handler_or_url] params))
+       (do (debug "bidi/goto! (params): "  (concat [handler_or_url] params))
            (apply goto! (concat [handler_or_url] params)))
-       (do (info "bidi/goto! (no-params)" handler_or_url)
+       (do (debug "bidi/goto! (no-params)" handler_or_url)
            (goto! handler_or_url))))
    nil))
 
