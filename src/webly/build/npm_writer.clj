@@ -1,4 +1,4 @@
-(ns webly.build.package-json
+(ns webly.build.npm-writer
   (:require
    [clojure.java.io :as io]
    [taoensso.timbre :as timbre :refer [info]]

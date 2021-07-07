@@ -1,7 +1,6 @@
 (ns demo.pages.main
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
-   [shadow.lazy :as lazy]
    [reagent.core :as r]
    [re-frame.core :refer [dispatch subscribe]]
    [webly.web.handler :refer [reagent-page]]
@@ -10,6 +9,7 @@
    [webly.user.app.views :refer [refresh-page]]
    [webly.user.settings.local-storage :refer [ls-get ls-set!]]
    [webly.user.emoji :refer [emoji]]
+   [webly.build.lazy :refer-macros [wrap-lazy] :refer [available]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 
@@ -31,10 +31,10 @@
      "party in vienna (test for route-params)"]
     [link-dispatch [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}]
      "party in Bali (test for query-params)"]
-    [link-dispatch [:bidi/goto-route {:handler :demo/party 
-                                    :route-params {:location "Panama"}
-                                    :query-params {:expected-guests 44}
-                                    :tag nil}]
+    [link-dispatch [:bidi/goto-route {:handler :demo/party
+                                      :route-params {:location "Panama"}
+                                      :query-params {:expected-guests 44}
+                                      :tag nil}]
      "party in Panama (test for goto-route)"]
 
     [link-dispatch [:bidi/goto "/job"]
@@ -44,9 +44,7 @@
 
     [link-href "/api/test" "demo api test"]
     [link-href "/api/time" "demo api time"]
-    [link-fn refresh-page "refresh page"]
-    
-    ]])
+    [link-fn refresh-page "refresh page"]]])
 
 ;; OAUTH
 (defn demo-oauth []
@@ -78,28 +76,24 @@
     [:li [link-fn #(add-notification :error compile-error 0) "show compile error"]]
     [:li [link-fn show-dialog-demo "show dialog"]]]])
 
-;; LAZY LOAD
-(def x (lazy/loadable snippets.snip/add))
-
-(defn handle-load [fun]
-  (info "result: " (fun 2 7)))
-
-(defn module-fun []
-  (info "module fun..")
-  ; https://code.thheller.com/blog/shadow-cljs/2019/03/03/code-splitting-clojurescript.html
-  ; https://clojureverse.org/t/shadow-lazy-convenience-wrapper-for-shadow-loader-cljs-loader/3841
-  (lazy/load x handle-load))
-
+(defn lazy []
+  (let [ui-add (wrap-lazy snippets.snip/ui-add)]
+    [:div
+     [ui-add 7 7]]))
 
 (defn demo-settings []
-  (let [s (subscribe [:settings])]
+  (let [show-lazy (r/atom false)
+        s (subscribe [:settings])]
     (fn []
       [block2 "settings"
        [:p (pr-str @s)]
        ;[link-fn #(ls-set! :webly {:willy 789}) "reset localstorage to :willy 789"]
        [link-fn #(dispatch [:settings/set :bongo 123]) " set bongo to 123"]
        [link-fn #(dispatch [:settings/set :bongo 456]) " set bongo to 456"]
-       [link-fn module-fun "layy load call module fun"]
+       [link-fn #(reset! show-lazy true) "lazy load call module snippets"]
+       [:div "lazy renderer: " (pr-str (available))]
+       (when @show-lazy
+         [lazy])
        [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]])))
 
 

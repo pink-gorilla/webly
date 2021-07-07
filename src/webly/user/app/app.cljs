@@ -9,6 +9,7 @@
    ; side-effects
    [day8.re-frame.http-fx]
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
+   [webly.build.lazy]
    [webly.web.events-bidi]
    [webly.ws.events]
    [webly.ws.core]

@@ -29,6 +29,10 @@
                    demo.pages.job
                    demo.time
                    demo.events]
+         :modules {:snippets [snippets.snip]
+                   :hello [snippets.hello
+                           snippets.bye
+                           ]}
          :title "Webly Demo"
          :start-user-app [:demo/start]}
 

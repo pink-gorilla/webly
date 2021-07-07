@@ -22,5 +22,8 @@
    (merge (:handlers time/time-serialization-handlers)
           (:handlers bidi/bidi-serialization-handlers))})
 
+; todo: 
+; (def ^:private default-readers {'ig/ref ref, 'ig/refset refset})
+; (defn read-string "Read a config from a string of edn. Refs may be denotied by tagging keywords with #ig/ref." ([s] (read-string {:eof nil} s)) ([opts s] (let [readers (merge default-readers (:readers opts {}))] (edn/read-string (assoc opts :readers readers) s))))
 
 

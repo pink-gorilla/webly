@@ -1,9 +1,13 @@
 (ns webly.build.core
   (:require
    [taoensso.timbre  :refer [debug info warn]]
-   [webly.build.config :refer [shadow-config]]
-   [webly.build.build-config] ; shadow via generated config file
-   [webly.writer :refer [write-status]]))
+   [webly.build.shadow-config :refer [shadow-config]]
+   [webly.build.shadow :refer [shadow-build]] ; shadow via generated config file
+   [webly.writer :refer [write write-status]]))
+
+(defn write-shadow-config [config]
+  (let [filename "shadow-cljs.edn"]
+    (write filename config)))
 
 (defn build [profile]
   (let [bundle (get profile :bundle)
@@ -12,7 +16,8 @@
       (do (info "building bundle: " bundle)
           ;(debug "shadow-config: " shadow-config) ; can be seen in generated shadow-cljs.edn
           (write-status "shadow-cljs" shadow-config)
-          (webly.build.build-config/build profile shadow-config))
+          (write-shadow-config shadow-config)
+          (shadow-build profile shadow-config))
       (warn "profile has no bundle"))))
 
 ;(comment

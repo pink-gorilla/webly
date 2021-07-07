@@ -1,40 +1,11 @@
-(ns webly.build.config
+(ns webly.build.shadow-config
+  "generates shadow-cljs.edn based on profile and config"
   (:require
    [taoensso.timbre :as timbre :refer [debug info]]
-   [shadow.cljs.devtools.config :as config]
    [webly.config :refer [get-in-config]]
    [webly.prefs :refer [if-pref-fn prefs-atom]]))
 
-(defn get-shadow-server-config-edn []
-  (let [c (-> (config/load-cljs-edn)
-      ;; system config doesn't need build infos
-              (dissoc :builds))]
-    (info "edn server config: " c)
-    c))
-
-#_(defn get-build-config [build-id]
-    (let [config (config/get-build! build-id)
-          x (get-in config [:devtools :before-load])]
-      (info "config:" config)
-      (info x (type x))
-      config))
-
-#_(defn watch
-    "starts a dev worker process for a given :build-id
-  opts defaults to {:autobuild true}"
-    ([build-id]
-     (watch build-id {}))
-    ([build-id opts]
-     (if (worker-running? build-id)
-       :already-watching
-       (let [build-config
-             (if (map? build-id)
-               build-id
-               (get-config build-id))]
-
-         (watch* build-config opts)
-         :watching))))
-
+;; build-options
 (defn build-ns-aliases []
   (debug @prefs-atom)
   (if-pref-fn :tenx
@@ -43,15 +14,29 @@
                ;'day8.re-frame.tracing 'day8.re-frame.tracing-stubs
                }))
 
-(defn ns-cljs-webly [ns-cljs]
+;; modules
+(defn main-config [ns-cljs]
   (let [ns-cljs (or ns-cljs [])]
     (into []
           (concat '[webly.user.app.app] ns-cljs))))
 
+(defn sub-module-config [[name ns-mod]]
+  (let [ns-mod (or ns-mod {})]
+    {name {:entries ns-mod
+           :depends-on #{:main}}}))
+
+(defn module-config [ns-cljs modules]
+  (let [main {:main {:entries (main-config ns-cljs)}}
+        sub (map sub-module-config modules)
+        subs (apply merge sub)]
+    (merge main subs)))
+
+;; shadow config
 (defn shadow-config [profile]
   (let [advanced? (get-in profile [:bundle :advanced])
         shadow-verbose (get-in profile [:bundle :shadow-verbose])
-        {:keys [#_lein-cljs-profile ns-cljs ring-handler]} (get-in-config [:webly])
+        {:keys [ns-cljs ring-handler modules]
+         :or {modules {}}} (get-in-config [:webly])
         ring-handler (symbol ring-handler)
         dev-http-port (get-in-config [:shadow :dev-http :port])
         http-port (get-in-config [:shadow :http :port])
@@ -59,8 +44,7 @@
         nrepl-port (get-in-config [:shadow :nrepl :port])]
     {:cache-root ".shadow-cljs"
      :verbose (if shadow-verbose true false)
-     ;:lein true
-     :lein {} ; :profile lein-cljs-profile}
+     :lein false
      :dev-http {dev-http-port {;:root "public" ; shadow does not need to serve resources
                                :handler ring-handler}}
      :http {:port http-port  ; shadow dashboard
@@ -74,12 +58,7 @@
                       :module-loader true
                       :output-dir "target/webly/public"
                       :asset-path "/r"
-                      :modules {:main     {:entries (ns-cljs-webly ns-cljs)}
-                                :snippets {:entries ['snippets.snip]
-                                           :depends-on #{:main}}
-                                ;:docs {:entries ['webly.user.markdown.views]
-                                ;       :depends-on #{:main}}
-                                }
+                      :modules (module-config ns-cljs modules)
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")
                     ;           :after-load (symbol "webly.web.app/after-load")}
                       :build-options    {:ns-aliases (build-ns-aliases)}

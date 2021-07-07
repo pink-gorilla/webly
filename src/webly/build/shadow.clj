@@ -1,35 +1,41 @@
-(ns webly.build.build-config
+(ns webly.build.shadow
+  "call shadow-cljs functions"
   (:require
    [taoensso.timbre :as timbre :refer [info warn]]
-
+   [shadow.cljs.devtools.server.npm-deps :as npm-deps]
    [shadow.cljs.devtools.cli]
-   ;[shadow.cljs.devtools.cli-actual]
-   [shadow.cljs.devtools.api :as shadow
-    ;:refer [watch* worker-running?]
-    ]
-   [webly.build.package-json :refer [ensure-package-json ensure-karma]]
-   [webly.build.install-npm :refer [install-npm]]
-   [webly.writer :refer [write-shadow-config]]
-   [webly.build.bundle-size :refer [generate-bundlesize-report]]))
+   [shadow.cljs.devtools.api :as shadow]
+   [shadow.cljs.build-report]
+   [webly.build.npm-writer :refer [ensure-package-json ensure-karma]]))
 
-#_(defn watch-api
-    {:shadow/requires-server true}
-    []
-    (let [opts {:verbose true}]
-      (shadow-server/start!)
-      (shadow/watch :webly opts)))
+;https://github.com/thheller/shadow-cljs/blob/master/src/main/shadow/cljs/devtools/cli_actual.clj
+; (let [{:keys [action builds options summary errors] :as opts}
+;        (opts/parse args)
+;
+;        config
+;        (config/load-cljs-edn!)]
+
+(defn install-npm [config opts]
+  (info "installing npm deps.." config opts)
+  ;; always install since its a noop if everything is in package.json
+  ;; and a server restart is not required for them to be picked up
+  (npm-deps/main config opts))
+
+(defn generate-bundlesize-report []
+  (shadow.cljs.build-report/generate
+   :webly
+   {:print-table true
+    :report-file ".webly/bundlesizereport.html"}))
 
 (defn watch-cli [cljs-build]
   (let [id  (name cljs-build)]
     (info "watching " id)
-  ;(shadow.cljs.devtools.cli-actual/-main "watch" "webly")
     (shadow.cljs.devtools.cli/-main "watch" id)))
 
-(defn build [profile shadow-config]
-  (write-shadow-config shadow-config)
+(defn shadow-build [profile shadow-config]
+
   (let [{:keys [shadow-verbose cljs-build shadow-mode size-report npm-install]} (get profile :bundle)
         shadow-opts {:verbose shadow-verbose}]
-
     (ensure-package-json)
     (ensure-karma)
     (when npm-install
@@ -48,9 +54,3 @@
 
      ; 
     ))
-
-
-
-
-
-

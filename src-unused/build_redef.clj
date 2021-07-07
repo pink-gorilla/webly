@@ -5,13 +5,13 @@
     ;:refer [watch* worker-running?]
     ]
    [shadow.cljs.devtools.server :as shadow-server]
-   [webly.build.bundle-size]))
+   [webly.build.shadow :refer [generate-bundlesize-report]]))
 
 (defn generate-bundlesize-report [config]
   (with-redefs [shadow.cljs.devtools.api/get-build-config
                 (fn [_ #_build-id]
                   (get-in config [:builds :webly]))]
-    (webly.build.bundle-size/generate-bundlesize-report)))
+    (generate-bundlesize-report)))
 
 (defn load-cljs-edn [config]
   (-> config
