@@ -76,13 +76,20 @@
     [:li [link-fn #(add-notification :error compile-error 0) "show compile error"]]
     [:li [link-fn show-dialog-demo "show dialog"]]]])
 
-(defn lazy []
+(defn lazy1 []
   (let [ui-add (wrap-lazy snippets.snip/ui-add)]
     [:div
-     [ui-add 7 7]]))
+     [ui-add 7 7]
+     ]))
+
+(defn lazy2 []
+  (let [ui-add-more (wrap-lazy snippets.snip/ui-add-more)]
+    [:div
+     [ui-add-more 7 7]]))
 
 (defn demo-settings []
-  (let [show-lazy (r/atom false)
+  (let [show-lazy1 (r/atom false)
+        show-lazy2 (r/atom false)
         s (subscribe [:settings])]
     (fn []
       [block2 "settings"
@@ -90,10 +97,13 @@
        ;[link-fn #(ls-set! :webly {:willy 789}) "reset localstorage to :willy 789"]
        [link-fn #(dispatch [:settings/set :bongo 123]) " set bongo to 123"]
        [link-fn #(dispatch [:settings/set :bongo 456]) " set bongo to 456"]
-       [link-fn #(reset! show-lazy true) "lazy load call module snippets"]
+       [link-fn #(reset! show-lazy1 true) "lazy load1"]
+       [link-fn #(reset! show-lazy2 true) "lazy load2"]
        [:div "lazy renderer: " (pr-str (available))]
-       (when @show-lazy
-         [lazy])
+       (when @show-lazy1
+         [lazy1])
+       (when @show-lazy2
+         [lazy2])
        [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]])))
 
 
