@@ -26,10 +26,7 @@ jobs:
     - name: Install clojure tools
       uses: DeLaGuardo/setup-clojure@3.5
       with:
-        # Install just one or all simultaneously
         cli: 1.10.3.882 # Clojure CLI based on tools.deps
-        #lein: 2.9.1     # or use 'latest' to always provision latest version of leiningen
-        #boot: 2.8.3     # or use 'latest' to always provision latest version of boot
     - name: prep res
       run: |
          ./scripts/prep-res.sh
@@ -41,7 +38,6 @@ jobs:
     - name: test-cljs
       run: npm test
     - name: clj-fmt
-      if: ${{ matrix.os != 'windows-latest' }}
       run: clojure -M:cljfmt
       shell: bash
     #- name: show git tag

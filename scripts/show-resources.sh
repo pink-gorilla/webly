@@ -1,5 +1,3 @@
-# jar tf target/gorilla-ui-0.1.23-SNAPSHOT.jar
+#!/bin/sh
 
-# ~/.m2/repository/org/pinkgorilla/gorilla-ui/0.2.9/gorilla-ui-0.2.9.jar
-
-jar tf ~/.m2/repository/org/pinkgorilla/gorilla-ui/0.2.10/gorilla-ui-0.2.10.jar
+fastjar tf ~/.m2/repository/org/pinkgorilla/webly/0.3.36/webly-0.3.36.jar

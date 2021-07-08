@@ -4,7 +4,8 @@
 
          ; cljs
          :ns-cljs []
-
+         :modules {}
+         
          ; webly client-server app
          :webly-bundle-entry  "webly.user.app.app.start ();" ; no need to change 
          :ring-handler "webly.user.app.app/ring-handler" ; no need to change 
