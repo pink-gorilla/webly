@@ -14,7 +14,7 @@
   (keys @renderer))
 
 (defn add-available [s]
-  (error "loaded lazy renderer: " s)
+  (info "available lazy renderer: " s)
   (swap! renderer assoc s {:symbol s}))
 (defn add-loaded [s f]
   (error "loaded lazy renderer: " s)
