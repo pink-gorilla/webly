@@ -10,18 +10,24 @@
 
 (defonce renderer (r/atom {}))
 
+(defn log-loading [symbol-fn]
+  (error "lazy loading: " symbol-fn))
+
+(defonce on-load (r/atom log-loading))
+
 (defn available []
   (keys @renderer))
 
 (defn add-available [s]
   (info "available lazy renderer: " s)
   (swap! renderer assoc s {:symbol s}))
+
 (defn add-loaded [s f]
   (error "loaded lazy renderer: " s)
   (swap! renderer assoc-in [s :fun] f))
 
 (defn start-load [symbol-fn load-spec]
-  (error "lazy loading: " symbol-fn)
+  (@on-load)
   (lazy/load load-spec (partial add-loaded symbol-fn)))
 
 (defn run [f args]
