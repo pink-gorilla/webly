@@ -27,7 +27,7 @@
   (swap! renderer assoc-in [s :fun] f))
 
 (defn start-load [symbol-fn load-spec]
-  (@on-load)
+  (@on-load symbol-fn)
   (lazy/load load-spec (partial add-loaded symbol-fn)))
 
 (defn run [f args]
