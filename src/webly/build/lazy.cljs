@@ -19,7 +19,7 @@
   (keys @renderer))
 
 (defn add-available [s]
-  (info "available lazy renderer: " s)
+  (debug "available lazy renderer: " s)
   (swap! renderer assoc s {:symbol s}))
 
 (defn add-loaded [s f]
