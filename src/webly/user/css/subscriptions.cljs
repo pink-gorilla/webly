@@ -3,7 +3,7 @@
    [re-frame.core :as rf]
    [webly.user.css.config :refer [css-app]]))
 
-(rf/reg-sub  ; move this to webly.
+(rf/reg-sub
  :css/theme
  (fn [db [_]]
    (let [{:keys [available current]
