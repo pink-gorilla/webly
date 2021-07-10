@@ -1,9 +1,19 @@
 (ns webly.user.css.subscriptions
   (:require
-   [re-frame.core :refer [reg-sub]]
+   [re-frame.core :as rf]
    [webly.user.css.config :refer [css-app]]))
 
-(reg-sub
+(rf/reg-sub  ; move this to webly.
+ :css/theme
+ (fn [db [_]]
+   (let [{:keys [available current]
+          :or {available {}
+               current {}}}
+         (get-in db [:theme])]
+     {:available available
+      :current current})))
+
+(rf/reg-sub
  :css/app-theme-links
  (fn [db [_]]
    (let [{:keys [available current]
@@ -12,7 +22,7 @@
          (get-in db [:theme])]
      (css-app available current))))
 
-(reg-sub
+(rf/reg-sub
  :css/theme-component
  (fn [db [_ component]]
    (get-in db [:theme :current component])))

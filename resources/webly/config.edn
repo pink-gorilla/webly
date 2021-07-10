@@ -19,13 +19,13 @@
          ; routes
          :routes {:app {}
                   :api {}}
-         :theme {:available {:tailwind {:light ["tailwindcss/dist/tailwind.min.css"]
-                                        :dark ["tailwindcss/dist/tailwind-dark.min.css"]}
+         :theme {:available {:tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
+                                        "dark" ["tailwindcss/dist/tailwind-dark.min.css"]}
                              :fonts    {true ["@fortawesome/fontawesome-free/css/all.min.css"
                                               "fonts-google/fonts.css"]}
                              :emoji    {true ["@icon/fontisto-emoji/fontisto-emoji.css"]}
                              :webly    {true ["webly/dialog.css"]}}
-                 :current {:tailwind :light ; true
+                 :current {:tailwind "light" ; true
                            :fonts    true
                            :emoji    false
                            :webly    true}}
