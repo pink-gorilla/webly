@@ -2,7 +2,8 @@
   (:require
    [taoensso.timbre :as timbre :refer [info error]]
    [webly.config :refer [config-atom]]
-   [webly.prefs :refer [prefs-atom]]))
+   [webly.prefs :refer [prefs-atom]]
+   [webly.writer :refer [write-target]]))
 
 (defonce profiles
   {:ci          {:prefs   {:tenx false}
@@ -99,5 +100,6 @@
         (info "webly profile-name: " profile-name " profile: " profile)
         (swap! config-atom merge {:profile profile})
         (swap! prefs-atom merge (get-build-prefs profile))
-        (info "prefs: " @prefs-atom)))
+        (info "prefs: " @prefs-atom)
+        (write-target "prefs" (assoc @prefs-atom :profile profile-name))))
     profile))

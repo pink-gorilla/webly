@@ -16,11 +16,20 @@
         s (str comment s)]
     (spit filename s)))
 
+(defn ensure-directory [path]
+  (when-not (.exists (io/file path))
+    (.mkdir (java.io.File. path))))
 (defn ensure-directory-webly []
-  (when-not (.exists (io/file ".webly"))
-    (.mkdir (java.io.File. ".webly"))))
+  (ensure-directory ".webly"))
 
 (defn write-status [name data]
   (ensure-directory-webly)
   (let [filename (str ".webly/" name ".edn")]
+    (write filename data)))
+
+(defn write-target [name data]
+  (ensure-directory "target")
+  (ensure-directory "webly")
+  (ensure-directory "public")
+  (let [filename (str "target/webly/public/" name ".edn")]
     (write filename data)))
