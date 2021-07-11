@@ -28,8 +28,8 @@
     (write filename data)))
 
 (defn write-target [name data]
-  (ensure-directory "target")
-  (ensure-directory "webly")
-  (ensure-directory "public")
-  (let [filename (str "target/webly/public/" name ".edn")]
+  (ensure-directory "./target")
+  (ensure-directory "./target/webly")
+  (ensure-directory "./target/webly/public")
+  (let [filename (str "./target/webly/public/" name ".edn")]
     (write filename data)))

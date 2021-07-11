@@ -42,12 +42,6 @@
   (is (= "text/css"
          (-> "/r/tailwindcss/dist/tailwind.css" GET content-type))))
 
-#_(deftest resource-aggrid []
-    (is (= "text/css"
-           (-> "/r/ag-grid-community/dist/styles/ag-grid.css" GET content-type)))
-    (is (= "text/css"
-           (-> "/r/ag-grid-community/dist/styles/ag-theme-balham.css" GET content-type))))
-
 (deftest resources-demo []
   (is (= "text/plain"
          (-> "/r/hello.txt" GET content-type)))
