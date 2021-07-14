@@ -1,14 +1,21 @@
 (ns webly.user.css.dom
   (:require
-   [taoensso.timbre :refer-macros [debugf infof warn warnf errorf]]))
-(defn ^:export on-link-load [& x]
-  (debugf "css loaded: %s" x))
+   [taoensso.timbre :refer-macros [debugf infof warn warnf errorf]]
+   [re-frame.core :as rf]))
+(defn ^:export on-link-load [x & _]
+  (debugf "css loaded: %s" x)
+  (rf/dispatch [:css/loading-success x]))
 
-(defn ^:export on-link-error [& x]
-  (errorf "css load error: %s" x))
+(defn ^:export on-link-error [x & _]
+  (errorf "css load error: %s" x)
+  ; we just log css load errors.
+  ; to calculate the status of number of css links tht need loading
+  ; we can say we dont need more loading of a *failed* css download.
+  (rf/dispatch [:css/loading-success x]))
 
 (defn add-css-link [href]
   (debugf "adding css: %s" href)
+  (rf/dispatch [:css/loading-add href])
   (let [head (.-head js/document)
         href (clj->js href)
         link (.createElement js/document "link")]

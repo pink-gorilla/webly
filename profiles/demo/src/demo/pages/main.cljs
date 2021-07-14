@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [reagent.core :as r]
-   [re-frame.core :refer [dispatch subscribe]]
+   [re-frame.core :as rf]
    [webly.web.handler :refer [reagent-page]]
    [webly.user.notifications.core :refer [add-notification]]
    [webly.user.oauth2.view :refer [tokens-view user-button]]
@@ -65,7 +65,7 @@
    [:p "line: 12 col: 28"]])
 
 (defn show-dialog-demo []
-  (dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
+  (rf/dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
              :small]))
 
 (defn demo-dialog []
@@ -90,13 +90,13 @@
 (defn demo-settings []
   (let [show-lazy1 (r/atom false)
         show-lazy2 (r/atom false)
-        s (subscribe [:settings])]
+        s (rf/subscribe [:settings])]
     (fn []
       [block2 "settings"
        [:p (pr-str @s)]
        ;[link-fn #(ls-set! :webly {:willy 789}) "reset localstorage to :willy 789"]
-       [link-fn #(dispatch [:settings/set :bongo 123]) " set bongo to 123"]
-       [link-fn #(dispatch [:settings/set :bongo 456]) " set bongo to 456"]
+       [link-fn #(rf/dispatch [:settings/set :bongo 123]) " set bongo to 123"]
+       [link-fn #(rf/dispatch [:settings/set :bongo 456]) " set bongo to 456"]
        [link-fn #(reset! show-lazy1 true) "lazy load1"]
        [link-fn #(reset! show-lazy2 true) "lazy load2"]
        [:div "lazy renderer: " (pr-str (available))]
@@ -104,6 +104,7 @@
          [lazy1])
        (when @show-lazy2
          [lazy2])
+       
        [:p [link-dispatch [:reframe10x-toggle] "tenx-toggle"]]])))
 
 
@@ -112,8 +113,8 @@
   (warn "status: " x))
 
 (defn demo-ws []
-  (let [t (subscribe [:demo/time])
-        c (subscribe [:ws/connected?])
+  (let [t (rf/subscribe [:demo/time])
+        c (rf/subscribe [:ws/connected?])
         tdt (r/atom nil)
         set-time-date (fn [[t v]] (reset! tdt v))]
     (fn []
@@ -121,11 +122,11 @@
        [:p (str "connected:" (if @c @c "not connected"))]
        [:p (str "time: " (if @t @t " no time received :-("))]
        [:p "time as date: " (when @tdt (str @tdt))]
-       [link-fn #(dispatch [:ws/send [:time/now []]]) " request time"]
-       [link-fn #(dispatch [:ws/send [:ws/status []] print-status 5000]) " request ws status"]
-       [link-fn #(dispatch [:ws/send [:demo/xxx [123 456 789]]]) " send unimplemented ws event request"]
-       [link-fn #(dispatch [:ws/send [:time/now-date []] set-time-date 5000]) " request time (as date)"]
-       [link-fn #(dispatch [:ws/send [:time/now-date-local []] set-time-date 5000]) " request time (as date local)"]])))
+       [link-fn #(rf/dispatch [:ws/send [:time/now []]]) " request time"]
+       [link-fn #(rf/dispatch [:ws/send [:ws/status []] print-status 5000]) " request ws status"]
+       [link-fn #(rf/dispatch [:ws/send [:demo/xxx [123 456 789]]]) " send unimplemented ws event request"]
+       [link-fn #(rf/dispatch [:ws/send [:time/now-date []] set-time-date 5000]) " request time (as date)"]
+       [link-fn #(rf/dispatch [:ws/send [:time/now-date-local []] set-time-date 5000]) " request time (as date local)"]])))
 
 (defn demo-kb []
   [block2 "keybindings"
@@ -141,16 +142,17 @@
 ; CSS
 (defn demo-css []
   (let [show (r/atom false)
+         loading? (rf/subscribe [:css/loading?])
         ; this triggers loading of the emojii css
         show! (fn []
                 (warn "showing emojii")
-                (dispatch [:css/set-theme-component :emoji true])
+                (rf/dispatch [:css/set-theme-component :emoji true])
                 (reset! show true))]
     (fn []
       [block2 "css loader"
        [:div.flex.flex-col
-        [link-dispatch [:css/set-theme-component :tailwind :light] "tailwind light"]
-        [link-dispatch [:css/set-theme-component :tailwind :dark] "tailwind dark"]
+        [link-dispatch [:css/set-theme-component :tailwind "light"] "tailwind light"]
+        [link-dispatch [:css/set-theme-component :tailwind "dark"] "tailwind dark"]
         [link-fn show! "show emoji"]
         [link-dispatch [:css/add-components
                         {:bad {true  ["non-existing.css"]}}
@@ -158,7 +160,9 @@
          "add non existing css"]
         (if @show
           [emoji "fiem-surprised"]
-          [:span "emoji not loaded"])]])))
+          [:span "emoji not loaded"])
+        [:p "css loading?" (str @loading?)]
+        ]])))
 
 
 
