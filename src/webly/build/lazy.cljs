@@ -12,7 +12,7 @@
 (defonce renderer (r/atom {}))
 
 (defn log-loading [symbol-fn]
-  (info "webly lazy loading: " symbol-fn))
+  (debug "webly lazy loading: " symbol-fn))
 
 (defonce on-load (r/atom log-loading))
 
@@ -24,7 +24,7 @@
   (swap! renderer assoc s {:symbol s}))
 
 (defn add-loaded [s f]
-  (info "loaded lazy renderer: " s)
+  (debug "loaded lazy renderer: " s)
   (swap! renderer assoc-in [s :fun] f))
 
 (defn start-load [symbol-fn load-spec]
