@@ -1,9 +1,9 @@
 (ns webly.user.oauth2.request
   (:require
-   [taoensso.timbre :refer-macros [info error]]
+   [taoensso.timbre :refer-macros [info errorf]]
    [clojure.string :as str]
    [ajax.core :as ajax]
-   [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
+   [re-frame.core :as rf]
    [webly.prefs :refer [pref]]
    [webly.log :refer [timbre-config!]]
    [webly.user.notifications.core :refer [add-notification]]))
@@ -16,7 +16,7 @@
 ;'authorization: Bearer YOUR_ACCESS_TOKEN' 
 ;$ curl -H "Authorization: token OAUTH-TOKEN" https://api.github.com
 
-(reg-event-fx
+(rf/reg-event-fx
  :request
  (fn [{:keys [db]} [_ provider uri success]]
    (let [token (get-in db [:token provider])
@@ -39,10 +39,10 @@
   (or (get-in res [:response :error :message])
       (get-in res [:response :message])))
 
-(reg-event-fx
+(rf/reg-event-fx
  :request/error
  (fn [{:keys [db]} [_ provider res]]
-   (info "request error: " provider res)
-   (add-notification :danger (str "request error " provider ": " (err-msg res)))
+   (errorf "oauth2 provider: %s error: %s" provider res)
+   (add-notification :error (str "request error " provider ": " (err-msg res)))
    {}))
 

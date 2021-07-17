@@ -1,4 +1,4 @@
-(ns webly.user.emoji)
+(ns demo.emoji)
 
 ;; font awesome example:
 ;;  [:i.fas.fa-trash]

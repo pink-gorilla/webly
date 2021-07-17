@@ -1,7 +1,6 @@
 {:npm-deps {; fonts
             "@fortawesome/fontawesome-free" "^5.14.0"
             "get-google-fonts" "^1.2.2"
-            "@icon/fontisto-emoji" "^3.0.4-alpha.0" ; this leads to warnings in dependent projects, perhapsdueto alpha text
             ; tailwind
             "tailwindcss" "2.1.2"
             "autoprefixer" "^10.0.2" ; peer dependency of tailwind. actually needed?
@@ -15,9 +14,8 @@
             ;"cross-env": "^6.0.3",
 
             ; react
-            "create-react-class" "^15.7.0"
-            "react-dom-factories" "^1.0.2"
-
+            "create-react-class" "^15.7.0"  ; is this needed?
+            "react-dom-factories" "^1.0.2" ; is this needed?
             ; since reagent 1.1, reagent no longer brings react and react-dom
             "react" "^17.0.1"
             "react-dom" "^17.0.1"

@@ -34,7 +34,11 @@
                            snippets.bye
                            ]}
          :title "Webly Demo"
-         :start-user-app [:demo/start]}
+         :start-user-app [:demo/start]
+         :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]}}
+                 :current {:emoji    false}}
+         
+         }
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
