@@ -6,7 +6,6 @@
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]
    [demo.emoji :refer [emoji]]))
 
-
 ; CSS
 (defn demo-css []
   (let [show (r/atom false)

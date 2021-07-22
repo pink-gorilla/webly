@@ -1,10 +1,9 @@
 (ns demo.pages.help
- (:require
-  [reagent.core :as r]
-    [re-frame.core :as rf]
+  (:require
+   [reagent.core :as r]
+   [re-frame.core :as rf]
    [webly.web.handler :refer [reagent-page]]
-  [pinkgorilla.repl.cljs.http :refer [get-json]]
- ))
+   [pinkgorilla.repl.cljs.http :refer [get-json]]))
 
 (defn link-fn [fun text]
   [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
@@ -17,7 +16,6 @@
   [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
    {:href href} text])
 
-
 (def data (r/atom {:d nil}))
 (def firstt (r/atom true))
 
@@ -28,8 +26,7 @@
      (reset! firstt false)
      (get-json "http://api.open-notify.org/iss-now.json" data [:d]) ;cors test
      (get-json "/api/config" data [:config])
-     nil
-     )
+     nil)
    [:p [link-dispatch [:bidi/goto  :demo/main] "main"]]
    [:h1 "help!"]
    [:div "data:" (pr-str @data)]

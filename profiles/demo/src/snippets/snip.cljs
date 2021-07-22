@@ -14,4 +14,4 @@
   (let [x (r/atom 0)]
     (fn [a b]
       (swap! x inc)
-     [:p "addition result: " (+ a b @x)])))
+      [:p "addition result: " (+ a b @x)])))

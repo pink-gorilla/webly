@@ -9,7 +9,8 @@
          "test"   {:get :api/test
                    :post :api/test  ; used in unit-test
                    }
-         "snippet"   {:get :api/snippet}}
+         "snippet"   {:get :api/snippet}
+         "bindata" :api/binary}
    :app  {""        :demo/main
           "help"    :demo/help
           "prose"   :demo/prose

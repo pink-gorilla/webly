@@ -31,8 +31,7 @@
   (infof ":time/now: %s" event)
   (send-response req :demo/time-date (now)))
 
-
 (defmethod -event-msg-handler :time/now-date-local
   [{:as req :keys [event id ?data ring-req ?reply-fn send-fn]}]
   (infof ":time/now: %s" event)
-  (send-response req :demo/time-date-local ( now-local)))
+  (send-response req :demo/time-date-local (now-local)))

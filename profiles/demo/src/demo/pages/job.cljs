@@ -3,7 +3,6 @@
    [re-frame.core :as rf]
    [webly.web.handler :refer [reagent-page]]))
 
-
 ; ui helper   
 
 (defn link-fn [fun text]
@@ -18,12 +17,11 @@
    {:href href} text])
 
 (defn job [{:keys [route-params query-params handler tag] :as p}]
-    [:div.party
-     [link-dispatch [:bidi/goto :demo/main] "main"]
-     [:p "This is a test for bidi route/query parameters."]
+  [:div.party
+   [link-dispatch [:bidi/goto :demo/main] "main"]
+   [:p "This is a test for bidi route/query parameters."]
 
-     [:p "params: " (pr-str p)]]
-    )
+   [:p "params: " (pr-str p)]])
 
 (defmethod reagent-page :demo/job [args]
   [job args])

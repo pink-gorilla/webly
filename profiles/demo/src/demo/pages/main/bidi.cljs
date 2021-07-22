@@ -4,8 +4,6 @@
    [webly.user.app.views :refer [refresh-page]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
-
-
 ;; BIDI ROUTING
 
 (defn demo-routing []

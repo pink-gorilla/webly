@@ -9,8 +9,7 @@
    [demo.pages.main.oauth :refer [demo-oauth]]
    [demo.pages.main.ws :refer [demo-ws]]
    [demo.pages.main.kb :refer [demo-kb]]
-   [demo.pages.main.settings :refer [demo-settings]]
-   ))
+   [demo.pages.main.settings :refer [demo-settings]]))
 
 (defn main []
   [:div.dark

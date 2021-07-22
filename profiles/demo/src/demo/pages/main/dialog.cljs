@@ -5,8 +5,6 @@
    [webly.user.notifications.core :refer [add-notification]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
-
-
 ;; DIALOG
 (def compile-error
   [:span.bg-green-600.m-3

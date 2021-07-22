@@ -3,8 +3,6 @@
    [taoensso.timbre :refer-macros [debug info warn error]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
-
-
 (defn demo-kb []
   [block2 "keybindings"
    [:p "press [alt-g k] to see keybindings"]

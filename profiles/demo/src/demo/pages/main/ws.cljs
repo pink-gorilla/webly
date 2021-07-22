@@ -6,9 +6,6 @@
    [webly.user.oauth2.view :refer [tokens-view user-button]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
-
-
-
 ; WEBSOCKET
 (defn print-status [x]
   (warn "status: " x))
