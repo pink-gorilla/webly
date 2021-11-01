@@ -33,7 +33,7 @@
   (let [s (get-in-config path)]
     (if (symbol? s)
       (try
-        (info "resolving symbol: " s)
+        (debug "resolving symbol: " s)
         (if-let [r (var-get (resolve s))]
           (do
             (debug "symbol " s " resolved to: " r)
