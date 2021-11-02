@@ -29,15 +29,18 @@
 
 (defn start-load [symbol-fn load-spec]
   (@on-load symbol-fn)
-  (lazy/load load-spec (partial add-loaded symbol-fn)))
+  (try
+    (lazy/load load-spec (partial add-loaded symbol-fn))
+    (catch :default e
+      (error "Lazy Loading failed for: " symbol-fn))))
 
 (defn run [f args]
   (if args
     (apply f args)
     (f)))
 
-(defn loading [& args]
-  [:span "loading"])
+(defn loading [symbol-fn & args]
+  [:span "lazy-load "])
 
 (defn show-lazy [load-spec symbol-fn]
   (let [css-loading? (rf/subscribe [:css/loading?])]
@@ -46,7 +49,7 @@
         (if (and r (not @css-loading?))
           [run r args]
           (do (start-load symbol-fn load-spec)
-              [loading]))))))
+              [loading symbol-fn]))))))
 
 
 

@@ -9,7 +9,7 @@
    [demo.pages.main.oauth :refer [demo-oauth]]
    [demo.pages.main.ws :refer [demo-ws]]
    [demo.pages.main.kb :refer [demo-kb]]
-   [demo.pages.main.settings :refer [demo-settings]]))
+   [demo.pages.main.settings :refer [demo-settings demo-lazy]]))
 
 (defn main []
   [:div.dark
@@ -20,7 +20,8 @@
     [demo-oauth]
     [demo-settings]
     [demo-ws]
-    [demo-kb]]])
+    [demo-kb]
+    [demo-lazy]]])
 
 (defmethod reagent-page :demo/main [& args]
   [main])
