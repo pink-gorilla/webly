@@ -18,7 +18,7 @@
                                  :exclusions [com.cognitect/fress]} ; fress makes problems
         ; ring + middlewares
         ring/ring-core {:mvn/version "1.9.4"}
-       ring/ring-devel {:mvn/version "1.9.4"} ; reload middleware - same version as rig/core
+        ring/ring-devel {:mvn/version "1.9.4"} ; reload middleware - same version as rig/core
         ring/ring-anti-forgery {:mvn/version "1.3.0"}
         ring-cors/ring-cors {:mvn/version "0.1.13"}
         ring/ring-defaults {:mvn/version "0.3.3"
@@ -30,7 +30,7 @@
         luminus/ring-ttl-session {:mvn/version "0.3.3"}
         ring-oauth2/ring-oauth2 {:mvn/version "0.1.5"}
         prone/prone {:mvn/version "2021-04-23"} ; exception middleware
-        
+
         ; routing
         bidi/bidi {:mvn/version "2.1.6"}
         clj-commons/pushy {:mvn/version "0.3.10"}
@@ -81,7 +81,7 @@
   :cljfmt     {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
                :main-opts ["-m" "cljfmt.main" "check" "--indents" "cljfmt.edn"]}
   :cljfmt-fix {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
-               :main-opts ["-m" "cljfmt.main" "fix" 
+               :main-opts ["-m" "cljfmt.main" "fix"
                            "src" "profiles/demo/src"
                            "--indents" "cljfmt.edn"]}
 
@@ -120,14 +120,15 @@
                       {:git/url "https://github.com/cognitect-labs/test-runner.git"
                        :sha "4e7e1c0dfd5291fa2134df052443dc29695d8cbe"}
                       ring/ring-mock {:mvn/version "0.4.0"}
-                      org.pinkgorilla/ui-repl {:mvn/version "0.0.21"} ; http cors test
+                      org.pinkgorilla/ui-repl {:mvn/version "0.0.23"} ; http cors test
                       }
          :main-opts ["-m" "cognitect.test-runner"]
          :exec-fn cognitect.test-runner.api/test}
 
-  :webly {:extra-paths ["profiles/demo/src"
+  :webly {; this is the ui demo.
+          :extra-paths ["profiles/demo/src"
                         "profiles/demo/resources"]
-          :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.21"}} ; http cors test
+          :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.23"}} ; http cors test
           :exec-fn webly.user.app.app/webly-run
           :exec-args {:profile "watch2"  ;watch2 - 10x disabled
                       :config "demo.edn"}}
@@ -136,7 +137,7 @@
                      "profiles/demo/src"
                      "profiles/demo/resources"
                      "profiles/test/resources"]
-       :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.21"}} ; http cors test
+       :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.23"}} ; http cors test
        :exec-fn webly.user.app.app/webly-run
        :exec-args {:profile "ci"
                    :config "demo.edn"}}
