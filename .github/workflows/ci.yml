@@ -62,7 +62,6 @@ jobs:
       #  clojure -M:release pom
       #  clojure -M:release jar
       # clojure -M:release deploy
-      # lein release
       # bash <(curl -s https://codecov.io/bash)
       # lein with-profile +relay-jetty cloverage
       #  bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json

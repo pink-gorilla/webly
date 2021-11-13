@@ -73,10 +73,11 @@
 
   ; https://github.com/weavejester/cljfmt
   :cljfmt     {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
-               :main-opts ["-m" "cljfmt.main" "check" "--indents" "cljfmt.edn"]}
+               :main-opts ["-m" "cljfmt.main" "check" 
+                           "--indents" "cljfmt.edn"]}
   :cljfmt-fix {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
                :main-opts ["-m" "cljfmt.main" "fix"
-                           "src" "profiles/demo/src"
+                           ;"src" "profiles/demo/src" "test"
                            "--indents" "cljfmt.edn"]}
 
  ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
