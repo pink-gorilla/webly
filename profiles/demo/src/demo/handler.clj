@@ -4,12 +4,11 @@
    [clojure.pprint]
    [clojure.java.io :as io]
    [taoensso.timbre :as log :refer [tracef debugf info infof warnf error errorf]]
-
    [ring.util.response :as res]
    [ring.util.io :as ring-io]
+   [modular.date :refer [now now-local now-unix]]
    [webly.web.middleware :refer [wrap-api-handler]]
    [webly.web.handler :refer [add-ring-handler]]
-   [webly.date :refer [now now-local now-unix]]
    [shadow.cljs.devtools.api :as shadow
     ;:refer [watch* worker-running?]
     ]

@@ -4,8 +4,8 @@
    [clojure.string :as str]
    [ajax.core :as ajax]
    [re-frame.core :as rf]
+   [modular.log :refer [timbre-config!]]
    [webly.prefs :refer [pref]]
-   [webly.log :refer [timbre-config!]]
    [webly.user.notifications.core :refer [add-notification]]))
 
 (defn auth-header [provider token]

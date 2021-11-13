@@ -2,7 +2,7 @@
   "generates shadow-cljs.edn based on profile and config"
   (:require
    [taoensso.timbre :as timbre :refer [debug info]]
-   [webly.config :refer [get-in-config]]
+   [modular.config :refer [get-in-config]]
    [webly.prefs :refer [if-pref-fn prefs-atom]]))
 
 ;; build-options

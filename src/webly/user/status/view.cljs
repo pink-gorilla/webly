@@ -1,7 +1,7 @@
 (ns webly.user.status.view
   (:require
    [re-frame.core :refer [subscribe]]
-   [webly.config :refer-macros [get-in-config-cljs]]
+   [modular.config :refer-macros [get-in-config-cljs]]
    [webly.user.status.subscriptions] ; side-effects
    ))
 

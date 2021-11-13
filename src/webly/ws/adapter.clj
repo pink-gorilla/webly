@@ -6,9 +6,9 @@
    [taoensso.sente.server-adapters.jetty9]
   ; [taoensso.sente.server-adapters.http-kit]
    [taoensso.sente  :as sente]
+   [modular.encoding.transit :as e]
    [webly.ws.id :refer [get-sente-session-uid]]
-   [webly.ws.msg-handler :refer [event-msg-handler]]
-   [webly.encoding.transit :as e]))
+   [webly.ws.msg-handler :refer [event-msg-handler]]))
 
 #_(defn undertow []
     (info "websocket mode: undertow.")

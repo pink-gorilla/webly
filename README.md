@@ -6,7 +6,6 @@
 - webly uses great tools such as: reagent, reframe, tailwind-css, shadow-cljs
 - webly brings a things that can be hard to configure (or repetitive) when you develop a web app such as:
   - ten-x developer console
-  - configuration management
   - unit test runner
   - routing (via edn config), extensible both in frontend  and backend
   - keybindings
@@ -16,7 +15,7 @@
   - oauth2
   - google analytics (can be disabled)
 
-- webly is used in [Goldly](https://github.com/pink-gorilla/goldly) and [Notebook](https://github.com/pink-gorilla/notebook).
+- webly is used in [Goldly](https://github.com/pink-gorilla/goldly).
 
 
 # run the ui demo

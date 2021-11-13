@@ -3,7 +3,7 @@
    [taoensso.timbre :as timbre :refer [info error]]
    [ring.util.response :as res]
    [ajax.core :as ajax]
-   [webly.config :refer [get-in-config config-atom]]
+   [modular.config :refer [get-in-config config-atom]]
    [webly.web.handler :refer [add-ring-handler]]
    [webly.web.middleware :refer [wrap-api-handler]]
    [webly.user.oauth2.provider :refer [get-provider]]))

@@ -1,8 +1,8 @@
 (ns webly.user.app.app
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [webly.writer :refer [write-status]]
-   [webly.config :refer [get-in-config config-atom load-config!]]
+   [modular.writer :refer [write-status]]
+   [modular.config :refer [get-in-config config-atom load-config!]]
    [webly.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]
    [webly.web.server :refer [run-server]]

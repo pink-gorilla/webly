@@ -1,6 +1,6 @@
 (ns webly.prefs
   (:require
-   [webly.date :refer [now-str]]))
+   [modular.date :refer [now-str]]))
 
 (defonce prefs-atom (atom {}))
 

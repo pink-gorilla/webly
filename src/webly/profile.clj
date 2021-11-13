@@ -1,9 +1,9 @@
 (ns webly.profile
   (:require
    [taoensso.timbre :as timbre :refer [info error]]
-   [webly.config :refer [config-atom]]
-   [webly.prefs :refer [prefs-atom]]
-   [webly.writer :refer [write-target]]))
+   [modular.config :refer [config-atom]]
+   [modular.writer :refer [write-target]]
+   [webly.prefs :refer [prefs-atom]]))
 
 (defonce profiles
   {:ci          {:prefs   {:tenx false}

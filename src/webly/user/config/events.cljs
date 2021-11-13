@@ -5,10 +5,10 @@
    [clojure.string :as str]
    [ajax.core :as ajax]
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
+   [modular.log :refer [timbre-config!]]
+   [modular.encoding.transit :refer [decode]]
    [webly.prefs :refer [pref]]
-   [webly.log :refer [timbre-config!]]
-   [webly.user.notifications.core :refer [add-notification]]
-   [webly.encoding.transit :refer [decode]]))
+   [webly.user.notifications.core :refer [add-notification]]))
 
 ; load configuration
 

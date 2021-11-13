@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer [info warn error]]
    [clojure.repl]
-   [webly.config :refer [get-in-config]]
+   [modular.config :refer [get-in-config]]
    [webly.web.middleware :refer [wrap-webly]]
    [webly.web.handler :refer [handler-registry]]
    ; ws

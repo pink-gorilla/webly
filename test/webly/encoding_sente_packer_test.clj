@@ -4,8 +4,9 @@
    [taoensso.sente.packers.transit :as sente-transit :refer [get-transit-packer]]
    [clojure.test :refer [deftest is testing]]
    [taoensso.sente.interfaces :as interfaces :refer (pack unpack)]
-   [webly.encoding.transit :as e]
-   [webly.date :refer [now-local]]))
+   [modular.encoding.transit :as e]
+   [modular.date :refer [now-local]]
+   ))
 
 (def p (get-transit-packer :json e/encode e/decode))
 

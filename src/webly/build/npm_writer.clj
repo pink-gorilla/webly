@@ -3,7 +3,7 @@
    [clojure.java.io :as io]
    [taoensso.timbre :as timbre :refer [info]]
    [cheshire.core :as cheshire]
-   [webly.date :refer [now-str]]))
+   [modular.date :refer [now-str]]))
 
 (def default-config
   {:private true

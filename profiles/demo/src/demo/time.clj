@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :as log :refer [tracef debugf info infof warnf error errorf]]
    [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
-   [webly.date :refer [now-str now  now-local]]
+   [modular.date :refer [now-str now  now-local]]
    [webly.ws.core :refer [send-all! send-response connected-uids]]
    [webly.ws.msg-handler :refer [-event-msg-handler]]))
 

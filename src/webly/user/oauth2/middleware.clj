@@ -6,8 +6,8 @@
    [ring.middleware.session :refer [wrap-session]]
    [ring.middleware.cookies :refer [wrap-cookies]]
    [ring.middleware.oauth2 :refer [wrap-oauth2]]
-   [webly.config :refer [get-in-config config-atom]]
-   [webly.writer :refer [write-status]]
+   [modular.config :refer [get-in-config config-atom]]
+   [modular.writer :refer [write-status]]
    [webly.user.oauth2.provider :refer [ring-oauth2-config]]))
 
 ; https://github.com/weavejester/ring-oauth2 

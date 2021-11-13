@@ -1,7 +1,7 @@
 (ns webly.web.middleware-transit
   (:require
    [cognitect.transit :as transit]
-   [webly.encoding.transit :as e]
+   [modular.encoding.transit :as e]
    [muuntaja.core :as m]))
 
 (def muuntaja
