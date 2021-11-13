@@ -30,6 +30,8 @@ jobs:
     - name: prep res
       run: |
          ./scripts/prep-res.sh
+    - name: clj-fmt
+      run: clojure -M:cljfmt
     - name: test-clj
       run: clojure -M:test
     - name: js build
@@ -37,8 +39,6 @@ jobs:
          clojure -X:ci
     - name: test-cljs
       run: npm test
-    - name: clj-fmt
-      run: clojure -M:cljfmt
       shell: bash
     #- name: show git tag
     #  run: clojure -M:garamond
