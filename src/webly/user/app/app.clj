@@ -14,8 +14,7 @@
 
    ; side-effects
    [webly.user.config.handler]   ; handler: config
-   [webly.user.oauth2.handler-token]   ; handler:  github-auth-token
-   [webly.user.oauth2.handler-redirect]
+   [webly.user.oauth2.handler]
    [webly.user.app.keybindings])
   (:gen-class))
 

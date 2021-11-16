@@ -17,7 +17,7 @@
     (info "opening oauth2 window: " url-auth)
     (.open js/window
            url-auth
-           (str "Webly OAuth " (name provider))
+           (str "Webly OAuth2 " (name provider))
            "width=500,height=600")))
 
 (reg-event-db

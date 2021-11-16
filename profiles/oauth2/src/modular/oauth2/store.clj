@@ -1,6 +1,7 @@
 (ns modular.oauth2.store
   (:require
-   [taoensso.timbre :refer-macros [info error]]
+   [taoensso.timbre :refer [info error]]
+   [clojure.java.io :as io]
    [modular.config :as config]
    [modular.persist.protocol :refer [save loadr]]
    [modular.persist.edn] ; side-effects
@@ -12,11 +13,16 @@
   (when-let [token-path (config/get-in-config [:oauth2 :token-path])]
     (str token-path name ".edn")))
 
+(defn- ensure-directory [path]
+  (when-not (.exists (io/file path))
+    (.mkdir (java.io.File. path))))
+
 (defn save-token
   [name data]
   (let [filename (filename-token name)]
     (if filename
-      (save :edn filename data)
+      (do (ensure-directory (config/get-in-config [:oauth2 :token-path]))
+          (save :edn filename data))
       (error "cannot save token - please set [:oauth2 :token-path] in modular config"))))
 
 (defn load-token [name]

@@ -49,7 +49,8 @@
                     :id "UA-154548494-1"} ; not a secret 
 
  ; creds (set them in creds.edn resource)
- :oauth2 {:github {:client-id        ""
+ :oauth2 {:token-path ".webly/tokenstore/"
+          :github {:client-id        ""
                    :client-secret    ""
                    :scopes          ["user:email"
                                      "gist"

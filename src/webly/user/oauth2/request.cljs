@@ -16,8 +16,8 @@
 
 (rf/reg-event-fx
  ::oauth2/login-error
- (fn [{:keys [db]} [_ provider res]]
-   (errorf "oauth2 provider: %s error: %s" provider res)
-   (add-notification :error (str "request error " provider ": " (err-msg res)))
+ (fn [{:keys [db]} [_ provider]]
+   (errorf "oauth2 provider: %s error" provider)
+   (add-notification :danger "oauth login error (token not received)")
    {}))
 

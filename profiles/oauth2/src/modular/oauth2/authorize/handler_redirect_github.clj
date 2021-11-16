@@ -1,12 +1,10 @@
-(ns webly.user.oauth2.handler-token
+(ns modular.oauth2.authorize.handler-redirect-github
   (:require
    [taoensso.timbre :as timbre :refer [info error]]
    [ring.util.response :as res]
    [ajax.core :as ajax]
    [modular.config :refer [get-in-config config-atom]]
-   [modular.oauth2.provider :refer [get-provider]]
-   [webly.web.handler :refer [add-ring-handler]]
-   [webly.web.middleware :refer [wrap-api-handler]]))
+   [modular.oauth2.provider :refer [get-provider]]))
 
 (defn handler-github-redirect [req]
   (let [p (promise)
@@ -35,9 +33,3 @@
 
   ;
   )
-
-(def handler-github-redirect-wrapped
-  (-> handler-github-redirect
-      wrap-api-handler))
-
-(add-ring-handler :webly/oauth2-github handler-github-redirect-wrapped)
