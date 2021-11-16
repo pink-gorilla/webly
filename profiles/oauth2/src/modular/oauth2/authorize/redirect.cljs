@@ -1,4 +1,4 @@
-(ns webly.user.oauth2.redirect
+(ns modular.oauth2.authorize.redirect
   (:require
    [cemerick.url :as url]))
 

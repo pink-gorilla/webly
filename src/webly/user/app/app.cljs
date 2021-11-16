@@ -22,11 +22,9 @@
    [webly.user.dialog]
    [webly.user.keybindings.events]
    [webly.user.analytics.events]
-   [webly.user.oauth2.events]
-   [webly.user.oauth2.events-parse]
-   [webly.user.oauth2.request-login]
-   [webly.user.oauth2.request]
-   [webly.user.oauth2.subscriptions]
+
+   [modular.oauth2]
+
    [webly.user.tenx.events]
    [webly.user.settings.subscriptions]
    [webly.user.settings.events]

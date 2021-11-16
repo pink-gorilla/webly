@@ -76,7 +76,7 @@ Bidi is not as highly starred as compojure, but it has important benefits:
   - bundle-size report at compile time
 
 
-## [oauth2 (separate readme)](/README-oauth2.md)
+## [oauth2 (separate readme)](/profiles/oauth2/README.md)
 
 # webly - how to use:
 

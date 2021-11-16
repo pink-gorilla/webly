@@ -1,53 +1,41 @@
-(ns webly.user.oauth2.provider
+(ns modular.oauth2.provider
   (:require
    [clojure.string]
    [taoensso.timbre :as timbre :refer [info infof error]]
-   [cemerick.url :refer [url url-encode]]))
+   [cemerick.url :refer [url url-encode]]
+   [modular.oauth2.provider.google :as google]
+   [modular.oauth2.provider.github :as github]))
 
-;{"token_type" "Bearer", 
-;"access_token" "ya29.a0AfH6SMD4K4sFxQ8LaWVOv_gPteXEdmGjRIFlWXxtJ7z0trs5p6bpoNmQ3ebN", 
-;"scope" "https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/spreadsheets.readonly",
-; "expires_in" "3599"}
-
-(defn parse-google [{:keys [anchor]}]
-  {:access-token (:access_token anchor)
-   :scope (:scope anchor)
-   :expires #?(:cljs (js/parseInt (:expires_in anchor))
-               :clj (:expires_in anchor))})
-
-; :query {code 27aefeb35395d63c34}}
-(defn parse-github [{:keys [query]}]
-  {:code (:code query)})
-
-;{:scope "openid profile"
-;   :responseType "id_token"
-;   :accessTokenResponseKey "id_token"
+;; PROVIDER LIST
 
 (def providers
-  {:github {:authorize-uri "https://github.com/login/oauth/authorize"
-            :access-token-uri "https://github.com/login/oauth/access_token"
-            :accessTokenResponseKey "id_token"
-            :response-type "token"
-            :parse parse-github
-            :parse-dispatch [:github/code->token]}
-   :google {:authorize-uri "https://accounts.google.com/o/oauth2/v2/auth"
-            :access-token-uri "https://accounts.google.com/o/oauth2/v2/access_token"
-            :response-type "token"
-            :accessTokenResponseKey "id_token"
-            :parse parse-google}})
+  {:github github/config
+   :google google/config})
 
-; :oauth2 {:github {:clientId        ""
-;                   :clientSecret    ""
-;                   :scope ""}
-;          :google {:clientId        ""
-;                   :clientSecret    ""
-;                   :scope ""}}
+(defn get-provider-config [p]
+  (or (p providers) {}))
+
+;; PROVIDER SPECIFIC STUFF
 
 (defn provider-uri [provider]
   (let [provider-name (name provider)]
     {:launch-uri       (str "/oauth2/auth/" provider-name)
      :redirect-uri     (str "/oauth2/redirect/" provider-name)
      :landing-uri      (str "/oauth2/landing/" provider-name)}))
+
+(defn get-provider-auth-header [p token]
+  (if-let [config (get-provider-config p)]
+    (let [auth-header (:auth-header config)]
+      (auth-header token))
+    (do (error "cannot get auth header for unknwon provider")
+        {})))
+
+(defn parse-userinfo [p token]
+  (if-let [config (get-provider-config p)]
+    (let [user-parse (:user-parse config)]
+      (user-parse token))
+    (do (error "cannot parse userinfo unknwon provider")
+        {})))
 
 (defn safe-scope [scope]
   (let [scope (if (nil? scope) "" scope)
@@ -57,13 +45,19 @@
     scope))
 
 (defn get-provider [config provider]
-  (let [p-code (or (provider providers) {})
+  (let [p-code (get-provider-config provider)
         p-config (or (get-in config [:oauth2 provider]) {})
         p-uri (provider-uri provider)
         p (merge p-uri p-code p-config)]
     (assoc p :scopes (safe-scope (:scopes p)))
       ;p
     ))
+; :oauth2 {:github {:clientId        ""
+;                   :clientSecret    ""
+;                   :scope ""}
+;          :google {:clientId        ""
+;                   :clientSecret    ""
+;                   :scope ""}}
 
 (defn ring-oauth2-config [config]
   (let [provider-list (keys providers)
@@ -101,6 +95,7 @@
         str
         ;url-encode
         )))
+
 ;  scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&
  ;include_granted_scopes=true&
 ; response_type=token&

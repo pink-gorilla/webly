@@ -1,4 +1,4 @@
-(ns webly.user.oauth2.subscriptions
+(ns modular.oauth2.subscriptions
   (:require
    [re-frame.core :refer [reg-sub]]))
 

@@ -4,9 +4,9 @@
    [ring.util.response :as res]
    [ajax.core :as ajax]
    [modular.config :refer [get-in-config config-atom]]
+   [modular.oauth2.provider :refer [get-provider]]
    [webly.web.handler :refer [add-ring-handler]]
-   [webly.web.middleware :refer [wrap-api-handler]]
-   [webly.user.oauth2.provider :refer [get-provider]]))
+   [webly.web.middleware :refer [wrap-api-handler]]))
 
 (defn handler-github-redirect [req]
   (let [p (promise)

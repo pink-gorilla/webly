@@ -1,46 +1,21 @@
 (ns webly.user.oauth2.request
   (:require
-   [taoensso.timbre :refer-macros [info errorf]]
-   [clojure.string :as str]
-   [ajax.core :as ajax]
-   [re-frame.core :as rf]
-   [modular.log :refer [timbre-config!]]
-   [webly.prefs :refer [pref]]
-   [webly.user.notifications.core :refer [add-notification]]))
-
-(defn auth-header [provider token]
-  (case provider
-    :google {:headers {"Authorization" (str "Bearer " token)}}
-    :github {:headers {"Authorization" (str "token " token)}}))
-
-;'authorization: Bearer YOUR_ACCESS_TOKEN' 
-;$ curl -H "Authorization: token OAUTH-TOKEN" https://api.github.com
-
-(rf/reg-event-fx
- :request
- (fn [{:keys [db]} [_ provider uri success]]
-   (let [token (get-in db [:token provider])
-         at (:access-token token)
-         r (merge (auth-header provider at)
-                  {:uri uri
-                   :method          :get
-                   :timeout         5000                     ;; optional see API docs
-                   :response-format  (ajax/json-response-format {:keywords? true}) ;; IMPORTANT!: You must provide this.
-                   :on-success      [success provider]
-                   :on-failure      [:request/error provider]})]
-     (info "making web request:" provider " token: " at " r: " r)
-     {;:db       (assoc-in db [:pref] (pref))
-      :http-xhrio r})))
-
-  ;:format (ajax/json-request-format) ;  {:keywords? false})
-  ;:response-format; {:keywords? true})
-
+   [webly.user.notifications.core :refer [add-notification]]
+   [modular.oauth2.request] ; side-effects
+   ))
 (defn err-msg [res]
   (or (get-in res [:response :error :message])
       (get-in res [:response :message])))
 
 (rf/reg-event-fx
- :request/error
+ ::oauth2/request-error
+ (fn [{:keys [db]} [_ provider res]]
+   (errorf "oauth2 provider: %s error: %s" provider res)
+   (add-notification :error (str "request error " provider ": " (err-msg res)))
+   {}))
+
+(rf/reg-event-fx
+ ::oauth2/login-error
  (fn [{:keys [db]} [_ provider res]]
    (errorf "oauth2 provider: %s error: %s" provider res)
    (add-notification :error (str "request error " provider ": " (err-msg res)))

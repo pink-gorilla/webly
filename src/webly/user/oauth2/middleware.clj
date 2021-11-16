@@ -8,7 +8,7 @@
    [ring.middleware.oauth2 :refer [wrap-oauth2]]
    [modular.config :refer [get-in-config config-atom]]
    [modular.writer :refer [write-status]]
-   [webly.user.oauth2.provider :refer [ring-oauth2-config]]))
+   [modular.oauth2.provider :refer [ring-oauth2-config]]))
 
 ; https://github.com/weavejester/ring-oauth2 
 

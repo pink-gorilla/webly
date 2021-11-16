@@ -1,4 +1,4 @@
-(ns webly.user.oauth2.events-parse
+(ns modular.oauth2.authorize.events-parse
   (:require
    [taoensso.timbre :refer-macros [info error]]
    [re-frame.core :refer [reg-event-fx reg-event-db dispatch]]
