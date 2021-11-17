@@ -2,14 +2,14 @@
   (:require
    [taoensso.timbre :as timbre :refer [info warn error]]
    [clojure.repl]
+   ; modular
    [modular.config :refer [get-in-config]]
+   [modular.webserver.jetty :refer [run-jetty-server]]
+   [modular.webserver.handler.registry :refer [handler-registry]]
+   ; webly
    [webly.web.middleware :refer [wrap-webly]]
-   [webly.web.handler :refer [handler-registry]]
-   ; ws
    [webly.ws.core :refer [init-ws!]]
    [webly.ws.handler :refer [ws-handshake-handler]]
-   ; jetty
-   [modular.webserver.jetty :refer [run-jetty-server]]
    ;[webly.web.hooks]
    ))
 (defn stop-server []

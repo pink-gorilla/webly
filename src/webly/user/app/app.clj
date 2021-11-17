@@ -3,11 +3,12 @@
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [modular.writer :refer [write-status]]
    [modular.config :refer [get-in-config config-atom load-config!]]
+   [modular.webserver.middleware.dev :refer [wrap-dev]]
+
    [webly.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]
    [webly.web.server :refer [run-server]]
    [webly.web.handler :refer [make-handler]]
-   [webly.web.middleware-dev :refer [wrap-dev]]
    [webly.user.app.handler :refer [app-handler]]
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.oauth2.middleware :refer [print-oauth2-config]]

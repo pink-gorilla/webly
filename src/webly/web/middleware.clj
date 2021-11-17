@@ -6,7 +6,6 @@
    [taoensso.timbre :refer [debug info error]]
    [ring.util.response :refer [response]]
    [ring.middleware.cors :refer [wrap-cors]]
-   ;[ring.middleware.cljsjs :refer [wrap-cljsjs]]
    [ring.middleware.gzip :refer [wrap-gzip]]
    [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
    [ring.middleware.keyword-params :refer [wrap-keyword-params]]
@@ -15,7 +14,7 @@
    [ring.middleware.session :refer [wrap-session]]
    [muuntaja.middleware :refer [wrap-format]] ; 30x faster than ring.middleware.format
    [ring.middleware.json :refer [wrap-json-response]]
-   [webly.web.middleware-transit :refer [muuntaja]]))
+   [modular.webserver.middleware.api :as api]))
 
 ;from clojurewb - good example for middleware for websocket requests
 
@@ -26,28 +25,7 @@
       ;; since they're not compatible with this middleware
         ((if (:websocket? request) handler wrapped) request))))
 
-(defn wrap-fallback-exception
-  [handler]
-  (fn [request]
-    (try
-      (handler request)
-      (catch Exception e
-        (error "exception in api call: " e)
-        {:status 500 :body "Something isn't quite right..."}))))
-
-(defn wrap-api-handler ; from gorilla-explore
-  "a wrapper for restful API calls"
-  [handler]
-  (-> handler ; middlewares execute from bottom -> up
-      ;(wrap-anti-forgery)
-      ;(wrap-defaults api-defaults)
-      (wrap-keyword-params)
-      (wrap-params)
-      ;(wrap-format) ; muuntaja https://github.com/metosin/muuntaja
-      (wrap-format muuntaja)
-      ;(wrap-json-response)
-      ;(wrap-gzip)
-      wrap-fallback-exception))
+(def wrap-api-handler api/wrap-api-handler)
 
 #_(defn wrap-ws [handler]
     (-> handler
@@ -93,7 +71,6 @@
        ; needed to query remote apis from cljs
       #_(wrap-cors :access-control-allow-origin [#".*"]
                    :access-control-allow-methods [:get :put :post :delete])
-      ;(wrap-cljsjs)
       (wrap-gzip)))
 
 

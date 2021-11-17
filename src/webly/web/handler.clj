@@ -4,7 +4,9 @@
    [taoensso.timbre :refer [debug info error]]
    [ring.util.response :as response]
    [bidi.bidi :as bidi]
-   [bidi.ring]))
+   [bidi.ring]
+   [modular.webserver.handler.not-found :refer [not-found-handler]]
+   [modular.webserver.handler.registry :as registry]))
 
 #_(defn html-response [html]
     (response/content-type
@@ -12,18 +14,8 @@
       :body html}
      "text/html"))
 
-(defonce handler-registry
-  (atom {}))
-
 (defn add-ring-handler [key handler]
-  (swap! handler-registry assoc key handler))
-
-; not found handler
-
-(def not-found-body "<h1>  bummer, not found </h1")
-
-(defn not-found-handler [req]
-  (response/not-found not-found-body))
+  (registry/add-ring-handler key handler))
 
 (add-ring-handler :webly/not-found not-found-handler)
 
@@ -34,7 +26,7 @@
   (when (keyword? handler-kw) ;resources have a wrapped handler
     (debug "get-handler-backend:" handler-kw))
   (if (keyword? handler-kw)
-    (if-let [handler (handler-kw @handler-registry)]
+    (if-let [handler (handler-kw @registry/handler-registry)]
       handler
       (do (error "handler-registry does not contain handler for: " handler-kw)
           nil))

@@ -1,4 +1,4 @@
-(ns webly.web.files
+(ns modular.webserver.handler.files
   (:require
    [taoensso.timbre  :refer [debug info warn error]]
    [bidi.bidi :as bidi :refer [url-decode]]

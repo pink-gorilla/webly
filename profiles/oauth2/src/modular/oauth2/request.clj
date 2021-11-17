@@ -5,6 +5,7 @@
    [cemerick.url :refer (url url-encode)]
    [clj-http.client :as http]
    [clojure.string :as string]
+   [cheshire.core]
    [modular.oauth2.provider :refer [get-provider-config get-provider-auth-header]]
    [modular.oauth2.store :refer [load-token]]))
 

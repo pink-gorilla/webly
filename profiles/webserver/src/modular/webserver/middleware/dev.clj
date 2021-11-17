@@ -1,4 +1,4 @@
-(ns webly.web.middleware-dev
+(ns modular.webserver.middleware.dev
   (:require
    [taoensso.timbre :refer [debug info warn error]]
    [prone.middleware :refer [wrap-exceptions]]

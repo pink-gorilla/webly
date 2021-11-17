@@ -2,7 +2,7 @@
   #?(:clj
      (:require
       [bidi.ring]
-      [webly.web.files])))
+      [modular.webserver.handler.files])))
 
 ;; from: 
 ;; https://github.com/juxt/bidi/blob/master/README.md
@@ -17,15 +17,15 @@
 
 #?(:clj   (def resource-handler
             ;(bidi.ring/->ResourcesMaybe {:prefix "public"})
-            (webly.web.files/->ResourcesMaybe {:prefix "public"}))
+            (modular.webserver.handler.files/->ResourcesMaybe {:prefix "public"}))
    :cljs (def resource-handler :webly/resources))
 
 #?(:clj   (def file-handler-nodejs
-            (webly.web.files/->FilesMaybe {:dir "node_modules"}))
+            (modular.webserver.handler.files/->FilesMaybe {:dir "node_modules"}))
    :cljs (def file-handler-nodejs :webly/files-nodejs))
 
 #?(:clj   (def file-handler-bundel
-            (webly.web.files/->FilesMaybe {:dir "target/webly/public"}))
+            (modular.webserver.handler.files/->FilesMaybe {:dir "target/webly/public"}))
    :cljs (def file-handler-bundel :webly/files-bundel))
 
 

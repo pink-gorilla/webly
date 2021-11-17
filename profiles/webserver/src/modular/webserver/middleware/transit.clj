@@ -1,4 +1,4 @@
-(ns webly.web.middleware-transit
+(ns modular.webserver.middleware.transit
   (:require
    [cognitect.transit :as transit]
    [modular.encoding.transit :as e]
