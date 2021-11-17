@@ -22,4 +22,8 @@
 
 (get-request :github/userinfo)
 
+(get-request :github/search-repo {:q "user:pink-gorilla"})
+
+
+
 

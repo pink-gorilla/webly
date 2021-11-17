@@ -30,7 +30,10 @@
    :parse parse-github
    ; api requests
    :auth-header auth-header
-   :endpoints {:userinfo "https://api.github.com/user"}
+   :endpoints {:userinfo    "https://api.github.com/user"
+               :search-repo "https://api.github.com/search/repositories" ; q=user:USERNAME
+               }
    ; userinfo
    :user "https://api.github.com/user"
    :user-parse user-parse})
+

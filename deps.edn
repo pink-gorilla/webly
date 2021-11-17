@@ -53,15 +53,15 @@
         org.clojure/clojurescript {:mvn/version "1.10.879"}
         akiroz.re-frame/storage {:mvn/version "0.1.4"} ; localstorage 
         ; supported servers
-        info.sunng/ring-jetty9-adapter {:mvn/version  "0.15.2"} ; uses jetty 10.0.2, vlast version with java 9 : 0.14.0
-        ;{luminus/ring-undertow-adapter "1.2.0"}
-         ;{http-kit "2.5.3"}
+        
         ; websockets
         com.taoensso/encore {:mvn/version  "3.19.0"} ; sente brings an older version
         com.taoensso/sente {:mvn/version "1.16.2"}
 
         org.pinkgorilla/modular {:mvn/version "0.0.4"}
-        org.pinkgorilla/modular-oauth2 {:local/root "./profiles/oauth2" :deps/manifest :deps}}
+        org.pinkgorilla/modular-oauth2 {:local/root "./profiles/oauth2" :deps/manifest :deps}
+        org.pinkgorilla/modular-webserver {:local/root "./profiles/webserver" :deps/manifest :deps}
+        }
  :aliases
  {:garamond
   {:main-opts ["-m" "garamond.main"]

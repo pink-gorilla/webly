@@ -23,13 +23,11 @@
                              :tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
                                         "dark" ["tailwindcss/dist/tailwind-dark.min.css"]}
                              :fontawesome {true ["@fortawesome/fontawesome-free/css/all.min.css"]}
-                             :fonts-google    {true ["fonts-google/fonts.css"]}
-                             }
+                             :fonts-google    {true ["fonts-google/fonts.css"]}}
                  :current {:webly-dialog true
                            :tailwind "light" ; true
                            :fontawesome true
-                           :fonts-google false
-                           }}
+                           :fonts-google false}}
 ;
          }
 
@@ -57,25 +55,31 @@
                                      "repo"]}
           :google {:client-id        ""
                    :client-secret    ""
-                   :scopes          ["https://www.googleapis.com/auth/spreadsheets.readonly"
+                   :scopes          ["https://www.googleapis.com/auth/userinfo.email"
+
+                                     "https://www.googleapis.com/auth/spreadsheets.readonly"
                                      "https://www.googleapis.com/auth/drive.readonly"
-                                     "https://www.googleapis.com/auth/userinfo.email"]}
+                                     ; "https://www.googleapis.com/auth/drive"
+                                     "https://docs.google.com/feeds/"
+                                     "https://spreadsheets.google.com/feeds"
+                                     "https://www.googleapis.com/auth/calendar"]}
+
+
+
+
           :xero {:client-id        ""
-                   :client-secret    ""
-                   :scopes          ["openid"
-                                     "profile"
-                                     "email"
-                                     "accounting.settings"
-                                     "accounting.reports.read"
-                                     "accounting.journals.read"
-                                     "accounting.contacts"
-                                     "accounting.attachments"
-                                     "accounting.transactions"
-                                     "accounting.transactions.read"
-                                     "offline_access"
-                                     ]}
-          
-          }
+                 :client-secret    ""
+                 :scopes          ["openid"
+                                   "profile"
+                                   "email"
+                                   "accounting.settings"
+                                   "accounting.reports.read"
+                                   "accounting.journals.read"
+                                   "accounting.contacts"
+                                   "accounting.attachments"
+                                   "accounting.transactions"
+                                   "accounting.transactions.read"
+                                   "offline_access"]}}
 
  :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :info]
                    [#{"org.eclipse.jetty.*"} :info]
