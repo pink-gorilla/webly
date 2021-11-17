@@ -42,7 +42,7 @@
         com.taoensso/encore {:mvn/version  "3.19.0"} ; sente brings an older version
         com.taoensso/sente {:mvn/version "1.16.2"}
 
-        org.pinkgorilla/modular {:mvn/version "0.0.4"}
+        org.pinkgorilla/modular {:mvn/version "0.0.7"}
         org.pinkgorilla/modular-oauth2 {:local/root "./profiles/oauth2" :deps/manifest :deps}
         org.pinkgorilla/modular-webserver {:local/root "./profiles/webserver" :deps/manifest :deps}}
  :aliases

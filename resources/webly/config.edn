@@ -36,9 +36,9 @@
           :http {:port 8001 :host "0.0.0.0"}; "localhost"}
           :nrepl {:port 8002}}
 
- :web-server     {:port 8000
+ :web-server     {:port 8080
                   :host "0.0.0.0"}
- :web-server-api {:port 8007
+ :web-server-api {:port 8081
                   :host "0.0.0.0"}
 
  :jetty-ws {"/api/chsk" :ws/chsk-get}
@@ -56,16 +56,12 @@
           :google {:client-id        ""
                    :client-secret    ""
                    :scopes          ["https://www.googleapis.com/auth/userinfo.email"
-
                                      "https://www.googleapis.com/auth/spreadsheets.readonly"
                                      "https://www.googleapis.com/auth/drive.readonly"
                                      ; "https://www.googleapis.com/auth/drive"
                                      "https://docs.google.com/feeds/"
                                      "https://spreadsheets.google.com/feeds"
                                      "https://www.googleapis.com/auth/calendar"]}
-
-
-
 
           :xero {:client-id        ""
                  :client-secret    ""

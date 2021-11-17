@@ -26,3 +26,4 @@ package.json
 package-lock.json
 /karma.conf.js
 .webly
+certs

@@ -18,8 +18,12 @@
   prone/prone {:mvn/version "2021-04-23"} ; exception middleware
   ring/ring-json {:mvn/version "0.5.1"}
   ; https
-  simplevalue/letsencrypt {:git/url "https://github.com/SimpleValue/sv.letsencrypt.git"
-                           :sha "8b1a85846acaaa37a58b054f2372d8fde0663b75"}
+  ;org.shredzone.acme4j/acme4j-client {:mvn/version "2.7"}
+  ;org.shredzone.acme4j/acme4j-utils {:mvn/version "2.7"}
+  ;org.bouncycastle/bcprov-jdk15on {:mvn/version "1.69"}
+  ;org.bouncycastle/bcpkix-fips {:mvn/version "1.0.3"}
+  ;simplevalue/letsencrypt {:git/url "https://github.com/SimpleValue/sv.letsencrypt.git"
+  ;                         :sha "8b1a85846acaaa37a58b054f2372d8fde0663b75"}
   ; webserver
   info.sunng/ring-jetty9-adapter {:mvn/version  "0.15.2"} ; uses jetty 10.0.2, vlast version with java 9 : 0.14.0
   ; modular
@@ -39,7 +43,16 @@
          :main-opts ["-m" "cognitect.test-runner"]
          :exec-fn cognitect.test-runner.api/test}
 
+  :nrepl {:extra-deps {nrepl/nrepl  {:mvn/version "0.8.3"}
+                       cider/cider-nrepl {:mvn/version,"0.27.2"}}
+          :main-opts  ["-m" "nrepl.cmdline"]}
+
   :webserver {:exec-fn  demo.https/run-webserver}
+
+  ; requires java/bouncycastle to be installed.
+  ; guix has the package: java-bouncycastle
+  :get-certificates {:exec-fn  demo.https/get-certificates}
+
 
 ;
   }}

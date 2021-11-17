@@ -19,7 +19,15 @@
 (defn run-webserver [& _]
   (let [ring-handler (-> (wrap-bidi routes)
                          (wrap-fallback-exception))]
-    (run-jetty-server ring-handler nil 80 "0.0.0.0" true)))
+    (run-jetty-server ring-handler nil 
+                      {:port 8080
+                       :host "0.0.0.0"
+                       :join? true
+                       :ssl-port 8443
+                       :keystore "./certs/keystore.p12"
+                       ; :key-password ; Password you gave when creating the keystore
+                       }
+                       )))
 
-
+;; https://danielflower.github.io/2017/04/08/Lets-Encrypt-Certs-with-embedded-Jetty.html
 

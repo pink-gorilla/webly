@@ -43,7 +43,11 @@
     (when api
       (info "using web-server-api"))
     (case type
-      :jetty (run-jetty-server ring-handler (jetty-ws-handler) port host api)
+      :jetty (run-jetty-server ring-handler (jetty-ws-handler)
+                              {:port port
+                               :host host
+                               :join? (if api false true)
+                               })
       ;:undertow (run-undertow-server ring-handler port host api)
       ;:httpkit (run-httpkit-server ring-handler port host api)
       ;:shadow (run-shadow-server)
