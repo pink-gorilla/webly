@@ -6,9 +6,10 @@
   reagent/reagent {:mvn/version "1.1.0"} ; https://github.com/reagent-project/reagent
   re-frame/re-frame {:mvn/version "1.2.0"}
   com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
-
   cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
   day8.re-frame/http-fx {:mvn/version "0.2.3"}  ; reframe based http requests
+;  cljoauth2/cljoauth2 {:git/url "https://github.com/muta93srb/clj-oauth2.git"
+;                       :sha "2704cc073c4dc2a0b3c5af3dc8da1018fb6ac3cd"}
   org.pinkgorilla/modular {:mvn/version "0.0.7"} ; persistence
   }
 

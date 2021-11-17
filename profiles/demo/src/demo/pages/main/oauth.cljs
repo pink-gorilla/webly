@@ -10,6 +10,7 @@
   [block2 "oauth2"
    [user-button :github]
    [user-button :google]
+   [user-button :xero]
    [:p [link-dispatch [:oauth2/login :github] "github login via popup"]]
    [:p [link-dispatch [:oauth2/login :google] "google login via popup"]]
    [:p [link-href "/oauth2/github/token?code=99" "api test: github code ->token"]]

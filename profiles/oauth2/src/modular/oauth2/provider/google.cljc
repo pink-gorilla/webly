@@ -19,11 +19,17 @@
   {"Authorization" (str "Bearer " token)})
 
 (def config
-  {:authorize-uri "https://accounts.google.com/o/oauth2/v2/auth"
-   :access-token-uri "https://accounts.google.com/o/oauth2/v2/access_token"
+  {; authorize
+   :authorize-uri "https://accounts.google.com/o/oauth2/v2/auth"
    :response-type "token"
+    ; access token
+   :access-token-uri "https://accounts.google.com/o/oauth2/v2/access_token"
    :accessTokenResponseKey "id_token"
    :parse parse-google
+   ; api requests
+   :auth-header auth-header
+   :endpoints {:userinfo "https://www.googleapis.com/oauth2/v2/userinfo"
+               :search "https://www.googleapis.com/customsearch/v1"}
+   ; userinfo
    :user "https://www.googleapis.com/oauth2/v2/userinfo"
-   :user-parse user-parse
-   :auth-header auth-header})
+   :user-parse user-parse})

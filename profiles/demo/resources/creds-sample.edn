@@ -2,7 +2,10 @@
 {:oauth2 {:google {:client-id ""
                    :client-secret ""}
           :github {:client-id        ""
-                   :client-secret    ""}}}
+                   :client-secret    ""}
+          :xero   {:client-id        ""
+                   :client-secret    ""}
+          }}
 
 ; google credentials
 ; https://console.developers.google.com/apis
@@ -21,4 +24,11 @@
 ; list your github oauth apps: https://github.com/settings/applications/
 
 
+; xero
 
+; https://developer.xero.com/app/manage
+; pick oauth2 - webapp
+; homepage url: https://localhost:8000/
+; redirect url is: http://localhost:8000/oauth2/redirect/xero
+; https://xeroapi.github.io/xero-node/accounting/index.html
+; https://github.com/XeroAPI/xero-node/blob/master/src/gen/api/accountingApi.ts

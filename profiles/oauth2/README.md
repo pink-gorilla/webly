@@ -42,4 +42,24 @@ we work similar to this library.
 
 
 
---
+
+https://luminusweb.com/docs/services.html#authentication
+
+(defn admin? [req]
+  (and (authenticated? req)
+       (#{:admin} (:role (:identity req)))))
+
+(def wrap-restricted
+  {:name :wrap-restricted
+   :wrap (fn wrap-restricted [handler]
+           (fn [req]
+             (if (boolean (:identity req))
+               (handler req)
+               (unauthorized
+{:error "You are not authorized to perform that action."}))))})
+
+
+["/restricted"
+      {:swagger    {:tags ["restricted"]}
+       :middleware [wrap-restricted]}
+   ["/user" {:get (fn [request] (ok (-> request :session :identity)))}]]])

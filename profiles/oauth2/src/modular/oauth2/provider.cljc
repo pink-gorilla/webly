@@ -4,13 +4,15 @@
    [taoensso.timbre :as timbre :refer [info infof error]]
    [cemerick.url :refer [url url-encode]]
    [modular.oauth2.provider.google :as google]
-   [modular.oauth2.provider.github :as github]))
+   [modular.oauth2.provider.github :as github]
+   [modular.oauth2.provider.xero :as xero]))
 
 ;; PROVIDER LIST
 
 (def providers
   {:github github/config
-   :google google/config})
+   :google google/config
+   :xero xero/config})
 
 (defn get-provider-config [p]
   (or (p providers) {}))
@@ -22,13 +24,6 @@
     {:launch-uri       (str "/oauth2/auth/" provider-name)
      :redirect-uri     (str "/oauth2/redirect/" provider-name)
      :landing-uri      (str "/oauth2/landing/" provider-name)}))
-
-(defn get-provider-auth-header [p token]
-  (if-let [config (get-provider-config p)]
-    (let [auth-header (:auth-header config)]
-      (auth-header token))
-    (do (error "cannot get auth header for unknwon provider")
-        {})))
 
 (defn parse-userinfo [p token]
   (if-let [config (get-provider-config p)]
@@ -109,3 +104,11 @@
 ; &expires_in=3599
 ; &scope=https://www.googleapis.com/auth/drive.readonly%20https://www.googleapis.com/auth/spreadsheets.readonly
 
+;; request
+
+(defn get-provider-auth-header [p token]
+  (if-let [config (get-provider-config p)]
+    (let [auth-header (:auth-header config)]
+      (auth-header token))
+    (do (error "cannot get auth header for unknwon provider")
+        {})))

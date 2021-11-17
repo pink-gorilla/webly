@@ -22,8 +22,7 @@
                    :on-success      [success provider]
                    :on-failure      [:oauth2/request-error provider]})]
      (info "making web request:" provider " token: " at " r: " r)
-     {;:db       (assoc-in db [:pref] (pref))
-      :http-xhrio r})))
+     {:http-xhrio r})))
 
   ;:format (ajax/json-request-format) ;  {:keywords? false})
   ;:response-format; {:keywords? true})

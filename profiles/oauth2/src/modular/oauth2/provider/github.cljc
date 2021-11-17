@@ -20,12 +20,17 @@
   {"Authorization" (str "token " token)})
 
 (def config
-  {:authorize-uri "https://github.com/login/oauth/authorize"
-   :access-token-uri "https://github.com/login/oauth/access_token"
-   :accessTokenResponseKey "id_token"
+  {; authorize
+   :authorize-uri "https://github.com/login/oauth/authorize"
    :response-type "token"
-   :parse parse-github
+   ; access token
+   :access-token-uri "https://github.com/login/oauth/access_token"
    :parse-dispatch [:github/code->token]
+   :accessTokenResponseKey "id_token"
+   :parse parse-github
+   ; api requests
+   :auth-header auth-header
+   :endpoints {:userinfo "https://api.github.com/user"}
+   ; userinfo
    :user "https://api.github.com/user"
-   :user-parse user-parse
-   :auth-header auth-header})
+   :user-parse user-parse})
