@@ -8,7 +8,6 @@
         }
 
  :tasks {; dev tools
-         demo (shell "clojure" "-X:webly")
          lint (shell "clojure" "-M:lint" "src" "profiles/oauth2" "profiles/webserver")
          cljfmt-check (shell "clojure" "-M:cljfmt" "check" "src" "profiles" "test")
          cljfmt-fix (shell "clojure" "-M:cljfmt" "fix" "src" "profiles" "test")
@@ -44,6 +43,12 @@
                 :task (shell "all good - you can push to github")}
 
 
+         
+         ;clj-kondo (clojure "-Sdeps" '{:deps {clj-kondo/clj-kondo {:mvn/version "2021.10.19"}}}
+         ;            "-M" "-m" "clj-kondo.main" "--lint" "src")}
+
+         demo (shell "clojure" "-X:webly")
+         make-web-requests (shell {:dir "profiles/demo-oauth2"} "clojure" "-X:make-web-requests")
 
  ;        
          }}
