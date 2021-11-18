@@ -10,8 +10,9 @@ openssl pkcs12 \
     -in fullchain.pem \
     -inkey privkey.pem \
     -out ../../keystore.p12 \
-    -name wien 
-  
+    -passout pass:password \
+    -name wien
+
 chmod a+r ../../keystore.p12
 
 

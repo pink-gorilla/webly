@@ -25,7 +25,7 @@
                        :join? true
                        :ssl-port 8443
                        :keystore "./certs/keystore.p12"
-                       ; :key-password ; Password you gave when creating the keystore
+                       :key-password "password"; Password you gave when creating the keystore
                        })))
 ;; https://danielflower.github.io/2017/04/08/Lets-Encrypt-Certs-with-embedded-Jetty.html
 
