@@ -3,7 +3,8 @@
    [taoensso.timbre :refer-macros [debug info error]]
    [re-frame.core :as rf]
    [webly.ws.core :refer [init-ws!]]
-   [webly.user.helper :refer [sente-ws-url]]))
+   ;[webly.user.helper :refer [sente-ws-url]]
+   ))
 
 (rf/reg-event-db
  :ws/init

@@ -4,16 +4,15 @@
   (:require
    [clojure.string]
    [taoensso.timbre :refer [debug info error]]
-   [ring.util.response :refer [response]]
-   [ring.middleware.cors :refer [wrap-cors]]
+   ;[ring.util.response :refer [response]]
    [ring.middleware.gzip :refer [wrap-gzip]]
-   [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
+   ;[ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
    [ring.middleware.keyword-params :refer [wrap-keyword-params]]
    [ring.middleware.params :refer [wrap-params]]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
    [ring.middleware.session :refer [wrap-session]]
-   [muuntaja.middleware :refer [wrap-format]] ; 30x faster than ring.middleware.format
-   [ring.middleware.json :refer [wrap-json-response]]
+  ; [muuntaja.middleware :refer [wrap-format]] ; 30x faster than ring.middleware.format
+  ; [ring.middleware.json :refer [wrap-json-response]]
    [modular.webserver.middleware.api :as api]))
 
 ;from clojurewb - good example for middleware for websocket requests
@@ -40,26 +39,6 @@
       ;(wrap-session)
       ;(wrap-json-response)
         (wrap-gzip))) ;oz 
-
-(defn allow-cross-origin
-  "Middleware function to allow cross origin requests from browsers.
-   When a browser attempts to call an API from a different domain, it makes an OPTIONS request first to see the server's
-   cross origin policy.  So, in this method we return that when an OPTIONs request is made.
-   Additionally, for non OPTIONS requests, we need to just returm the 'Access-Control-Allow-Origin' header or else
-   the browser won't read the data properly.
-   The above notes are all based on how Chrome works. "
-  ([handler]
-   (allow-cross-origin handler "*"))
-  ([handler allowed-origins]
-   (fn [request]
-     (if (= (request :request-method) :options)
-       (-> (response)                     ; Don't pass the requests down, just return what the browser needs to continue.
-           (assoc-in [:headers "Access-Control-Allow-Origin"] allowed-origins)
-           (assoc-in [:headers "Access-Control-Allow-Methods"] "GET,POST,DELETE")
-           (assoc-in [:headers "Access-Control-Allow-Headers"] "X-Requested-With,Content-Type,Cache-Control,Origin,Accept,Authorization")
-           (assoc :status 200))
-       (-> (handler request)         ; Pass the request on, but make sure we add this header for CORS support in Chrome.
-           (assoc-in [:headers "Access-Control-Allow-Origin"] allowed-origins))))))
 
 (defn wrap-webly [handler]
   (-> handler

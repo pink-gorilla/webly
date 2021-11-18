@@ -2,7 +2,7 @@
   "Events related configuration loading"
   (:require
    [taoensso.timbre :refer-macros [debug info infof error]]
-   [clojure.string :as str]
+   ;[clojure.string :as str]
    [ajax.core :as ajax]
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
    [modular.log :refer [timbre-config!]]

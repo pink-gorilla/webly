@@ -2,9 +2,9 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info error]]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
-   [ring-ttl-session.core :refer [ttl-memory-store]]
-   [ring.middleware.session :refer [wrap-session]]
-   [ring.middleware.cookies :refer [wrap-cookies]]
+   ;[ring-ttl-session.core :refer [ttl-memory-store]]
+  ; [ring.middleware.session :refer [wrap-session]]
+  ; [ring.middleware.cookies :refer [wrap-cookies]]
    [ring.middleware.oauth2 :refer [wrap-oauth2]]
    [modular.config :refer [get-in-config config-atom]]
    [modular.writer :refer [write-status]]

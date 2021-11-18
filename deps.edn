@@ -38,13 +38,11 @@
         akiroz.re-frame/storage {:mvn/version "0.1.4"} ; localstorage 
         ; supported servers
 
-        ; websockets
-        com.taoensso/encore {:mvn/version  "3.19.0"} ; sente brings an older version
-        com.taoensso/sente {:mvn/version "1.16.2"}
-
         org.pinkgorilla/modular {:mvn/version "0.0.7"}
         org.pinkgorilla/modular-oauth2 {:local/root "./profiles/oauth2" :deps/manifest :deps}
-        org.pinkgorilla/modular-webserver {:local/root "./profiles/webserver" :deps/manifest :deps}}
+        org.pinkgorilla/modular-webserver {:local/root "./profiles/webserver" :deps/manifest :deps}
+        org.pinkgorilla/modular-websocket {:local/root "./profiles/websocket" :deps/manifest :deps}
+        }
  :aliases
  {:garamond
   {:main-opts ["-m" "garamond.main"]
@@ -55,27 +53,18 @@
             :main-opts ["-m" "applied-science.deps-library"]}
 
   ; https://github.com/weavejester/cljfmt
-  :cljfmt     {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
-               :main-opts ["-m" "cljfmt.main" "check"
-                           "src"
-                           "profiles"
-                           "test"
-                           "--indents" "cljfmt.edn"]}
-  :cljfmt-fix {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
-               :main-opts ["-m" "cljfmt.main" "fix"
-                           "src"
-                           "profiles"
-                           "test"
-                           "--indents" "cljfmt.edn"]}
+  :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
+           :main-opts ["-m" "cljfmt.main" 
+                       "--indents" "cljfmt.edn"
+                       ; "fix"  "check"
+                       ]}
 
  ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
   :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
          :main-opts ["-m" "clj-kondo.main"
                      "--fail-level" "error"
-                     "--lint"
-                     "src"
-                     "profiles/oauth2"
-                     "--config" "cljkondo.edn"]}
+                     "--config" "cljkondo.edn"
+                     "--lint"]}
 
   :cloverage {:extra-paths ["test"]
               :extra-deps  {cloverage/cloverage {:mvn/version "RELEASE"}}
@@ -100,8 +89,8 @@
   ; 2. run unit tests 
 
   :test {:extra-paths ["test"
-                       "profiles/demo/resources"
-                       "profiles/test/resources"]
+                       "test/resources"
+                       "profiles/demo/resources"]
          :extra-deps {io.github.cognitect-labs/test-runner
                       {:git/url "https://github.com/cognitect-labs/test-runner.git"
                        :sha "4e7e1c0dfd5291fa2134df052443dc29695d8cbe"}
@@ -112,9 +101,9 @@
          :exec-fn cognitect.test-runner.api/test}
 
   :ci {:extra-paths ["test"
+                     "test/resources"
                      "profiles/demo/src"
-                     "profiles/demo/resources"
-                     "profiles/test/resources"]
+                     "profiles/demo/resources"]
        :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}} ; http cors test
        :exec-fn webly.user.app.app/webly-run
        :exec-args {:profile "ci"
@@ -123,7 +112,8 @@
   :webly {; this is the ui demo.
           :extra-paths ["profiles/demo/src"
                         "profiles/demo/resources"]
-          :extra-deps  {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}} ; http cors test
+          :extra-deps  {org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
+                        org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}} ; http cors test
           :exec-fn webly.user.app.app/webly-run
           :exec-args {:profile "watch2"  ;watch2 - 10x disabled
                       :config "demo.edn"}}

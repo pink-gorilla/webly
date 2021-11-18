@@ -1,7 +1,5 @@
 (ns modular.webserver.handler.not-found
   (:require
-   [clojure.string]
-   [taoensso.timbre :refer [debug info error]]
    [ring.util.response :as response]))
 
 ; not found handler

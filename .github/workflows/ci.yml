@@ -31,7 +31,7 @@ jobs:
       run: |
          ./scripts/prep-res.sh
     - name: clj-fmt
-      run: clojure -M:cljfmt
+      run: clojure -M:cljfmt check
     - name: test-clj
       run: clojure -M:test
     - name: js build

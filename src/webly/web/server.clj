@@ -7,9 +7,9 @@
    [modular.webserver.jetty :refer [run-jetty-server]]
    [modular.webserver.handler.registry :refer [handler-registry]]
    ; webly
-   [webly.web.middleware :refer [wrap-webly]]
+   ;[webly.web.middleware :refer [wrap-webly]]
    [webly.ws.core :refer [init-ws!]]
-   [webly.ws.handler :refer [ws-handshake-handler]]
+   ;[webly.ws.handler :refer [ws-handshake-handler]]
    ;[webly.web.hooks]
    ))
 (defn stop-server []
@@ -44,10 +44,9 @@
       (info "using web-server-api"))
     (case type
       :jetty (run-jetty-server ring-handler (jetty-ws-handler)
-                              {:port port
-                               :host host
-                               :join? (if api false true)
-                               })
+                               {:port port
+                                :host host
+                                :join? (if api false true)})
       ;:undertow (run-undertow-server ring-handler port host api)
       ;:httpkit (run-httpkit-server ring-handler port host api)
       ;:shadow (run-shadow-server)

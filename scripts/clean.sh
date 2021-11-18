@@ -1,13 +1,18 @@
 #!/bin/sh
-rm target/ -r
-rm .shadow-cljs/ -r
-rm node_modules -r
-rm .cpcache -r
 
-rm package.json
-rm package-lock.json
-rm karma.conf.js
-rm shadow-cljs.edn
+echo "cleaning artefacts"
 
-rm .webly -r
+rm target/ -r -f
+rm .shadow-cljs/ -r -f
+rm node_modules -r -f
+rm .cpcache -r -f
+
+rm .webly -r -f
+
+rm package.json -f
+rm package-lock.json -f
+rm karma.conf.js -f
+rm shadow-cljs.edn -f
+
+
 

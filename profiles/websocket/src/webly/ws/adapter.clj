@@ -1,6 +1,6 @@
 (ns webly.ws.adapter
   (:require
-   [taoensso.timbre :as log :refer [info infof]]
+   [taoensso.timbre :as log :refer [debug info infof]]
    [taoensso.sente.packers.transit :as sente-transit]
   ; [taoensso.sente.server-adapters.undertow]
    [taoensso.sente.server-adapters.jetty9]
@@ -11,18 +11,18 @@
    [webly.ws.msg-handler :refer [event-msg-handler]]))
 
 #_(defn undertow []
-    (info "websocket mode: undertow.")
+    (debug "websocket mode: undertow.")
     (require '[taoensso.sente.server-adapters.undertow])
 
     taoensso.sente.server-adapters.undertow/get-sch-adapter)
 
 (defn jetty []
-  (info "websocket mode: jetty.")
+  (debug "websocket mode: jetty.")
   (require '[taoensso.sente.server-adapters.jetty9])
   taoensso.sente.server-adapters.jetty9/get-sch-adapter)
 
 #_(defn httpkit []
-    (info "websocket mode: httpkit")
+    (debug "websocket mode: httpkit")
     (require '[taoensso.sente.server-adapters.http-kit])
     taoensso.sente.server-adapters.http-kit/get-sch-adapter)
 

@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :refer [info error]]
    [clojure.data.json :as json]
-   [cemerick.url :refer (url url-encode)]
+   [cemerick.url :refer [url url-encode]]
    [clj-http.client :as http]
    [clojure.string :as string]
    [cheshire.core]

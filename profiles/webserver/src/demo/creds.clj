@@ -2,9 +2,7 @@
   (:require
    [clojure.java.io :as io]
    [sv.letsencrypt.pem-to-keystore]
-   [sv.letsencrypt.core :refer [create-keystore letsencrypt-via-http-stack]]
-))
-
+   [sv.letsencrypt.core :refer [create-keystore letsencrypt-via-http-stack]]))
 
 (defn- compose
   "Same as `clojure.core/comp` but reverse the arguments / `fns`."

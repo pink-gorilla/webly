@@ -1,0 +1,49 @@
+{:paths ["script"]
+ :deps {;borkdude/gh-release-artifact
+        #_{:local/root "../gh-release-artifact"}
+       ; {:git/url "https://github.com/borkdude/gh-release-artifact"
+       ;  :sha "2f8898d84126a4e922c490f8614211a8b0cf67cd"}
+       ; com.github.liquidz/antq {:mvn/version "RELEASE"}
+       ; org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
+        }
+
+ :tasks {; dev tools
+         demo (shell "clojure" "-X:webly")
+         lint (shell "clojure" "-M:lint" "src" "profiles/oauth2" "profiles/webserver")
+         cljfmt-check (shell "clojure" "-M:cljfmt" "check" "src" "profiles" "test")
+         cljfmt-fix (shell "clojure" "-M:cljfmt" "fix" "src" "profiles" "test")
+         deps-tree (shell "clojure" "-X:deps" "tree")
+         outdated (shell "clojure" "-M:outdated")
+
+         ; build
+         clean (shell "scripts/clean.sh")
+         npm-install (shell "clojure"  "-X:webly" ":profile" "npm-install")
+         build-js (shell "clojure" "-X:webly" ":profile" "ci")
+         copy-resources (shell "scripts/copy_res.sh")
+         get-fonts (shell "scripts/get-fonts.sh")
+         cljs-build {:depends [npm-install
+                               build-js
+                               copy-resources
+                               get-fonts]
+                     :task (shell "echo" "cljs bundle has been built!")}
+
+         ; tests
+         test-clj (shell "clojure" "-M:test")
+         test-cljs (shell "npm" "test")
+
+         ;; CI
+         ci {:depends [cljfmt-check
+                       cljs-build
+                       test-clj
+                       test-cljs]
+             :task (shell "ci checks are ok!")}
+
+         check {:depends [clean
+                          cljfmt-fix
+                          ci]
+                :task (shell "all good - you can push to github")}
+
+
+
+ ;        
+         }}

@@ -9,11 +9,23 @@
 ; namespaces in this list are those we get for side-effects.
   ; it is also possible to do regex search here:
   ; https://github.com/borkdude/clj-kondo/blob/master/doc/config.md
-  :unused-namespace {:level :off
+  :unused-namespace {:level :info
                      :exclude [clojure.core.async
                                cljs.core.async
-                               cljs.core.async.macros]}
-  :unused-binding {:level :off}
+                               cljs.core.async.macros
+                               taoensso.timbre]}
+  :unused-binding {:level :off
+                   :exclude [taoensso.timbre
+                             ; this does not work:
+                             ;webly.ws.msg-handler
+                             ;?uid
+                             ;?csrf-token
+                             ;?handshake-data
+                             ;?reply-fn
+                             ;client-id
+                             ;send-fn
+                             ;ev-msg
+                             ]}
 
   :unused-referred-var {:level :off
                         :exclude {taoensso.timbre [trace tracef ; dont be strict in referring to logging functions 
@@ -58,7 +70,7 @@
           :progress false
           ;; output can be filtered and removed by regex on filename. empty options leave the output untouched.
           :include-files [] #_["^src" "^test"]
-          :exclude-files [".*cljs"
+          :exclude-files [;".*cljs"
                           "src/demo/goldly.*"
                              ;"^cljs/core"
                              ; "profiles/test/src/demo/cljs.*"

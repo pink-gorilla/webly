@@ -1,7 +1,4 @@
-(ns modular.webserver.handler.registry
-  (:require
-   [clojure.string]
-   [taoensso.timbre :refer [debug info error]]))
+(ns modular.webserver.handler.registry)
 
 (defonce handler-registry
   (atom {}))

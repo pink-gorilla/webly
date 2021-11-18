@@ -1,6 +1,6 @@
 (ns modular.webserver.handler.files
   (:require
-   [taoensso.timbre  :refer [debug info warn error]]
+  ; [taoensso.timbre  :refer [debug info warn error]]
    [bidi.bidi :as bidi :refer [url-decode]]
    [clojure.java.io :as io]
    [ring.util.response :refer [file-response resource-response]]

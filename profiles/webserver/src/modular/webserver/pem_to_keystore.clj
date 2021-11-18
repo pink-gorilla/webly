@@ -12,10 +12,6 @@
   (java.security.Security/addProvider
    (org.bouncycastle.jce.provider.BouncyCastleProvider.)))
 
-
-
-
-
 (defn- read-private-key
   [pem-file]
   (with-open [reader (java.io.FileReader. pem-file)

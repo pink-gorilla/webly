@@ -1,13 +1,14 @@
 (ns webly.user.oauth2.handler
   (:require
    [taoensso.timbre :as timbre :refer [info error]]
-   [hiccup.page :as page]
-   [ring.util.response :as response]
-   [webly.web.handler :refer [add-ring-handler]]
-   [webly.web.middleware :refer [wrap-webly wrap-api-handler]]
+  ; [hiccup.page :as page]
+  ; [ring.util.response :as response]
    [modular.oauth2.authorize.handler-redirect :refer [handler-oauth2-redirect]]
    [modular.oauth2.authorize.handler-redirect-github :refer [handler-github-redirect]]
-   [modular.oauth2.store.save-handler :refer [handler-oauth2-save]]))
+   [modular.oauth2.store.save-handler :refer [handler-oauth2-save]]
+   [modular.webserver.middleware.api :refer [wrap-api-handler]]
+   [webly.web.handler :refer [add-ring-handler]]
+   [webly.web.middleware :refer [wrap-webly]]))
 
 (def handler-oauth-redirect-wrapped
   (-> handler-oauth2-redirect

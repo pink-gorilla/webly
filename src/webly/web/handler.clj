@@ -2,17 +2,10 @@
   (:require
    [clojure.string]
    [taoensso.timbre :refer [debug info error]]
-   [ring.util.response :as response]
    [bidi.bidi :as bidi]
    [bidi.ring]
    [modular.webserver.handler.not-found :refer [not-found-handler]]
    [modular.webserver.handler.registry :as registry]))
-
-#_(defn html-response [html]
-    (response/content-type
-     {:status 200
-      :body html}
-     "text/html"))
 
 (defn add-ring-handler [key handler]
   (registry/add-ring-handler key handler))

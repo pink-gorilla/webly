@@ -9,20 +9,21 @@
  {:token-path "../../.webly/tokenstore/"})
 
 (load-token :google)
-
 (get-endpoint :google/search)
-
+(get-request :google/search)
 (get-request :google/search {:q "clojure"
                              :num 10
-  ;:cx 4
+                             ;:cx 4
                              })
+
 (load-token :github)
-
 (get-endpoint :github/userinfo)
-
 (get-request :github/userinfo)
-
 (get-request :github/search-repo {:q "user:pink-gorilla"})
+
+(load-token :xero)
+
+
 
 
 
