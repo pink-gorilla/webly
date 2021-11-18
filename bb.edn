@@ -42,13 +42,15 @@
                           ci]
                 :task (shell "all good - you can push to github")}
 
-
+         show-jar (shell "fastjar" "tf" "target/webly.jar")
          
          ;clj-kondo (clojure "-Sdeps" '{:deps {clj-kondo/clj-kondo {:mvn/version "2021.10.19"}}}
          ;            "-M" "-m" "clj-kondo.main" "--lint" "src")}
 
          demo (shell "clojure" "-X:webly")
+         webserver-https (shell {:dir "profiles/webserver"} "clojure" "-X:webserver")
          make-web-requests (shell {:dir "profiles/demo-oauth2"} "clojure" "-X:make-web-requests")
+
 
  ;        
          }}

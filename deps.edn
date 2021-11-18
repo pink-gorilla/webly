@@ -41,20 +41,42 @@
         org.pinkgorilla/modular {:mvn/version "0.0.7"}
         org.pinkgorilla/modular-oauth2 {:local/root "./profiles/oauth2" :deps/manifest :deps}
         org.pinkgorilla/modular-webserver {:local/root "./profiles/webserver" :deps/manifest :deps}
-        org.pinkgorilla/modular-websocket {:local/root "./profiles/websocket" :deps/manifest :deps}
-        }
+        org.pinkgorilla/modular-websocket {:local/root "./profiles/websocket" :deps/manifest :deps}}
  :aliases
  {:garamond
   {:main-opts ["-m" "garamond.main"]
    :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
 
   ;https://github.com/applied-science/deps-library 1.0.861
-  :release {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
-            :main-opts ["-m" "applied-science.deps-library"]}
+  :release
+  {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
+   :main-opts ["-m" "applied-science.deps-library"]}
+
+  :jar
+  {:extra-deps {com.github.seancorfield/depstar {:mvn/version "2.0.216"}}
+   :exec-fn hf.depstar/jar
+   :exec-args {;:pom-file "pom2.xml"
+               :jar "target/webly.jar"
+               :group-id "org.pinkgorilla"
+               :artifact-id "webly"
+               :sync-pom true
+               :paths-only false
+               :verbose true
+               :jar-type :thin ; :uber
+               }}
+
+  :deploy-jar
+  {:replace-deps {slipset/deps-deploy {:mvn/version "0.1.5"}}
+   :exec-fn deps-deploy.deps-deploy/deploy
+   :exec-args {:installer :remote
+               :artifact "target/webly.jar"}}
+
+
+
 
   ; https://github.com/weavejester/cljfmt
   :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
-           :main-opts ["-m" "cljfmt.main" 
+           :main-opts ["-m" "cljfmt.main"
                        "--indents" "cljfmt.edn"
                        ; "fix"  "check"
                        ]}

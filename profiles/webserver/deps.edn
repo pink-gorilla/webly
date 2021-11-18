@@ -47,7 +47,8 @@
                        cider/cider-nrepl {:mvn/version,"0.27.2"}}
           :main-opts  ["-m" "nrepl.cmdline"]}
 
-  :webserver {:exec-fn  demo.https/run-webserver}
+  :webserver {:extra-paths ["src-demo"]
+              :exec-fn  demo.https/run-webserver}
 
   ; requires java/bouncycastle to be installed.
   ; guix has the package: java-bouncycastle
