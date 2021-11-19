@@ -53,20 +53,26 @@
    :main-opts ["-m" "applied-science.deps-library"]}
 
   :jar
-  {:extra-deps {com.github.seancorfield/depstar {:mvn/version "2.0.216"}}
+   ; alternative approach culd be depstar:
+   ; If you do not sync the pom, depstar will take it as-is -- try :sync-pom false (or just remove that option, it should default to false).
+
+  {:extra-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
    :exec-fn hf.depstar/jar
    :exec-args {;:pom-file "pom2.xml"
                :jar "target/webly.jar"
                :group-id "org.pinkgorilla"
                :artifact-id "webly"
                :sync-pom true
+               ; :sync-pom -- if true, will run the equivalent of clojure -Spom to create or update your pom.xml file prior to building the JAR file
                :paths-only false
+               ; :paths-only -- if true, only use :paths and :extra-paths from the project basis (and do not treat :local/root and :git/url 
+               ; as providing source dependencies); new in 2.0.206
                :verbose true
                :jar-type :thin ; :uber
                }}
 
   :deploy-jar
-  {:replace-deps {slipset/deps-deploy {:mvn/version "0.1.5"}}
+  {:replace-deps {slipset/deps-deploy {:mvn/version "0.2.0"}}
    :exec-fn deps-deploy.deps-deploy/deploy
    :exec-args {:installer :remote
                :artifact "target/webly.jar"}}

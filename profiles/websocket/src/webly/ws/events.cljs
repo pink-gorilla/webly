@@ -1,31 +1,53 @@
 (ns webly.ws.events
   (:require
-   [taoensso.timbre :refer-macros [debug info error]]
+   [taoensso.timbre :refer-macros [debug info warn error]]
+   [cemerick.url :as url]
    [re-frame.core :as rf]
-   [webly.ws.core :refer [init-ws!]]
-   ;[webly.user.helper :refer [sente-ws-url]]
-   ))
+   [webly.ws.core :refer [init-ws!]]))
+
+(defn application-url
+  "gets the current url, as a map"
+  []
+  (url/url (-> js/window .-location .-href)))
+
+(defn is-https? []
+  (let [{:keys [protocol]} (application-url)]
+    (= "https" protocol)))
+
+(defn is-served-by-shadow? [db]
+  (let [app-url (application-url)
+        port (:port app-url)
+        shadow-dev-port (get-in db [:config :shadow :dev-http :port])
+        shadow-port (get-in db [:config :shadow :http :port])]
+    (or (= port shadow-dev-port)
+        (= port shadow-port))))
+
+(defn changed-port [db]
+  (when (is-served-by-shadow? db)
+    (warn "the page is served by shadow which does not support sente websockets - connecting to jetty server..")
+    (if (is-https?)
+      (get-in db [:config :web-server :ssl-port])
+      (get-in db [:config :web-server :port]))))
 
 (rf/reg-event-db
  :ws/init
  (fn [db [_]]
-   (let [api (get-in db [:config :profile :server :api])
-         port-api (get-in db [:config :web-server-api :port])
-         port (when api port-api)]
+   (let [port (changed-port db)]
+     (warn "ws connect to port (nil=unchanged): " port)
      (init-ws! "/api/chsk" port)
      db)))
 
-#_[{:type :auto,
-    :open? false,
-    :ever-opened? false,
+#_[{:type :auto
+    :open? false
+    :ever-opened? false
     :csrf-token "6zxUoCmfhv5lleMLfrHMgpChTHYecrY2TSswTz9YTrLLmm/bn7WWT+NCe4mbEFFfEg+gl/Zyobr7tdQX"}
 
-   {:type :ws,
-    :open? true,
-    :ever-opened? true,
-    :csrf-token "6zxUoCmfhv5lleMLfrHMgpChTHYecrY2TSswTz9YTrLLmm/bn7WWT+NCe4mbEFFfEg+gl/Zyobr7tdQX",
-    :uid "93732cb7-da5c-4792-88cd-c9362dbed11d",
-    :handshake-data nil,
+   {:type :ws
+    :open? true
+    :ever-opened? true
+    :csrf-token "6zxUoCmfhv5lleMLfrHMgpChTHYecrY2TSswTz9YTrLLmm/bn7WWT+NCe4mbEFFfEg+gl/Zyobr7tdQX"
+    :uid "93732cb7-da5c-4792-88cd-c9362dbed11d"
+    :handshake-data nil
     :first-open? true}]
 
 ;[{:type :auto, 

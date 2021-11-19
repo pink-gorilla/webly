@@ -4,6 +4,7 @@
    [clojure.data.json :as json]
    [cemerick.url :refer [url url-encode]]
    [clj-http.client :as http]
+
    [clojure.string :as string]
    [cheshire.core]
    [modular.oauth2.provider :refer [get-provider-config get-provider-auth-header]]

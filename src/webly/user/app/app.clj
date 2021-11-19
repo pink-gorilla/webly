@@ -4,7 +4,6 @@
    [modular.writer :refer [write-status]]
    [modular.config :refer [get-in-config config-atom load-config!]]
    [modular.webserver.middleware.dev :refer [wrap-dev]]
-
    [webly.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]
    [webly.web.server :refer [run-server]]
@@ -12,7 +11,6 @@
    [webly.user.app.handler :refer [app-handler]]
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.oauth2.middleware :refer [print-oauth2-config]]
-
    ; side-effects
    [webly.user.config.handler]   ; handler: config
    [webly.user.oauth2.handler]

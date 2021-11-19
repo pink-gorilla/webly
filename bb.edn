@@ -43,13 +43,17 @@
                 :task (shell "all good - you can push to github")}
 
          show-jar (shell "fastjar" "tf" "target/webly.jar")
-         
+         show-jar-pom (shell "fastjar" "xf" "target/webly.jar" "META-INF/maven/org.pinkgorilla/webly/pom.xml")
+         show-jar-manifest (shell "fastjar" "xf" "target/webly.jar" "META-INF/MANIFEST.MF") 
+         show-git-tag (shell "clojure" "-M:garamond")
+          
+
          ;clj-kondo (clojure "-Sdeps" '{:deps {clj-kondo/clj-kondo {:mvn/version "2021.10.19"}}}
          ;            "-M" "-m" "clj-kondo.main" "--lint" "src")}
 
-         demo (shell "clojure" "-X:webly")
-         webserver-https (shell {:dir "profiles/webserver"} "clojure" "-X:webserver")
-         make-web-requests (shell {:dir "profiles/demo-oauth2"} "clojure" "-X:make-web-requests")
+         demo-webly (shell "clojure" "-X:webly")
+         demo-webserver-https (shell {:dir "profiles/webserver"} "clojure" "-X:webserver")
+         demo-web-requests (shell {:dir "profiles/demo-oauth2"} "clojure" "-X:make-web-requests")
 
 
  ;        

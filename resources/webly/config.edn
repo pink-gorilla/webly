@@ -37,9 +37,11 @@
           :nrepl {:port 8002}}
 
  :web-server     {:port 8080
-                  :host "0.0.0.0"}
- :web-server-api {:port 8081
-                  :host "0.0.0.0"}
+                  :host "0.0.0.0"
+                  :ssl-port 8443
+                  :keystore "./profiles/webserver/certs/keystore.p12"
+                  :key-password "password"; Password you gave when creating the keystore
+                  }
 
  :jetty-ws {"/api/chsk" :ws/chsk-get}
 
@@ -50,12 +52,12 @@
  :oauth2 {:token-path ".webly/tokenstore/"
           :github {:client-id        ""
                    :client-secret    ""
-                   :scopes          ["user:email"
+                   :scope          ["user:email"
                                      "gist"
                                      "repo"]}
           :google {:client-id        ""
                    :client-secret    ""
-                   :scopes          ["https://www.googleapis.com/auth/userinfo.email"
+                   :scope          ["https://www.googleapis.com/auth/userinfo.email"
                                      "https://www.googleapis.com/auth/spreadsheets.readonly"
                                      "https://www.googleapis.com/auth/drive.readonly"
                                      ; "https://www.googleapis.com/auth/drive"
@@ -65,7 +67,7 @@
 
           :xero {:client-id        ""
                  :client-secret    ""
-                 :scopes          ["openid"
+                 :scope          ["openid"
                                    "profile"
                                    "email"
                                    "accounting.settings"

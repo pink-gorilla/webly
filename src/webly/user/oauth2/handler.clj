@@ -3,8 +3,8 @@
    [taoensso.timbre :as timbre :refer [info error]]
   ; [hiccup.page :as page]
   ; [ring.util.response :as response]
-   [modular.oauth2.authorize.handler-redirect :refer [handler-oauth2-redirect]]
-   [modular.oauth2.authorize.handler-redirect-github :refer [handler-github-redirect]]
+   [modular.oauth2.authorize.redirect-handler :refer [handler-oauth2-redirect]]
+   [modular.oauth2.authorize.token-handler :refer [token-handler]]
    [modular.oauth2.store.save-handler :refer [handler-oauth2-save]]
    [modular.webserver.middleware.api :refer [wrap-api-handler]]
    [webly.web.handler :refer [add-ring-handler]]
@@ -16,11 +16,11 @@
 
 (add-ring-handler :oauth2/redirect handler-oauth-redirect-wrapped)
 
-(def handler-github-redirect-wrapped
-  (-> handler-github-redirect
+(def token-handler-wrapped
+  (-> token-handler
       wrap-api-handler))
 
-(add-ring-handler :oauth2/redirect-github handler-github-redirect-wrapped)
+(add-ring-handler :oauth2/token token-handler-wrapped)
 
 (def handler-oauth2-save-wrapped
   (-> handler-oauth2-save

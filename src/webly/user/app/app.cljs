@@ -3,16 +3,18 @@
    [reagent.dom]
    [taoensso.timbre :refer-macros [info warn]]
    [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db reg-sub]]
-   [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
-   [webly.user.app.views :refer [webly-app]]
-
    ; side-effects
    [day8.re-frame.http-fx]
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
+   [modular.oauth2]
+   ; webly
    [webly.build.lazy]
    [webly.web.events-bidi]
    [webly.ws.events]
    [webly.ws.core]
+   ; webly.user
+   [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
+   [webly.user.app.views :refer [webly-app]]
    [webly.user.status.events]
    [webly.user.css.events]
    [webly.user.css.subscriptions]
@@ -22,9 +24,6 @@
    [webly.user.dialog]
    [webly.user.keybindings.events]
    [webly.user.analytics.events]
-
-   [modular.oauth2]
-
    [webly.user.tenx.events]
    [webly.user.settings.subscriptions]
    [webly.user.settings.events]
@@ -89,7 +88,6 @@
      (dispatch [:css/init])
      (dispatch [:settings/init])
      (dispatch [:ws/init])
-
      (dispatch [:webly/set-status :configured? true])
 
      (if start-user-app

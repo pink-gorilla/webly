@@ -1,6 +1,13 @@
 (ns modular.oauth2.authorize.redirect
   (:require
+   [taoensso.timbre :refer-macros [info error]]
    [cemerick.url :as url]))
+
+#_(defn message-event-handler
+    [e]
+    (info "message received: " e)
+    (dispatch [:remote-oauth (.. e -data -code) (.. e -data -state)]))
+;(js/window.addEventListener "message" message-event-handler)
 
 ; https://stackoverflow.com/questions/28230845/communication-between-tabs-or-windows
 ; https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API
@@ -25,8 +32,8 @@
                 wurl (get data "url")
                 provider (get data "provider")
                 cbdata (merge  (url-data wurl) {:provider (keyword provider)})]
-            (println "oauth chan rcvd: json: " json  "data: " data)
-            (println "oauth cb data: " cbdata)
+            (info "oauth chan rcvd: json: " json  "data: " data)
+            (info "oauth cb data: " cbdata)
             (cb cbdata)))))
 
 ;; to be used from redirect window.

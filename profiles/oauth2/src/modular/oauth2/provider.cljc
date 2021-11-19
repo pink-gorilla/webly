@@ -7,6 +7,14 @@
    [modular.oauth2.provider.github :as github]
    [modular.oauth2.provider.xero :as xero]))
 
+;; our page strucutre for different providers
+
+(defn provider-uri [provider]
+  (let [provider-name (name provider)]
+    {:launch-uri       (str "/oauth2/auth/" provider-name)
+     :redirect-uri     (str "/oauth2/redirect/" provider-name)
+     :landing-uri      (str "/oauth2/landing/" provider-name)}))
+
 ;; PROVIDER LIST
 
 (def providers
@@ -17,79 +25,66 @@
 (defn get-provider-config [p]
   (or (p providers) {}))
 
-;; PROVIDER SPECIFIC STUFF
+;; RING CONFIG
 
-(defn provider-uri [provider]
-  (let [provider-name (name provider)]
-    {:launch-uri       (str "/oauth2/auth/" provider-name)
-     :redirect-uri     (str "/oauth2/redirect/" provider-name)
-     :landing-uri      (str "/oauth2/landing/" provider-name)}))
+(defn full-provider-config [config provider]
+  (let [code (or (get-provider-config provider) {})
+        app (or (get-in config [:oauth2 provider]) {})]
+    (merge code app)))
 
-(defn parse-userinfo [p token]
-  (if-let [config (get-provider-config p)]
-    (let [user-parse (:user-parse config)]
-      (user-parse token))
-    (do (error "cannot parse userinfo unknwon provider")
-        {})))
+(defn ring-oauth2-config [config]
+  (let [provider-list (keys providers)
+        list (map (fn [p] {p (full-provider-config config p)}) provider-list)]
+    (apply merge list)))
 
-(defn safe-scope [scope]
+;; AUTHORIZE - START
+
+(defn scope->string [scope]
   (let [scope (if (nil? scope) "" scope)
         scope (if (string? scope)
                 scope
                 (clojure.string/join " " scope))]
     scope))
 
-(defn get-provider [config provider]
-  (let [p-code (get-provider-config provider)
-        p-config (or (get-in config [:oauth2 provider]) {})
-        p-uri (provider-uri provider)
-        p (merge p-uri p-code p-config)]
-    (assoc p :scopes (safe-scope (:scopes p)))
-      ;p
-    ))
-; :oauth2 {:github {:clientId        ""
-;                   :clientSecret    ""
-;                   :scope ""}
-;          :google {:clientId        ""
-;                   :clientSecret    ""
-;                   :scope ""}}
-
-(defn ring-oauth2-config [config]
-  (let [provider-list (keys providers)
-        list (map (fn [p] {p (get-provider config p)}) provider-list)]
-    (apply merge list)))
-
-(defn current-path [current-url path]
-  (-> (url current-url)
-      (assoc :path path)
-      (.toString)))
-
-; https://github.com/login/oauth/authorize?
-; client_id=
-; &response_type=token
-; &redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth2%2Fgithub%2Flanding
-; &scope=user%3Aemail%20gist
-
 #?(:cljs (defn nonce []
            (.toString (.random js/Math)))
    :clj  (defn nonce []
            (str (rand-int Integer/MAX_VALUE))))
 
+(defn set-relative-path [current-url path]
+  (-> (url current-url)
+      (assoc :path path)
+      (.toString)))
+
+(defn url-redirect [provider-kw current-url]
+  (->> provider-kw
+       provider-uri
+       :redirect-uri
+       (set-relative-path current-url)))
+
 (defn url-authorize [config provider current-url]
-  (let [{:keys [authorize-uri redirect-uri scopes client-id response-type]} (get-provider config provider)
-        redirect-uri (current-path current-url redirect-uri)
+  (let [{:keys [authorize-uri response-type client-id scope]} (full-provider-config config provider)
         query {:client_id client-id
-               :redirect_uri redirect-uri
+               :redirect_uri  (url-redirect provider current-url)
                :response_type response-type
-               :scope scopes
+               :scope (scope->string scope)
                ;:nonce (nonce)
-               }]
-    (infof "oauth2 for: %s authorize-uri: %s callback-uri: %s" provider authorize-uri redirect-uri)
+               }
+        query (if (= provider :xero)
+                ; not sure why this is needed.                 
+                (assoc query :returnUrl "https://login.xero.com/identity/identity/connect/authorize")
+                query)]
+    (infof "oauth2 for: %s authorize-uri: %s params: %s" provider authorize-uri (pr-str query))
     (-> (url authorize-uri)
         (assoc :query query)
         str
         ;url-encode
         )))
+; https://github.com/login/oauth/authorize?
+; client_id=
+; &response_type=token
+; &redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth2%2Fgithub%2Flanding
+; &scope=user%3Aemail%20gist
 
 ;  scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&
  ;include_granted_scopes=true&
@@ -104,11 +99,18 @@
 ; &expires_in=3599
 ; &scope=https://www.googleapis.com/auth/drive.readonly%20https://www.googleapis.com/auth/spreadsheets.readonly
 
-;; request
+;; REQUESTS (use the api)
 
 (defn get-provider-auth-header [p token]
   (if-let [config (get-provider-config p)]
     (let [auth-header (:auth-header config)]
       (auth-header token))
     (do (error "cannot get auth header for unknwon provider")
+        {})))
+
+(defn parse-userinfo [p token]
+  (if-let [config (get-provider-config p)]
+    (let [user-parse (:user-parse config)]
+      (user-parse token))
+    (do (error "cannot parse userinfo unknwon provider")
         {})))

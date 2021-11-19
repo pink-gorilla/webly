@@ -1,6 +1,6 @@
-(ns modular.oauth2.authorize.handler-redirect
+(ns modular.oauth2.authorize.redirect-handler
   (:require
-   [taoensso.timbre :as timbre :refer [info error]]
+   [taoensso.timbre :as timbre :refer [debug info error]]
    [hiccup.page :as page]
    [ring.util.response :as response]))
 
@@ -16,10 +16,10 @@
      [:div "Feel free to close this window if it doesn't go away automatically."]]]))
 
 (defn handler-oauth2-redirect [req]
-  (info "redirect: " req)
+  (debug "oauth2 redirect: " req)
   (let [provider (get-in req [:route-params :provider])
         res (response/content-type {:status 200
                                     :body (page-oauth2-redirect provider)}
                                    "text/html")]
-    (info "provider: " provider)
+    (info "oauth2 redirect for provider: " provider)
     res))

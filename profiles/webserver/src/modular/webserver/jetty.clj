@@ -1,5 +1,6 @@
 (ns modular.webserver.jetty
   (:require
+   [clojure.java.io :as io]
    [taoensso.timbre :as timbre :refer [info]]
    [ring.adapter.jetty9 :refer [run-jetty]]))
 
@@ -9,8 +10,18 @@
                       }
         ws-opts (if ws-map
                   {:websockets ws-map}  ; {"/api/chsk" (wrap-webly (partial ws-handshake-handler conn))}
-                  {})]
+                  {})
+        {:keys [port ssl-port keystore]} user-opts
+        https? (and
+                ssl-port
+                keystore
+                (.exists (io/file keystore)))
+        user-opts (if https?
+                    user-opts
+                    (dissoc user-opts :keystore :ssl-port :key-password))]
   ; https://github.com/sunng87/ring-jetty9-adapter  
-    (info "Starting Jetty web server .. ")
+    (if https?
+      (info "Starting Jetty web server (http: " port "https: " ssl-port)
+      (info "Starting Jetty web server (http: " port " ; no https"))
     (run-jetty ring-handler (merge default-opts ws-opts user-opts))))
 

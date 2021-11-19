@@ -5,7 +5,7 @@
 ;"scope" "https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/spreadsheets.readonly",
 ; "expires_in" "3599"}
 
-(defn parse-google [{:keys [anchor]}]
+(defn parse-redirect [{:keys [anchor]}]
   {:access-token (:access_token anchor)
    :scope (:scope anchor)
    :expires #?(:cljs (js/parseInt (:expires_in anchor))
@@ -22,10 +22,12 @@
   {; authorize
    :authorize-uri "https://accounts.google.com/o/oauth2/v2/auth"
    :response-type "token"
+   :parse-redirect parse-redirect
+
     ; access token
    :access-token-uri "https://accounts.google.com/o/oauth2/v2/access_token"
    :accessTokenResponseKey "id_token"
-   :parse parse-google
+
    ; api requests
    :auth-header auth-header
    :endpoints {:userinfo "https://www.googleapis.com/oauth2/v2/userinfo"
