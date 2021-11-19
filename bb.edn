@@ -53,7 +53,10 @@
 
          demo-webly (shell "clojure" "-X:webly")
          demo-webserver-https (shell {:dir "profiles/webserver"} "clojure" "-X:webserver")
-         demo-web-requests (shell {:dir "profiles/demo-oauth2"} "clojure" "-X:make-web-requests")
+
+         demo-web-requests-google (shell {:dir "profiles/demo-oauth2"} "clojure" "-X:web-requests-google")
+         demo-web-requests-xero (shell {:dir "profiles/demo-oauth2"} "clojure" "-X:web-requests-xero")
+         demo-web-requests-github (shell {:dir "profiles/demo-oauth2"} "clojure" "-X:web-requests-github")
 
 
  ;        

@@ -38,6 +38,19 @@
          (:body)
          (cheshire.core/parse-string true)))))
 
+(defn get-request-xero
+  ([tenant-id provider_endpoint]
+   (get-request provider_endpoint {}))
+  ([tenant-id provider_endpoint query-params]
+   (info "get-request " provider_endpoint query-params)
+   (let [{:keys [url header]} (get-endpoint provider_endpoint)]
+     (info "http/get " url)
+     (-> (http/get url {:headers (assoc header "Xero-Tenant-Id" tenant-id)
+                        :accept :json
+                        :query-params query-params})
+         (:body)
+         (cheshire.core/parse-string true)))))
+
 (comment
 
   (get-endpoint :google/userinfo)

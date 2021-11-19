@@ -27,7 +27,8 @@
    :auth-header auth-header
    :endpoints {; https://api-explorer.xero.com/
                :userinfo "https://api.xero.com/api.xro/2.0/Organisation"
-               :contacts "https://api.xero.com/api.xro/2.0/Contacts"}
+               :contacts "https://api.xero.com/api.xro/2.0/Contacts"
+               :branding-themes "https://api.xero.com/api.xro/2.0/BrandingThemes"}
    ; userinfo
    :user "https://api.xero.com/api.xro/2.0/Organisation"
    :user-parse user-parse})
