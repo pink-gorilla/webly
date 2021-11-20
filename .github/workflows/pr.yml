@@ -14,9 +14,6 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/project.clj') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-    - name: ci checks (with babashka)
-      uses: tzafrirben/babashka-docker-action@v1.1
-      id: bb_script
-      with:
-        bb_cmd: "bb ci-check"
+    - name: Install Babashka
+      run bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
 
