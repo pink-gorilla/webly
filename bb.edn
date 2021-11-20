@@ -1,23 +1,27 @@
 {:paths ["script"]
- :deps {;borkdude/gh-release-artifact
+ :deps {fipp/fipp {:mvn/version "0.6.24"}
+        ;borkdude/gh-release-artifact
         #_{:local/root "../gh-release-artifact"}
        ; {:git/url "https://github.com/borkdude/gh-release-artifact"
        ;  :sha "2f8898d84126a4e922c490f8614211a8b0cf67cd"}
        ; com.github.liquidz/antq {:mvn/version "RELEASE"}
-       ; org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
+       ; 
         }
 
- :tasks {; dev tools
+ :tasks {:requires [deps]
+         ; dev tools
          lint (shell "clojure" "-M:lint" "src" "profiles/oauth2" "profiles/webserver")
-         cljfmt-check (shell "clojure" "-M:cljfmt" "check" "src" "profiles" "test")
-         cljfmt-fix (shell "clojure" "-M:cljfmt" "fix" "src" "profiles" "test")
-         deps-tree (shell "clojure" "-X:deps" "tree")
-         outdated (shell "clojure" "-M:outdated")
+         cljfmt-check (shell {:dir "profiles/webly"} "clojure" "-M:cljfmt" "check" "src" "profiles" "test")
+         cljfmt-fix (shell {:dir "profiles/webly"} "clojure" "-M:cljfmt" "fix" "src" "profiles" "test")
+         deps-tree (shell {:dir "profiles/webly"} "clojure" "-X:deps" "tree")
+         outdated (shell {:dir "profiles/webly"} "clojure" "-M:outdated")
 
          ; build
          clean (shell "scripts/clean.sh")
-         npm-install (shell "clojure"  "-X:webly" ":profile" "npm-install")
-         build-js (shell "clojure" "-X:webly" ":profile" "ci")
+         tailwind-girouette (shell {:dir "profiles/webly"} "clojure" "-X:tailwind-girouette")
+
+         npm-install (shell {:dir "profiles/demo-webly"} "clojure"  "-X:demo-webly" ":profile" "npm-install")
+         build-js (shell {:dir "profiles/webly"} "clojure" "-X:webly" ":profile" "ci")
          copy-resources (shell "scripts/copy_res.sh")
          get-fonts (shell "scripts/get-fonts.sh")
          cljs-build {:depends [npm-install
@@ -27,8 +31,8 @@
                      :task (shell "echo" "cljs bundle has been built!")}
 
          ; tests
-         test-clj (shell "clojure" "-M:test")
-         test-cljs (shell "npm" "test")
+         test-clj (shell {:dir "profiles/webly"} "clojure" "-M:test")
+         test-cljs (shell {:dir "profiles/webly"} "npm" "test")
 
          ;; CI
          ci {:depends [cljfmt-check
@@ -44,19 +48,29 @@
 
          show-jar (shell "fastjar" "tf" "target/webly.jar")
          show-jar-pom (shell "fastjar" "xf" "target/webly.jar" "META-INF/maven/org.pinkgorilla/webly/pom.xml")
-         show-jar-manifest (shell "fastjar" "xf" "target/webly.jar" "META-INF/MANIFEST.MF") 
+         show-jar-manifest (shell "fastjar" "xf" "target/webly.jar" "META-INF/MANIFEST.MF")
          show-git-tag (shell "clojure" "-M:garamond")
-          
+
+         merge-deps (deps/merge-deps "./profiles/webly" 
+                                     ["./profiles/frontend"
+                                      "./profiles/webserver"
+                                      "./profiles/websocket"
+                                      "./profiles/oauth2"]
+                                     "./deps.edn")
 
          ;clj-kondo (clojure "-Sdeps" '{:deps {clj-kondo/clj-kondo {:mvn/version "2021.10.19"}}}
          ;            "-M" "-m" "clj-kondo.main" "--lint" "src")}
+         
+         ;; demos
 
-         demo-webly (shell "clojure" "-X:webly")
          demo-webserver-https (shell {:dir "profiles/webserver"} "clojure" "-X:webserver")
 
          demo-web-requests-google (shell {:dir "profiles/demo-oauth2"} "clojure" "-X:web-requests-google")
          demo-web-requests-xero (shell {:dir "profiles/demo-oauth2"} "clojure" "-X:web-requests-xero")
          demo-web-requests-github (shell {:dir "profiles/demo-oauth2"} "clojure" "-X:web-requests-github")
+
+
+         demo-webly (shell {:dir "profiles/demo-webly"} "clojure" "-X:webly-demo")
 
 
  ;        

@@ -1,11 +1,12 @@
-{:paths ["src" "classes"]
+{:paths ["src"]
  :deps
  {org.clojure/clojure    {:mvn/version "1.10.3"}
-  org.pinkgorilla/modular {:mvn/version "0.0.7"} ; persistence
-  org.pinkgorilla/modular-oauth2 {:local/root "../oauth2" :deps/manifest :deps}
   clj-http/clj-http {:mvn/version "3.12.1"}
   commons-codec/commons-codec {:mvn/version "1.15"}
-  uri/uri {:mvn/version "1.1.0"}}
+  uri/uri {:mvn/version "1.1.0"}
+  clj-jwt/clj-jwt {:mvn/version "0.1.1"}
+  org.pinkgorilla/modular {:mvn/version "0.0.7"} ; persistence
+  org.pinkgorilla/modular-oauth2 {:local/root "../oauth2" :deps/manifest :deps}}
 
  :aliases
  {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}
@@ -24,6 +25,11 @@
 
   :web-requests-google {:exec-fn demo/make-web-requests
                         :exec-args {:provider :google}}
+
+  :jwt {:exec-fn  demo/jwt}
+  :show-token {:exec-fn  demo/show-token}
+  :validate-token {:exec-fn  demo/validate}
+
 
 
 ;

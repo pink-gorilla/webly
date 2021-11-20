@@ -1,0 +1,25 @@
+{:paths ["src" 
+         "resources"
+         "target/node_modules"  ; css png resources from npm modules (tailwind)
+         ]
+ :deps
+ {org.pinkgorilla/modular-webly {:local/root "../webly" :deps/manifest :deps}
+  org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
+  org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
+  }
+ :aliases
+ {
+  
+  
+  
+  
+  :webly-demo
+  {:extra-deps  {org.pinkgorilla/modular-demo-webly {:local/root "../demo-webly" :deps/manifest :deps}
+                 org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
+                 }
+   :exec-fn webly.user.app.app/webly-run
+   :exec-args {:profile "watch2"  ;watch2 - 10x disabled
+               :config "demo.edn"}}}
+ 
+ 
+ }

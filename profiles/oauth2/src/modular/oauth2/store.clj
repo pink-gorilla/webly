@@ -2,6 +2,7 @@
   (:require
    [taoensso.timbre :refer [info error]]
    [clojure.java.io :as io]
+   [buddy.sign.jwt :as jwt]
    [modular.config :as config]
    [modular.persist.protocol :refer [save loadr]]
    [modular.persist.edn] ; side-effects
@@ -32,3 +33,23 @@
       (do
         (error "cannot load token - please set [:oauth2 :token-path] in modular config")
         nil))))
+
+;(defn unsign [token]
+;  (with-redefs [buddy.core.codecs (fn [url] {:body "Goodbye world"})]
+;    (jwt/unsign token "key")
+;    
+;  )
+
+(defn validate-token [name]
+   ; (jwt/decrypt incoming-data secret)
+  (let [token (load-token name)]
+    (jwt/unsign token "key") 
+
+    )
+   
+  )
+
+
+
+
+

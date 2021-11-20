@@ -10,6 +10,8 @@
   day8.re-frame/http-fx {:mvn/version "0.2.3"}  ; reframe based http requests
   simplevalue/letsencrypt {:git/url "https://github.com/SimpleValue/sv.letsencrypt.git"
                            :sha "8b1a85846acaaa37a58b054f2372d8fde0663b75"}
+  buddy/buddy-sign {:mvn/version "3.4.1"}
+  buddy/buddy-auth {:mvn/version "3.0.1"}
   org.pinkgorilla/modular {:mvn/version "0.0.7"} ; persistence
   }
 
@@ -26,7 +28,8 @@
          :main-opts ["-m" "cognitect.test-runner"]
          :exec-fn cognitect.test-runner.api/test}
 
-  :make-demo-charts {:exec-fn  demo.chartmaker/make-demo-charts}
+
+
 
 ;
   }}

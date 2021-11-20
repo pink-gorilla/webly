@@ -15,6 +15,6 @@
    {:href href} text])
 
 (defn block2 [name & children]
-  (->  [:div.bg-blue-400.m-5.inline-block
+  (->  [:div.bg-red-400.m-5.inline-block.md:w-full
         [:p.text-4xl.mb-5 name]]
        (into children)))

@@ -53,31 +53,45 @@
           :github {:client-id        ""
                    :client-secret    ""
                    :scope          ["user:email"
-                                     "gist"
-                                     "repo"]}
+                                    "gist"
+                                    "repo"]}
           :google {:client-id        ""
                    :client-secret    ""
                    :scope          ["https://www.googleapis.com/auth/userinfo.email"
-                                     "https://www.googleapis.com/auth/spreadsheets.readonly"
-                                     "https://www.googleapis.com/auth/drive.readonly"
-                                     ; "https://www.googleapis.com/auth/drive"
-                                     "https://docs.google.com/feeds/"
-                                     "https://spreadsheets.google.com/feeds"
-                                     "https://www.googleapis.com/auth/calendar"]}
+                                    ; readonly 
+                                    "https://www.googleapis.com/auth/spreadsheets.readonly"
+                                    "https://www.googleapis.com/auth/drive.readonly"
+                                    "https://www.googleapis.com/auth/gmail.readonly"
+                                    "https://www.googleapis.com/auth/drive.photos.readonly"
+
+                                    ; edit
+                                    "https://www.googleapis.com/auth/spreadsheets"
+                                    "https://www.googleapis.com/auth/calendar"
+
+                                    "https://www.googleapis.com/auth/drive"
+                                    "https://www.googleapis.com/auth/drive.appdata"
+                                    "https://www.googleapis.com/auth/drive.file"
+                                    "https://www.googleapis.com/auth/drive.metadata"
+                                    "https://www.googleapis.com/auth/drive.metadata.readonly"
+                                    "https://www.googleapis.com/auth/cloud-platform"
+                                    
+                                    "https://docs.google.com/feeds/"
+                                    "https://spreadsheets.google.com/feeds"]}
+
 
           :xero {:client-id        ""
                  :client-secret    ""
                  :scope          ["openid"
-                                   "profile"
-                                   "email"
-                                   "accounting.settings"
-                                   "accounting.reports.read"
-                                   "accounting.journals.read"
-                                   "accounting.contacts"
-                                   "accounting.attachments"
-                                   "accounting.transactions"
-                                   "accounting.transactions.read"
-                                   "offline_access"]}}
+                                  "profile"
+                                  "email"
+                                  "accounting.settings"
+                                  "accounting.reports.read"
+                                  "accounting.journals.read"
+                                  "accounting.contacts"
+                                  "accounting.attachments"
+                                  "accounting.transactions"
+                                  "accounting.transactions.read"
+                                  "offline_access"]}}
 
  :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :info]
                    [#{"org.eclipse.jetty.*"} :info]
