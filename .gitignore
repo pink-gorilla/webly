@@ -28,4 +28,4 @@ package-lock.json
 .webly
 certs
 target/
-./ci/deps.edn
+ci/deps.edn

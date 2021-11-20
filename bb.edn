@@ -30,7 +30,10 @@
                                      ["./frontend"
                                       "./webserver"
                                       "./websocket"
-                                      "./oauth2"]
+                                      "./oauth2"
+                                      "./webly"
+                                      
+                                      ]
                                      "./ci/deps.edn")
          build {:depends [npm-install
                           build-ci
