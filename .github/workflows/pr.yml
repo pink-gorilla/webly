@@ -15,7 +15,8 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
     - name: ci checks (with babashka)
-      uses: tzafrirben/babashka-docker-action@v0.3
+      uses: tzafrirben/babashka-docker-action@v1.1
       id: bb_script
       with:
         bb_cmd: "bb ci-check"
+

@@ -28,7 +28,7 @@ jobs:
       with:
         cli: 1.10.3.1029 # Clojure CLI based on tools.deps
     - name: ci checks (with babashka)
-      uses: tzafrirben/babashka-docker-action@v0.3
+      uses:tzafrirben/babashka-docker-action@v1.1
       id: bb_script
       with:
         bb_cmd: "bb ci-check"
