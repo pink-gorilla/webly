@@ -10,52 +10,95 @@
    [webly.user.tailwind.css :refer [composed-classes]]))
 
 (def webly-default-classes
-  ["bg-blue-300"
-   "bg-red-400"
+  ["inline-block"
    "cursor-pointer"
-   "hover:bg-red-700"
-   "inline-block"
+   "overflow-scroll"
+
+   "w-full"
+   "md:w-full"
+
+    ; margin padding
    "m-1"
    "m-5"
    "mb-5"
-   "md:w-full"
-   "text-4xl"
-   "a"
-   "below."
-   "bg-blue-300"
-   "cursor-pointer"
-   "hover:bg-red-700"
-   "cursor-pointer"
-   "for"
-   "hover:bg-red-700"
-   "is"
-   "m-1"
-   "bg-yellow-300"
-   "dark"
-   "dark:bg-gray-800"
-   "dark:text-white"
-   "grid"
-   "grid-cols-4"
-   "text-gray-900"
-
-   "flex"
-   "flex-col"
-   "bg-blue-300"
-   "bg-green-600"
+   "pb-5"
+   "gap-1"
+   "gap-2"
+   "gap-3"
+   "gap-4"
+   "gap-5"
    "m-3"
-
    "p-5"
+   "p-4"
+   "p-4"
+   "mr-3"
+   "lg:p-5"
 
-   "text-red-900"
+   ; border
    "border"
    "border-2"
    "border-blue-500"
    "border-round"
-   "overflow-scroll"
+   "border-l-4"
+   "border-red-500"
+   "border-l-4"
+   "border-yellow-500"
+   "border-l-4"
+   "border-blue-500"
+   ; color
 
+
+   "bg-blue-300"
    "bg-red-400"
+   "bg-yellow-100"
+   "bg-yellow-300"
+   "bg-blue-300"
+   "bg-green-600"
+   "bg-red-100"
+   "bg-red-400"
+   "bg-blue-100"
+   "bg-blue-400"
+   "bg-gray-300"
+   "hover:bg-red-700"
+   "dark:bg-gray-800"
+   "dark:text-white"
+
+  ;; text
    "text-3xl"
-   "text-blue-500"])
+   "text-blue-500"
+   "text-4xl"
+   "text-red-700"
+   "text-red-900"
+   "text-gray-900"
+   "text-yellow-700"
+   "text-blue-700"
+
+   ; grid
+   "grid"
+   "grid-cols-1"
+   "grid-cols-2"
+   "grid-cols-3"
+   "grid-cols-4"
+   "md:grid-cols-1"
+   "md:grid-cols-2"
+   "lg:grid-cols-2"
+   "lg:grid-cols-3"
+   "xl:grid-cols-3"
+   "xl:grid-cols-4"
+
+   ; flex
+   "flex"
+   "flex-col"
+
+   "dark"
+   "notification"
+   "fas" 
+   "fa-trash" 
+   "button"
+
+   "i.fas.fa-trash.mr-3"
+
+])
 
 (defn- kw->classes [kw]
   (->> (name kw)

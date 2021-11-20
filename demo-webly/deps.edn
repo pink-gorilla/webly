@@ -40,9 +40,14 @@
   :tailwind-girouette-list
   {:ns-default girouette.processor
    :exec-fn process
-   :exec-args {:source-paths ["src"]
+   :exec-args {:source-paths ["src"
+                              "../frontend/src"]
                :css {:output-file "target/webly/public/girouette.edn"
-                     :output-format :css-classes}
+                     :output-format :css-classes
+                     :source-paths ["src"
+                                    "../frontend/src"]
+                     
+                     }
                :garden-fn webly.user.tailwind.grammar/class-name->garden
                :apply-classes webly.user.tailwind.css/composed-classes
                :watch? false}}

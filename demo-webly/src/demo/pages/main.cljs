@@ -13,7 +13,14 @@
 
 (defn main []
   [:div.dark
-   [:div {:class "dark:bg-gray-800 bg-yellow-300 text-gray-900 dark:text-white grid grid-cols-4"}
+   [:div {:class (str
+                  "bg-gray-300 text-gray-900 "
+                  "dark:bg-gray-800 dark:text-white "
+                  "grid gap-4 " 
+                  "grid-cols-1 "
+                  "md:grid-cols-2 "
+                  "lg:grid-cols-3 "
+                  "xl:grid-cols-4 ")}
     [demo-css]
     [demo-routing]
     [demo-dialog]
