@@ -1,5 +1,5 @@
 {:paths ["target/node_modules"  ; css png resources from npm modules (tailwind)
-         "demo-webly/target/node_modules"
+         "../demo-webly/target/node_modules"
          ]
  :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}}
  :aliases

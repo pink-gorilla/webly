@@ -17,29 +17,19 @@
 
 - webly is used in [Goldly](https://github.com/pink-gorilla/goldly).
 
+# Webly Compile Profiles
+
+- watch - shadow-cljs watch
+- watch2 - schadow-cljs watch without ten-x devtools
+- compile  - Build cljs bundle, and output bundle stats
+- release - Build cljs bundle, output bundle stats. no tenx. no source-maps
+- jetty -  Serves website from precompiled bundle with Jetty.
 
 # run the ui demo
 
-Clone this repo and run:
+Clone this repo and run: `bb demo-webly`
 
-```
-./scripts/prep-res.sh
-clojure -X:webly     ; The demo runs a webserver on port 8000. "shadow-cljs watch" mode
-```
-
-The source code of the demo is in **profiles/demo**.
-
-If this was your app, after you are finished developing it, you might compile it:
-
-```
-clojure -X:webly :profile '"compile"' ; Build cljs bundle, and output bundle stats
-clojure -X:webly :profile '"jetty"'   ; Serves website from precompiled bundle.
-```
-
-```
-clojure -X:webly :profile '"release"' ; Build cljs bundle, output bundle stats. no tenx. no source-maps
-clojure -X:webly :profile '"jetty"'   ; Serves website from precompiled bundle.
-```
+The demo runs a webserver on port 8080 with shadow-cljs "watch" mode.
 
 # features:
 
@@ -115,8 +105,8 @@ Sometimes github repo and npm module do not match.
 Check this to see what goes on:  https://unpkg.com/@ricokahler/oauth2-popup-flow@2.0.0-alpha.1/index.js
 
 ## unit tests
-- clj `clojure -X:test`
-- cljs: `./scripts/test-cljs.sh`
+- clj `bb test-clj`
+- cljs: `bb test-cljs`
 
 
 
