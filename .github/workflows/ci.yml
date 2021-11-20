@@ -52,3 +52,4 @@ jobs:
       # Could not transfer metadata foo:bar/maven-metadata.xml from/to releases (https://clojars.org/repo): Read timed out
       # Default 10000 not enough for us
       # export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"
+      
