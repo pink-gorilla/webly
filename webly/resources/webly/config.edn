@@ -20,12 +20,14 @@
          :routes {:app {}
                   :api {}}
          :theme {:available {:webly-dialog {true ["webly/dialog.css"]}
-                             :tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
-                                        "dark" ["tailwindcss/dist/tailwind-dark.min.css"]}
+                             :tailwind-full {"light" ["tailwindcss/dist/tailwind.min.css"]
+                                             "dark" ["tailwindcss/dist/tailwind-dark.min.css"]}
+                             :tailwind-girouette {true ["girouette.css"]}
                              :fontawesome {true ["@fortawesome/fontawesome-free/css/all.min.css"]}
                              :fonts-google    {true ["fonts-google/fonts.css"]}}
                  :current {:webly-dialog true
-                           :tailwind "light" ; true
+                           :tailwind-full false ; "light" ; true
+                           :tailwind-girouette true
                            :fontawesome true
                            :fonts-google false}}
 ;

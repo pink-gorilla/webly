@@ -16,11 +16,15 @@
         org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
         ;org.slf4j/slf4j-api {:mvn/version "1.7.30"} ; slf4j-timbre is incmpatibe with slf4j-api 2.0.0 that comes with jetty
 
+        ; tailwind
+        ;girouette/girouette {:mvn/version "0.0.5"}
+        girouette/processor {:mvn/version "0.0.5"}
+
         ; webly/core
         clj-commons/pushy {:mvn/version "0.3.10"}
         com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
         hiccup/hiccup {:mvn/version "1.0.5"}   ; server side templating
-        girouette/girouette {:mvn/version "0.0.5"} ; tailwind config generation
+       
         reagent/reagent {:mvn/version "1.1.0"} ; https://github.com/reagent-project/reagent
         re-frame/re-frame {:mvn/version "1.2.0"}
         cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
@@ -39,6 +43,7 @@
                               ;:exclusions [org.clojure/tools.reader] ; outdated
         ;{thheller/shadow-cljsjs "0.0.21"}  ; already referred to from shadow-cljs
         org.clojure/clojurescript {:mvn/version "1.10.879"}
+        
 
         ; modular
         org.pinkgorilla/modular {:mvn/version "0.0.11"}
@@ -120,15 +125,7 @@
   ; 1. ilustrate links in web-app
   ; 2. run unit tests 
 
-  :tailwind-girouette
-  {:extra-deps {girouette/processor {:mvn/version "0.0.5"}}
-   :ns-default girouette.processor
-   :exec-fn process
-   :exec-args {:css {:output-file "target/public/girouette.css"}
-               :garden-fn webly.user.tailwind.grammar/class-name->garden
-               :apply-classes webly.user.tailwind.css/composed-classes
-               :watch? false
-               #_#_:dry-run? true}}
+
 
 
 

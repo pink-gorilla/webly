@@ -22,6 +22,32 @@
        :exec-args {:profile "ci"
                    :config "demo.edn"}}
 
+
+  :tailwind-girouette-webly
+  {:exec-fn webly.user.tailwind.generator/generate-tailwind-webly}
+
+  :tailwind-girouette-usage
+  {:ns-default girouette.processor
+   :exec-fn process
+   :exec-args {:source-paths ["src"]
+               :css {;:output-file "target/webly/public/girouette.edn"
+                     ;:output-format :css-classes
+                     :output-file "target/webly/public/girouette.css"}
+               :garden-fn webly.user.tailwind.grammar/class-name->garden
+               :apply-classes webly.user.tailwind.css/composed-classes
+               :watch? false}}
+
+  :tailwind-girouette-list
+  {:ns-default girouette.processor
+   :exec-fn process
+   :exec-args {:source-paths ["src"]
+               :css {:output-file "target/webly/public/girouette.edn"
+                     :output-format :css-classes}
+               :garden-fn webly.user.tailwind.grammar/class-name->garden
+               :apply-classes webly.user.tailwind.css/composed-classes
+               :watch? false}}
+
+
   :webly-demo-watch {:exec-fn webly.user.app.app/webly-run
                      :exec-args {:profile "watch"
                                  :config "demo.edn"}}

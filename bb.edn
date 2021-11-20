@@ -20,14 +20,15 @@
                    (webly/clean-project "./demo-repl")
                    (webly/clean-project "./webly")
                    (webly/clean-project "./webserver"))
-         tailwind-girouette (webly/clojure "webly" "-X:tailwind-girouette")
+         tailwind-girouette-usage (webly/clojure "webly" "-X:tailwind-girouette-usage")
+         tailwind-girouette-webly (webly/clojure "webly" "-X:tailwind-girouette-webly")
          npm-install (webly/run "demo-webly" "demo-webly" "npm-install")
          build-js (webly/run "demo-webly" "demo-webly" "ci")
          copy-resources (shell {:dir "demo-webly"} "../script/copy_res.sh")
          get-fonts  (shell {:dir "demo-webly"} "../script/get-fonts.sh")
          cljs-build {:depends [npm-install
                                build-js
-                               tailwind-girouette
+                               tailwind-girouette-webly
                                copy-resources
                                get-fonts]
                      :task (shell "echo" "cljs bundle has been built!")}
