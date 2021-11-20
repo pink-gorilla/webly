@@ -25,7 +25,7 @@
 
 
 (defn run [dir alias profile]
-  (println "webly profile: " profile)
+  (println "RUNNING WEBLY ALIAS:" alias "PROFILE: " profile  "in dir: " dir)
   (shell {:dir dir} "clojure" (str "-X:" alias) ":profile" profile))
 
 

@@ -27,13 +27,11 @@ jobs:
       uses: DeLaGuardo/setup-clojure@3.5
       with:
         cli: 1.10.3.1029 # Clojure CLI based on tools.deps
-    - name: babashka script
-        uses: tzafrirben/babashka-docker-action@v0.3
-        id: bb_script
-        with:
-          bb_cmd: "bb ci-check"
-    #- name: show git tag
-    #  run: clojure -M:garamond
+    - name: ci checks (with babashka)
+      uses: tzafrirben/babashka-docker-action@v0.3
+      id: bb_script
+      with:
+        bb_cmd: "bb ci-check"
     - name: Release
       if: success()
       # if: github.event_name == 'push'

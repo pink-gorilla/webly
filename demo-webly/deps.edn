@@ -1,27 +1,53 @@
-{:paths ["src"
-         "resources"
-         "target/node_modules"  ; css png resources from npm modules (tailwind)
+{:paths ["target/node_modules"  ; css png resources from npm modules (tailwind)
+         "demo-webly/target/node_modules"
          ]
- :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
-        org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
-        org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
-        }
+ :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}}
  :aliases
- {:test {:extra-paths ["test"
+ {:test-clj {:extra-paths ["src"
+                       "resources"
+                       "test"
                        "test/resources"]
-         :extra-deps {io.github.cognitect-labs/test-runner
+         :extra-deps {org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
+                      org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
+                      io.github.cognitect-labs/test-runner
                       {:git/url "https://github.com/cognitect-labs/test-runner.git"
                        :sha "dd6da11611eeb87f08780a30ac8ea6012d4c05ce"}
                       ring/ring-mock {:mvn/version "0.4.0"}}
          :main-opts ["-m" "cognitect.test-runner"]
          :exec-fn cognitect.test-runner.api/test}
 
-  :ci {:extra-paths ["test"
-                     "test/resources"]
-       :exec-fn webly.user.app.app/webly-run
-       :exec-args {:profile "ci"
-                   :config "demo.edn"}}
+  :garamond
+  {:main-opts ["-m" "garamond.main"]
+   :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
 
+  ;https://github.com/applied-science/deps-library 1.0.861
+  :release
+  {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
+   :main-opts ["-m" "applied-science.deps-library"]}
+
+  :jar
+   ; alternative approach culd be depstar:
+   ; If you do not sync the pom, depstar will take it as-is -- try :sync-pom false (or just remove that option, it should default to false).
+  {:extra-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
+   :exec-fn hf.depstar/jar
+   :exec-args {;:pom-file "pom2.xml"
+               :jar "target/webly.jar"
+               :group-id "org.pinkgorilla"
+               :artifact-id "webly"
+               :sync-pom true
+               ; :sync-pom -- if true, will run the equivalent of clojure -Spom to create or update your pom.xml file prior to building the JAR file
+               :paths-only false
+               ; :paths-only -- if true, only use :paths and :extra-paths from the project basis (and do not treat :local/root and :git/url 
+               ; as providing source dependencies); new in 2.0.206
+               :verbose true
+               :jar-type :thin ; :uber
+               }}
+
+  :deploy-jar
+  {:replace-deps {slipset/deps-deploy {:mvn/version "0.2.0"}}
+   :exec-fn deps-deploy.deps-deploy/deploy
+   :exec-args {:installer :remote
+               :artifact "target/webly.jar"}}
 
   :tailwind-girouette-webly
   {:exec-fn webly.user.tailwind.generator/generate-tailwind-webly}
@@ -45,29 +71,30 @@
                :css {:output-file "target/webly/public/girouette.edn"
                      :output-format :css-classes
                      :source-paths ["src"
-                                    "../frontend/src"]
-                     
-                     }
+                                    "../frontend/src"]}
                :garden-fn webly.user.tailwind.grammar/class-name->garden
                :apply-classes webly.user.tailwind.css/composed-classes
                :watch? false}}
 
 
-  :webly-demo-watch {:exec-fn webly.user.app.app/webly-run
-                     :exec-args {:profile "watch"
-                                 :config "demo.edn"}}
+  ; demo
+  ; unit tests use demo profile for resource tests
+  ; so the demo serves two puroses
+  ; 1. ilustrate links in web-app
+  ; 2. run unit tests 
 
-  :webly-demo-watch2  {:exec-fn webly.user.app.app/webly-run
-                       :exec-args {:profile "watch2"  ;watch2 - 10x disabled
-                                   :config "demo.edn"}}
+  :demo-webly {:extra-paths ["src"
+                             "resources"
+                             "test"
+                             "test/resources"]
+               :extra-deps {org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
+                            org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
+                            }
+               :exec-fn webly.user.app.app/webly-run
+               :exec-args {:config "demo.edn"
+                           :profile "npm-install"}}
 
-  :webly-demo-compile {:exec-fn webly.user.app.app/webly-run
-                       :exec-args {:profile "release"
-                                   :config "demo.edn"}}
 
-  :webly-demo-jetty {:exec-fn webly.user.app.app/webly-run
-                     :exec-args {:profile "jetty"
-                                 :config "demo.edn"}}
 
   ;
   }}

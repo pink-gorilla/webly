@@ -47,7 +47,6 @@
    "border-blue-500"
    ; color
 
-
    "bg-blue-300"
    "bg-red-400"
    "bg-yellow-100"
@@ -92,13 +91,11 @@
 
    "dark"
    "notification"
-   "fas" 
-   "fa-trash" 
+   "fas"
+   "fa-trash"
    "button"
 
-   "i.fas.fa-trash.mr-3"
-
-])
+   "i.fas.fa-trash.mr-3"])
 
 (defn- kw->classes [kw]
   (->> (name kw)

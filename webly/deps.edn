@@ -52,44 +52,7 @@
         webly/websocket {:local/root "../websocket" :deps/manifest :deps}
         webly/frontend {:local/root "../frontend" :deps/manifest :deps}}
  :aliases
- {:garamond
-  {:main-opts ["-m" "garamond.main"]
-   :extra-deps {com.workframe/garamond {:mvn/version "0.4.0"}}}
-
-  ;https://github.com/applied-science/deps-library 1.0.861
-  :release
-  {:extra-deps {applied-science/deps-library {:mvn/version "0.4.0"}}
-   :main-opts ["-m" "applied-science.deps-library"]}
-
-  :jar
-   ; alternative approach culd be depstar:
-   ; If you do not sync the pom, depstar will take it as-is -- try :sync-pom false (or just remove that option, it should default to false).
-
-  {:extra-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
-   :exec-fn hf.depstar/jar
-   :exec-args {;:pom-file "pom2.xml"
-               :jar "target/webly.jar"
-               :group-id "org.pinkgorilla"
-               :artifact-id "webly"
-               :sync-pom true
-               ; :sync-pom -- if true, will run the equivalent of clojure -Spom to create or update your pom.xml file prior to building the JAR file
-               :paths-only false
-               ; :paths-only -- if true, only use :paths and :extra-paths from the project basis (and do not treat :local/root and :git/url 
-               ; as providing source dependencies); new in 2.0.206
-               :verbose true
-               :jar-type :thin ; :uber
-               }}
-
-  :deploy-jar
-  {:replace-deps {slipset/deps-deploy {:mvn/version "0.2.0"}}
-   :exec-fn deps-deploy.deps-deploy/deploy
-   :exec-args {:installer :remote
-               :artifact "target/webly.jar"}}
-
-
-
-
-  ; https://github.com/weavejester/cljfmt
+ {; https://github.com/weavejester/cljfmt
   :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
            :main-opts ["-m" "cljfmt.main"
                        "--indents" "cljfmt.edn"
@@ -118,17 +81,6 @@
   :check {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
                                         :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
           :main-opts ["-m" "clj-check.check"]}
-
-  ; demo
-  ; unit tests use demo profile for resource tests
-  ; so the demo serves two puroses
-  ; 1. ilustrate links in web-app
-  ; 2. run unit tests 
-
-
-
-
-
 
 
 ;
