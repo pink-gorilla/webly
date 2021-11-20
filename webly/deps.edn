@@ -41,7 +41,7 @@
         org.clojure/clojurescript {:mvn/version "1.10.879"}
 
         ; modular
-        org.pinkgorilla/modular {:mvn/version "0.0.7"}
+        org.pinkgorilla/modular {:mvn/version "0.0.11"}
         org.pinkgorilla/modular-oauth2 {:local/root "../oauth2" :deps/manifest :deps}
         org.pinkgorilla/modular-webserver {:local/root "../webserver" :deps/manifest :deps}
         org.pinkgorilla/modular-websocket {:local/root "../websocket" :deps/manifest :deps}
@@ -130,37 +130,7 @@
                :watch? false
                #_#_:dry-run? true}}
 
-  :test {:extra-paths ["test"
-                       "test/resources"
-                       ;"../demo-webly/resources"
-                       ]
-         :extra-deps {io.github.cognitect-labs/test-runner
-                      {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                       :sha "4e7e1c0dfd5291fa2134df052443dc29695d8cbe"}
-                      ring/ring-mock {:mvn/version "0.4.0"}
-                      org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
-                      org.pinkgorilla/modular-demo-webly {:local/root "../demo-webly" :deps/manifest :deps}}
-         :main-opts ["-m" "cognitect.test-runner"]
-         :exec-fn cognitect.test-runner.api/test}
 
-  :ci {:extra-paths ["test"
-                     "test/resources"
-                     ;"profiles/demo/src"
-                     ;"profiles/demo/resources"
-                     ]
-       :extra-deps  {org.pinkgorilla/modular-demo-webly {:local/root "../demo-webly" :deps/manifest :deps}
-                     org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
-                     }
-       :exec-fn webly.user.app.app/webly-run
-       :exec-args {:profile "ci"
-                   :config "demo.edn"}}
-
-  :webly-demo {:extra-deps  {org.pinkgorilla/modular-demo-webly {:local/root "../demo-webly" :deps/manifest :deps}
-                             org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
-                             }
-               :exec-fn webly.user.app.app/webly-run
-               :exec-args {:profile "watch2"  ;watch2 - 10x disabled
-                           :config "demo.edn"}}
 
 
 

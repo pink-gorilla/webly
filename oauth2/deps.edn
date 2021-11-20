@@ -12,7 +12,7 @@
                            :sha "8b1a85846acaaa37a58b054f2372d8fde0663b75"}
   buddy/buddy-sign {:mvn/version "3.4.1"}
   buddy/buddy-auth {:mvn/version "3.0.1"}
-  org.pinkgorilla/modular {:mvn/version "0.0.7"} ; persistence
+  org.pinkgorilla/modular {:mvn/version "0.0.11"} ; persistence
   }
 
 
@@ -24,7 +24,7 @@
 
   :test {:extra-paths ["test"]
          :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                                                            :sha "9e35c979860c75555adaff7600070c60004a0f44"}}
+                                                            :sha "dd6da11611eeb87f08780a30ac8ea6012d4c05ce"}}
          :main-opts ["-m" "cognitect.test-runner"]
          :exec-fn cognitect.test-runner.api/test}
 

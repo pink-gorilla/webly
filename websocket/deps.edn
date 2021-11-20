@@ -1,7 +1,7 @@
 {:paths ["src"]
  :deps
  {org.clojure/clojure    {:mvn/version "1.10.3"}
-  org.pinkgorilla/modular {:mvn/version "0.0.7"} ; persistence
+  org.pinkgorilla/modular {:mvn/version "0.0.11"} ; persistence
 
   ; websockets
   com.taoensso/encore {:mvn/version  "3.19.0"} ; sente brings an older version
@@ -16,7 +16,7 @@
 
   :test {:extra-paths ["test"]
          :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                                                            :sha "9e35c979860c75555adaff7600070c60004a0f44"}}
+                                                            :sha "dd6da11611eeb87f08780a30ac8ea6012d4c05ce"}}
          :main-opts ["-m" "cognitect.test-runner"]
          :exec-fn cognitect.test-runner.api/test}
 

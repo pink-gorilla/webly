@@ -43,11 +43,7 @@
 (defn validate-token [name]
    ; (jwt/decrypt incoming-data secret)
   (let [token (load-token name)]
-    (jwt/unsign token "key") 
-
-    )
-   
-  )
+    (jwt/unsign token "key")))
 
 
 

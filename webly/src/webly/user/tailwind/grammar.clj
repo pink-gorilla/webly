@@ -20,8 +20,6 @@
     ; [girouette.tw.svg :as svg]
     ; [girouette.tw.accessibility :as accessibility]
    ))
-
-
 (def my-custom-components
   [{:id :rainbow-text
     :rules "
@@ -32,7 +30,6 @@
                :background-clip "text"
                ;:-webkit-background-clip "text"
                :color "transparent"})}]);})}])
-
 
 (def my-chosen-components
   [common/components
@@ -54,14 +51,12 @@
    ;accessibility/components
    my-custom-components])
 
-
 ;; Adds colors to the existing default ones.
 (def my-color-map
   (assoc color/default-color-map
          "cat-white"  "eeeeee"
          "cat-orange" "e58c56"
          "cat-black"  "333333"))
-
 
 ;; This example shows how to Girouette on a custom grammar.
 ;; Here, we use only a subset of the Girouette components and we add your own.
