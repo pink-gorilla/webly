@@ -27,25 +27,8 @@ jobs:
       uses: DeLaGuardo/setup-clojure@3.5
       with:
         cli: 1.10.3.1029 # Clojure CLI based on tools.deps
-    - name: prep res
-      run: |
-         ./scripts/prep-res.sh
-    - name: clj-fmt
-      run: clojure -M:cljfmt check
-    - name: test-clj
-      run: clojure -M:test
-    - name: js build
-      run: |
-         clojure -X:ci
-    - name: test-cljs
-      run: npm test
-      shell: bash
-    #- name: show git tag
-    #  run: clojure -M:garamond
-    #- name: clj-kondo
-    #  run: clojure -M:lint
-    #- name: cloverage
-    #  run: clojure -M:cloverage
+    - name: Install Babashka
+      run bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
     - name: Release
       if: success()
       # if: github.event_name == 'push'
@@ -69,3 +52,4 @@ jobs:
       # Could not transfer metadata foo:bar/maven-metadata.xml from/to releases (https://clojars.org/repo): Read timed out
       # Default 10000 not enough for us
       # export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"
+      
