@@ -1,7 +1,5 @@
 (ns webly.user.app.views
   (:require
-   [cljs.pprint]
-   [reagent.dom]
    [reagent.core :as r]
    [re-frame.core :refer [subscribe]]
    [webly.web.handler :refer [reagent-page]]
@@ -9,9 +7,8 @@
    [webly.user.status.view :refer [status-page]]
    [webly.user.css.view :refer [load-css]]
    [webly.user.dialog :refer [modal-container]]
-   [webly.user.notifications.dialog :refer [notifications-container]]
-   [webly.user.status.subscriptions] ; side-effects
-   ))
+   [webly.user.notifications.dialog :refer [notifications-container]]))
+
 (defn available-pages []
   (->> (methods reagent-page)
        keys

@@ -26,7 +26,8 @@
            :depends-on #{:main}}}))
 
 (defn module-config [ns-cljs modules]
-  (let [main {:main {:entries (main-config ns-cljs)}}
+  (let [main {:main {:init-fn 'webly.user.app.app/start
+                     :entries (main-config ns-cljs)}}
         sub (map sub-module-config modules)
         subs (apply merge sub)]
     (merge main subs)))

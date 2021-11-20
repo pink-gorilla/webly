@@ -21,7 +21,7 @@
                     (dissoc user-opts :keystore :ssl-port :key-password))]
   ; https://github.com/sunng87/ring-jetty9-adapter  
     (if https?
-      (info "Starting Jetty web server (http: " port "https: " ssl-port)
-      (info "Starting Jetty web server (http: " port " ; no https"))
+      (info "Starting Jetty web server (http:" port "https:" ssl-port ")")
+      (info "Starting Jetty web server (http:" port "https: none)"))
     (run-jetty ring-handler (merge default-opts ws-opts user-opts))))
 

@@ -1,11 +1,12 @@
 (ns webly.user.app.app
   (:require
    [reagent.dom]
+   [cljs.pprint]
    [taoensso.timbre :refer-macros [info warn]]
    [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db reg-sub]]
    ; side-effects
-   [day8.re-frame.http-fx]
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
+   [day8.re-frame.http-fx]
    [modular.oauth2]
    ; webly
    [webly.build.lazy]
@@ -27,7 +28,9 @@
    [webly.user.tenx.events]
    [webly.user.settings.subscriptions]
    [webly.user.settings.events]
-   [webly.user.app.events]))
+   [webly.user.app.events]
+   [webly.user.status.subscriptions] ; side-effects
+   ))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]
@@ -107,4 +110,7 @@
   (mount-app))
 
 (defn ^:export start []
+  (enable-console-print!)
+  (println "webly starting..")
+  (info "webly starting..")
   (webly-run!))

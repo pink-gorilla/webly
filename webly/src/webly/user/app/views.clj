@@ -91,7 +91,8 @@
       [:div  ; .w-screen.h-screen
        [:script {:src "/r/main.js"
                  :type "text/javascript"
-                 :onload webly-bundle-entry}]]])))
+                 ;:onload webly-bundle-entry
+                 }]]])))
 
 (defn app-page [csrf-token]
   (layout @config-atom

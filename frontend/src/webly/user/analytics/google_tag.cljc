@@ -20,11 +20,11 @@
   [google-analytics-config]
   (let [{:keys [enabled id]} google-analytics-config]
     (if (and enabled id)
-      (do (info "google analytics starting with google id: " id)
+      (do (debug "google analytics starting with google id: " id)
           (script-cljs id)
           #_(script-js id))
       (do
-        (warn "no google analytics config!")
+        (debug "no google analytics config!")
         [:div {:class "no-google-analytics-config-tag"}]))))
 
 (defn script-tag-config [google-analytics-config]

@@ -1,13 +1,8 @@
 {:paths ["src"]
- :deps
- {org.clojure/clojure    {:mvn/version "1.10.3"}
-  org.pinkgorilla/modular {:mvn/version "0.0.11"} ; persistence
-
-  ; websockets
-  com.taoensso/encore {:mvn/version  "3.19.0"} ; sente brings an older version
-  com.taoensso/sente {:mvn/version "1.16.2"}
-  }
-
+ :deps {org.clojure/clojure    {:mvn/version "1.10.3"}
+        org.pinkgorilla/modular {:mvn/version "0.0.11"} ; persistence
+        com.taoensso/encore {:mvn/version  "3.19.0"} ; sente brings an older version
+        com.taoensso/sente {:mvn/version "1.16.2"}}
 
  :aliases
  {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}

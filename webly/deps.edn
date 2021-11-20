@@ -42,10 +42,10 @@
 
         ; modular
         org.pinkgorilla/modular {:mvn/version "0.0.11"}
-        org.pinkgorilla/modular-oauth2 {:local/root "../oauth2" :deps/manifest :deps}
-        org.pinkgorilla/modular-webserver {:local/root "../webserver" :deps/manifest :deps}
-        org.pinkgorilla/modular-websocket {:local/root "../websocket" :deps/manifest :deps}
-        org.pinkgorilla/modular-frontend {:local/root "../frontend" :deps/manifest :deps}}
+        webly/oauth2 {:local/root "../oauth2" :deps/manifest :deps}
+        webly/webserver {:local/root "../webserver" :deps/manifest :deps}
+        webly/websocket {:local/root "../websocket" :deps/manifest :deps}
+        webly/frontend {:local/root "../frontend" :deps/manifest :deps}}
  :aliases
  {:garamond
   {:main-opts ["-m" "garamond.main"]

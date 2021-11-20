@@ -39,7 +39,7 @@
  :web-server     {:port 8080
                   :host "0.0.0.0"
                   :ssl-port 8443
-                  :keystore "./profiles/webserver/certs/keystore.p12"
+                  :keystore "../webserver/certs/keystore.p12"
                   :key-password "password"; Password you gave when creating the keystore
                   }
 
