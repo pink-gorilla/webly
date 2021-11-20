@@ -27,11 +27,8 @@ jobs:
       uses: DeLaGuardo/setup-clojure@3.5
       with:
         cli: 1.10.3.1029 # Clojure CLI based on tools.deps
-    - name: ci checks (with babashka)
-      uses:tzafrirben/babashka-docker-action@v1.1
-      id: bb_script
-      with:
-        bb_cmd: "bb ci-check"
+    - name: Install Babashka
+      run bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
     - name: Release
       if: success()
       # if: github.event_name == 'push'
