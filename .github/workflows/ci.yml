@@ -28,7 +28,7 @@ jobs:
       with:
         cli: 1.10.3.1029 # Clojure CLI based on tools.deps
     - name: Install Babashka
-      run bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
+      run: bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
     - name: Release
       if: success()
       # if: github.event_name == 'push'
