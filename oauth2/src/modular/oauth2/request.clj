@@ -4,7 +4,6 @@
    [clojure.data.json :as json]
    [cemerick.url :refer [url url-encode]]
    [clj-http.client :as http]
-
    [clojure.string :as string]
    [cheshire.core]
    [modular.oauth2.provider :refer [get-provider-config get-provider-auth-header]]
@@ -17,7 +16,7 @@
         config (get-provider-config provider)
         url (get-in config [:endpoints endpoint])
         token (load-token provider)
-        at (:access-token token)
+        at (:access-token token);; Xero example for authroize request
         header (get-provider-auth-header provider at)]
     {:provider provider
      :endpoint endpoint
@@ -52,6 +51,7 @@
          (error "keys of error: " (keys e))
          ;;(error (:body e))
          )))))
+
 (defn get-request-xero
   ([tenant-id provider_endpoint]
    (get-request provider_endpoint {}))

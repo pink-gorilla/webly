@@ -66,13 +66,17 @@
   (let [{:keys [authorize-uri authorize-response-type client-id scope]} (full-provider-config config provider)
         query {:client_id client-id
                :redirect_uri  (url-redirect provider current-url)
-               :response_type authorize-response-type
+               ; If the value is code, launches a Basic authorization code flow, requiring a POST to the token endpoint to obtain the tokens.
+               ;  If the value is token id_token or id_token token, launches an Implicit flow
+               :response_type authorize-response-type ; response_type=token
                :scope (scope->string scope)
-               ;:nonce (nonce)
+               ; state: sessionid
                }
-        query (if (= provider :xero)
-                ; not sure why this is needed.                 
-                (assoc query :returnUrl "https://login.xero.com/identity/identity/connect/authorize")
+        query (case provider
+                :xero (assoc query :returnUrl "https://login.xero.com/identity/identity/connect/authorize") ; not sure why this is needed.                 
+                :google
+                (assoc query :access_type "offline"; the client does not receive a refresh token unless a value of offline is specified. (online or offline
+                       :nonce (nonce))
                 query)]
     (infof "oauth2 for: %s authorize-uri: %s params: %s" provider authorize-uri (pr-str query))
     (-> (url authorize-uri)
@@ -80,24 +84,6 @@
         str
         ;url-encode
         )))
-; https://github.com/login/oauth/authorize?
-; client_id=
-; &response_type=token
-; &redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth2%2Fgithub%2Flanding
-; &scope=user%3Aemail%20gist
-
-;  scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&
- ;include_granted_scopes=true&
-; response_type=token&
-; state=state_parameter_passthrough_value&
-; redirect_uri=https%3A//oauth2.example.com/code&
-; client_id=client_id
-
-; http://localhost:8000/oauth2/google/token
-; #access_token=ya29.a0AfH6SMBizCNXcAu2WM_P4quZ2Z5z3rHhz0824AO-c_nO2AOiDW7NT3kT3bDNw8wK5i6xMa8ysgKFlwTQv5vvpVCkepmvCGSvm6iwkvVsseaaSOB7Af4uJzX5wbgrZ_4F_6Dkrp9rMO48RtI9Gp2gzvEOqxdT
-; &token_type=Bearer
-; &expires_in=3599
-; &scope=https://www.googleapis.com/auth/drive.readonly%20https://www.googleapis.com/auth/spreadsheets.readonly
 
 ;; REQUESTS (use the api)
 
