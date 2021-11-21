@@ -8,7 +8,7 @@
    [deps-deploy.deps-deploy :as dd]))
 
 
-(def lib 'pink-gorilla/webly)
+(def lib 'org.pink-gorilla/webly)
 (def version (format "0.4.%s" (b/git-count-revs nil)))
 
 (defn jar "build the JAR" [opts]
