@@ -1,7 +1,7 @@
 (ns modular.oauth2.provider.github)
 
 ; :query {code 27aefeb35395d63c34}}
-(defn parse-redirect [{:keys [query]}]
+(defn parse-authorize-response [{:keys [query]}]
   {:code (:code query)})
 
   ; :github {:email "name@domain.com"
@@ -16,22 +16,22 @@
   {:user (:login data)
    :email (:email data)})
 
-(defn auth-header [token]
+(defn api-request-auth-header [token]
   {"Authorization" (str "token " token)})
 
 (def config
   {; authorize
    :authorize-uri "https://github.com/login/oauth/authorize"
-   :response-type "token"
-   :parse-redirect parse-redirect
+   :authorize-response-type "token"
+   :parse-authorize-response parse-authorize-response
 
-   ; access token
-   :access-token-uri "https://github.com/login/oauth/access_token"
+   ; token
+   :token-uri "https://github.com/login/oauth/access_token"
    :parse-dispatch [:github/code->token]
    :accessTokenResponseKey "id_token"
 
    ; api requests
-   :auth-header auth-header
+   :auth-header api-request-auth-header
    :endpoints {:userinfo    "https://api.github.com/user"
                :search-repo "https://api.github.com/search/repositories" ; q=user:USERNAME
                }

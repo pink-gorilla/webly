@@ -15,7 +15,7 @@
    (let [provider (get-provider-config p)
          code (:code data)
          {:keys [client-id client-secret]} (get-in db [:config :oauth2 p])]
-     (info "github code -> token .. code: " code " clientId " client-id)
+     (info "oauth2/code->token .. code: " code " clientId " client-id)
      {:db       db
       :http-xhrio {:method          :get
                    :uri            "/api/oauth2/token" ;  "https://github.com/login/oauth/access_token"

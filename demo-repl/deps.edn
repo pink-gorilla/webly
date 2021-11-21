@@ -5,6 +5,10 @@
   commons-codec/commons-codec {:mvn/version "1.15"}
   uri/uri {:mvn/version "1.1.0"}
   clj-jwt/clj-jwt {:mvn/version "0.1.1"}
+
+  com.auth0/java-jwt {:mvn/version "3.12.0"}
+  com.auth0/jwks-rsa {:mvn/version  "0.15.0"}
+
   org.pinkgorilla/modular {:mvn/version "0.0.7"} ; persistence
   org.pinkgorilla/modular-oauth2 {:local/root "../oauth2" :deps/manifest :deps}}
 

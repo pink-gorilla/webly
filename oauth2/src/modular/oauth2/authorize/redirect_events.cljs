@@ -19,12 +19,13 @@
  (fn [{:keys [db]} [_ data]]
    (let [p (:provider data)
          provider (get providers p)
-         parse-redirect (:parse-redirect provider)
-         code (parse-redirect data)
-         ;parse-dispatch (:parse-dispatch provider)
-         ]
-     (rf/dispatch [:oauth2/code->token p code])
-     ;(when parse-dispatch
+         parse-authorize-response (:parse-authorize-response provider)
+         auth-result (parse-authorize-response data)]
+     (if (:code auth-result)
+       (rf/dispatch [:oauth2/code->token p auth-result])
+       (rf/dispatch [:oauth2/save-token p auth-result]))
+
+;(when parse-dispatch
      ;  (rf/dispatch parse-dispatch))
      ;(if token
      ;  (do (rf/dispatch [:oauth2/save-token p token])

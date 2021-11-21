@@ -21,7 +21,12 @@
  {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}
                           org.slf4j/slf4j-nop {:mvn/version "1.7.32"}}
              :main-opts ["-m" "antq.core"]}
-
+  
+  :nrepl {:extra-deps {nrepl/nrepl  {:mvn/version "0.8.3"}
+                      cider/cider-nrepl {:mvn/version,"0.27.2"}}
+          
+          
+         :main-opts  ["-m" "nrepl.cmdline"]}
   :test {:extra-paths ["test"]
          :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
                                                             :sha "dd6da11611eeb87f08780a30ac8ea6012d4c05ce"}}

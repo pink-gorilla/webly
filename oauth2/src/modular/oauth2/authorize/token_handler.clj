@@ -32,9 +32,9 @@
         url-redirect (get-in req [:query-params "url-redirect"])
         p (promise)
         provider-config (full-provider-config @config-atom provider)
-        {:keys [access-token-uri client-id client-secret]} provider-config]
+        {:keys [token-uri client-id client-secret]} provider-config]
     (info "getting token for provider " provider " code :" code "client-id:" client-id " redirect-url: " url-redirect)
-    (ajax/POST access-token-uri ; "https://github.com/login/oauth/access_token"
+    (ajax/POST token-uri ; "https://github.com/login/oauth/access_token"
       :headers (auth-header-oauth-token client-id client-secret)
       :params {:client_id	 client-id
                :client_secret client-secret

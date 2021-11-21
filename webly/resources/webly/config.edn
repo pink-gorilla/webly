@@ -54,12 +54,17 @@
  :oauth2 {:token-path ".webly/tokenstore/"
           :github {:client-id        ""
                    :client-secret    ""
-                   :scope          ["user:email"
+                   :scope          [;https://docs.github.com/en/developers/apps/scopes-for-oauth-apps
+                                    "user"
+                                    ;"user:email" ; this includes ONLY the user email
                                     "gist"
                                     "repo"]}
           :google {:client-id        ""
                    :client-secret    ""
-                   :scope          ["https://www.googleapis.com/auth/userinfo.email"
+                   :scope          [;https://developers.google.com/identity/protocols/oauth2/scopes
+                                    "openid"
+                                    "email"
+                                    "https://www.googleapis.com/auth/userinfo.email"
                                     ; readonly 
                                     "https://www.googleapis.com/auth/spreadsheets.readonly"
                                     "https://www.googleapis.com/auth/drive.readonly"
@@ -78,12 +83,16 @@
                                     "https://www.googleapis.com/auth/cloud-platform"
                                     
                                     "https://docs.google.com/feeds/"
-                                    "https://spreadsheets.google.com/feeds"]}
+                                    "https://spreadsheets.google.com/feeds"
+                                    
+                                    "https://www.googleapis.com/auth/cloud_search"
+                                    ]}
 
 
           :xero {:client-id        ""
                  :client-secret    ""
-                 :scope          ["openid"
+                 :scope          ["offline_access" ; refresh_token
+                                  "openid"
                                   "profile"
                                   "email"
                                   "accounting.settings"
@@ -93,7 +102,7 @@
                                   "accounting.attachments"
                                   "accounting.transactions"
                                   "accounting.transactions.read"
-                                  "offline_access"]}}
+                                  ]}}
 
  :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :info]
                    [#{"org.eclipse.jetty.*"} :info]

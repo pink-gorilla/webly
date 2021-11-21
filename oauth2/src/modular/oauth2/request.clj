@@ -1,6 +1,6 @@
 (ns modular.oauth2.request
   (:require
-   [taoensso.timbre :refer [info error]]
+   [taoensso.timbre :refer [info warn error]]
    [clojure.data.json :as json]
    [cemerick.url :refer [url url-encode]]
    [clj-http.client :as http]
@@ -32,12 +32,26 @@
    (info "get-request " provider_endpoint query-params)
    (let [{:keys [url header]} (get-endpoint provider_endpoint)]
      (info "http/get " url)
-     (-> (http/get url {:headers header
-                        :accept :json
-                        :query-params query-params})
-         (:body)
-         (cheshire.core/parse-string true)))))
-
+     (try
+       (-> (http/get url {:headers header
+                          :accept :json
+                          :query-params query-params})
+           (:body)
+           (cheshire.core/parse-string true))
+       (catch clojure.lang.ExceptionInfo e
+         (error "get-request " provider_endpoint " error: " (.getMessage e))
+         ;(warn (.getData e))
+        ; (info (prn e))
+         (when-let [body (-> e .getData :body)]
+           (let [b (cheshire.core/parse-string body true)]
+             (warn "body: " b)
+             b)))
+       (catch Exception e
+         (error "get-request " provider_endpoint " exception")
+         ;(error e)
+         (error "keys of error: " (keys e))
+         ;;(error (:body e))
+         )))))
 (defn get-request-xero
   ([tenant-id provider_endpoint]
    (get-request provider_endpoint {}))

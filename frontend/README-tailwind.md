@@ -27,3 +27,21 @@ string to map.
 - https://tailwindui.com/
 
 
+## tailwind optimization 
+
+https://www.pollen.style/addons/grid
+
+
+Tw
+84 colors 3600kb
+25 colors 2200kb
+
+5 breakpoints 3600
+1 breakpoint 1100 
+
+
+
+https://tailwindui.com/components/application-ui/lists/tables
+
+
+

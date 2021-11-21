@@ -63,10 +63,10 @@
        (set-relative-path current-url)))
 
 (defn url-authorize [config provider current-url]
-  (let [{:keys [authorize-uri response-type client-id scope]} (full-provider-config config provider)
+  (let [{:keys [authorize-uri authorize-response-type client-id scope]} (full-provider-config config provider)
         query {:client_id client-id
                :redirect_uri  (url-redirect provider current-url)
-               :response_type response-type
+               :response_type authorize-response-type
                :scope (scope->string scope)
                ;:nonce (nonce)
                }
