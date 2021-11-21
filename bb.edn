@@ -1,4 +1,6 @@
-{:paths ["script"]
+{:paths ["script"
+         "target/node_modules"
+         ]
  :deps {;borkdude/gh-release-artifact
        ; {:git/url "https://github.com/borkdude/gh-release-artifact"
        ;  :sha "2f8898d84126a4e922c490f8614211a8b0cf67cd"}
@@ -53,7 +55,8 @@
                              test-cljs]
                    :task (shell "echo" "ci checks are ok!")}
 
-         commit-check {:depends [clean
+         commit-check {:doc "if this succeeds, then the github ci pipeline will work too."
+                       :depends [clean
                                  cljfmt-fix
                                  ci-check]
                        :task (shell "echo" "all good - you can push to github")}
@@ -67,7 +70,7 @@
                   :task (clojure "-T:build deploy")}
 
          tag {:doc "Tags release and pushes tag to Github."
-              :task (let [version (-> (slurp "resources/META-INF/pink-gorilla/webly/meta.edn")
+              :task (let [version (-> (slurp "demo-webly/resources/META-INF/pink-gorilla/webly/meta.edn")
                                       edn/read-string
                                       :version)
                           tag (str "v" version)]
@@ -82,11 +85,9 @@
                          (run 'clojars)
                          (run 'tag))}
 
-         show-jar (shell {:dir "demo-webly"} "fastjar" "tf" "target/webly-0.4.516.jar")
-         show-jar-pom (shell {:dir "demo-webly"} "fastjar" "xf" "target/webly.jar" "META-INF/maven/org.pinkgorilla/webly/pom.xml")
-         show-jar-manifest (shell {:dir "demo-webly"} "fastjar" "xf" "target/webly.jar" "META-INF/MANIFEST.MF")
-       
-
+         jar-extract {:doc "Extracts generated jar (for debugging)"
+                      :task (shell {:dir "demo-webly/target"} "fastjar" "xf" "webly-0.4.516.jar")}
+                 
 
          ;; demos
          demo-webserver-https (webly/clojure "webserver" "-X:webserver")

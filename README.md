@@ -24,7 +24,7 @@ Clone this repo and run: `bb demo-webly`
 The demo runs a webserver on port 8080 with shadow-cljs "watch" mode.
 
 
-# features:
+# features
 
 ## 10x / tracing
 - are included in watch / compile
@@ -59,7 +59,7 @@ Bidi is not as highly starred as compojure, but it has important benefits:
   - bundle-size report at compile time
 
 
-## [oauth2 (separate readme)](/profiles/oauth2/README.md)
+## [oauth2 (separate readme)](/oauth2/README.md)
 
 # webly - how to use:
 
