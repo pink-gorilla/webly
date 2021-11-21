@@ -25,7 +25,7 @@
         others-deps-list (map #(load-deps-config-path % [:deps]) others)
         other-deps (apply concat others-deps-list)
         all-deps (concat main-deps other-deps)
-        all-deps (remove #(-> % second :local/root) all-deps)
+        ;all-deps (remove #(-> % second :local/root) all-deps)
         all-deps (into {} all-deps)
         merged-edn (assoc main-edn :deps all-deps)]
     (println "merged deps: " all-deps)

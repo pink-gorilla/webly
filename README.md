@@ -17,19 +17,12 @@
 
 - webly is used in [Goldly](https://github.com/pink-gorilla/goldly).
 
-# Webly Compile Profiles
-
-- watch - shadow-cljs watch
-- watch2 - schadow-cljs watch without ten-x devtools
-- compile  - Build cljs bundle, and output bundle stats
-- release - Build cljs bundle, output bundle stats. no tenx. no source-maps
-- jetty -  Serves website from precompiled bundle with Jetty.
-
 # run the ui demo
 
 Clone this repo and run: `bb demo-webly`
 
 The demo runs a webserver on port 8080 with shadow-cljs "watch" mode.
+
 
 # features:
 
@@ -72,10 +65,13 @@ Bidi is not as highly starred as compojure, but it has important benefits:
 
 To start webly you have to pass it two parameter: **profile** and **config**
 
+# Webly Compile Profiles
+
 **Webly profile** can be one of the following strings:
-- watch: builds with ten-x and runs shadow dev server
-- compile: builds bundle
-- release: builds release bundle (for production)
+- watch: builds with ten-x and runs shadow dev server (shadow-cljs watch)
+- watch2: shadow-cljs watch without ten-x devtools
+- compile: builds bundle and output bundle stats
+- release: builds release bundle (for production)  no tenx. no source-maps bundle stats
 - jetty: runs app, with bundle compiled via compile or release 
 - ci: builds bundle for unit tests
 - npm-install: just installs npm dependencies (based on deps.cljs)
@@ -90,7 +86,6 @@ To start webly you have to pass it two parameter: **profile** and **config**
 - keep your npm depeendencies *only* in deps.cljs
 - do NOT create a package.json file!
 - package.json will be auto generated
-- run `lein webly npm-install` and `npm outdated` to see if there are newer versions available
 
 
 Add npm dependencies that you want to use into a clojure deps.cljs

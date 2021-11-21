@@ -31,16 +31,15 @@
                                       "./webserver"
                                       "./websocket"
                                       "./oauth2"
-                                      "./webly"
-                                      
-                                      ]
+                                      "./webly"]
                                      "./ci/deps.edn")
          build {:depends [npm-install
                           build-ci
                           tailwind-girouette-webly
                           copy-resources
                           get-fonts
-                          merge-deps]
+                          ;merge-deps
+                          ]
                 :task (shell "echo" "cljs bundle has been built!")}
 
          ; tests
@@ -59,14 +58,35 @@
                                  ci-check]
                        :task (shell "echo" "all good - you can push to github")}
 
-         ;; JAR
-         show-jar (shell {:dir "demo-webly"} "fastjar" "tf" "target/webly.jar")
+
+         ;; JAR 
+         jar {:doc "Builds the jar"
+              :task (webly/clojure "demo-webly" "-T:build" "jar")}
+
+         clojars {:doc "Deploys the jar to clojars"
+                  :task (clojure "-T:build deploy")}
+
+         tag {:doc "Tags release and pushes tag to Github."
+              :task (let [version (-> (slurp "resources/META-INF/pink-gorilla/webly/meta.edn")
+                                      edn/read-string
+                                      :version)
+                          tag (str "v" version)]
+                      (shell "git tag" tag)
+                      (shell "git push origin" tag))}
+
+         deploy {:doc "Deploys the jar to clojars"
+                 ;; ensure sequential order becauce tag reads from info.edn made
+                 ;; by build.clj
+                 :task (do
+                         (run 'jar)
+                         (run 'clojars)
+                         (run 'tag))}
+
+         show-jar (shell {:dir "demo-webly"} "fastjar" "tf" "target/webly-0.4.516.jar")
          show-jar-pom (shell {:dir "demo-webly"} "fastjar" "xf" "target/webly.jar" "META-INF/maven/org.pinkgorilla/webly/pom.xml")
          show-jar-manifest (shell {:dir "demo-webly"} "fastjar" "xf" "target/webly.jar" "META-INF/MANIFEST.MF")
-         show-git-tag (webly/clojure "webly" "-M:garamond")
-         git-tag-patch (webly/clojure "." "-M:garamond")
-         git-tag-minor (webly/clojure "demo-webly" "-M:garamond tag --minor")
-         ;clojure -M:release tag --minor
+       
+
 
          ;; demos
          demo-webserver-https (webly/clojure "webserver" "-X:webserver")

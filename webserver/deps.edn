@@ -50,7 +50,7 @@
 
   ; requires java/bouncycastle to be installed.
   ; guix has the package: java-bouncycastle
-  :get-certificates {:exec-fn  demo.https/get-certificates}
+  ; :get-certificates {:exec-fn  demo.https/get-certificates}
 
 
 ;

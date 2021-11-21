@@ -8,8 +8,8 @@
   com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
   cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
   day8.re-frame/http-fx {:mvn/version "0.2.3"}  ; reframe based http requests
-  simplevalue/letsencrypt {:git/url "https://github.com/SimpleValue/sv.letsencrypt.git"
-                           :sha "8b1a85846acaaa37a58b054f2372d8fde0663b75"}
+  ;simplevalue/letsencrypt {:git/url "https://github.com/SimpleValue/sv.letsencrypt.git"
+  ;                         :sha "8b1a85846acaaa37a58b054f2372d8fde0663b75"}
   buddy/buddy-sign {:mvn/version "3.4.1"}
   buddy/buddy-auth {:mvn/version "3.0.1"}
   org.pinkgorilla/modular {:mvn/version "0.0.11"} ; persistence
