@@ -52,7 +52,8 @@
 
  ; creds (set them in creds.edn resource)
  :oauth2 {:token-path ".webly/tokenstore/"
-          :github {:client-id        ""
+          :github {;https://docs.github.com/en/rest/reference/permissions-required-for-github-apps
+                   :client-id        ""
                    :client-secret    ""
                    :scope          [;https://docs.github.com/en/developers/apps/scopes-for-oauth-apps
                                     "user"

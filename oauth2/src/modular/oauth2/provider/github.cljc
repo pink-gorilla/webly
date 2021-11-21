@@ -22,7 +22,7 @@
 (def config
   {; authorize
    :authorize-uri "https://github.com/login/oauth/authorize"
-   :authorize-response-type "token"
+   :authorize-response-type "code" ;  "token"
    :parse-authorize-response parse-authorize-response
 
    ; token

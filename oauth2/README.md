@@ -193,3 +193,26 @@ https://oauth2.example.com/auth?error=access_denied
 An authorization code response:
 
 https://oauth2.example.com/auth?code=4/P7q7W91a-oMsCeLvIaQm6bTrgtp7
+
+
+
+const axios = require('axios');
+const querystring = require('querystring');
+const keys = require('../config/keys');
+
+const getAccessToken = async refreshToken => {
+  try {
+    const accessTokenObj = await axios.post(
+      'https://www.googleapis.com/oauth2/v4/token',
+      querystring.stringify({
+        refresh_token: refreshToken,
+        client_id: keys.googleClientID,
+        client_secret: keys.googleClientSecret,
+        grant_type: 'refresh_token'
+      })
+    );
+    return accessTokenObj.data.access_token;
+  } catch (err) {
+    console.log(err);
+  }
+};
