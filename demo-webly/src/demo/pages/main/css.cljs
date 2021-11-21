@@ -18,8 +18,7 @@
     (fn []
       [block2 "css loader"
        [:div.flex.flex-col
-        [link-dispatch [:css/set-theme-component :tailwind "light"] "tailwind light"]
-        [link-dispatch [:css/set-theme-component :tailwind "dark"] "tailwind dark"]
+        [:p "css loading?" (str @loading?)]
         [link-fn show! "show emoji"]
         [link-dispatch [:css/add-components
                         {:bad {true  ["non-existing.css"]}}
@@ -28,4 +27,7 @@
         (if @show
           [emoji "fiem-surprised"]
           [:span "emoji not loaded"])
-        [:p "css loading?" (str @loading?)]]])))
+        [:p "tailwind theme switcher (requires full tailwind css)"]
+        [link-dispatch [:css/set-theme-component :tailwind "light"] "tailwind light"]
+        [link-dispatch [:css/set-theme-component :tailwind "dark"] "tailwind dark"]
+        ]])))

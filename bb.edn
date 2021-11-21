@@ -1,6 +1,5 @@
 {:paths ["script"
-         "target/node_modules"
-         ]
+         "target/node_modules"]
  :deps {;borkdude/gh-release-artifact
        ; {:git/url "https://github.com/borkdude/gh-release-artifact"
        ;  :sha "2f8898d84126a4e922c490f8614211a8b0cf67cd"}
@@ -67,7 +66,7 @@
               :task (webly/clojure "demo-webly" "-T:build" "jar")}
 
          clojars {:doc "Deploys the jar to clojars"
-                  :task (clojure "-T:build deploy")}
+                  :task (webly/clojure "demo-webly" "-T:build" "deploy")}
 
          tag {:doc "Tags release and pushes tag to Github."
               :task (let [version (-> (slurp "demo-webly/resources/META-INF/pink-gorilla/webly/meta.edn")
@@ -77,7 +76,7 @@
                       (shell "git tag" tag)
                       (shell "git push origin" tag))}
 
-         deploy {:doc "Deploys the jar to clojars"
+         ci-deploy {:doc "Deploys the jar to clojars"
                  ;; ensure sequential order becauce tag reads from info.edn made
                  ;; by build.clj
                  :task (do
@@ -87,7 +86,7 @@
 
          jar-extract {:doc "Extracts generated jar (for debugging)"
                       :task (shell {:dir "demo-webly/target"} "fastjar" "xf" "webly-0.4.516.jar")}
-                 
+
 
          ;; demos
          demo-webserver-https (webly/clojure "webserver" "-X:webserver")
@@ -95,7 +94,12 @@
          demo-web-requests-xero (webly/clojure "demo-repl" "-X:web-requests-xero")
          demo-web-requests-github (webly/clojure "demo-repl" "-X:web-requests-github")
 
-         demo-webly (webly/run "demo-webly" "demo-webly" "watch2")
+         demo-webly {:doc "webly demo with shadow-cljs watch"
+                     :task (webly/run "demo-webly" "demo-webly" "watch2")}
+         demo-compile {:doc "compile webly demo javascript"
+                       :task (webly/run "demo-webly" "demo-webly" "release")}
+         demo-jetty {:doc "serve compiled webly demo javascript with jetty"
+                     :task (webly/run "demo-webly" "demo-webly" "jetty")}
 
 
  ;        

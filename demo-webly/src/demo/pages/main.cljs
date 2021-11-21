@@ -3,13 +3,18 @@
    [taoensso.timbre :refer-macros [debug info warn error]]
    [webly.web.handler :refer [reagent-page]]
    ; boxes
-   [demo.pages.main.css :refer [demo-css]]
+
+   [demo.pages.main.lazy :refer [demo-lazy]]
    [demo.pages.main.bidi :refer [demo-routing]]
-   [demo.pages.main.dialog :refer [demo-dialog]]
-   [demo.pages.main.oauth :refer [demo-oauth]]
+   [demo.pages.main.css :refer [demo-css]]
    [demo.pages.main.ws :refer [demo-ws]]
+   [demo.pages.main.oauth :refer [demo-oauth]]
+   ; frontend
+   [demo.pages.main.settings :refer [demo-settings]]
+   [demo.pages.main.dialog :refer [demo-dialog]]
+
    [demo.pages.main.kb :refer [demo-kb]]
-   [demo.pages.main.settings :refer [demo-settings demo-lazy]]))
+   ))
 
 (defn main []
   [:div.dark
@@ -21,14 +26,16 @@
                   "md:grid-cols-2 "
                   "lg:grid-cols-3 "
                   "xl:grid-cols-4 ")}
-    [demo-css]
+    
+    [demo-lazy]
     [demo-routing]
-    [demo-dialog]
-    [demo-oauth]
-    [demo-settings]
     [demo-ws]
+    [demo-css]
+    [demo-oauth]
+    [demo-dialog]
+    [demo-settings]
     [demo-kb]
-    [demo-lazy]]])
+    ]])
 
 (defmethod reagent-page :demo/main [& args]
   [main])

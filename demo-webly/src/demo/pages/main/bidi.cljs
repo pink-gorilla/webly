@@ -7,7 +7,7 @@
 ;; BIDI ROUTING
 
 (defn demo-routing []
-  [block2 "bidi routes"
+  [block2 "routes"
    [:div.flex.flex-col
     [link-dispatch [:bidi/goto "/help"]
      "help! (as an url)"]
