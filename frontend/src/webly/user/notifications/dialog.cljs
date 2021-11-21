@@ -26,7 +26,7 @@
     :role "alert"}
    [:button
     {:on-click #(rf/dispatch [:notification/dismiss id])}
-    [:i.fas.fa-trash.mr-3]]
+    [:i.fas.fa-trash.pr-3]]
    hiccup])
 
 (defn ^:export notifications-container []

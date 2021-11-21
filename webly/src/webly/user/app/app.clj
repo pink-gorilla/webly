@@ -62,7 +62,7 @@
 (defn webly-run!
   [profile-name config]
   (when (empty? @config-atom)
-    (warn "config is empty.. loading config now!")
+    (info "config is empty.. loading config now!")
     (load-config! config))
   (let [profile (setup-profile profile-name)]
     (if (:server profile)

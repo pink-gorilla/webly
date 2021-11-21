@@ -55,6 +55,7 @@
    "bg-green-600"
    "bg-red-100"
    "bg-red-400"
+   "bg-red-500"
    "bg-blue-100"
    "bg-blue-400"
    "bg-gray-300"
@@ -95,7 +96,27 @@
    "fa-trash"
    "button"
 
-   "i.fas.fa-trash.mr-3"])
+   "cursor-pointer"
+   "button"
+   "i"
+   "fas"
+
+   "hover:text-blue-700 mr-1"
+   "hover:text-blue-700 mr-1"
+   "fas fa-trash mr-3"
+   "fas fa-trash pr-3"
+   "inline-block"
+   "fa-lg pl-1 fab fa-google-plus"
+   "absolute bg-blue-300 p-2 top-3 border-0 mr-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg"
+   "absolute bg-blue-300 p-2 top-3 border-0 mr-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg"
+   "text-white p-3"
+   "fa-lg pl-1"
+   "bg-blue-300 cursor-pointer hover:bg-red-700 m-1"
+   "text-green-800"
+   "bg-blue-300 cursor-pointer hover:bg-red-700 m-1"
+
+;
+   ])
 
 (defn- kw->classes [kw]
   (->> (name kw)

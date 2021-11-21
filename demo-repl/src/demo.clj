@@ -54,7 +54,7 @@
 (defn make-web-requests [{:keys [provider]}]
   (config/set!
    :oauth2
-   {:token-path "../../.webly/tokenstore/"})
+   {:token-path "../demo-webly/.webly/tokenstore/"})
   (case provider
     :xero (xero)
     :google (google)

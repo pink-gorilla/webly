@@ -7,7 +7,8 @@
        ; 
         }
 
- :tasks {:requires [deps webly]
+ :tasks {:requires [deps webly
+                    [clojure.edn :as edn]]
          ; dev tools
          lint (webly/clojure "webly" "-M:lint" "src" "../oauth2" "../webserver")
          cljfmt-check (webly/clojure "webly" "-M:cljfmt" "check" "src" "../oauth2" "../webserver")
@@ -79,20 +80,19 @@
          ci-deploy {:doc "Deploys the jar to clojars"
                  ;; ensure sequential order becauce tag reads from info.edn made
                  ;; by build.clj
-                 :task (do
-                         (run 'jar)
-                         (run 'clojars)
-                         (run 'tag))}
+                    :task (do
+                            (run 'jar)
+                            (run 'clojars)
+                            (run 'tag))}
 
          jar-extract {:doc "Extracts generated jar (for debugging)"
                       :task (shell {:dir "demo-webly/target"} "fastjar" "xf" "webly-0.4.516.jar")}
 
+         ;; devtest
+
+         devtest-webserver-https (webly/clojure "webserver" "-X:webserver")
 
          ;; demos
-         demo-webserver-https (webly/clojure "webserver" "-X:webserver")
-         demo-web-requests-google (webly/clojure "demo-repl" "-X:web-requests-google")
-         demo-web-requests-xero (webly/clojure "demo-repl" "-X:web-requests-xero")
-         demo-web-requests-github (webly/clojure "demo-repl" "-X:web-requests-github")
 
          demo-webly {:doc "webly demo with shadow-cljs watch"
                      :task (webly/run "demo-webly" "demo-webly" "watch2")}
@@ -100,6 +100,12 @@
                        :task (webly/run "demo-webly" "demo-webly" "release")}
          demo-jetty {:doc "serve compiled webly demo javascript with jetty"
                      :task (webly/run "demo-webly" "demo-webly" "jetty")}
+
+         req-github {:doc "web requests to github"
+                     :task (webly/clojure "demo-repl" "-X:web-requests-github")}
+         req-google (webly/clojure "demo-repl" "-X:web-requests-google")
+         req-xero (webly/clojure "demo-repl" "-X:web-requests-xero")
+
 
 
  ;        
