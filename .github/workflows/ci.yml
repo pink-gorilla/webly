@@ -41,13 +41,7 @@ jobs:
       run: |
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
-        cd ci
-        clojure -M:release --patch
-        git push --tags
-      #  clojure -M:release tag --minor
-      #  clojure -M:release pom
-      #  clojure -M:release jar
-      # clojure -M:release deploy
+        bb deploy
       # bash <(curl -s https://codecov.io/bash)
       # lein with-profile +relay-jetty cloverage
       #  bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
