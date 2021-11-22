@@ -1,4 +1,4 @@
-(ns webly.user.css.config
+(ns frontend.css.config
   (:require
    [clojure.string :refer [starts-with?]]))
 

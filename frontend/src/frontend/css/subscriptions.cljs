@@ -1,7 +1,7 @@
-(ns webly.user.css.subscriptions
+(ns frontend.css.subscriptions
   (:require
    [re-frame.core :as rf]
-   [webly.user.css.config :refer [css-app]]))
+   [frontend.css.config :refer [css-app]]))
 
 (rf/reg-sub
  :css/theme

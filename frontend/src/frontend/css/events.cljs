@@ -1,4 +1,4 @@
-(ns webly.user.css.events
+(ns frontend.css.events
   (:require
    [taoensso.timbre :refer-macros [info error]]
    [re-frame.core :as rf]))

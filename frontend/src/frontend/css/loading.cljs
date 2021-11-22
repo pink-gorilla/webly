@@ -1,4 +1,4 @@
-(ns webly.user.css.loading
+(ns frontend.css.loading
   (:require
    [taoensso.timbre :refer-macros [debug debugf info warn warnf error]]
    [re-frame.core :as rf]))

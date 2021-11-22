@@ -4,9 +4,9 @@
    [hiccup.page :as page]
    [taoensso.timbre :refer [debug info error]]
    [modular.config :refer [config-atom]]
-   [webly.user.analytics.google-tag :refer [script-tag-src script-tag-config]]
-   [webly.user.tenx.view :refer [tenx-script]]
-   [webly.user.css.config :refer [css-app]]))
+   [frontend.analytics.google-tag :refer [script-tag-src script-tag-config]]
+   [frontend.css.config :refer [css-app]]
+   [webly.user.tenx.view :refer [tenx-script]]))
 
 ;; CSS
 

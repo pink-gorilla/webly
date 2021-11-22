@@ -1,9 +1,9 @@
-(ns webly.user.css.view
+(ns frontend.css.view
   (:require
    [taoensso.timbre :as timbre :refer [debugf info infof warn warnf errorf]]
    [re-frame.core :as rf]
-   [webly.user.css.dom :refer [existing-css update-css]]
-   [webly.user.css.subscriptions]))
+   [frontend.css.dom :refer [existing-css update-css]]
+   [frontend.css.subscriptions]))
 
 ; css loading status not implemented correctly.
 (rf/dispatch [:webly/status-css :loaded])

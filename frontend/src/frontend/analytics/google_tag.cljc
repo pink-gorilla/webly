@@ -1,4 +1,4 @@
-(ns webly.user.analytics.google-tag
+(ns frontend.analytics.google-tag
   (:require
    #?(:clj  [taoensso.timbre :refer [debug info warn error]])
    #?(:cljs  [taoensso.timbre :refer-macros [debug info warn error]])))

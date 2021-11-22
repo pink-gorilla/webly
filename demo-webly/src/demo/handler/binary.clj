@@ -1,6 +1,5 @@
 (ns demo.handler.binary
   (:require
-
    [clojure.java.io :as io]
    [ring.util.response :as res]
    [ring.util.io :as ring-io]))

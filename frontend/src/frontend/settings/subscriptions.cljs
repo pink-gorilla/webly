@@ -1,4 +1,4 @@
-(ns webly.user.settings.subscriptions
+(ns frontend.settings.subscriptions
   (:require
    [re-frame.core :refer [reg-sub]]))
 

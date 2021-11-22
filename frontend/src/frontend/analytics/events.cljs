@@ -1,8 +1,8 @@
-(ns webly.user.analytics.events
+(ns frontend.analytics.events
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :refer [reg-event-db]]
-   [webly.user.analytics.google-tag :refer [send-event]]))
+   [frontend.analytics.google-tag :refer [send-event]]))
 
 (reg-event-db
  :ga/init

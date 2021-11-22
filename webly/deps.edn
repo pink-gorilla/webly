@@ -44,7 +44,7 @@
         
 
         ; modular
-        org.pinkgorilla/modular {:mvn/version "0.0.11"}
+        org.pinkgorilla/modular {:mvn/version "0.0.12"}
         webly/oauth2 {:local/root "../oauth2" :deps/manifest :deps}
         webly/webserver {:local/root "../webserver" :deps/manifest :deps}
         webly/websocket {:local/root "../websocket" :deps/manifest :deps}

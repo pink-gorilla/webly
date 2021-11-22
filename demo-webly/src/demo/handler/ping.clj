@@ -1,8 +1,6 @@
 (ns demo.handler.ping
-  (:require 
-      [clojure.pprint]
-   )
-  )
+  (:require
+   [clojure.pprint]))
 
 
 (defn ping-handler [req]

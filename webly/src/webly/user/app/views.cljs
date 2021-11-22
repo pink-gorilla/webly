@@ -2,12 +2,12 @@
   (:require
    [reagent.core :as r]
    [re-frame.core :refer [subscribe]]
+   [frontend.css.view :refer [load-css]]
+   [frontend.notifications.dialog :refer [notifications-container]]
+   [frontend.dialog :refer [modal-container]]
    [webly.web.handler :refer [reagent-page]]
    [webly.web.routes :refer [current]]
-   [webly.user.status.view :refer [status-page]]
-   [webly.user.css.view :refer [load-css]]
-   [webly.user.dialog :refer [modal-container]]
-   [frontend.notifications.dialog :refer [notifications-container]]))
+   [webly.user.status.view :refer [status-page]]))
 
 (defn available-pages []
   (->> (methods reagent-page)

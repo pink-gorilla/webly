@@ -9,10 +9,6 @@
     ]))
 
 
-
-
-
-
 (defn snippet-handler [req]
   (clojure.pprint/pprint req)
   (println "snippet: " (shadow/compile :webly {:verbose false}))

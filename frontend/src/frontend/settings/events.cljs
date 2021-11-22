@@ -1,4 +1,4 @@
-(ns webly.user.settings.events
+(ns frontend.settings.events
   "events related to the settings"
   (:require
    [taoensso.timbre :refer-macros [info warn]]

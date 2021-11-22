@@ -3,7 +3,7 @@
    [clojure.test :refer [deftest is are testing]]
    ;[cljs.test :refer-macros [async deftest is testing]]
    [taoensso.timbre :refer-macros [info error]]
-   [webly.user.css.config :refer [css-component css-app]]))
+   [frontend.css.config :refer [css-component css-app]]))
 
 (def available-themes
   {:tailwind   {true ["tailwindcss/dist/tailwind.css"]}

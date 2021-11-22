@@ -3,7 +3,7 @@
    [taoensso.timbre :refer-macros [debug info warn error]]
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [webly.user.settings.local-storage :refer [ls-get ls-set!]]
+   [frontend.settings.local-storage :refer [ls-get ls-set!]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 (defn demo-settings []

@@ -1,4 +1,4 @@
-(ns webly.user.settings.local-storage
+(ns frontend.settings.local-storage
   (:require
    [cljs.reader :as reader]))
 

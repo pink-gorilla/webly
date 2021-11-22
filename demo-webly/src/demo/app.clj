@@ -3,6 +3,4 @@
    ; side effects for the demo clj app
    [demo.routes]
    [demo.handler]
-   [demo.time]
-   [demo.keybindings]
-   ))
+   [demo.time]))

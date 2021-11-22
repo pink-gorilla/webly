@@ -1,7 +1,8 @@
-(ns webly.user.css.dom
+(ns frontend.css.dom
   (:require
    [taoensso.timbre :refer-macros [debugf infof warn warnf errorf]]
    [re-frame.core :as rf]))
+
 (defn ^:export on-link-load [x & _]
   (debugf "css loaded: %s" x)
   (rf/dispatch [:css/loading-success x]))
@@ -23,8 +24,8 @@
     (.setAttribute link "rel" "stylesheet")
     (.setAttribute link "type" "text/css")
     (.setAttribute link "class" "webly")
-    (.setAttribute link "onload" (str "webly.user.css.dom.on_link_load ('" href "')"))
-    (.setAttribute link "onerror"  (str "webly.user.css.dom.on_link_error ('" href "')"))
+    (.setAttribute link "onload" (str "frontend.css.dom.on_link_load ('" href "')"))
+    (.setAttribute link "onerror"  (str "frontend.css.dom.on_link_error ('" href "')"))
     ;(println "link: " href)
     (.appendChild head link)))
 

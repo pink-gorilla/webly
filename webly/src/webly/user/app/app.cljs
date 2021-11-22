@@ -12,6 +12,13 @@
    [modular.ws.core]
    ; frontend
    [frontend.keybindings.events]
+   [frontend.analytics.events]
+   [frontend.settings.events]
+   [frontend.settings.subscriptions]
+   [frontend.css.events]
+   [frontend.css.loading]
+   [frontend.css.subscriptions]
+   [frontend.dialog]
 
    ; webly
    [webly.build.lazy]
@@ -20,17 +27,10 @@
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.app.views :refer [webly-app]]
    [webly.user.status.events]
-   [webly.user.css.events]
-   [webly.user.css.subscriptions]
-   [webly.user.css.loading]
+
    [webly.user.config.events]
    [webly.user.config.subscription]
-   [webly.user.dialog]
-
-   [webly.user.analytics.events]
    [webly.user.tenx.events]
-   [webly.user.settings.subscriptions]
-   [webly.user.settings.events]
    [webly.user.app.events]
    [webly.user.status.subscriptions] ; side-effects
    ))

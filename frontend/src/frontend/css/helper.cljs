@@ -1,4 +1,4 @@
-(ns webly.user.css.helper
+(ns frontend.css.helper
   (:require
    [goog.string :as gstring]
    [goog.string.format]))

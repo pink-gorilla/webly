@@ -1,4 +1,4 @@
-(ns webly.user.dialog
+(ns frontend.dialog
   (:require-macros [reagent.ratom :refer [reaction]])
   (:require
    [re-frame.core :refer [reg-sub-raw reg-event-db dispatch subscribe]]))
