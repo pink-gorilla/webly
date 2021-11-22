@@ -1,4 +1,4 @@
-(ns webly.user.keybindings.component
+(ns frontend.keybindings.component
   (:require
    [taoensso.timbre :refer-macros [debug]]
    [re-frame.core :refer [subscribe dispatch dispatch-sync]]))

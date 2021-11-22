@@ -1,4 +1,4 @@
-(ns webly.user.notifications.core
+(ns frontend.notifications.core
   (:require
    [re-frame.core :refer [dispatch]]))
 

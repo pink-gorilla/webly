@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :as rf]
-   [webly.user.notifications.core :refer [add-notification]]
+   [frontend.notifications.core :refer [add-notification]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 ;; DIALOG

@@ -13,8 +13,7 @@
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.oauth2.middleware :refer [print-oauth2-config]]
    ; side-effects
-   [webly.user.oauth2.handler]
-   [webly.user.app.keybindings])
+   [webly.user.oauth2.handler])
   (:gen-class))
 
 (defn start-safe [service-symbol]

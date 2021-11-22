@@ -1,4 +1,4 @@
-(ns webly.user.tailwind.grammar
+(ns frontend.tailwind.grammar
   (:require
    [girouette.tw.core :refer [make-api]]
    [girouette.tw.common :as common]

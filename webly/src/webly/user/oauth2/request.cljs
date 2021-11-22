@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :refer-macros [info errorf]]
    [re-frame.core :as rf]
-   [webly.user.notifications.core :refer [add-notification]]
+   [frontend.notifications.core :refer [add-notification]]
    [modular.oauth2.request] ; side-effects
    ))
 

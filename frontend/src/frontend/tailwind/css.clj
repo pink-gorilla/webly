@@ -1,4 +1,4 @@
-(ns webly.user.tailwind.css)
+(ns frontend.tailwind.css)
 
 (def composed-classes
   {"btn" ["p-2" "rounded"]

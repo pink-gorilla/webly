@@ -1,11 +1,12 @@
-(ns webly.user.keybindings.events
+(ns frontend.keybindings.events
   (:require
    [clojure.string :as str]
    [taoensso.timbre :refer-macros [debug debugf info error]]
    [re-frame.core :refer [reg-event-db reg-sub dispatch]]
-   [webly.user.notifications.core :refer [add-notification]]
-   [webly.user.keybindings.init :refer [init-keybindings!]]
-   [webly.user.keybindings.component :refer [keybindings-dialog]]))
+   [frontend.notifications.core :refer [add-notification]]
+   [frontend.keybindings.init :refer [init-keybindings!]]
+   [frontend.keybindings.component :refer [keybindings-dialog]]))
+
 (def clean-search
   {:highlight     0
    :visible-items nil

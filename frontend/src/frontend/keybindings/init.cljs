@@ -1,4 +1,4 @@
-(ns webly.user.keybindings.init
+(ns frontend.keybindings.init
   (:require
    [taoensso.timbre :refer-macros [debug debugf info infof error]]
    [re-frame.core :as r :refer [reg-event-db dispatch]]

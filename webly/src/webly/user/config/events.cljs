@@ -8,7 +8,7 @@
    [modular.log :refer [timbre-config!]]
    [modular.encoding.transit :refer [decode]]
    [webly.prefs :refer [pref]]
-   [webly.user.notifications.core :refer [add-notification]]))
+   [frontend.notifications.core :refer [add-notification]]))
 
 ; load configuration
 

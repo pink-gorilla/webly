@@ -41,7 +41,13 @@
  :settings {:use-localstorage  true  ; allow user to change settings via localstorage
             :bongo 777}
 
- :keybindings  [{:kb "alt-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
+ :keybindings  [; https://github.com/piranha/keybind
+                ; shift, ctrl, alt, win, cmd, defmod, "left" "right"
+                ; "meta-shift-l" "alt-shift-p" "ctrl-shift-left" "ctrl-shift-right"
+                {:kb "alt-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
+                {:kb "ctrl-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
+                {:kb "win-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
+
                 {:kb "esc"     :handler [:modal/close]            :desc "Dialog Close"} ; for ALL dialogs!
                 {:kb "alt-g t" :handler [:reframe10x-toggle] :desc "10x visibility toggle"}
 
@@ -50,3 +56,7 @@
                 {:kb "alt-g 3" :handler [:bidi/goto :demo/help] :desc "goto help"}
                 {:kb "alt-g 4" :handler [:bidi/goto :demo/job] :desc "goto job"}
                 {:kb "alt-g 5" :handler [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}] :desc "goto party bali"}]}
+
+
+
+

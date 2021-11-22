@@ -37,7 +37,7 @@
   {:level :info
    ;:creates-vars {org.httpkit.server/with-channel [con]}
    :exclude [
-             [webly.user.notifications.events [db]]
+             [frontend.notifications.events [db]]
     ;         (org.httpkit.server/with-channel [con])
      ;        (pinkgorilla.nrepl.ws.httpkit-ws-relay [con])
              ]

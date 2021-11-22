@@ -4,4 +4,5 @@
    [demo.routes]
    [demo.handler]
    [demo.time]
+   [demo.keybindings]
    ))

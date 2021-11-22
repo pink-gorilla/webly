@@ -31,7 +31,7 @@ The demo runs a webserver on port 8080 with shadow-cljs "watch" mode.
 - keybinding [alt+g t] to open 10x console
 - touse trace-fn see:
   - https://github.com/day8/re-frame-debux is included in watch profile
-  - webly.user.notifications.events
+  - frontend.notifications.events
   - select :notification/add in tenx dev consol
 
 ## Bidi Routing

@@ -6,7 +6,7 @@
   (:require
    [taoensso.timbre :refer-macros [info]]
    [re-frame.core :refer [reg-event-db]]
-   [webly.user.notifications.core :refer [add-notification]]))
+   [frontend.notifications.core :refer [add-notification]]))
 
 (reg-event-db
  :reframe10x-init

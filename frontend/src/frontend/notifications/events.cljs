@@ -1,8 +1,8 @@
-(ns webly.user.notifications.events
+(ns frontend.notifications.events
   (:require
    [taoensso.timbre :refer-macros [error]]
    [re-frame.core :as rf :include-macros true :refer [dispatch]]
-   [webly.user.notifications.core :refer [notification]]))
+   [frontend.notifications.core :refer [notification]]))
 
 ;; stolen from:
 ;; https://github.com/baskeboler/cljs-karaoke-client/blob/master/src/main/cljs_karaoke/events/notifications.cljs

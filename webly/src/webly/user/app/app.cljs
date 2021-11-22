@@ -10,10 +10,12 @@
    [modular.oauth2]
    [modular.ws.events]
    [modular.ws.core]
+   ; frontend
+   [frontend.keybindings.events]
+
    ; webly
    [webly.build.lazy]
    [webly.web.events-bidi]
-
    ; webly.user
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.app.views :refer [webly-app]]
@@ -24,7 +26,7 @@
    [webly.user.config.events]
    [webly.user.config.subscription]
    [webly.user.dialog]
-   [webly.user.keybindings.events]
+
    [webly.user.analytics.events]
    [webly.user.tenx.events]
    [webly.user.settings.subscriptions]

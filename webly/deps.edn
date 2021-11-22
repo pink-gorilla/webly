@@ -16,9 +16,7 @@
         org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
         ;org.slf4j/slf4j-api {:mvn/version "1.7.30"} ; slf4j-timbre is incmpatibe with slf4j-api 2.0.0 that comes with jetty
 
-        ; tailwind
-        ;girouette/girouette {:mvn/version "0.0.5"}
-        girouette/processor {:mvn/version "0.0.5"}
+       
 
         ; webly/core
         clj-commons/pushy {:mvn/version "0.3.10"}

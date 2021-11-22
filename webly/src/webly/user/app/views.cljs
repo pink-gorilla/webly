@@ -7,7 +7,7 @@
    [webly.user.status.view :refer [status-page]]
    [webly.user.css.view :refer [load-css]]
    [webly.user.dialog :refer [modal-container]]
-   [webly.user.notifications.dialog :refer [notifications-container]]))
+   [frontend.notifications.dialog :refer [notifications-container]]))
 
 (defn available-pages []
   (->> (methods reagent-page)

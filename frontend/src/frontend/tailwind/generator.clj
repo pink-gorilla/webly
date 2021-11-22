@@ -1,4 +1,4 @@
-(ns webly.user.tailwind.generator
+(ns frontend.tailwind.generator
   (:require
    [clojure.string :as str]
    [clojure.java.io :as io]
@@ -7,8 +7,8 @@
    [girouette.garden.util :as util]
    [girouette.tw.common :refer [dot]]
    [girouette.processor]
-   [webly.user.tailwind.grammar :refer [my-chosen-components  my-color-map class-name->garden]]
-   [webly.user.tailwind.css :refer [composed-classes]]))
+   [frontend.tailwind.grammar :refer [my-chosen-components  my-color-map class-name->garden]]
+   [frontend.tailwind.css :refer [composed-classes]]))
 
 (def webly-default-classes
   ["inline-block"
@@ -115,6 +115,12 @@
    "bg-blue-300 cursor-pointer hover:bg-red-700 m-1"
    "text-green-800"
    "bg-blue-300 cursor-pointer hover:bg-red-700 m-1"
+   ; keybindings
+   "m-2 border border-round border-blue-400 w-1/4"
+   "w-full ml-2 bg-blue-200 text-lg"
+    "bg-red-300"
+   "flex flex-row items-stretch mb-0 border border-solid border-blue-800 p-0"
+   "flex flex-row items-stretch"
 
 ;
    ])
@@ -157,6 +163,6 @@
   (ensure-directory "target/webly/public")
   (generate-tailwind
    {:output-file "target/webly/public/girouette.css"
-    :garden-fn webly.user.tailwind.grammar/class-name->garden
-    :class-compositions webly.user.tailwind.css/composed-classes
+    :garden-fn frontend.tailwind.grammar/class-name->garden
+    :class-compositions frontend.tailwind.css/composed-classes
     :all-css-classes webly-default-classes}))

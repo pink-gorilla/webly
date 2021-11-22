@@ -34,7 +34,7 @@
                :artifact "target/webly.jar"}}
 
   :tailwind-girouette-webly
-  {:exec-fn webly.user.tailwind.generator/generate-tailwind-webly}
+  {:exec-fn frontend.tailwind.generator/generate-tailwind-webly}
 
   :tailwind-girouette-usage
   {:ns-default girouette.processor
@@ -43,8 +43,8 @@
                :css {;:output-file "target/webly/public/girouette.edn"
                      ;:output-format :css-classes
                      :output-file "target/webly/public/girouette.css"}
-               :garden-fn webly.user.tailwind.grammar/class-name->garden
-               :apply-classes webly.user.tailwind.css/composed-classes
+               :garden-fn frontend.tailwind.grammar/class-name->garden
+               :apply-classes frontend.tailwind.css/composed-classes
                :watch? false}}
 
   :tailwind-girouette-list
@@ -56,8 +56,8 @@
                      :output-format :css-classes
                      :source-paths ["src"
                                     "../frontend/src"]}
-               :garden-fn webly.user.tailwind.grammar/class-name->garden
-               :apply-classes webly.user.tailwind.css/composed-classes
+               :garden-fn frontend.tailwind.grammar/class-name->garden
+               :apply-classes frontend.tailwind.css/composed-classes
                :watch? false}}
 
 
