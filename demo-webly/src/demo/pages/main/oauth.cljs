@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :as rf]
-   [webly.user.oauth2.view :refer [tokens-view user-button]]
+   [modular.oauth2.view :refer [tokens-view user-button]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 ;; OAUTH

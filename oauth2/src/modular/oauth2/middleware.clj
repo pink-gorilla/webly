@@ -1,4 +1,4 @@
-(ns webly.user.oauth2.middleware
+(ns modular.oauth2.middleware
   (:require
    [taoensso.timbre :as timbre :refer [debug info error]]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]

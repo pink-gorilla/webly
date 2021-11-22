@@ -45,10 +45,10 @@
 
         ; modular
         org.pinkgorilla/modular {:mvn/version "0.0.12"}
-        webly/oauth2 {:local/root "../oauth2" :deps/manifest :deps}
-        webly/webserver {:local/root "../webserver" :deps/manifest :deps}
-        webly/websocket {:local/root "../websocket" :deps/manifest :deps}
-        webly/frontend {:local/root "../frontend" :deps/manifest :deps}}
+        modular/oauth2 {:local/root "../oauth2" :deps/manifest :deps}
+        modular/webserver {:local/root "../webserver" :deps/manifest :deps}
+        modular/websocket {:local/root "../websocket" :deps/manifest :deps}
+        modular/frontend {:local/root "../frontend" :deps/manifest :deps}}
  :aliases
  {; https://github.com/weavejester/cljfmt
   :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}

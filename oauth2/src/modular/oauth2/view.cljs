@@ -1,7 +1,7 @@
-(ns webly.user.oauth2.view
+(ns modular.oauth2.view
   (:require
    [re-frame.core :refer [dispatch subscribe]]
-   [webly.user.tooltip :refer [with-tooltip]]))
+   [frontend.tooltip :refer [with-tooltip]]))
 
 (defn header-ico [fa-icon rf-dispatch]
   [:a {:on-click #(dispatch rf-dispatch)

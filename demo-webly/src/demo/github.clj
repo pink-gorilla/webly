@@ -2,7 +2,7 @@
 
 ;todo: put server side rendered example that uses github here
 
- ;[webly.user.oauth2.middleware :refer [wrap-oauth wrapx]]
+ ;[modular.oauth2.middleware :refer [wrap-oauth wrapx]]
 
 #_(defn handler-auth [request]
   ; Once the user is authenticated, a new key is added to every request:

@@ -1,4 +1,4 @@
-(ns webly.user.tooltip
+(ns frontend.tooltip
   (:require
    [reagent.core :as r]))
 
