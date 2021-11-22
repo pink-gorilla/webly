@@ -5,9 +5,8 @@
    [bidi.bidi :as bidi]
    [webly.web.resources]
    [webly.web.handler]
-
    [webly.routes :refer [routes-api routes-app]]
-   [webly.user.app.routes :refer [make-routes-backend make-routes-frontend]]))
+   [webly.app.routes :refer [make-routes-backend make-routes-frontend]]))
 
 (def routes-backend (make-routes-backend routes-app routes-api))
 (def routes-frontend (make-routes-frontend routes-app))

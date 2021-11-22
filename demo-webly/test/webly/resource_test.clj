@@ -8,7 +8,7 @@
    [webly.app.handler :refer [app-handler]]
    ;[webly.web.resources] ; side-effects
    [webly.routes :refer [routes-api routes-app]]
-   [webly.user.app.routes :refer [make-routes-backend make-routes-frontend]]))
+   [webly.app.routes :refer [make-routes-backend make-routes-frontend]]))
 
 (def routes-backend (make-routes-backend routes-app routes-api))
 (def routes-frontend (make-routes-frontend routes-app))
