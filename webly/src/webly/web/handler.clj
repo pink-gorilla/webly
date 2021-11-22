@@ -5,10 +5,7 @@
    [bidi.bidi :as bidi]
    [bidi.ring]
    [modular.webserver.handler.not-found :refer [not-found-handler]]
-   [modular.webserver.handler.registry :as registry]))
-
-(defn add-ring-handler [key handler]
-  (registry/add-ring-handler key handler))
+   [modular.webserver.handler.registry :refer [add-ring-handler handler-registry]]))
 
 (add-ring-handler :webly/not-found not-found-handler)
 
@@ -19,7 +16,7 @@
   (when (keyword? handler-kw) ;resources have a wrapped handler
     (debug "get-handler-backend:" handler-kw))
   (if (keyword? handler-kw)
-    (if-let [handler (handler-kw @registry/handler-registry)]
+    (if-let [handler (handler-kw @handler-registry)]
       handler
       (do (error "handler-registry does not contain handler for: " handler-kw)
           nil))

@@ -1,9 +1,9 @@
-(ns webly.web.events-bidi
+(ns frontend.routes.events
   (:require
    [taoensso.timbre :refer-macros [debug info]]
    [re-frame.core :as rf]
    [pushy.core :as pushy]
-   [webly.web.routes :refer [routes history goto! goto-route! nav!]])) ;set-initial-query-params
+   [frontend.routes :refer [routes history goto! goto-route! nav!]])) ;set-initial-query-params
 
 (rf/reg-event-db
  :bidi/init

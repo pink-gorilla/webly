@@ -6,6 +6,8 @@
          ; tailwind
         ;girouette/girouette {:mvn/version "0.0.5"}
         girouette/processor {:mvn/version "0.0.5"}
+        clj-commons/pushy {:mvn/version "0.3.10"}
+        com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
 
 ;
         }}

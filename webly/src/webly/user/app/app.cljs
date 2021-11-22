@@ -21,10 +21,10 @@
    [frontend.dialog]
    [frontend.config.events]
    [frontend.config.subscription]
+   [frontend.routes.events]
 
    ; webly
    [webly.build.lazy]
-   [webly.web.events-bidi]
    ; webly.user
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.app.views :refer [webly-app]]

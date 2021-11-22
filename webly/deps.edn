@@ -19,10 +19,7 @@
        
 
         ; webly/core
-        clj-commons/pushy {:mvn/version "0.3.10"}
-        com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
         hiccup/hiccup {:mvn/version "1.0.5"}   ; server side templating
-       
         reagent/reagent {:mvn/version "1.1.0"} ; https://github.com/reagent-project/reagent
         re-frame/re-frame {:mvn/version "1.2.0"}
         cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx

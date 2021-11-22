@@ -1,4 +1,4 @@
- (ns webly.web.routes
+ (ns frontend.routes
    (:require
     [taoensso.timbre :refer-macros [info infof error]]
     [reagent.core :as r]
@@ -139,7 +139,4 @@
       (set! (.-location js/window) url)
       (do (reset-current! "bidi/goto!" h)
           (pushy/set-token! history url)))))
-
-
-
 

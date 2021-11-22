@@ -5,8 +5,8 @@
    [frontend.css.view :refer [load-css]]
    [frontend.notifications.dialog :refer [notifications-container]]
    [frontend.dialog :refer [modal-container]]
+   [frontend.routes :refer [current]]
    [webly.web.handler :refer [reagent-page]]
-   [webly.web.routes :refer [current]]
    [webly.user.status.view :refer [status-page]]))
 
 (defn available-pages []
