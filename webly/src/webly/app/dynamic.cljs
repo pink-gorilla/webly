@@ -1,7 +1,7 @@
-(ns webly.app.app
+(ns webly.app.dynamic
   (:require
    [reagent.dom]
-   [cljs.pprint]
+   ;[cljs.pprint]
    [taoensso.timbre :refer-macros [info warn]]
    [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db reg-sub]]
    ; side-effects
@@ -61,7 +61,7 @@
 
   (info "mounting webly-app ..")
   (dispatch [:ga/event {:category "webly" :action "mounted" :label 77 :value 13}])
-  (webly.app.app/mount-app))
+  (webly.app.dynamic/mount-app))
 
 (defn remove-spinner []
   (let [spinner (.. js/document (getElementById "spinner"))

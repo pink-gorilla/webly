@@ -89,7 +89,7 @@
       loading
       [:div#webly page]
       [:div  ; .w-screen.h-screen
-       [:script {:src "/r/main.js"
+       [:script {:src "/r/webly_dynamic.js"
                  :type "text/javascript"
                  ;:onload webly-bundle-entry
                  }]]])))
