@@ -1,7 +1,7 @@
 (ns demo.pages.main
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
-   [webly.web.handler :refer [reagent-page]]
+   [frontend.page :refer [reagent-page]]
    ; webly
    [demo.pages.main.lazy :refer [demo-lazy]]
    [demo.pages.main.route :refer [demo-routing]]

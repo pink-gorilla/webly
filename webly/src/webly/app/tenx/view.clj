@@ -1,4 +1,4 @@
-(ns webly.user.tenx.view
+(ns webly.app.tenx.view
   (:require
    [taoensso.timbre :refer [warn]]
    [webly.prefs :refer [if-pref-fn]]))

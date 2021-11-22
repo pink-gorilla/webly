@@ -1,4 +1,4 @@
-(ns webly.user.helper
+(ns webly.app.helper
   (:require
    [clojure.string :as str]
    [cemerick.url :as url]))

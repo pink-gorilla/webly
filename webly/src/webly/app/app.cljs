@@ -1,4 +1,4 @@
-(ns webly.user.app.app
+(ns webly.app.app
   (:require
    [reagent.dom]
    [cljs.pprint]
@@ -25,13 +25,11 @@
 
    ; webly
    [webly.build.lazy]
-   ; webly.user
-   [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
-   [webly.user.app.views :refer [webly-app]]
-   [webly.user.status.events]
-   [webly.user.tenx.events]
-   [webly.user.app.events]
-   [webly.user.status.subscriptions] ; side-effects
+   [webly.app.tenx.events]
+   [webly.app.views :refer [webly-app]]
+   [webly.app.events]
+   [webly.app.routes :refer [make-routes-frontend make-routes-backend]]
+   [webly.app.status.page] ; side-effects
    ))
 
 (defn mount-app []
@@ -63,7 +61,7 @@
 
   (info "mounting webly-app ..")
   (dispatch [:ga/event {:category "webly" :action "mounted" :label 77 :value 13}])
-  (webly.user.app.app/mount-app))
+  (webly.app.app/mount-app))
 
 (defn remove-spinner []
   (let [spinner (.. js/document (getElementById "spinner"))

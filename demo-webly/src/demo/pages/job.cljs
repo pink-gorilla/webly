@@ -1,7 +1,7 @@
 (ns demo.pages.job
   (:require
    [re-frame.core :as rf]
-   [webly.web.handler :refer [reagent-page]]))
+   [frontend.page :refer [reagent-page]]))
 
 ; ui helper   
 

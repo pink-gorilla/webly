@@ -1,28 +1,13 @@
-(ns webly.user.app.views
+(ns webly.app.views
   (:require
    [reagent.core :as r]
    [re-frame.core :refer [subscribe]]
    [frontend.css.view :refer [load-css]]
    [frontend.notifications.dialog :refer [notifications-container]]
    [frontend.dialog :refer [modal-container]]
+   [frontend.page :refer [reagent-page]]
    [frontend.routes :refer [current]]
-   [webly.web.handler :refer [reagent-page]]
-   [webly.user.status.view :refer [status-page]]))
-
-(defn available-pages []
-  (->> (methods reagent-page)
-       keys
-       (remove #(= :default %))
-       (into [])))
-
-(defn not-found-page []
-  [:div.bg-red-500.m-5
-   [:h1 (str "page " (:handler @current) " - not found!")]
-   [:p "Available pages: " (pr-str (available-pages))]
-   [:p "Current Page:" (str @current)]])
-
-(defmethod reagent-page :default [& args]
-  [not-found-page])
+   [webly.app.status.page :refer [status-page]]))
 
 (defonce generation (r/atom 1))
 (defn page-viewer [current]

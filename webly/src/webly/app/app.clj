@@ -1,4 +1,4 @@
-(ns webly.user.app.app
+(ns webly.app.app
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [modular.writer :refer [write-status]]
@@ -10,8 +10,8 @@
    [webly.build.core :refer [build]]
    [webly.web.server :refer [run-server]]
    [webly.web.handler :refer [make-handler]]
-   [webly.user.app.handler :refer [app-handler]]
-   [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]])
+   [webly.app.handler :refer [app-handler]]
+   [webly.app.routes :refer [make-routes-frontend make-routes-backend]])
   (:gen-class))
 
 (defn start-safe [service-symbol]

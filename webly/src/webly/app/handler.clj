@@ -1,4 +1,4 @@
-(ns webly.user.app.handler
+(ns webly.app.handler
   (:require
    [clojure.string]
    [ring.util.response :as response]
@@ -8,7 +8,7 @@
    [modular.webserver.handler.registry :refer [add-ring-handler]]
    [modular.webserver.middleware.api :refer [wrap-api-handler]]
    [modular.ws.middleware :refer [wrap-ws]]
-   [webly.user.app.views :refer [app-page]]))
+   [webly.app.page :refer [app-page]]))
 
 ; CSRF TOKEN
 

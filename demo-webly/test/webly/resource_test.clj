@@ -5,7 +5,7 @@
    [bidi.bidi]
    [bidi.ring]
    [webly.web.handler :refer [make-handler]]
-   [webly.user.app.handler :refer [app-handler]]
+   [webly.app.handler :refer [app-handler]]
    ;[webly.web.resources] ; side-effects
    [webly.routes :refer [routes-api routes-app]]
    [webly.user.app.routes :refer [make-routes-backend make-routes-frontend]]))

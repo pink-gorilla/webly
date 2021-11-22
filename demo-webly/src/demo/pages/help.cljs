@@ -2,7 +2,7 @@
   (:require
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [webly.web.handler :refer [reagent-page]]
+   [frontend.page :refer [reagent-page]]
    [pinkgorilla.repl.cljs.http :refer [get-json]]))
 
 (defn link-fn [fun text]

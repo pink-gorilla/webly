@@ -1,4 +1,4 @@
-(ns webly.user.app.views
+(ns webly.app.page
   (:require
    [clojure.string :as str]
    [hiccup.page :as page]
@@ -6,7 +6,7 @@
    [modular.config :refer [config-atom]]
    [frontend.analytics.google-tag :refer [script-tag-src script-tag-config]]
    [frontend.css.config :refer [css-app]]
-   [webly.user.tenx.view :refer [tenx-script]]))
+   [webly.app.tenx.view :refer [tenx-script]]))
 
 ;; CSS
 

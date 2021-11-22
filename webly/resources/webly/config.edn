@@ -11,8 +11,8 @@
          :modules {}
 
          ; webly client-server app
-         :webly-bundle-entry  "webly.user.app.app.start ();" ; no need to change 
-         :ring-handler "webly.user.app.app/ring-handler" ; no need to change 
+         :webly-bundle-entry  "webly.app.app.start ();" ; no need to change 
+         :ring-handler "webly.app.app/ring-handler" ; no need to change 
          :loading-image-url "/r/webly/loading-code.jpg" ; no need to change  ;"/r/webly/loading-lemur.jpg"
 
          ; user app

@@ -97,6 +97,9 @@
          demo-webly {:doc "webly demo with shadow-cljs watch"
                      :task (do  (run 'tailwind-girouette-webly)
                                 (webly/run "demo-webly" "demo-webly" "watch2"))}
+         demo-webly-tenx {:doc "webly demo with shadow-cljs watch"
+                          :task (do  (run 'tailwind-girouette-webly)
+                                     (webly/run "demo-webly" "demo-webly" "watch"))}
          demo-compile {:doc "compile webly demo javascript"
                        :task (webly/run "demo-webly" "demo-webly" "release")}
          demo-jetty {:doc "serve compiled webly demo javascript with jetty"

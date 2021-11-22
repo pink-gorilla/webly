@@ -1,7 +1,7 @@
-(ns webly.user.tenx.events-off
+(ns webly.app.tenx.events-off
   "reframe events related to 10x
    this ns gets changed in in shadow cljs config with 
-   :ns-aliases to webly.user.tenx.events
+   :ns-aliases to webly.app.tenx.events
    note: calling ns 10x does lead to errors (at runtime in the bundle) "
   (:require
    [taoensso.timbre :refer-macros [info]]

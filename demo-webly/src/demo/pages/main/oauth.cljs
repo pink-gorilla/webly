@@ -13,7 +13,6 @@
    [user-button :xero]
    [:p [link-dispatch [:oauth2/login :github] "github login via popup"]]
    [:p [link-dispatch [:oauth2/login :google] "google login via popup"]]
-   [:p [link-href "/oauth2/github/token?code=99" "api test: github code ->token"]]
-    ; [:p [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]
+   ; [:p [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]
    [:div.border.border-blue-500.border-2.border-round.overflow-scroll
     [tokens-view]]])

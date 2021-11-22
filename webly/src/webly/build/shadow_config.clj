@@ -9,8 +9,8 @@
 (defn build-ns-aliases []
   (debug @prefs-atom)
   (if-pref-fn :tenx
-              {'webly.user.tenx.events 'webly.user.tenx.events-on}
-              {'webly.user.tenx.events 'webly.user.tenx.events-off
+              {'webly.app.tenx.events 'webly.app.tenx.events-on}
+              {'webly.app.tenx.events 'webly.app.tenx.events-off
                ;'day8.re-frame.tracing 'day8.re-frame.tracing-stubs
                }))
 
@@ -18,7 +18,7 @@
 (defn main-config [ns-cljs]
   (let [ns-cljs (or ns-cljs [])]
     (into []
-          (concat '[webly.user.app.app] ns-cljs))))
+          (concat '[webly.app.app] ns-cljs))))
 
 (defn sub-module-config [[name ns-mod]]
   (let [ns-mod (or ns-mod {})]
@@ -26,7 +26,7 @@
            :depends-on #{:main}}}))
 
 (defn module-config [ns-cljs modules]
-  (let [main {:main {:init-fn 'webly.user.app.app/start
+  (let [main {:main {:init-fn 'webly.app.app/start
                      :entries (main-config ns-cljs)}}
         sub (map sub-module-config modules)
         subs (apply merge sub)]

@@ -1,4 +1,4 @@
-(ns webly.user.app.routes
+(ns webly.app.routes
   (:require
    [webly.web.resources :refer [resource-handler file-handler-nodejs file-handler-bundel]]))
 
@@ -17,6 +17,7 @@
   {;["md/" :file] :ui/markdown
    ;["oauth2/redirect/" :provider] :oauth2/redirect  : either client OR server side
    })
+
 (defn make-routes-frontend [user-routes-app]
   ["/" (merge webly-routes-app user-routes-app)])
 

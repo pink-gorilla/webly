@@ -1,8 +1,9 @@
-(ns webly.user.status.view
+(ns webly.app.status.page
   (:require
    [re-frame.core :refer [subscribe]]
    [modular.config :refer-macros [get-in-config-cljs]]
-   [webly.user.status.subscriptions] ; side-effects
+   [webly.app.status.subscriptions] ; side-effects
+   [webly.app.status.events] ; side-effects
    ))
 
 (defn status-page []

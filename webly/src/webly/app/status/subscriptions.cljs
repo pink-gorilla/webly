@@ -1,4 +1,4 @@
-(ns webly.user.status.subscriptions
+(ns webly.app.status.subscriptions
   (:require
    [re-frame.core :as rf]))
 
