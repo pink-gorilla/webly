@@ -1,4 +1,4 @@
-(ns demo.pages.main.bidi
+(ns demo.pages.main.route
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [webly.user.app.views :refer [refresh-page]]

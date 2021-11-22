@@ -4,6 +4,7 @@
    [modular.writer :refer [write-status]]
    [modular.config :refer [get-in-config config-atom load-config!]]
    [modular.webserver.middleware.dev :refer [wrap-dev]]
+
    [webly.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]
    [webly.web.server :refer [run-server]]
@@ -12,22 +13,24 @@
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.oauth2.middleware :refer [print-oauth2-config]]
    ; side-effects
-   [webly.user.config.handler]   ; handler: config
    [webly.user.oauth2.handler]
    [webly.user.app.keybindings])
   (:gen-class))
+
+(defn start-safe [service-symbol]
+  (try
+    (info "start-service:" service-symbol)
+    (if-let [f (resolve service-symbol)]
+      (f)
+      (error "services symbol [" service-symbol "] could not get resolved!"))
+    (catch Exception e
+      (error "Exception starting service: " (pr-str e)))))
 
 (defn start-services [profile]
   (let [start-service (get-in-config [:webly :start-service])]
     (if start-service
       (do (info "starting services : " (:server profile))
-          (try
-            (info "start-service:" start-service)
-            (if-let [f (resolve start-service)]
-              (f)
-              (error "services symbol [" start-service "] could not get resolved!"))
-            (catch Exception e
-              (error "Exception starting services: " (pr-str e)))))
+          (start-safe start-service))
       (warn "no services defined."))))
 
 (defn create-ring-handler
@@ -75,11 +78,11 @@
 (defn webly-run [{:keys [profile config]}]
   (webly-run! profile config))
 
-(defn -main ; for lein alias
-  ([]
-   (webly-run {}))
-  ([profile]
-   (webly-run {:profile profile}))
-  ([config profile]   ; when config and profile are passed, config first (because profile then can get changed in cli)
-   (webly-run {:profile profile
-               :config config})))
+#_(defn -main ; for lein alias
+    ([]
+     (webly-run {}))
+    ([profile]
+     (webly-run {:profile profile}))
+    ([config profile]   ; when config and profile are passed, config first (because profile then can get changed in cli)
+     (webly-run {:profile profile
+                 :config config})))

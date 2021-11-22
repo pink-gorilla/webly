@@ -1,4 +1,4 @@
-(ns webly.ws.ws
+(ns modular.ws.ws
   (:require
    [taoensso.timbre :as log :refer [debugf]]
    ;[ring.middleware.keyword-params]

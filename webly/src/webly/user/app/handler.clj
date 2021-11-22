@@ -4,8 +4,10 @@
    [ring.util.response :as response]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [bidi.ring]
-   [webly.web.middleware :refer [wrap-webly]]
-   [webly.web.handler :refer [add-ring-handler]]
+   [modular.webserver.handler.config :refer [config-handler]]
+   [modular.webserver.handler.registry :refer [add-ring-handler]]
+   [modular.webserver.middleware.api :refer [wrap-api-handler]]
+   [modular.ws.middleware :refer [wrap-ws]]
    [webly.user.app.views :refer [app-page]]))
 
 ; CSRF TOKEN
@@ -36,8 +38,8 @@
 
 (def app-handler
   (-> app-handler-raw
-      wrap-webly))
+      wrap-ws))
 
 (add-ring-handler :webly/app-bundle app-handler)
 
-
+(add-ring-handler :webly/config (wrap-api-handler config-handler))

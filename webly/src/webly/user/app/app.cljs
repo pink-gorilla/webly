@@ -8,11 +8,12 @@
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
    [day8.re-frame.http-fx]
    [modular.oauth2]
+   [modular.ws.events]
+   [modular.ws.core]
    ; webly
    [webly.build.lazy]
    [webly.web.events-bidi]
-   [webly.ws.events]
-   [webly.ws.core]
+
    ; webly.user
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.app.views :refer [webly-app]]

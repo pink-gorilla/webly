@@ -1,4 +1,4 @@
-(ns webly.ws.msg-handler
+(ns modular.ws.msg-handler
   (:require
    [taoensso.timbre :as timbre :refer-macros [tracef debug debugf infof info  warnf error errorf trace]]
    [re-frame.core :as rf]

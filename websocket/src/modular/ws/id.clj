@@ -1,4 +1,4 @@
-(ns webly.ws.id)
+(ns modular.ws.id)
 
 (defn unique-id
   "Get a unique id for a session."

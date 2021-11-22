@@ -13,3 +13,8 @@
  (fn [db _]
    (:time db)))
 
+(reg-sub
+ :demo/connected
+ (fn [db _]
+   (:connected db)))
+

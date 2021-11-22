@@ -24,11 +24,11 @@
     (fn []
       [block2 "lazy cljs component"
        [link-fn #(reset! show-lazy1 true) "lazy load1"]
-       ;[link-fn #(reset! show-lazy2 true) "lazy load2 (not working)"]
+       [link-fn #(reset! show-lazy2 true) "lazy load2 (not working)"]
        [:div "loaded lazy renderer: " (pr-str (available))]
        (when @show-lazy1
          [lazy1])
-       ;(when @show-lazy2
-       ;  [lazy2])
+       (when @show-lazy2
+         [lazy2])
        ])))
 

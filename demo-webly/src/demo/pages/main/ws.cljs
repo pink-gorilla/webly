@@ -20,8 +20,11 @@
        [:p (str "connected:" (if @c @c "not connected"))]
        [:p (str "time: " (if @t @t " no time received :-("))]
        [:p "time as date: " (when @tdt (str @tdt))]
-       [link-fn #(rf/dispatch [:ws/send [:time/now []]]) " request time"]
-       [link-fn #(rf/dispatch [:ws/send [:ws/status []] print-status 5000]) " request ws status"]
-       [link-fn #(rf/dispatch [:ws/send [:demo/xxx [123 456 789]]]) " send unimplemented ws event request"]
-       [link-fn #(rf/dispatch [:ws/send [:time/now-date []] set-time-date 5000]) " request time (as date)"]
-       [link-fn #(rf/dispatch [:ws/send [:time/now-date-local []] set-time-date 5000]) " request time (as date local)"]])))
+       [:div.flex.flex-col
+        [link-fn #(rf/dispatch [:ws/send [:time/now []]]) " request time"]
+        [link-fn #(rf/dispatch [:ws/send [:time/now-date []] set-time-date 5000]) " request time (as date)"]
+        [link-fn #(rf/dispatch [:ws/send [:time/now-date-local []] set-time-date 5000]) " request time (as date local)"]
+        [link-fn #(rf/dispatch [:ws/send [:demo/connected []] print-status 5000]) "request connections (see log)"]
+        [link-fn #(rf/dispatch [:ws/send [:demo/xxx [123 456 789]]]) "no-server-handler (see log)"]
+        
+        ]])))

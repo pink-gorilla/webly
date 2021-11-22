@@ -1,11 +1,11 @@
-(ns webly.ws.handler
+(ns modular.ws.handler
   (:require
    [taoensso.timbre :as log :refer [debug debugf info infof]]
    [cheshire.core :as json]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
-   [webly.web.handler :refer [add-ring-handler]]
-   [webly.web.middleware :refer [wrap-webly]]
-   [webly.ws.id :refer [get-sente-session-uid]]))
+   [modular.webserver.handler.registry :refer [add-ring-handler]]
+   [modular.ws.id :refer [get-sente-session-uid]]
+   [modular.ws.middleware :refer [wrap-ws]]))
 
 ; CSRF TOKEN
 
@@ -43,7 +43,7 @@
     res))
 
 (defn add-ws-handler [conn]
-  (add-ring-handler :ws/token (wrap-webly ws-token-handler-raw))
-  (add-ring-handler :ws/chsk-get (wrap-webly (partial ws-handshake-handler conn)))
-  (add-ring-handler :ws/chsk-post (wrap-webly (partial ws-ajax-post-handler conn))))
+  (add-ring-handler :ws/token (wrap-ws ws-token-handler-raw))
+  (add-ring-handler :ws/chsk-get (wrap-ws (partial ws-handshake-handler conn)))
+  (add-ring-handler :ws/chsk-post (wrap-ws (partial ws-ajax-post-handler conn))))
 

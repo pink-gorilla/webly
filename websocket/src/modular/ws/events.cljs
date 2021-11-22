@@ -1,9 +1,9 @@
-(ns webly.ws.events
+(ns modular.ws.events
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [cemerick.url :as url]
    [re-frame.core :as rf]
-   [webly.ws.core :refer [init-ws!]]))
+   [modular.ws.core :refer [init-ws!]]))
 
 (defn application-url
   "gets the current url, as a map"

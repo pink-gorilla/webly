@@ -1,35 +1,19 @@
-(ns webly.ws.adapter
+(ns modular.ws.adapter
   (:require
    [taoensso.timbre :as log :refer [debug info infof]]
    [taoensso.sente.packers.transit :as sente-transit]
-  ; [taoensso.sente.server-adapters.undertow]
-   [taoensso.sente.server-adapters.jetty9]
-  ; [taoensso.sente.server-adapters.http-kit]
    [taoensso.sente  :as sente]
    [modular.encoding.transit :as e]
-   [webly.ws.id :refer [get-sente-session-uid]]
-   [webly.ws.msg-handler :refer [event-msg-handler]]))
+   [modular.ws.id :refer [get-sente-session-uid]]
+   [modular.ws.msg-handler :refer [event-msg-handler]]
+   [modular.ws.adapter.jetty :as jetty]
+   ))
 
-#_(defn undertow []
-    (debug "websocket mode: undertow.")
-    (require '[taoensso.sente.server-adapters.undertow])
-
-    taoensso.sente.server-adapters.undertow/get-sch-adapter)
-
-(defn jetty []
-  (debug "websocket mode: jetty.")
-  (require '[taoensso.sente.server-adapters.jetty9])
-  taoensso.sente.server-adapters.jetty9/get-sch-adapter)
-
-#_(defn httpkit []
-    (debug "websocket mode: httpkit")
-    (require '[taoensso.sente.server-adapters.http-kit])
-    taoensso.sente.server-adapters.http-kit/get-sch-adapter)
 
 (defn get-adapter [server-type]
   (case server-type
     ;:undertow  (undertow)
-    :jetty (jetty)
+    :jetty (jetty/get-sch-adapter)
     ;:httpkit (httpkit)
     ;
     ))

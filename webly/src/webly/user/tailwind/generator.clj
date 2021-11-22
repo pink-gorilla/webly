@@ -1,6 +1,7 @@
 (ns webly.user.tailwind.generator
   (:require
    [clojure.string :as str]
+   [clojure.java.io :as io]
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [garden.core :as garden] ; side-effects!
    [girouette.garden.util :as util]
@@ -146,7 +147,14 @@
                                   class-compositions))]
     (spit output-file (garden/css all-garden-defs))))
 
+(defn- ensure-directory [path]
+  (when-not (.exists (io/file path))
+    (.mkdir (java.io.File. path))))
+
 (defn generate-tailwind-webly [& _]
+  (ensure-directory "target")
+  (ensure-directory "target/webly")
+  (ensure-directory "target/webly/public")
   (generate-tailwind
    {:output-file "target/webly/public/girouette.css"
     :garden-fn webly.user.tailwind.grammar/class-name->garden

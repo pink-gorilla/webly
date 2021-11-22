@@ -1,10 +1,10 @@
-(ns webly.ws.adapter
+(ns modular.ws.adapter
   (:require
    [taoensso.timbre :as timbre :refer-macros [tracef debug debugf infof warn warnf errorf trace]]
    [taoensso.sente :as sente :refer [cb-success?]]
    [taoensso.sente.packers.transit :as sente-transit] ;; Optional, for Transit encoding
    [modular.encoding.transit :as e]
-   [webly.ws.msg-handler :refer [event-msg-handler]]))
+   [modular.ws.msg-handler :refer [event-msg-handler]]))
 
 ;; see: https://github.com/ptaoussanis/sente/blob/master/example-project/src/example/client.cljs
 

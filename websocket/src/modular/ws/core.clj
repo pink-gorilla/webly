@@ -1,9 +1,9 @@
-(ns webly.ws.core
+(ns modular.ws.core
   (:require
    [taoensso.timbre :as log :refer [error info warn]]
-   [webly.ws.adapter :refer [ws-init! start-router!]]
-   [webly.ws.handler :refer [add-ws-handler]]
-   [webly.ws.ws :as ws]))
+   [modular.ws.adapter :refer [ws-init! start-router!]]
+   [modular.ws.handler :refer [add-ws-handler]]
+   [modular.ws.ws :as ws]))
 
 (def c (atom nil))
 

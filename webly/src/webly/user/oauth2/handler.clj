@@ -7,12 +7,13 @@
    [modular.oauth2.authorize.token-handler :refer [token-handler]]
    [modular.oauth2.store.save-handler :refer [handler-oauth2-save]]
    [modular.webserver.middleware.api :refer [wrap-api-handler]]
-   [webly.web.handler :refer [add-ring-handler]]
-   [webly.web.middleware :refer [wrap-webly]]))
+   [modular.ws.middleware :refer [wrap-ws]]
+
+   [webly.web.handler :refer [add-ring-handler]]))
 
 (def handler-oauth-redirect-wrapped
   (-> handler-oauth2-redirect
-      wrap-webly))
+      wrap-ws))
 
 (add-ring-handler :oauth2/redirect handler-oauth-redirect-wrapped)
 

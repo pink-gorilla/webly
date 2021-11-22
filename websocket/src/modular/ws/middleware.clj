@@ -1,4 +1,4 @@
-(ns webly.web.middleware
+(ns modular.ws.middleware
   "a middleware takes a handler, and wraps a middleware around it.
    It is handler transformation, not routing related."
   (:require
@@ -15,8 +15,6 @@
   ; [ring.middleware.json :refer [wrap-json-response]]
    [modular.webserver.middleware.api :as api]))
 
-;from clojurewb - good example for middleware for websocket requests
-
 #_(defn wrap-formats2 [handler]
     (let [wrapped (-> handler wrap-params (wrap-format formats/instance))]
       (fn [request]
@@ -31,16 +29,14 @@
         #_(wrap-defaults
            (-> site-defaults
                (assoc-in [:security :anti-forgery] true)))
-
         (wrap-defaults api-defaults)
       ;(wrap-api-handler)
       ;(wrap-cors-handler)
-        (wrap-cljsjs) ; oz
       ;(wrap-session)
       ;(wrap-json-response)
         (wrap-gzip))) ;oz 
 
-(defn wrap-webly [handler]
+(defn wrap-ws [handler]
   (-> handler
       ;allow-cross-origin
       (wrap-defaults site-defaults)
@@ -51,5 +47,3 @@
       #_(wrap-cors :access-control-allow-origin [#".*"]
                    :access-control-allow-methods [:get :put :post :delete])
       (wrap-gzip)))
-
-

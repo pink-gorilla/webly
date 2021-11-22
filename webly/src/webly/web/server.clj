@@ -6,10 +6,9 @@
    [modular.config :refer [get-in-config]]
    [modular.webserver.jetty :refer [run-jetty-server]]
    [modular.webserver.handler.registry :refer [handler-registry]]
+   [modular.ws.core :refer [init-ws!]]
    ; webly
-   ;[webly.web.middleware :refer [wrap-webly]]
-   [webly.ws.core :refer [init-ws!]]
-   ;[webly.ws.handler :refer [ws-handshake-handler]]
+   ;[modular.ws.handler :refer [ws-handshake-handler]]
    ;[webly.web.hooks]
    ))
 (defn stop-server []

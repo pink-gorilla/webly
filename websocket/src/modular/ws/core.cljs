@@ -1,9 +1,9 @@
-(ns webly.ws.core
+(ns modular.ws.core
   (:require
    [taoensso.timbre :refer-macros [debug info error]]
    [re-frame.core :as rf]
-   [webly.ws.adapter :refer [ws-init! start-router!]]
-   [webly.ws.ws :as ws]))
+   [modular.ws.adapter :refer [ws-init! start-router!]]
+   [modular.ws.ws :as ws]))
 
 (defonce c (atom nil))
 

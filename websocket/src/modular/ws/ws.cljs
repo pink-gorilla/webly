@@ -1,4 +1,4 @@
-(ns webly.ws.ws
+(ns modular.ws.ws
   (:require
    [taoensso.timbre :as timbre :refer-macros [debug debugf info error]]
    [re-frame.core :as rf]))

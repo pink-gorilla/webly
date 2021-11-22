@@ -10,8 +10,13 @@
 (defn ui-add [a b]
   [:p "addition result: " (+ a b)])
 
-(defn ui-add-more [a b]
+(defn ui-add-more-impl [a b]
   (let [x (r/atom 0)]
     (fn [a b]
       (swap! x inc)
       [:p "addition result: " (+ a b @x)])))
+
+
+(defn ui-add-more [a b]
+   [ui-add-more-impl a b]
+  )
