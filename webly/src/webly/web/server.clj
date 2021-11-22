@@ -6,11 +6,8 @@
    [modular.config :refer [get-in-config]]
    [modular.webserver.jetty :refer [run-jetty-server]]
    [modular.webserver.handler.registry :refer [handler-registry]]
-   [modular.ws.core :refer [init-ws!]]
-   ; webly
-   ;[modular.ws.handler :refer [ws-handshake-handler]]
-   ;[webly.web.hooks]
-   ))
+   [modular.ws.core :refer [init-ws!]]))
+
 (defn stop-server []
   (warn "stop-server ..")
   (Thread/sleep 100))
@@ -21,7 +18,7 @@
   (System/exit 0))
 
 (defn jetty-ws-map []
-  (let [jetty-ws (get-in-config [:jetty-ws])
+  (let [jetty-ws (get-in-config [:webly/web-server :jetty-ws])
         v  (map (fn [[route kw]]
                   [route (get @handler-registry kw)])
                 jetty-ws)]
@@ -35,7 +32,7 @@
 
 (defn run-server [ring-handler profile]
   (let [{:keys [type api wrap-handler-reload]} (get-in profile [:server])
-        jetty-config (get-in-config [:web-server])
+        jetty-config (get-in-config [:webly/web-server])
         jetty-config (if api
                        (do  (debug "using web-server-api")
                             (assoc jetty-config :join? false))

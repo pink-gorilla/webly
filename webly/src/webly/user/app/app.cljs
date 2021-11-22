@@ -19,6 +19,8 @@
    [frontend.css.loading]
    [frontend.css.subscriptions]
    [frontend.dialog]
+   [frontend.config.events]
+   [frontend.config.subscription]
 
    ; webly
    [webly.build.lazy]
@@ -27,9 +29,6 @@
    [webly.user.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.user.app.views :refer [webly-app]]
    [webly.user.status.events]
-
-   [webly.user.config.events]
-   [webly.user.config.subscription]
    [webly.user.tenx.events]
    [webly.user.app.events]
    [webly.user.status.subscriptions] ; side-effects

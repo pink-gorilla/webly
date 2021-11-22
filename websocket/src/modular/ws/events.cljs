@@ -26,8 +26,8 @@
   (when (is-served-by-shadow? db)
     (warn "the page is served by shadow which does not support sente websockets - connecting to jetty server..")
     (if (is-https?)
-      (get-in db [:config :web-server :ssl-port])
-      (get-in db [:config :web-server :port]))))
+      (get-in db [:config :webly/web-server :ssl-port])
+      (get-in db [:config :webly/web-server :port]))))
 
 (rf/reg-event-db
  :ws/init

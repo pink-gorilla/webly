@@ -1,4 +1,4 @@
-(ns webly.user.config.events
+(ns frontend.config.events
   "Events related configuration loading"
   (:require
    [taoensso.timbre :refer-macros [debug info infof error]]
@@ -7,8 +7,9 @@
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
    [modular.log :refer [timbre-config!]]
    [modular.encoding.transit :refer [decode]]
+   [frontend.notifications.core :refer [add-notification]]
    [webly.prefs :refer [pref]]
-   [frontend.notifications.core :refer [add-notification]]))
+   ))
 
 ; load configuration
 

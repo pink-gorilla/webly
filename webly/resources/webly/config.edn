@@ -1,4 +1,8 @@
-{:webly {; clj
+{:shadow {:dev-http {:port 8000}
+           :http {:port 8001 :host "0.0.0.0"}; "localhost"}
+           :nrepl {:port 8002}}
+  
+ :webly {; clj
          :ns-clj []
          :start-service nil
 
@@ -34,18 +38,16 @@
          }
 
  :prefix "/r/" ; resource route prefix ; most web-apps can leave this at default values
- :shadow {:dev-http {:port 8000}
-          :http {:port 8001 :host "0.0.0.0"}; "localhost"}
-          :nrepl {:port 8002}}
 
- :web-server     {:port 8080
-                  :host "0.0.0.0"
-                  :ssl-port 8443
-                  :keystore "../webserver/certs/keystore.p12"
-                  :key-password "password"; Password you gave when creating the keystore
-                  }
 
- :jetty-ws {"/api/chsk" :ws/chsk-get}
+ :webly/web-server {:port 8080
+                    :host "0.0.0.0"
+                    :ssl-port 8443
+                    :keystore "../webserver/certs/keystore.p12"
+                    :key-password "password"; Password you gave when creating the keystore
+                    :jetty-ws {"/api/chsk" :ws/chsk-get}}
+
+
 
  :google-analytics {:enabled false ; true
                     :id "UA-154548494-1"} ; not a secret 

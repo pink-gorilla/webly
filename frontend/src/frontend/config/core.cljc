@@ -1,4 +1,4 @@
-(ns webly.user.config.core)
+(ns frontend.config.core)
 
 (def prefix-res
   (atom  "/r/"))
