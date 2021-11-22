@@ -1,0 +1,1 @@
+{:module-uris {:webly_dynamic [], :webly_static ["/r/webly_static.js"], :snippets ["/r/snippets.js"], :hello ["/r/hello.js"]}, :module-infos {:webly_dynamic nil, :webly_static #{:webly_dynamic}, :snippets #{:webly_dynamic}, :hello #{:webly_dynamic}}}
