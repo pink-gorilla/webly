@@ -23,6 +23,8 @@ Clone this repo and run: `bb demo-webly`
 
 The demo runs a webserver on port 8080 with shadow-cljs "watch" mode.
 
+A simple demo is on [Webly Github Pages](https://pink-gorilla.github.io/webly/)
+
 
 # features
 
