@@ -3,7 +3,7 @@
    [taoensso.timbre :refer-macros [info warn]]
    [clojure.string :as str]
    [cemerick.url :as url]
-   [frontend.config.core :refer [webly-mode-atom]]
+   [frontend.config.core :refer [webly-mode-atom entry-path-atom]]
    [frontend.helper :refer [application-url]]))
 
 (defn change-config [match]
@@ -14,8 +14,7 @@
    ;(str/replace path #"(.*/)(.*)$" change-config)
     path))
 
-(defonce entry-path-atom
-  (atom ""))
+
 
 (defn entry-path-adjust [path]
   (if (str/blank? @entry-path-atom)
@@ -23,6 +22,7 @@
     (str/replace path @entry-path-atom "/")
     ;"/"
     ))
+
 (defn make-static-adjustment []
   (info "making static adjustments..")
   (info "static entry path is: " (entry-path))

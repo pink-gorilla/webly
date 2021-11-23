@@ -10,7 +10,7 @@
    [modular.encoding.transit :refer [decode]]
    [frontend.notifications.core :refer [add-notification]]
    [webly.prefs :refer [pref]]
-   [frontend.config.core :refer [webly-mode-atom]]
+   [frontend.config.core :refer [webly-mode-atom entry-path-atom]]
    [frontend.helper :refer [static-config-url]]
    [bidi.bidi]
    )
@@ -25,7 +25,7 @@
    (infof "loading config dispatch-after-load: %s"  after-config-load)
    (let [static? (= :static @webly-mode-atom)
          uri (if static?
-               (static-config-url)
+               (str @entry-path-atom "/config.edn") ; (static-config-url)
                "/api/config")
          format (if static? 
                   (ajax/text-response-format)
