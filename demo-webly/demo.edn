@@ -13,8 +13,8 @@
                          "help"    :demo/help
                          "prose"   :demo/prose
                          ["party/" :location] :demo/party
-                         "job"     #bidi.bidi.TaggedMatch{:matched  :demo/job :tag :wunderbar}
-                         "job2"    #bidi.bidi.TaggedMatch{:matched :demo/job :tag {:flags 3 :context :wunderbar}}
+                         ;"job"     #bidi.bidi.TaggedMatch{:matched  :demo/job :tag :wunderbar}
+                         ;"job2"    #bidi.bidi.TaggedMatch{:matched :demo/job :tag {:flags 3 :context :wunderbar}}
                          "save"    :demo/save-non-existing ; there is no handler defined for this on purpose
                          }}
          ; clj

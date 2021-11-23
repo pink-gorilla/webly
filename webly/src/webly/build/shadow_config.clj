@@ -18,19 +18,22 @@
 (defn main-config-dynamic [ns-cljs]
   (let [ns-cljs (or ns-cljs [])]
     (into []
-          (concat '[webly.app.dynamic] ns-cljs))))
+          (concat '[webly.app.app] ns-cljs))))
 
 (defn sub-module-config [[name ns-mod]]
   (let [ns-mod (or ns-mod {})]
     {name {:entries ns-mod
-           :depends-on #{:webly_dynamic}}}))
+           :depends-on #{:webly}}}))
 
 (defn module-config [ns-cljs modules]
-  (let [main {:webly_dynamic {:init-fn 'webly.app.dynamic/start
-                              :entries (main-config-dynamic ns-cljs)}
-              :webly_static {:init-fn 'webly.app.static/start
-                             :depends-on #{:webly_dynamic}
-                             :entries '[webly.app.static]}}
+  (let [main {:webly  {:entries (main-config-dynamic ns-cljs)}
+              ;:webly_dynamic {:init-fn 'webly.app.dynamic/start
+              ;                :depends-on #{:webly_shared}
+              ;                :entries '[webly.app.dynamic]}
+              ;:webly_static {:init-fn 'webly.app.static/start
+              ;               :depends-on #{:webly_shared}
+              ;               :entries '[webly.app.static]}
+              }
         sub (map sub-module-config modules)
         subs (apply merge sub)]
     (merge main subs)))

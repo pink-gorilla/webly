@@ -81,24 +81,37 @@
 
 (defn layout [webly-config page]
   (let [{:keys [webly]} webly-config
-        {:keys [webly-bundle-entry]} webly]
+        ;{:keys [webly-bundle-entry]} webly
+        ]
     (page/html5
      {:mode :html}
      (head webly-config)
      [:body.loading
       loading
-      [:div#webly page]
-      [:div  ; .w-screen.h-screen
-       [:script {:src "/r/webly_dynamic.js"
-                 :type "text/javascript"
-                 ;:onload webly-bundle-entry
-                 }]]])))
+      [:div#webly page]])))
 
-(defn app-page [csrf-token]
+(defn app-page-dynamic [csrf-token]
   (layout @config-atom
           [:div
            [:div#sente-csrf-token {:data-csrf-token csrf-token}]
-           [:div#app]]))
+           [:div#app]
+           [:div  ; .w-screen.h-screen
+            [:script {:src "/r/webly.js"
+                      :type "text/javascript"
+                      :onload "webly.app.app.start ('dynamic');"}]]]))
+
+(defn app-page-static [csrf-token]
+  (layout @config-atom
+          [:div
+           [:div#sente-csrf-token {:data-csrf-token csrf-token}]
+           [:div#app]
+           [:div  ; .w-screen.h-screen
+            [:script {:src "/r/webly.js"
+                      :type "text/javascript"
+                      :onload "webly.app.app.start ('static');"}]]]))
+
+
+
 
 
 

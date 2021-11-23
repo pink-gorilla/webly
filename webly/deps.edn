@@ -41,7 +41,7 @@
         
 
         ; modular
-        org.pinkgorilla/modular {:mvn/version "0.0.14"}
+        org.pinkgorilla/modular {:mvn/version "0.0.15"}
         modular/oauth2 {:local/root "../oauth2" :deps/manifest :deps}
         modular/webserver {:local/root "../webserver" :deps/manifest :deps}
         modular/websocket {:local/root "../websocket" :deps/manifest :deps}

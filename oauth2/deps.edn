@@ -12,7 +12,7 @@
   ;                         :sha "8b1a85846acaaa37a58b054f2372d8fde0663b75"}
   buddy/buddy-sign {:mvn/version "3.4.1"}
   buddy/buddy-auth {:mvn/version "3.0.1"}
-  org.pinkgorilla/modular {:mvn/version "0.0.14"} ; persistence
+  org.pinkgorilla/modular {:mvn/version "0.0.15"} ; persistence
   modular/frontend {:local/root "../frontend" :deps/manifest :deps}
   }
 

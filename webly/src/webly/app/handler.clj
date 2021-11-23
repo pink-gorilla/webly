@@ -8,7 +8,7 @@
    [modular.webserver.handler.registry :refer [add-ring-handler]]
    [modular.webserver.middleware.api :refer [wrap-api-handler]]
    [modular.ws.middleware :refer [wrap-ws]]
-   [webly.app.page :refer [app-page]]))
+   [webly.app.page :refer [app-page-dynamic]]))
 
 ; CSRF TOKEN
 
@@ -31,7 +31,7 @@
         res (response/content-type
              {:status 200
               ;:session session
-              :body (app-page csrf-token)}
+              :body (app-page-dynamic csrf-token)}
              "text/html")]
     ;(response/header res "session" session)
     res))

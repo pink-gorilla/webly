@@ -1,5 +1,12 @@
 (ns frontend.config.core)
 
+
+
+
+(defonce webly-mode-atom
+  (atom :dynamic))
+
+
 (def prefix-res
   (atom  "/r/"))
 
@@ -9,6 +16,11 @@
 (defn link-css [href]
   [:link {:rel "stylesheet"
           :href (res-href href)}])
+
+
+
+
+
 
 
 

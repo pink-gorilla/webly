@@ -2,6 +2,7 @@
   (:require
    [taoensso.timbre  :refer [debug info warn]]
    [modular.writer :refer [write write-status write-target]]
+   [webly.build.static :refer [prepare-static-page]]
    [webly.build.shadow-config :refer [shadow-config]]
    [webly.build.shadow :refer [shadow-build]] ; shadow via generated config file
    ))
@@ -16,6 +17,7 @@
     (if bundle
       (do (info "building bundle: " bundle)
           ;(debug "shadow-config: " shadow-config) ; can be seen in generated shadow-cljs.edn
+          (prepare-static-page)
           (write-status "shadow-cljs" shadow-config)
           (write-shadow-config shadow-config)
           (shadow-build profile shadow-config)

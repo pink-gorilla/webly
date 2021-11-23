@@ -4,7 +4,9 @@
     [reagent.core :as r]
     [bidi.bidi :as bidi]
     [pushy.core :as pushy]
-    [cemerick.url :as url]))
+    [cemerick.url :as url]
+    [webly.app.static :refer [entry-path-adjust]]
+    ))
 
 ; bidi does not handle query params
 ; idea how to solve the problem: https://github.com/juxt/bidi/issues/51
@@ -88,8 +90,10 @@
     (hard-redirect (:url match))))
 
 (defn on-url-change [path & options]
-  (let [options (or options {})]
-    (info "url did change to: " path) ; " options:" options
+  (info "url did change to: " path) ; " options:" options  
+  (let [options (or options {})
+        path (entry-path-adjust path)
+        ]
     (path->route @routes path options))) ; options
 
 ; see: 
