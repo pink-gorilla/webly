@@ -13,11 +13,12 @@
          ; webly client-server app
          ; :webly-bundle-entry  "webly.app.app.start ();" ; no need to change 
          :ring-handler "webly.app.app/ring-handler" ; no need to change 
-         :loading-image-url "/r/webly/loading-code.jpg" ; no need to change  ;"/r/webly/loading-lemur.jpg"
+         :loading-image-url "webly/loading-code.jpg" ; no need to change  ;"/r/webly/loading-lemur.jpg"
 
          ; user app
          :title "webly"
-         :icon "/r/webly/favicon.ico"
+         :icon "webly/favicon.ico"
+         :spinner "webly/loading.svg"
          :start-user-app [:webly/start-default]  ; after config loaded
 
          ; routes

@@ -16,10 +16,10 @@
           :type "text/css"
           :href link}])
 
-(defn css->hiccup [webly-config]
+(defn css->hiccup [prefix webly-config]
   (let [theme (get-in webly-config [:webly :theme])
         {:keys [available current]} theme
-        css-links (css-app available current)]
+        css-links (css-app prefix available current)]
     (debug "css links: " css-links)
     (doall (map css-link css-links))))
 
@@ -36,7 +36,7 @@
               background-size: cover;
             }")])
 
-(def loading
+(defn loading [spinner-src]
   [:div
    #_[:script
       "window.onload = function () {
@@ -47,7 +47,7 @@
         }
      }"]
    [:img {:id "spinner"
-          :src "/r/webly/loading.svg"
+          :src spinner-src
           :style (style {:width "120px"
                          :height "120px"
                          :position "absolute"
@@ -58,7 +58,7 @@
 ;; APP
 
 (defn head [webly-config]
-  (let [{:keys [webly google-analytics]} webly-config
+  (let [{:keys [webly google-analytics prefix]} webly-config
         {:keys [title loading-image-url icon]} webly
         head [:head
               [:meta {:http-equiv "Content-Type"
@@ -71,23 +71,22 @@
                       :content "pink-gorilla"}]
               ; <meta name= "keywords" content= "keywords,here" >
               [:title title]
-              [:link {:rel "shortcut icon" :href icon}]
+              [:link {:rel "shortcut icon" :href (str prefix icon)}]
               (tenx-script)
-              (body-loading-style loading-image-url)
+              (body-loading-style (str prefix loading-image-url))
               (script-tag-src google-analytics)
               (script-tag-config google-analytics)]]
     (into head
-          (css->hiccup webly-config))))
+          (css->hiccup prefix webly-config))))
 
 (defn layout [webly-config page]
-  (let [{:keys [webly]} webly-config
-        ;{:keys [webly-bundle-entry]} webly
-        ]
+  (let [{:keys [webly prefix]} webly-config
+        {:keys [spinner]} webly]
     (page/html5
      {:mode :html}
      (head webly-config)
      [:body.loading
-      loading
+      (loading (str prefix spinner))
       [:div#webly page]])))
 
 (defn app-page-dynamic [csrf-token]
@@ -105,14 +104,15 @@
     (assoc config :prefix prefix)))
 
 (defn app-page-static [csrf-token]
-  (layout (config-prefix-adjust @config-atom) ; :prefix "/r/"
-          [:div
-           [:div#sente-csrf-token {:data-csrf-token csrf-token}]
-           [:div#app]
-           [:div  ; .w-screen.h-screen
-            [:script {:src "/r/webly.js"
-                      :type "text/javascript"
-                      :onload "webly.app.app.start ('static');"}]]]))
+  (let [config (config-prefix-adjust @config-atom)]
+    (layout config ; :prefix "/r/"
+            [:div
+             [:div#sente-csrf-token {:data-csrf-token csrf-token}]
+             [:div#app]
+             [:div  ; .w-screen.h-screen
+              [:script {:src (str (:prefix config) "webly.js")
+                        :type "text/javascript"
+                        :onload "webly.app.app.start ('static');"}]]])))
 
 
 

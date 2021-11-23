@@ -9,7 +9,7 @@
   com.auth0/java-jwt {:mvn/version "3.12.0"}
   com.auth0/jwks-rsa {:mvn/version  "0.15.0"}
 
-  org.pinkgorilla/modular {:mvn/version "0.0.15"} ; persistence
+  org.pinkgorilla/modular {:mvn/version "0.0.16"} ; persistence
   org.pinkgorilla/modular-oauth2 {:local/root "../oauth2" :deps/manifest :deps}}
 
  :aliases

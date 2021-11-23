@@ -18,14 +18,14 @@
   (are [x y] (= x y)
 
     []
-    (css-component available-themes :codemirror false)
+    (css-component "/r/" available-themes :codemirror false)
 
     ["/r/codemirror/lib/codemirror.css"]
-    (css-component available-themes :codemirror true)
+    (css-component "/r/" available-themes :codemirror true)
 
     ["/r/codemirror/lib/codemirror.css"
      "/r/codemirror/theme/base16-light.css"]
-    (css-component available-themes :codemirror "base16-light")))
+    (css-component "/r/" available-themes :codemirror "base16-light")))
 
 (deftest theme-app-config []
   (are [x y] (= x y)
@@ -33,6 +33,6 @@
     ["/r/tailwindcss/dist/tailwind.css"
      "/r/codemirror/lib/codemirror.css"
      "/r/codemirror/theme/base16-light.css"]
-    (css-app available-themes current-theme-config)
+    (css-app "/r/" available-themes current-theme-config)
 ;
     ))

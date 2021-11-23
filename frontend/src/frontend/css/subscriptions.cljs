@@ -19,8 +19,11 @@
    (let [{:keys [available current]
           :or {available {}
                current {}}}
-         (get-in db [:theme])]
-     (css-app available current))))
+         (get-in db [:theme])
+         prefix (:prefix db)
+         ]
+     (println "app theme link prefix: " prefix)
+     (css-app prefix available current))))
 
 (rf/reg-sub
  :css/theme-component
