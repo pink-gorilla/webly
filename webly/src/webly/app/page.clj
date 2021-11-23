@@ -100,8 +100,12 @@
                       :type "text/javascript"
                       :onload "webly.app.app.start ('dynamic');"}]]]))
 
+(defn config-prefix-adjust [config]
+  (let [prefix (:prefix-static config)]
+    (assoc config :prefix prefix)))
+
 (defn app-page-static [csrf-token]
-  (layout @config-atom
+  (layout (config-prefix-adjust @config-atom) ; :prefix "/r/"
           [:div
            [:div#sente-csrf-token {:data-csrf-token csrf-token}]
            [:div#app]

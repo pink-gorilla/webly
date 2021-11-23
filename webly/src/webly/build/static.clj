@@ -20,11 +20,15 @@
 (defn save-resources []
   (write-resources-to "target/webly/public/r" "public"))
 
+(defn config-prefix-adjust [config]
+  (let [prefix (:prefix-static config)]
+    (assoc config :prefix prefix)))
+
 (defn write-static-config []
   (let [filename "target/webly/public/config.edn"
         config (-> @config-atom
-                   (dissoc :oauth2) ; oauth2 settings are private
-                   )]
+                   (dissoc :oauth2 :webly/web-server :shadow) ; oauth2 settings are private
+                   (config-prefix-adjust))]
     (write filename config)))
 
 (defn prepare-static-page []

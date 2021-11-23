@@ -30,6 +30,9 @@
          :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]}}
                  :current {:emoji    false}}}
 
+ 
+ :prefix-static "/webly/r/"
+
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
  :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
