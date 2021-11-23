@@ -18,7 +18,7 @@
   (create-html app-page-dynamic "/r/webly.js" "target/webly/public/index_dynamic.html"))
 
 (defn save-resources []
-  (write-resources-to "target/webly/public/r" "public"))
+  (write-resources-to "target/res" "public"))
 
 (defn config-prefix-adjust [config]
   (let [prefix (:prefix-static config)]

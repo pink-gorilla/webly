@@ -31,7 +31,7 @@
                  :current {:emoji    false}}}
 
  
- :prefix-static "/webly/r/public/"
+ :prefix-static "/webly/r/"
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 

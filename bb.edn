@@ -115,11 +115,20 @@
 
          copy-static {:doc "Prepares the static page"
                       :task (do (fs/delete-tree "docs")
-                                (fs/copy-tree "demo-webly/target/webly/public" "docs" {:replace-existing true}))}
+                                (fs/create-dirs "docs/r/webly")
+                                (fs/create-dirs "docs/r")
+                                (fs/copy-tree "demo-webly/target/webly/public" "docs" {:replace-existing true})
+                                (fs/copy-tree "demo-webly/target/node_modules/public" "docs/r" {:replace-existing true})
+                                (fs/copy-tree "demo-webly/target/res/public" "docs/r" {:replace-existing true})
+
+                                )}
          update-static {:doc "Compiles Bundel and copies static"
                         :task (do (run 'clean)
                                   (run 'npm-install)
                                   (run 'demo-compile)
+                                  (run 'tailwind-girouette-webly)
+                                  (run 'copy-resources)
+                                  (run 'get-fonts)
                                   (run 'copy-static))}
 
 

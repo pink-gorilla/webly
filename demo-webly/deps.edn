@@ -42,7 +42,7 @@
    :exec-args {:source-paths ["src"]
                :css {;:output-file "target/webly/public/girouette.edn"
                      ;:output-format :css-classes
-                     :output-file "target/webly/public/girouette.css"}
+                     :output-file "target/res/public/girouette.css"}
                :garden-fn frontend.tailwind.grammar/class-name->garden
                :apply-classes frontend.tailwind.css/composed-classes
                :watch? false}}
