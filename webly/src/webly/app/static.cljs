@@ -17,7 +17,7 @@
 (defn entry-path-adjust [path]
   (if (str/blank? @entry-path-atom)
     path
-    (if (str/ends-with @entry-path-atom "/")
+    (if (str/ends-with? @entry-path-atom "/")
       (str/replace path @entry-path-atom "/")
       (str/replace path @entry-path-atom ""))
 
