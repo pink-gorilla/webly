@@ -5,11 +5,11 @@
    [clojure.test :refer [deftest is testing]]
    [taoensso.sente.interfaces :as interfaces :refer (pack unpack)]
    [modular.encoding.transit :as e]
-   [modular.date :refer [now-local]]))
+   [modular.date :refer [now-date]]))
 
 (def p (get-transit-packer :json e/encode e/decode))
 
-(def d (now-local))
+(def d (now-date))
 
 (deftest sente-p []
   (is (= (pack p [:chsk/ws-ping "foo"]) "[\"~:chsk/ws-ping\",\"foo\"]"))
