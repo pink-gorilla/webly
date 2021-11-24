@@ -1,5 +1,6 @@
 (ns frontend.css.subscriptions
   (:require
+   [taoensso.timbre :refer-macros [info warn error]]
    [re-frame.core :as rf]
    [frontend.css.config :refer [css-app]]))
 
@@ -22,7 +23,7 @@
          (get-in db [:theme])
          prefix (get-in db [:config :prefix])
          ]
-     (println "app theme link prefix: " prefix)
+     (info "app theme link prefix: " prefix)
      (css-app prefix available current))))
 
 (rf/reg-sub

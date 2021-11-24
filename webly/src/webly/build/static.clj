@@ -1,5 +1,6 @@
 (ns webly.build.static
   (:require
+   [clojure.java.io :as io]
    [taoensso.timbre  :refer [debug info warn]]
    [modular.writer :refer [write write-status write-target]]
    [modular.resource.load :refer [write-resources-to]]
@@ -13,11 +14,20 @@
     (info "writing static page: " filename)
     (spit filename html)))
 
+(defn- ensure-directory [path]
+  (when-not (.exists (io/file path))
+    (.mkdir (java.io.File. path))))
+
 (defn generate-static-html []
-  (create-html app-page-static "/r/webly.js" "target/webly/public/index.html")
-  (create-html app-page-dynamic "/r/webly.js" "target/webly/public/index_dynamic.html"))
+  (ensure-directory "target")
+  (ensure-directory "target/static")
+
+  (create-html app-page-static "/r/webly.js" "target/static/index.html")
+  (create-html app-page-dynamic "/r/webly.js" "target/static/index_dynamic.html"))
 
 (defn save-resources []
+  (ensure-directory "target")
+  (ensure-directory "target/res")
   (write-resources-to "target/res" "public"))
 
 (defn config-prefix-adjust [config]
@@ -25,10 +35,12 @@
     (assoc config :prefix prefix)))
 
 (defn write-static-config []
-  (let [filename "target/webly/public/config.edn"
+  (let [filename "target/static/config.edn"
         config (-> @config-atom
                    (dissoc :oauth2 :webly/web-server :shadow) ; oauth2 settings are private
                    (config-prefix-adjust))]
+    (ensure-directory "target")
+    (ensure-directory "target/static")
     (write filename config)))
 
 (defn prepare-static-page []

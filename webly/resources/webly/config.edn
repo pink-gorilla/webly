@@ -1,28 +1,14 @@
 {:shadow {:dev-http {:port 8000}
-           :http {:port 8001 :host "0.0.0.0"}; "localhost"}
-           :nrepl {:port 8002}}
-  
- :webly {; clj
-         :ns-clj []
-         :start-service nil
+          :http {:port 8001 :host "0.0.0.0"}; "localhost"}
+          :nrepl {:port 8002}}
 
-         ; cljs
-         :ns-cljs []
-         :modules {}
-
-         ; webly client-server app
-         :ring-handler "webly.app.app/ring-handler" ; no need to change 
-         :loading-image-url "webly/loading_code.jpg" ; no need to change  ;"/r/webly/loading-lemur.jpg"
-
-         ; user app
+ :webly {; user app
          :title "webly"
-         :icon "webly/favicon.ico"
+         :icon "webly/pinkgorilla32.png" ; "webly/favicon.ico"  ; gorilla is much smaller than the favicon
          :spinner "webly/loading.svg"
+         :loading-image-url "webly/loading_code.jpg" ; no need to change  ;"/r/webly/loading-lemur.jpg"
          :start-user-app [:webly/start-default]  ; after config loaded
-
-         ; routes
-         :routes {:app {}
-                  :api {}}
+         ; theme
          :theme {:available {:webly-dialog {true ["webly/dialog.css"]}
                              :tailwind-full {"light" ["tailwindcss/dist/tailwind.min.css"]
                                              "dark" ["tailwindcss/dist/tailwind-dark.min.css"]}
@@ -34,11 +20,21 @@
                            :tailwind-girouette true
                            :fontawesome true
                            :fonts-google false}}
+         ; cljs
+         :ns-cljs []
+         :modules {}
+         ; clj
+         :ns-clj []
+         :start-service nil
+         :ring-handler "webly.app.app/ring-handler" ; no need to change 
+         ; routes
+         :routes {:app {}
+                  :api {}}
 ;
          }
 
  :prefix "/r/" ; resource route prefix ; most web-apps can leave this at default values
-
+ :prefix-static "/webly/r/"
 
  :webly/web-server {:port 8080
                     :host "0.0.0.0"

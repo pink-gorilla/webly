@@ -159,10 +159,10 @@
 
 (defn generate-tailwind-webly [& _]
   (ensure-directory "target")
-  (ensure-directory "target/webly")
-  (ensure-directory "target/webly/public")
+  (ensure-directory "target/node_modules")
+  (ensure-directory "target/node_modules/public")
   (generate-tailwind
-   {:output-file "target/webly/public/girouette.css"
+   {:output-file "target/node_modules/public/girouette.css"
     :garden-fn frontend.tailwind.grammar/class-name->garden
     :class-compositions frontend.tailwind.css/composed-classes
     :all-css-classes webly-default-classes}))

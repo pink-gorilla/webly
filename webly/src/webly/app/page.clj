@@ -90,14 +90,15 @@
       [:div#webly page]])))
 
 (defn app-page-dynamic [csrf-token]
-  (layout @config-atom
-          [:div
-           [:div#sente-csrf-token {:data-csrf-token csrf-token}]
-           [:div#app]
-           [:div  ; .w-screen.h-screen
-            [:script {:src "/r/webly.js"
-                      :type "text/javascript"
-                      :onload "webly.app.app.start ('dynamic');"}]]]))
+  (let [config @config-atom]
+    (layout config
+            [:div
+             [:div#sente-csrf-token {:data-csrf-token csrf-token}]
+             [:div#app]
+             [:div  ; .w-screen.h-screen
+              [:script {:src (str (:prefix config) "webly.js")
+                        :type "text/javascript"
+                        :onload "webly.app.app.start ('dynamic');"}]]])))
 
 (defn config-prefix-adjust [config]
   (let [prefix (:prefix-static config)]

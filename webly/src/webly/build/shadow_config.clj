@@ -2,6 +2,7 @@
   "generates shadow-cljs.edn based on profile and config"
   (:require
    [taoensso.timbre :as timbre :refer [debug info]]
+   [clojure.string :as str]
    [modular.config :refer [get-in-config]]
    [webly.prefs :refer [if-pref-fn prefs-atom]]))
 
@@ -48,7 +49,8 @@
         dev-http-port (get-in-config [:shadow :dev-http :port])
         http-port (get-in-config [:shadow :http :port])
         http-host (get-in-config [:shadow :http :host])
-        nrepl-port (get-in-config [:shadow :nrepl :port])]
+        nrepl-port (get-in-config [:shadow :nrepl :port])
+        prefix (get-in-config [:prefix])]
     {:cache-root ".shadow-cljs"
      :verbose (if shadow-verbose true false)
      :lein false
@@ -64,7 +66,7 @@
      :builds {:webly {:target :browser
                       :module-loader true
                       :output-dir "target/webly/public"
-                      :asset-path "/r"
+                      :asset-path (subs prefix 0 (dec (count prefix))) ;  "/r/" => "/r"
                       :modules (module-config ns-cljs modules)
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")
                     ;           :after-load (symbol "webly.web.app/after-load")}

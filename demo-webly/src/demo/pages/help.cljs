@@ -19,6 +19,8 @@
 (def data (r/atom {:d nil}))
 (def firstt (r/atom true))
 
+(def prefix-atom (rf/subscribe [:prefix]))
+
 (defn help []
   [:div
    [:h1 "webly help"]
@@ -32,7 +34,7 @@
    [:div "data:" (pr-str @data)]
 
    [:p "a moon image should show below. this is a test for webly resource handler."]
-   [:img {:src "/r/moon.jpg"}]])
+   [:img {:src (str @prefix-atom "moon.jpg")}]])
 
 (defmethod reagent-page :demo/help [& args]
   [help])

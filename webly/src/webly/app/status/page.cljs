@@ -8,19 +8,22 @@
 
 (defn status-page []
   (let [status (subscribe [:webly/status])
-        background-image (get-in-config-cljs [:webly :loading-image-url])
+        loading-image-url (get-in-config-cljs [:webly :loading-image-url])
+        spinner (get-in-config-cljs [:webly :spinner])
+        prefix (get-in-config-cljs [:prefix])
+
         ;background-image "/r/webly/loading-lemur.jpg"
         ]
     (fn []
       [:div
-       {:style {:background-image (str "url(" background-image ")") ; no-repeat center center fixed"
+       {:style {:background-image (str "url(" prefix loading-image-url ")") ; no-repeat center center fixed"
                 :background-repeat "no-repeat"
                 :background-size "cover"
                 :justify-content "center"
                 :align-items "center"
                 :width "100vw"
                 :height "100vh"}}
-       [:img {:src "/r/webly/loading.svg"
+       [:img {:src (str prefix spinner)  ; "/r/" "webly/loading.svg"
               :style {:width "120px"
                       :height "120px"
                       :position "absolute"
