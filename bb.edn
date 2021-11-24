@@ -42,7 +42,7 @@
          test-clj (webly/clojure "demo-webly" "-M:test-clj")
          test-cljs (shell {:dir "demo-webly"} "npm" "test")
          ci-check {:depends [cljfmt-check
-                             build
+                             test-build
                              test-clj
                              test-cljs]
                    :task (shell "echo" "ci checks are ok!")}
