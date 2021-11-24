@@ -4,17 +4,24 @@
 
  :webly {; user app
          :title "webly"
-         :icon "webly/pinkgorilla32.png" ; "webly/favicon.ico"  ; gorilla is much smaller than the favicon
          :spinner "webly/loading.svg"
-         :loading-image-url "webly/loading_code.jpg" ; no need to change  ;"/r/webly/loading-lemur.jpg"
+         :icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
+         :loading-image-url "webly/loadimage/library.jpg" ; 
          :start-user-app [:webly/start-default]  ; after config loaded
          ; theme
-         :theme {:available {:webly-dialog {true ["webly/dialog.css"]}
+         :theme {:available {:webly-dialog {true ["webly/dialog.css"]
+                                            false []}
                              :tailwind-full {"light" ["tailwindcss/dist/tailwind.min.css"]
-                                             "dark" ["tailwindcss/dist/tailwind-dark.min.css"]}
-                             :tailwind-girouette {true ["girouette.css"]}
-                             :fontawesome {true ["@fortawesome/fontawesome-free/css/all.min.css"]}
-                             :fonts-google    {true ["fonts-google/fonts.css"]}}
+                                             "dark" ["tailwindcss/dist/tailwind-dark.min.css"]
+                                             false []
+                                             }
+                             :tailwind-girouette {true ["girouette.css"]
+                                                  false []}
+                             :fontawesome {true ["@fortawesome/fontawesome-free/css/all.min.css"]
+                                           false []}
+                             :fonts-google    {true ["fonts-google/fonts.css"]
+                                               false []
+                                               }}
                  :current {:webly-dialog true
                            :tailwind-full false ; "light" ; true
                            :tailwind-girouette true

@@ -25,7 +25,7 @@
   (shadow.cljs.build-report/generate
    :webly
    {:print-table true
-    :report-file ".webly/bundlesizereport.html"}))
+    :report-file "target/webly/public/bundlesizereport.html"})) ;".webly/bundlesizereport.html"
 
 (defn watch-cli [cljs-build]
   (let [id  (name cljs-build)]

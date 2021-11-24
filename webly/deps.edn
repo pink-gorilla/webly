@@ -8,13 +8,10 @@
         org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
         ;org.slf4j/slf4j-api {:mvn/version "1.7.30"} ; slf4j-timbre is incmpatibe with slf4j-api 2.0.0 that comes with jetty
         ;com.fzakaria/slf4j-timbre {:mvn/version  "0.3.21"} ; slf4j ->timbre adapter (used by jetty)
-
+;; {ring.middleware.logger "0.5.0"}
         ;; old
-        ;; {ring.middleware.logger "0.5.0"}
         luminus/ring-ttl-session {:mvn/version "0.3.3"}
-        ring-oauth2/ring-oauth2 {:mvn/version "0.1.5"}
-        com.andrewmcveigh/cljs-time {:mvn/version  "0.5.2"} ; time (for edn/transit encoding - is moved to modular)  
-
+       
         ; webly/core
         hiccup/hiccup {:mvn/version "1.0.5"}   ; server side templating
         reagent/reagent {:mvn/version "1.1.0"} ; https://github.com/reagent-project/reagent
@@ -36,7 +33,7 @@
         
 
         ; modular
-        org.pinkgorilla/modular {:mvn/version "0.0.16"}
+        org.pinkgorilla/modular {:mvn/version "0.0.18"}
         modular/oauth2 {:local/root "../oauth2" :deps/manifest :deps}
         modular/webserver {:local/root "../webserver" :deps/manifest :deps}
         modular/websocket {:local/root "../websocket" :deps/manifest :deps}

@@ -5,14 +5,15 @@
    ;[clojure.string :as str]
    [ajax.core :as ajax]
    [cljs.reader :refer [read-string]]
+   [bidi.bidi]
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
    [modular.log :refer [timbre-config!]]
    [modular.encoding.transit :refer [decode]]
-   [frontend.notifications.core :refer [add-notification]]
-   [webly.prefs :refer [pref]]
+   [modular.encoding.edn :refer [read-edn]]
    [frontend.config.core :refer [webly-mode-atom entry-path-atom]]
+   [frontend.notifications.core :refer [add-notification]]
    [frontend.helper :refer [static-config-url]]
-   [bidi.bidi]
+   [webly.prefs :refer [pref]]
    )
  ;  (:import [bidi.bidi TaggedMatch])
   )
@@ -54,7 +55,7 @@
  (fn [cofx [_ after-config-load config]]
    (let [static? (= :static @webly-mode-atom)
          config (if static? 
-                   (cljs.reader/read-string config)
+                   (read-edn config) ; (cljs.reader/read-string config)
                   config)
          fx {:db          (assoc-in (:db cofx) [:config] config)
              :dispatch [after-config-load]}]

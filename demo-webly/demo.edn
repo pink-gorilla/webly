@@ -2,38 +2,38 @@
          ; routes can be a map or a symbol.
          ; if you do lots of merging of routes, you might prefer a symbol
          :routes demo.routes/routes
-         :routes2 {:api {"time"   {:get :api/time}
-                         "timejava"   {:get :api/time-java}
-                         "biditest"   {:get :api/bidi-test}
-                         "test"   {:get :api/test
-                                   :post :api/test  ; used in unit-test
-                                   }
-                         "snippet"   {:get :api/snippet}}
-                   :app {""        :demo/main
-                         "help"    :demo/help
-                         "prose"   :demo/prose
-                         ["party/" :location] :demo/party
+         #_:routes #_{:api {"time"   {:get :api/time}
+                            "timejava"   {:get :api/time-java}
+                            "biditest"   {:get :api/bidi-test}
+                            "test"   {:get :api/test
+                                      :post :api/test  ; used in unit-test
+                                      }
+                            "snippet"   {:get :api/snippet}}
+                      :app {""        :demo/main
+                            "help"    :demo/help
+                            "prose"   :demo/prose
+                            ["party/" :location] :demo/party
                          ;"job"     #bidi.bidi.TaggedMatch{:matched  :demo/job :tag :wunderbar}
                          ;"job2"    #bidi.bidi.TaggedMatch{:matched :demo/job :tag {:flags 3 :context :wunderbar}}
-                         "save"    :demo/save-non-existing ; there is no handler defined for this on purpose
-                         }}
+                            "save"    :demo/save-non-existing ; there is no handler defined for this on purpose
+                            }}
          ; clj
          :ns-clj [demo.app]
          :start-service demo.time/start-time-sender!
          ; cljs
          :ns-cljs [demo.app
-                   frontend.keybindings.init
-                   ]
+                   frontend.keybindings.init]
          :modules {:snippets [snippets.snip]
                    :hello [snippets.hello
                            snippets.bye]}
          :title "Webly Demo"
          :start-user-app [:demo/start]
-         :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]}}
+         :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
+                                     false []}
+                             }
                  :current {:emoji    false}}}
 
- 
- :prefix-static "/webly/r/"
+ :prefix-static "/webly/r/" ; for static-page build (github pages)
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
@@ -49,12 +49,12 @@
  :keybindings  [; https://github.com/piranha/keybind
                 ; shift, ctrl, alt, win, cmd, defmod, "left" "right"
                 ; "meta-shift-l" "alt-shift-p" "ctrl-shift-left" "ctrl-shift-right"
+                {:kb "esc"     :handler [:modal/close]            :desc "Dialog Close"} ; for ALL dialogs!
+                {:kb "alt-g t" :handler [:reframe10x-toggle] :desc "10x visibility toggle"}
+
                 {:kb "alt-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
                 {:kb "ctrl-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
                 {:kb "win-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
-
-                {:kb "esc"     :handler [:modal/close]            :desc "Dialog Close"} ; for ALL dialogs!
-                {:kb "alt-g t" :handler [:reframe10x-toggle] :desc "10x visibility toggle"}
 
                 {:kb "alt-g 1" :handler [:bidi/goto :demo/main] :desc "goto main"}
                 {:kb "alt-g 2" :handler [:bidi/goto :demo/party :location "Vienna"] :desc "goto party vienna"}
