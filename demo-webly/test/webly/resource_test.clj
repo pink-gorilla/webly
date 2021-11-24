@@ -36,7 +36,7 @@
 
 (deftest resource-webly []
   (is (= "image/x-icon"
-         (-> "/r/webly/favicon.ico" GET content-type))))
+         (-> "/r/webly/icon/silver.ico" GET content-type))))
 
 (deftest resources-tailwind []
   (is (= "text/css"
