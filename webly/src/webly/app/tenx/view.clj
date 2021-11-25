@@ -1,7 +1,7 @@
 (ns webly.app.tenx.view
   (:require
    [taoensso.timbre :refer [warn]]
-   [webly.prefs :refer [if-pref-fn]]))
+   [webly.build.prefs :refer [if-pref-fn]]))
 
 (defn tenx-script []
   (if-pref-fn :tenx

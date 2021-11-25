@@ -1,6 +1,7 @@
-(ns webly.prefs
+(ns webly.build.prefs
   (:require
-   [modular.date :refer [now-str]]))
+   [modular.date :refer [now-str]]
+   [modular.writer :refer [write-target]]))
 
 (defonce prefs-atom (atom {}))
 
@@ -23,3 +24,6 @@
   (if (get @prefs-atom kw)
     with
     without))
+
+(defn write-build-prefs []
+  (write-target "build" @prefs-atom))

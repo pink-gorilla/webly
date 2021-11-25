@@ -21,7 +21,6 @@
 (defn generate-static-html []
   (ensure-directory "target")
   (ensure-directory "target/static")
-
   (create-html app-page-static "/r/webly.js" "target/static/index.html")
   (create-html app-page-dynamic "/r/webly.js" "target/static/index_dynamic.html"))
 

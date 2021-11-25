@@ -4,11 +4,10 @@
    [taoensso.timbre :as timbre :refer [debug info]]
    [clojure.string :as str]
    [modular.config :refer [get-in-config]]
-   [webly.prefs :refer [if-pref-fn prefs-atom]]))
+   [webly.build.prefs :refer [if-pref-fn prefs-atom]]))
 
 ;; build-options
 (defn build-ns-aliases []
-  (debug @prefs-atom)
   (if-pref-fn :tenx
               {'webly.app.tenx.events 'webly.app.tenx.events-on}
               {'webly.app.tenx.events 'webly.app.tenx.events-off
@@ -43,14 +42,24 @@
 (defn shadow-config [profile]
   (let [advanced? (get-in profile [:bundle :advanced])
         shadow-verbose (get-in profile [:bundle :shadow-verbose])
-        {:keys [ns-cljs ring-handler modules]
+        {:keys [ns-cljs ring-handler modules title start-user-app]
          :or {modules {}}} (get-in-config [:webly])
         ring-handler (symbol ring-handler)
         dev-http-port (get-in-config [:shadow :dev-http :port])
         http-port (get-in-config [:shadow :http :port])
         http-host (get-in-config [:shadow :http :host])
         nrepl-port (get-in-config [:shadow :nrepl :port])
-        prefix (get-in-config [:prefix])]
+        prefix (get-in-config [:prefix])
+        asset-path  (subs prefix 0 (dec (count prefix))) ;  "/r/" => "/r"
+        ]
+    (swap! prefs-atom assoc
+           :ns-cljs (main-config-dynamic ns-cljs)
+             ;:prefix prefix 
+           :asset-path asset-path
+           :modules modules
+           :advanced? advanced?
+             ;:title title
+           :start-user-app start-user-app)
     {:cache-root ".shadow-cljs"
      :verbose (if shadow-verbose true false)
      :lein false
@@ -66,7 +75,7 @@
      :builds {:webly {:target :browser
                       :module-loader true
                       :output-dir "target/webly/public"
-                      :asset-path (subs prefix 0 (dec (count prefix))) ;  "/r/" => "/r"
+                      :asset-path asset-path
                       :modules (module-config ns-cljs modules)
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")
                     ;           :after-load (symbol "webly.web.app/after-load")}

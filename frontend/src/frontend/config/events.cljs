@@ -2,7 +2,6 @@
   "Events related configuration loading"
   (:require
    [taoensso.timbre :refer-macros [debug info infof error]]
-   ;[clojure.string :as str]
    [ajax.core :as ajax]
    [cljs.reader :refer [read-string]]
    [bidi.bidi]
@@ -13,7 +12,7 @@
    [frontend.config.core :refer [webly-mode-atom entry-path-atom]]
    [frontend.notifications.core :refer [add-notification]]
    [frontend.helper :refer [static-config-url]]
-   [webly.prefs :refer [pref]]
+   [webly.build.prefs :refer [pref]]
    )
  ;  (:import [bidi.bidi TaggedMatch])
   )
@@ -33,7 +32,7 @@
                   (ajax/transit-response-format :json decode)
                   )]
      (info "loading config from url: " uri)
-     {:db   (assoc-in db [:pref] (pref))
+     {:db   (assoc-in db [:build] (pref))
       :http-xhrio {:method          :get
                    :uri             uri
                    :timeout         10000                     ;; optional see API docs

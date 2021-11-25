@@ -22,7 +22,8 @@
          :start-service demo.time/start-time-sender!
          ; cljs
          :ns-cljs [demo.app
-                   frontend.keybindings.init]
+                   ;frontend.keybindings.init
+                   ]
          :modules {:snippets [snippets.snip]
                    :hello [snippets.hello
                            snippets.bye]}

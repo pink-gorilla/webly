@@ -5,7 +5,7 @@
    [webly.build.static :refer [prepare-static-page]]
    [webly.build.shadow-config :refer [shadow-config]]
    [webly.build.shadow :refer [shadow-build]] ; shadow via generated config file
-   ))
+   [webly.build.prefs :refer [write-build-prefs]]))
 
 (defn write-shadow-config [config]
   (let [filename "shadow-cljs.edn"]
@@ -20,6 +20,7 @@
           (prepare-static-page)
           (write-status "shadow-cljs" shadow-config)
           (write-shadow-config shadow-config)
+          (write-build-prefs)
           (shadow-build profile shadow-config)
           ;(write-target "lazy" ()[name data])
           )

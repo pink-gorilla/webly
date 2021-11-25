@@ -1,9 +1,9 @@
-(ns webly.profile
+(ns webly.build.profile
   (:require
    [taoensso.timbre :as timbre :refer [info error]]
    [modular.config :refer [config-atom]]
    [modular.writer :refer [write-target]]
-   [webly.prefs :refer [prefs-atom]]))
+   [webly.build.prefs :refer [prefs-atom]]))
 
 (defonce profiles
   {:ci          {:prefs   {:tenx false}
@@ -62,13 +62,13 @@
                  :server {:type :jetty
                           :wrap-handler-reload false}}
 
-   :httpkit      {:prefs   {:tenx true}
-                  :server {:type :httpkit
-                           :wrap-handler-reload false}}
+   ;:httpkit      {:prefs   {:tenx true}
+   ;               :server {:type :httpkit
+   ;                        :wrap-handler-reload false}}
 
-   :undertow    {:server {:type :undertow
-                          :wrap-handler-reload false}}})
-
+   ;:undertow    {:server {:type :undertow
+   ;                       :wrap-handler-reload false}}
+   })
 (defn str->profile [profile-str]
   (let [p (keyword profile-str)]
     (get profiles p)))
@@ -100,6 +100,6 @@
         (info "webly profile-name: " profile-name " profile: " profile)
         (swap! config-atom merge {:profile profile})
         (swap! prefs-atom merge (get-build-prefs profile))
-        (info "prefs: " @prefs-atom)
-        (write-target "prefs" (assoc @prefs-atom :profile profile-name))))
+        (swap! prefs-atom assoc :profile profile-name)
+        (info "build prefs: " @prefs-atom)))
     profile))
