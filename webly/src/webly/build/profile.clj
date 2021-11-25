@@ -100,6 +100,6 @@
         (info "webly profile-name: " profile-name " profile: " profile)
         (swap! config-atom merge {:profile profile})
         (swap! prefs-atom merge (get-build-prefs profile))
-        (swap! prefs-atom assoc :profile profile-name)
+        (swap! prefs-atom assoc :profile (str profile-name))
         (info "build prefs: " @prefs-atom)))
     profile))
