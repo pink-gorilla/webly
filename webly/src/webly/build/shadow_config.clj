@@ -4,6 +4,7 @@
    [taoensso.timbre :as timbre :refer [debug info]]
    [clojure.string :as str]
    [modular.config :refer [get-in-config]]
+   [modular.writer :refer [write-target]]
    [webly.build.prefs :refer [if-pref-fn prefs-atom]]))
 
 ;; build-options
@@ -53,13 +54,13 @@
         asset-path  (subs prefix 0 (dec (count prefix))) ;  "/r/" => "/r"
         ]
     (swap! prefs-atom assoc
-           :ns-cljs (main-config-dynamic ns-cljs)
              ;:prefix prefix 
            :asset-path asset-path
-           :modules modules
            :advanced? advanced?
              ;:title title
            :start-user-app start-user-app)
+    (write-target "build-config" {:ns-cljs (main-config-dynamic ns-cljs)
+                                  :modules modules})
     {:cache-root ".shadow-cljs"
      :verbose (if shadow-verbose true false)
      :lein false
