@@ -41,8 +41,11 @@
 
 ;; shadow config
 (defn shadow-config [profile]
-  (let [advanced? (get-in profile [:bundle :advanced])
+  (let [;; PROFILE *************************************************
+        advanced? (get-in profile [:bundle :advanced])
         shadow-verbose (get-in profile [:bundle :shadow-verbose])
+        static? (get-in profile [:bundle :static?])
+        ;; CONFIG **************************************************
         {:keys [ns-cljs ring-handler modules title start-user-app]
          :or {modules {}}} (get-in-config [:webly])
         ring-handler (symbol ring-handler)
@@ -50,14 +53,14 @@
         http-port (get-in-config [:shadow :http :port])
         http-host (get-in-config [:shadow :http :host])
         nrepl-port (get-in-config [:shadow :nrepl :port])
-        prefix (get-in-config [:prefix])
+        prefix (if static?
+                 (get-in-config [:prefix-static])
+                 (get-in-config [:prefix]))
         asset-path  (subs prefix 0 (dec (count prefix))) ;  "/r/" => "/r"
         ]
     (swap! prefs-atom assoc
-             ;:prefix prefix 
            :asset-path asset-path
            :advanced? advanced?
-             ;:title title
            :start-user-app start-user-app)
     (write-target "build-config" {:ns-cljs (main-config-dynamic ns-cljs)
                                   :modules modules})

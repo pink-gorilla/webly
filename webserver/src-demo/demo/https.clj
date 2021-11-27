@@ -12,7 +12,10 @@
 (config/set! :demo {:mode 3 :message "testing"})
 
 (def routes
-  ["/" {"config" {:get (wrap-api-handler config-handler)}
+  ["/" {"webly" (->FilesMaybe {:dir "../docs/"})
+        "webly/" (->FilesMaybe {:dir "../docs/index.html"})
+        ;"" (->FilesMaybe {:dir "../docs/"})
+        "config" {:get (wrap-api-handler config-handler)}
         #{"r" "public"} (->FilesMaybe {:dir "public"})
         true not-found-handler}])
 

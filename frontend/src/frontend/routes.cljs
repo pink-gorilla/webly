@@ -1,12 +1,32 @@
  (ns frontend.routes
    (:require
+    [clojure.string :as str]
     [taoensso.timbre :refer-macros [info infof error]]
     [reagent.core :as r]
     [bidi.bidi :as bidi]
     [pushy.core :as pushy]
-    [cemerick.url :as url]
-    [webly.app.static :refer [entry-path-adjust]]
-    ))
+    [cemerick.url :as url]))
+
+(defonce static-prefix-atom (atom ""))
+
+
+(defn set-prefix! [prefix]
+  (let [safe-prefix  (if (str/ends-with? prefix "/")
+                       (subs prefix 0 (dec (count prefix)))
+                       prefix)]
+    (reset! static-prefix-atom safe-prefix)))
+
+
+
+
+(defn entry-path-adjust [path]
+  (if (str/blank? @static-prefix-atom)
+    path
+    (if (str/ends-with? @static-prefix-atom "/")
+      (str/replace path @static-prefix-atom "/")
+      (str/replace path @static-prefix-atom ""))))
+
+
 
 ; bidi does not handle query params
 ; idea how to solve the problem: https://github.com/juxt/bidi/issues/51
@@ -92,8 +112,7 @@
 (defn on-url-change [path & options]
   (info "url did change to: " path) ; " options:" options  
   (let [options (or options {})
-        path (entry-path-adjust path)
-        ]
+        path (entry-path-adjust path)]
     (path->route @routes path options))) ; options
 
 ; see: 

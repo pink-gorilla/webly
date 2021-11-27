@@ -15,8 +15,6 @@
    {:href href} text])
 
 
-
-
 (defn block2 [name & children]
   (->  [:div.bg-blue-400.inline-block.w-full ; md:w-full
         {:class "lg:p-5"}

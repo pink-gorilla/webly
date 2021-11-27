@@ -34,12 +34,13 @@
     (assoc config :prefix prefix)))
 
 (defn write-static-config []
-  (let [filename "target/static/config.edn"
+  (let [filename "target/static/r/config.edn"
         config (-> @config-atom
                    (dissoc :oauth2 :webly/web-server :shadow) ; oauth2 settings are private
                    (config-prefix-adjust))]
     (ensure-directory "target")
     (ensure-directory "target/static")
+    (ensure-directory "target/static/r")
     (write filename config)))
 
 (defn prepare-static-page []

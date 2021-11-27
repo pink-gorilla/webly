@@ -11,19 +11,18 @@
    [modular.ws.events]
    [modular.ws.core]
    ; frontend
+   [frontend.config.events]
+   [frontend.config.subscription]
+   [frontend.routes.events]
+   [frontend.css.events]
+   [frontend.css.loading]
+   [frontend.css.subscriptions]
    [frontend.keybindings.events]
    [frontend.analytics.events]
    [frontend.settings.events]
    [frontend.settings.subscriptions]
-   [frontend.css.events]
-   [frontend.css.loading]
-   [frontend.css.subscriptions]
    [frontend.dialog]
-   [frontend.config.events]
-   [frontend.config.subscription]
-   [frontend.routes.events]
-   [frontend.config.core :refer [webly-mode-atom]]
-
+   [frontend.routes :refer [set-prefix!]]
    ; webly
    [webly.build.lazy]
    [webly.app.tenx.events]
@@ -31,7 +30,11 @@
    [webly.app.events]
    [webly.app.routes :refer [make-routes-frontend make-routes-backend]]
    [webly.app.status.page] ; side-effects
-   [webly.app.static :refer [make-static-adjustment]]))
+
+   [webly.build.prefs :refer [pref]]
+;   [webly.app.static :refer [make-static-adjustment]]
+;   [frontend.config.core :refer [webly-mode-atom]]
+   ))
 
 (defn mount-app []
   (reagent.dom/render [webly-app]
@@ -80,7 +83,7 @@
 
 (reg-event-db
  :webly/app-after-config-load
- (fn [db [_]]
+ (fn [db [_ static?]]
    (let [routes (get-in db [:config :webly :routes])
          start-user-app (get-in db [:config :webly :start-user-app])]
      (info "webly config after-load")
@@ -91,9 +94,9 @@
      (dispatch [:keybindings/init])
      (dispatch [:css/init])
      (dispatch [:settings/init])
-     (if (= :dynamic @webly-mode-atom)
-       (dispatch [:ws/init])
-       (warn "websockets are deactivated in static mode."))
+     (if static?
+       (warn "websockets are deactivated in static mode.")
+       (dispatch [:ws/init]))
      (dispatch [:webly/set-status :configured? true])
 
      (if start-user-app
@@ -104,18 +107,16 @@
      )
    db))
 
-(defn webly-run! [& args] ; & args is for legacy reasons
-  (info "webly-run! mode:" @webly-mode-atom)
-  (dispatch [:reframe10x-init])
-  (dispatch [:webly/status :route-init])
-  (dispatch [:webly/status :loading-config])
-  (dispatch [:config/load :webly/app-after-config-load])
-  (mount-app))
-
 (defn ^:export start [mode]
   (enable-console-print!)
   (println "webly starting mode:" mode)
-  (info "webly starting mode: " mode)
-  (if (= mode "static")
-    (make-static-adjustment))
-  (webly-run!))
+  (info "webly starting mode: " mode " prefs: " (pref))
+  (let [static? (= mode "static")
+        load-path (:asset-path (pref))]
+    (when static?
+      (set-prefix! load-path))
+    (dispatch [:reframe10x-init])
+    (dispatch [:webly/status :route-init])
+    (dispatch [:webly/status :loading-config])
+    (dispatch [:config/load :webly/app-after-config-load static? load-path])
+    (mount-app)))

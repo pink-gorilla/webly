@@ -6,6 +6,7 @@
    [shadow.cljs.devtools.cli]
    [shadow.cljs.devtools.api :as shadow]
    [shadow.cljs.build-report]
+   [webly.build.static :refer [prepare-static-page]]
    [webly.build.npm-writer :refer [ensure-package-json ensure-karma]]))
 
 ;https://github.com/thheller/shadow-cljs/blob/master/src/main/shadow/cljs/devtools/cli_actual.clj
@@ -34,10 +35,11 @@
 
 (defn shadow-build [profile shadow-config]
 
-  (let [{:keys [shadow-verbose cljs-build shadow-mode size-report npm-install]} (get profile :bundle)
+  (let [{:keys [shadow-verbose cljs-build shadow-mode size-report npm-install static?]} (get profile :bundle)
         shadow-opts {:verbose shadow-verbose}]
     (ensure-package-json)
     (ensure-karma)
+
     (when npm-install
       (info "webly - npm install ..")
       (install-npm shadow-config shadow-opts))
@@ -51,6 +53,10 @@
     (when size-report
       (info "creating size report ..")
       (generate-bundlesize-report))
+
+    (when static?
+      (info "creating static page ..")
+      (prepare-static-page))
 
      ; 
     ))

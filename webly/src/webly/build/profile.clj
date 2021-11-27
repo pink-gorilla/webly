@@ -12,6 +12,15 @@
                           :shadow-mode :release
                           :size-report false}}
 
+   :static  {:prefs   {:tenx false
+                       :static? true}
+             :bundle {:shadow-verbose false
+                      :cljs-build :webly
+                      :shadow-mode :release ; production build - no source maps
+                      :advanced true
+                      :size-report false
+                      :static? true}}
+
    :release     {:prefs   {:tenx false}
                  :bundle {:shadow-verbose false
                           :cljs-build :webly
@@ -23,7 +32,8 @@
                            :cljs-build :webly
                            :shadow-mode :release ; production build - no source maps
                            :advanced true
-                           :size-report true}}
+                           :size-report true
+                           :static? false}}
 
    :npm-install  {:prefs   {:tenx false}
                   :bundle {:shadow-verbose false

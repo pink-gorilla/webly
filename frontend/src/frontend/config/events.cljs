@@ -9,35 +9,31 @@
    [modular.log :refer [timbre-config!]]
    [modular.encoding.transit :refer [decode]]
    [modular.encoding.edn :refer [read-edn]]
-   [frontend.config.core :refer [webly-mode-atom entry-path-atom]]
    [frontend.notifications.core :refer [add-notification]]
-   [frontend.helper :refer [static-config-url]]
-   [webly.build.prefs :refer [pref]]
+   [frontend.routes :refer [static-prefix-atom]]
+  ; [webly.build.prefs :refer [pref]]
    )
- ;  (:import [bidi.bidi TaggedMatch])
+
   )
 
 ; load configuration
 
 (reg-event-fx
  :config/load
- (fn [{:keys [db]} [_ after-config-load]]
-   (infof "loading config dispatch-after-load: %s"  after-config-load)
-   (let [static? (= :static @webly-mode-atom)
-         uri (if static?
-               (str @entry-path-atom "/config.edn") ; (static-config-url)
-               "/api/config")
-         format (if static? 
+ (fn [{:keys [db]} [_ after-config-load static?]]
+   (let [format (if static? 
                   (ajax/text-response-format)
-                  (ajax/transit-response-format :json decode)
-                  )]
-     (info "loading config from url: " uri)
-     {:db   (assoc-in db [:build] (pref))
+                  (ajax/transit-response-format :json decode))
+         uri (if static?
+                     (str @static-prefix-atom "/config.edn") 
+                     "/api/config")]
+     (infof "loading config static?: %s from url: %s then dispatch: %s" static? uri after-config-load)
+     {;:db   (assoc-in db [:build] (pref))
       :http-xhrio {:method          :get
                    :uri             uri
                    :timeout         10000                     ;; optional see API docs
                    :response-format format ;; IMPORTANT!: You must provide this.
-                   :on-success      [:config/load-success after-config-load]
+                   :on-success      [:config/load-success static? after-config-load]
                    :on-failure      [:config/load-error]}})))
 
 
@@ -51,13 +47,15 @@
 
 (reg-event-fx
  :config/load-success
- (fn [cofx [_ after-config-load config]]
-   (let [static? (= :static @webly-mode-atom)
-         config (if static? 
+ (fn [cofx [_ static? after-config-load config]]
+   (let [config (if static? 
                    (read-edn config) ; (cljs.reader/read-string config)
                   config)
-         fx {:db          (assoc-in (:db cofx) [:config] config)
-             :dispatch [after-config-load]}]
+         ;config (assoc config :build (pref)
+         ;              :mode @webly-mode-atom
+         ;              :entry-path @entry-path-atom)
+         fx {:db (assoc-in (:db cofx) [:config] config)
+             :dispatch [after-config-load static?]}]
      (info "config load-success!")
      (timbre-config! config)
      (debug "config: " config)
