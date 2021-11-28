@@ -1,7 +1,7 @@
 (ns webly.build.shadow
   "call shadow-cljs functions"
   (:require
-   [taoensso.timbre :as timbre :refer [info warn]]
+   [taoensso.timbre :as timbre :refer [debug info warn]]
    [shadow.cljs.devtools.server.npm-deps :as npm-deps]
    [shadow.cljs.devtools.cli]
    [shadow.cljs.devtools.api :as shadow]
@@ -41,14 +41,17 @@
     (ensure-karma)
 
     (when npm-install
-      (info "webly - npm install ..")
+      (info "webly: npm install ..")
       (install-npm shadow-config shadow-opts))
 
     (case shadow-mode
-      :release (shadow/release cljs-build shadow-opts)  ; production build (onebundle file, no source-maps)
-      :compile (shadow/compile cljs-build shadow-opts) ; dev build (one bundle per ns, source-maps)
-      :watch (watch-cli cljs-build) ;(watch-api)  hot reloading
-      (warn "not building cljs bundle"))
+      :release (do (info "shadow build: release")
+                   (shadow/release cljs-build shadow-opts))  ; production build (onebundle file, no source-maps)
+      :compile (do (info "shadow build: compile")
+                   (shadow/compile cljs-build shadow-opts)) ; dev build (one bundle per ns, source-maps)
+      :watch (do (info "shadow build: watch")
+                 (watch-cli cljs-build)) ;(watch-api)  hot reloading
+      (debug "not building cljs bundle"))
 
     (when size-report
       (info "creating size report ..")
