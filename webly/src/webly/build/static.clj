@@ -30,8 +30,11 @@
   (write-resources-to "target/res" "public"))
 
 (defn config-prefix-adjust [config]
-  (let [prefix (:prefix-static config)]
-    (assoc config :prefix prefix)))
+  (let [prefix (:prefix config)
+        static-main-path (:static-main-path config)
+        asset-path (str static-main-path prefix)]
+    (info "static asset path: " asset-path)
+    (assoc config :prefix asset-path)))
 
 (defn write-static-config []
   (let [filename "target/static/r/config.edn"
@@ -44,6 +47,8 @@
     (write filename config)))
 
 (defn prepare-static-page []
+  ; 1. adjust config & write
+  (write-static-config)
+
   (generate-static-html)
-  (save-resources)
-  (write-static-config))
+  (save-resources))

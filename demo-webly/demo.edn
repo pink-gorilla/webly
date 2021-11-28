@@ -17,8 +17,8 @@
                                      false []} }
                  :current {:emoji    false}}}
 
- :prefix-static "/webly/r/" ; for static-page build (github pages)
- ;:prefix-static "/r/" ; for static-page build (github pages)
+ 
+ :static-main-path "/webly" ; for static-page build (github pages)
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 

@@ -53,12 +53,15 @@
         http-port (get-in-config [:shadow :http :port])
         http-host (get-in-config [:shadow :http :host])
         nrepl-port (get-in-config [:shadow :nrepl :port])
-        prefix (if static?
-                 (get-in-config [:prefix-static])
-                 (get-in-config [:prefix]))
+        main-path (if static?
+                    (get-in-config [:static-main-path])
+                    "")
+        prefix (str main-path
+                    (get-in-config [:prefix]))
         asset-path  (subs prefix 0 (dec (count prefix))) ;  "/r/" => "/r"
         ]
     (swap! prefs-atom assoc
+           :main-path main-path
            :asset-path asset-path
            :advanced? advanced?
            :start-user-app start-user-app)

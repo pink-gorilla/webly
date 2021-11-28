@@ -1,3 +1,3 @@
 (function(){
-'use strict';$APP.ud("hello");$APP.td.gh();
+'use strict';$APP.vd("hello");$APP.ud.gh();
 }).call(this);

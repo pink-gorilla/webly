@@ -41,7 +41,7 @@
          }
 
  :prefix "/r/" ; resource route prefix ; most web-apps can leave this at default values
- :prefix-static "/webly/r/"
+
 
  :webly/web-server {:port 8080
                     :host "0.0.0.0"

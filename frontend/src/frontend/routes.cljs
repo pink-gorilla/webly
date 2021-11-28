@@ -7,24 +7,36 @@
     [pushy.core :as pushy]
     [cemerick.url :as url]))
 
-(defonce static-prefix-atom (atom ""))
+(defonce static-main-path-atom (atom ""))
 
 
-(defn set-prefix! [prefix]
-  (let [safe-prefix  (if (str/ends-with? prefix "/")
-                       (subs prefix 0 (dec (count prefix)))
-                       prefix)]
-    (reset! static-prefix-atom safe-prefix)))
+(defn set-main-path! [path]
+  (let [safe-path (if (str/ends-with? path "/")
+                       (subs path 0 (dec (count path)))
+                       path)]
+    (info "set-main-path!" safe-path)
+    (reset! static-main-path-atom safe-path)))
 
 
 
 
 (defn entry-path-adjust [path]
-  (if (str/blank? @static-prefix-atom)
+  (if (str/blank? @static-main-path-atom)
     path
-    (if (str/ends-with? @static-prefix-atom "/")
-      (str/replace path @static-prefix-atom "/")
-      (str/replace path @static-prefix-atom ""))))
+    (if (str/ends-with? @static-main-path-atom "/")
+      (str/replace path @static-main-path-atom "/")
+      (str/replace path @static-main-path-atom ""))))
+
+
+
+(defn html-static-adjust [path]
+  (if (str/ends-with? path "/index.html")
+    (str/replace path "/index.html" "/")
+    path
+    ))
+    
+
+
 
 
 
@@ -112,7 +124,10 @@
 (defn on-url-change [path & options]
   (info "url did change to: " path) ; " options:" options  
   (let [options (or options {})
-        path (entry-path-adjust path)]
+        path (entry-path-adjust path)
+        path (html-static-adjust path)
+        ]
+    (info "adjusted path: " path)
     (path->route @routes path options))) ; options
 
 ; see: 

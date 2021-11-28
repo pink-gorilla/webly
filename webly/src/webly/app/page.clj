@@ -101,8 +101,11 @@
                         :onload "webly.app.app.start ('dynamic');"}]]])))
 
 (defn config-prefix-adjust [config]
-  (let [prefix (:prefix-static config)]
-    (assoc config :prefix prefix)))
+  (let [prefix (:prefix config)
+        static-main-path (:static-main-path config)
+        asset-path (str static-main-path prefix)]
+    (info "static asset path: " asset-path)
+    (assoc config :prefix asset-path)))
 
 (defn app-page-static [csrf-token]
   (let [config (config-prefix-adjust @config-atom)]

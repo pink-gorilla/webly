@@ -10,7 +10,7 @@
    [modular.encoding.transit :refer [decode]]
    [modular.encoding.edn :refer [read-edn]]
    [frontend.notifications.core :refer [add-notification]]
-   [frontend.routes :refer [static-prefix-atom]]
+   [frontend.routes :refer [static-main-path-atom]]
   ; [webly.build.prefs :refer [pref]]
    )
 
@@ -25,7 +25,7 @@
                   (ajax/text-response-format)
                   (ajax/transit-response-format :json decode))
          uri (if static?
-                     (str @static-prefix-atom "/config.edn") 
+               (str @static-main-path-atom "/r/config.edn")
                      "/api/config")]
      (infof "loading config static?: %s from url: %s then dispatch: %s" static? uri after-config-load)
      {;:db   (assoc-in db [:build] (pref))

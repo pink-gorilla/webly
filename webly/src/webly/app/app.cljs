@@ -22,7 +22,7 @@
    [frontend.settings.events]
    [frontend.settings.subscriptions]
    [frontend.dialog]
-   [frontend.routes :refer [set-prefix!]]
+   [frontend.routes :refer [set-main-path!]]
    ; webly
    [webly.build.lazy]
    [webly.app.tenx.events]
@@ -112,11 +112,12 @@
   (println "webly starting mode:" mode)
   (info "webly starting mode: " mode " prefs: " (pref))
   (let [static? (= mode "static")
-        load-path (:asset-path (pref))]
+        main-path (:main-path (pref))
+        asset-path (:asset-path (pref))]
     (when static?
-      (set-prefix! load-path))
+      (set-main-path! main-path))
     (dispatch [:reframe10x-init])
     (dispatch [:webly/status :route-init])
     (dispatch [:webly/status :loading-config])
-    (dispatch [:config/load :webly/app-after-config-load static? load-path])
+    (dispatch [:config/load :webly/app-after-config-load static? main-path])
     (mount-app)))

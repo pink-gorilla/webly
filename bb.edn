@@ -93,7 +93,7 @@
                            :task (webly/run "demo-webly" "demo-webly" "release-adv")}
          
          demo-compile-static {:doc "compile webly demo javascript (advanced compilation)"
-                  :task (webly/run "demo-webly" "demo-webly" "static ")}
+                  :task (webly/run "demo-webly" "demo-webly" "static")}
 
          demo-jetty {:doc "serve compiled webly demo javascript with jetty"
                      :task (webly/run "demo-webly" "demo-webly" "jetty")}
