@@ -1,5 +1,6 @@
 (ns webly.app.status.page
   (:require
+   [taoensso.timbre :refer-macros [info infof error]]
    [re-frame.core :refer [subscribe]]
    [modular.config :refer-macros [get-in-config-cljs]]
    [webly.app.status.subscriptions] ; side-effects
@@ -10,10 +11,9 @@
   (let [status (subscribe [:webly/status])
         loading-image-url (get-in-config-cljs [:webly :loading-image-url])
         spinner (get-in-config-cljs [:webly :spinner])
-        prefix (get-in-config-cljs [:prefix])
-
-        ;background-image "/r/webly/loading-lemur.jpg"
-        ]
+        prefix (get-in-config-cljs [:prefix])]
+    (info "compile time config " {:prefix prefix :webly {:spinner spinner
+                                                         :loading-image-url loading-image-url}})
     (fn []
       [:div
        {:style {:background-image (str "url(" prefix loading-image-url ")") ; no-repeat center center fixed"

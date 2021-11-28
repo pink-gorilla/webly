@@ -19,3 +19,7 @@
          {:keys [state css]} status]
      (and (= state :running)
           (= css :loaded)))))
+
+;{:css :loaded
+; :state :configuring-app
+; :configured? true
