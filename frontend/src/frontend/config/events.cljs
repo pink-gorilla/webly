@@ -12,21 +12,19 @@
    [frontend.notifications.core :refer [add-notification]]
    [frontend.routes :refer [static-main-path-atom]]
   ; [webly.build.prefs :refer [pref]]
-   )
-
-  )
+   ))
 
 ; load configuration
 
 (reg-event-fx
  :config/load
  (fn [{:keys [db]} [_ after-config-load static?]]
-   (let [format (if static? 
+   (let [format (if static?
                   (ajax/text-response-format)
                   (ajax/transit-response-format :json decode))
          uri (if static?
                (str @static-main-path-atom "/r/config.edn")
-                     "/api/config")]
+               "/api/config")]
      (infof "loading config static?: %s from url: %s then dispatch: %s" static? uri after-config-load)
      {;:db   (assoc-in db [:build] (pref))
       :http-xhrio {:method          :get
@@ -48,12 +46,15 @@
 (reg-event-fx
  :config/load-success
  (fn [cofx [_ static? after-config-load config]]
-   (let [config (if static? 
-                   (read-edn config) ; (cljs.reader/read-string config)
+   (let [config (if static?
+                  (read-edn config) ; (cljs.reader/read-string config)
                   config)
-         ;config (assoc config :build (pref)
+         config (assoc config
+                       :static? static?
+                       ;:build (pref)
          ;              :mode @webly-mode-atom
-         ;              :entry-path @entry-path-atom)
+         ;              :entry-path @entry-path-atom
+                       )
          fx {:db (assoc-in (:db cofx) [:config] config)
              :dispatch [after-config-load static?]}]
      (info "config load-success!")
