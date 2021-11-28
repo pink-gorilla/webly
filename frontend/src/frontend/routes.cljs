@@ -178,3 +178,11 @@
       (do (reset-current! "bidi/goto!" h)
           (pushy/set-token! history url)))))
 
+
+; here for testing of github pages
+(defn ^:export 
+  G [handler-str]
+  (info "handler-str: " handler-str)
+  (let [handler-kw (keyword handler-str)]
+    (info "handler-kw: " handler-kw)
+    (goto! handler-kw)))
