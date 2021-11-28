@@ -13,7 +13,7 @@
          (info "ga init id: " id " debug?: " debug?)
          ;(ga-init id debug?)
          )
-       (warn "google analytics disabled.")))
+       (debug "google analytics disabled.")))
    db))
 
 (reg-event-db
