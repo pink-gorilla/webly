@@ -1,3 +1,3 @@
 (function(){
-'use strict';var y5;$APP.HR=function(a,b){return new $APP.T(null,3,5,$APP.U,[$APP.Yx,"addition result: ",a+b],null)};y5=function(){var a=$APP.py(0);return function(b,c){$APP.po.g(a,$APP.di);return new $APP.T(null,3,5,$APP.U,[$APP.Yx,"addition result: ",b+c+$APP.q(a)],null)}};$APP.LR=function(a,b){return new $APP.T(null,3,5,$APP.U,[y5,a,b],null)};$APP.vd("snippets");$APP.ud.gh();
+'use strict';var A5;$APP.LR=function(a,b){return new $APP.T(null,3,5,$APP.U,[$APP.Yx,"addition result: ",a+b],null)};A5=function(){var a=$APP.py(0);return function(b,c){$APP.po.g(a,$APP.di);return new $APP.T(null,3,5,$APP.U,[$APP.Yx,"addition result: ",b+c+$APP.q(a)],null)}};$APP.PR=function(a,b){return new $APP.T(null,3,5,$APP.U,[A5,a,b],null)};$APP.vd("snippets");$APP.ud.gh();
 }).call(this);

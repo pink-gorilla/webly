@@ -23,8 +23,8 @@
                     (merge settings-default store)
                     settings-default)]
      (if use-localstorage
-       (warn ":db :settings can be changed by user via localstorage")
-       (warn "using static settings supplied via config"))
+       (info ":db :settings can be changed by user via localstorage")
+       (info "using static settings supplied via config"))
      {:db (assoc db :settings settings)})))
 
 ;; Settings Change

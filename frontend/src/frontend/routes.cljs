@@ -12,29 +12,26 @@
 
 (defn set-main-path! [path]
   (let [safe-path (if (str/ends-with? path "/")
-                       (subs path 0 (dec (count path)))
-                       path)]
+                    (subs path 0 (dec (count path)))
+                    path)]
     (info "set-main-path!" safe-path)
     (reset! static-main-path-atom safe-path)))
 
 
-
-
 (defn entry-path-adjust [path]
-  (if (str/blank? @static-main-path-atom)
-    path
-    (if (str/ends-with? @static-main-path-atom "/")
-      (str/replace path @static-main-path-atom "/")
-      (str/replace path @static-main-path-atom ""))))
+  (let [path-adjusted (if (str/blank? @static-main-path-atom)
+                        path
+                        (str/replace path @static-main-path-atom ""))]
+    (info "entry-path-adjust path: " path " adjusted: " path-adjusted)
+    path-adjusted))
 
 
 
 (defn html-static-adjust [path]
   (if (str/ends-with? path "/index.html")
     (str/replace path "/index.html" "/")
-    path
-    ))
-    
+    path))
+
 
 
 
@@ -125,8 +122,7 @@
   (info "url did change to: " path) ; " options:" options  
   (let [options (or options {})
         path (entry-path-adjust path)
-        path (html-static-adjust path)
-        ]
+        path (html-static-adjust path)]
     (info "adjusted path: " path)
     (path->route @routes path options))) ; options
 
@@ -180,7 +176,7 @@
 
 
 ; here for testing of github pages
-(defn ^:export 
+(defn ^:export
   G [handler-str]
   (info "handler-str: " handler-str)
   (let [handler-kw (keyword handler-str)]
