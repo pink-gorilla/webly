@@ -17,6 +17,7 @@
          cljfmt-fix (webly/clojure "webly" "-M:cljfmt" "fix" "src" "../oauth2" "../webserver")
          deps-tree (webly/clojure "webly" "-X:deps" "tree")
          outdated (webly/clojure "webly" "-M:outdated")
+         
 
          ; build
          clean (do (fs/delete-tree "docs")

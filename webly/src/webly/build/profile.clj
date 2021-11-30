@@ -32,8 +32,7 @@
                            :cljs-build :webly
                            :shadow-mode :release ; production build - no source maps
                            :advanced true
-                           :size-report true
-                           :static? false}}
+                           :size-report true}}
 
    :npm-install  {:prefs   {:tenx false}
                   :bundle {:shadow-verbose false

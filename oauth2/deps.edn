@@ -13,8 +13,7 @@
   buddy/buddy-sign {:mvn/version "3.4.1"}
   buddy/buddy-auth {:mvn/version "3.0.1"}
   ring-oauth2/ring-oauth2 {:mvn/version "0.1.5"}
-
-  org.pinkgorilla/modular {:mvn/version "0.0.18"} ; persistence
+  
   modular/frontend {:local/root "../frontend" :deps/manifest :deps}}
 
 

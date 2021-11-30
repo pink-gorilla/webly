@@ -1,33 +1,29 @@
 {:paths ["src"]
  :deps {org.clojure/clojure    {:mvn/version "1.10.3"}
-  ; encoding
-        luminus-transit/luminus-transit {:mvn/version  "0.1.2"}
         org.clojure/data.json {:mvn/version "2.4.0"} ; https://github.com/thheller/shadow-cljs/issues/872
-  ; ring middleware
+        ; ring middleware
         bidi/bidi {:mvn/version "2.1.6"}
         ring/ring-core {:mvn/version "1.9.4"}
         ring/ring-devel {:mvn/version "1.9.4"} ; reload middleware - same version as rig/core
         bk/ring-gzip {:mvn/version "0.3.0"} ; from oz
-       
         metosin/muuntaja {:mvn/version "0.6.8"} ; 30x faster than ring-middleware-format
         ring-cors/ring-cors {:mvn/version "0.1.13"}
         ring/ring-defaults {:mvn/version "0.3.3"
                             :exclusions [javax.servlet/servlet-api]}
         prone/prone {:mvn/version "2021-04-23"} ; exception middleware
         ring/ring-json {:mvn/version "0.5.1"}
-  ; https
-  ;org.shredzone.acme4j/acme4j-client {:mvn/version "2.7"}
-  ;org.shredzone.acme4j/acme4j-utils {:mvn/version "2.7"}
-  ;org.bouncycastle/bcprov-jdk15on {:mvn/version "1.69"}
-  ;org.bouncycastle/bcpkix-fips {:mvn/version "1.0.3"}
-  ;simplevalue/letsencrypt {:git/url "https://github.com/SimpleValue/sv.letsencrypt.git"
-  ;                         :sha "8b1a85846acaaa37a58b054f2372d8fde0663b75"}
-  ; webserver
+        ; https
+        ;org.shredzone.acme4j/acme4j-client {:mvn/version "2.7"}
+        ;org.shredzone.acme4j/acme4j-utils {:mvn/version "2.7"}
+        ;org.bouncycastle/bcprov-jdk15on {:mvn/version "1.69"}
+        ;org.bouncycastle/bcpkix-fips {:mvn/version "1.0.3"}
+        ;simplevalue/letsencrypt {:git/url "https://github.com/SimpleValue/sv.letsencrypt.git"
+        ;                         :sha "8b1a85846acaaa37a58b054f2372d8fde0663b75"}
+        ; webserver
         info.sunng/ring-jetty9-adapter {:mvn/version  "0.15.2"} ; uses jetty 10.0.2, vlast version with java 9 : 0.14.0
-  ; modular
-        org.pinkgorilla/modular {:mvn/version "0.0.18"} ; persistence
+        ; modular
+        org.pinkgorilla/modular {:mvn/version "0.0.20"} ; persistence
         }
-
 
 
  :aliases
