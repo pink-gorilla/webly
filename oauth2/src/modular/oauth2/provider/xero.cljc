@@ -1,4 +1,6 @@
-(ns modular.oauth2.provider.xero)
+(ns modular.oauth2.provider.xero
+  (:require
+   [modular.oauth2.protocol :refer [provider-config]]))
 
 (defn parse-authorize-response [{:keys [query]}] ;anchor
   {:scope (:scope query)
@@ -30,6 +32,9 @@
    ; userinfo
    :user "https://api.xero.com/api.xro/2.0/Organisation"
    :user-parse user-parse})
+
+(defmethod provider-config :xero [_]
+  config)
 
 ;; Xero example for authroize request
 

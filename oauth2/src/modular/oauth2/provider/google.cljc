@@ -1,4 +1,6 @@
-(ns modular.oauth2.provider.google)
+(ns modular.oauth2.provider.google
+  (:require
+   [modular.oauth2.protocol :refer [provider-config]]))
 
 #_(defn parse-authorize-token-response [{:keys [anchor]}]
     ; #access_token=ya29.a0ARrdaM9mY4gaGPSU_5pMhS7x3wsgrPhDWhGy0fQVIwlsz7soPBlLVnAAEYQWl9SudGnfmapQ_2dq1oa6jS-SlJlR59cniSm1TAFkrK2KEqmBnvJHNI-mux6GDFtuVh-st5eysR97Z3xHSfjkxhsf9QknOZLv
@@ -55,6 +57,9 @@
 ; userinfo
    :user "https://www.googleapis.com/oauth2/v2/userinfo"
    :user-parse user-parse})
+
+(defmethod provider-config :google [_]
+  config)
 
 ; Google refresh token -> access token. 
 ;refresh_token: <REFRESH_TOKEN_FOR_THE_USER>

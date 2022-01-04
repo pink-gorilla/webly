@@ -1,4 +1,6 @@
-(ns modular.oauth2.provider.github)
+(ns modular.oauth2.provider.github
+  (:require
+   [modular.oauth2.protocol :refer [provider-config]]))
 
 ; :query {code 27aefeb35395d63c34}}
 (defn parse-authorize-response [{:keys [query]}]
@@ -38,4 +40,9 @@
    ; userinfo
    :user "https://api.github.com/user"
    :user-parse user-parse})
+
+(defmethod provider-config :github [_]
+  config)
+
+
 

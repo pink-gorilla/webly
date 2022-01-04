@@ -5,7 +5,8 @@
    [re-frame.core :as rf]
    [modular.oauth2.authorize.redirect :refer [register-callback]]
    [modular.oauth2.store] ; side effects
-   [modular.oauth2.provider :refer [providers url-authorize]]))
+   [modular.oauth2.protocol :refer [provider-config]]
+   [modular.oauth2.provider :refer [url-authorize]]))
 
 ;; redirect
 
@@ -18,7 +19,7 @@
  :oauth2/redirect
  (fn [{:keys [db]} [_ data]]
    (let [p (:provider data)
-         provider (get providers p)
+         provider (provider-config p)
          parse-authorize-response (:parse-authorize-response provider)
          auth-result (parse-authorize-response data)]
      (if (:code auth-result)

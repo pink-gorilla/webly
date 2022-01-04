@@ -5,7 +5,8 @@
    [cemerick.url :refer [url url-encode]]
    [modular.oauth2.provider.google :as google]
    [modular.oauth2.provider.github :as github]
-   [modular.oauth2.provider.xero :as xero]))
+   [modular.oauth2.provider.xero :as xero]
+   [modular.oauth2.protocol :refer [provider-config known-providers]]))
 
 ;; our page strucutre for different providers
 
@@ -17,13 +18,10 @@
 
 ;; PROVIDER LIST
 
-(def providers
-  {:github github/config
-   :google google/config
-   :xero xero/config})
-
 (defn get-provider-config [p]
-  (or (p providers) {}))
+  (let [c (provider-config p)]
+    (info "provider " p "config: " c)
+    c))
 
 ;; RING CONFIG
 
@@ -33,7 +31,7 @@
     (merge code app)))
 
 (defn ring-oauth2-config [config]
-  (let [provider-list (keys providers)
+  (let [provider-list (known-providers)
         list (map (fn [p] {p (full-provider-config config p)}) provider-list)]
     (apply merge list)))
 

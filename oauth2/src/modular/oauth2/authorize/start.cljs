@@ -5,7 +5,7 @@
    [re-frame.core :refer [reg-event-fx reg-event-db dispatch]]
    [modular.oauth2.authorize.redirect :refer [register-callback]]
    [modular.oauth2.store] ; side effects
-   [modular.oauth2.provider :refer [providers url-authorize]]))
+   [modular.oauth2.provider :refer [url-authorize]]))
 
 ;; LOGIN
 
