@@ -63,7 +63,7 @@
 
   ; demo
   ; unit tests use demo profile for resource tests
-  ; so the demo serves two puroses
+  ; so the demo serves two purposes
   ; 1. ilustrate links in web-app
   ; 2. run unit tests 
 

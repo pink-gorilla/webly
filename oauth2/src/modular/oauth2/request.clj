@@ -1,6 +1,6 @@
 (ns modular.oauth2.request
   (:require
-   [taoensso.timbre :refer [info warn error]]
+   [taoensso.timbre :refer [debug info warn error]]
    [clojure.data.json :as json]
    [cemerick.url :refer [url url-encode]]
    [clj-http.client :as http]
@@ -30,7 +30,8 @@
   ([provider_endpoint query-params]
    (info "get-request " provider_endpoint query-params)
    (let [{:keys [url header]} (get-endpoint provider_endpoint)]
-     (info "http/get " url)
+     (debug "http/get " url)
+     (debug "headers: " (pr-str header))
      (try
        (-> (http/get url {:headers header
                           :accept :json

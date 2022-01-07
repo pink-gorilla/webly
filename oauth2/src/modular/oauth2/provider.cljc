@@ -1,7 +1,7 @@
 (ns modular.oauth2.provider
   (:require
    [clojure.string]
-   [taoensso.timbre :as timbre :refer [info infof error]]
+   [taoensso.timbre :as timbre :refer [debug info infof error]]
    [cemerick.url :refer [url url-encode]]
    [modular.oauth2.provider.google :as google]
    [modular.oauth2.provider.github :as github]
@@ -20,7 +20,7 @@
 
 (defn get-provider-config [p]
   (let [c (provider-config p)]
-    (info "provider " p "config: " c)
+    (debug "provider " p "config: " c)
     c))
 
 ;; RING CONFIG

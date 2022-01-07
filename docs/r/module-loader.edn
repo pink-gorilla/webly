@@ -1,1 +1,0 @@
-{:module-uris {:webly [], :snippets ["/webly/r/snippets.js"], :hello ["/webly/r/hello.js"]}, :module-infos {:webly nil, :snippets #{:webly}, :hello #{:webly}}}

@@ -65,7 +65,8 @@
 ;refresh_token: <REFRESH_TOKEN_FOR_THE_USER>
 ;grant_type: refresh_token
 
-;In order to get an access token with a refresh token, you just need to ask for the offline access
+;In order to get an access token with a refresh token, you just need to ask for the offline 
+; access
 ; type (for example in PHP: $client->setAccessType("offline");) and you will get it.
 ; Just keep in mind you will get the access token with the refresh token only in 
 ; the first authorization, so make sure to save that access token in the first time

@@ -30,3 +30,5 @@ certs
 target/
 ci/deps.edn
 demo-webly/karma.conf.js
+\#*\#
+creds-wien.edn

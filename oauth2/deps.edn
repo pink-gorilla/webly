@@ -10,10 +10,20 @@
   day8.re-frame/http-fx {:mvn/version "0.2.3"}  ; reframe based http requests
   ;simplevalue/letsencrypt {:git/url "https://github.com/SimpleValue/sv.letsencrypt.git"
   ;                         :sha "8b1a85846acaaa37a58b054f2372d8fde0663b75"}
+  
+  buddy/buddy-core {:mvn/version "1.10.1"}
   buddy/buddy-sign {:mvn/version "3.4.1"}
   buddy/buddy-auth {:mvn/version "3.0.1"}
+
+  no.nsd/clj-jwt {:git/url "https://gitlab.nsd.no/clojure/clj-jwt.git", :git/sha "bc23acb3c7cbf0d2def2d395c3e3d9c405be28d5"
+                  ;:mvn/version "0.4.5"
+                  } ; https://gitlab.nsd.no/clojure/clj-jwt - verify signed oidc token with public keys
+
+  clj-jwt/clj-jwt {:mvn/version "0.1.1"}; https://github.com/liquidz/clj-jwt
+
   ring-oauth2/ring-oauth2 {:mvn/version "0.1.5"}
-  
+
+  org.pinkgorilla/modular {:mvn/version "0.0.20"}
   modular/frontend {:local/root "../frontend" :deps/manifest :deps}}
 
 
@@ -23,9 +33,10 @@
              :main-opts ["-m" "antq.core"]}
 
   :nrepl {:extra-deps {nrepl/nrepl  {:mvn/version "0.8.3"}
-                       cider/cider-nrepl {:mvn/version,"0.27.2"}}
-
-
+                       cider/cider-nrepl {:mvn/version,"0.27.2"}
+                       ;cider/nrepl {:mvn/version "0.3.0"}
+                       
+                       }
           :main-opts  ["-m" "nrepl.cmdline"]}
   :test {:extra-paths ["test"]
          :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
