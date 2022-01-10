@@ -9,6 +9,15 @@
    [modular.oauth2.provider :refer [get-provider-config get-provider-auth-header]]
    [modular.oauth2.store :refer [load-token]]))
 
+(defn get-auth-header
+  [provider]
+  (let [config (get-provider-config provider)
+        token (load-token provider)
+        access-token (:access-token token)
+        header (get-provider-auth-header provider access-token)]
+     header))
+
+
 (defn get-endpoint
   [provider_endpoint]
   (let [provider (-> provider_endpoint namespace keyword)
@@ -65,6 +74,72 @@
                         :query-params query-params})
          (:body)
          (cheshire.core/parse-string true)))))
+
+
+
+(defn post-request
+  ([provider url body-params]
+   (info "post-request " provider url body-params)
+   (let [header(get-auth-header provider)]
+     (debug "http/get " url)
+     (info "htttp/post url: " url " header: " (pr-str header))
+     (try
+       (-> (http/post url {:headers header
+                          :accept :json
+                          :body (cheshire.core/generate-string body-params)
+                          :content-type :json
+                          })
+           (:body)
+           (cheshire.core/parse-string true))
+       (catch clojure.lang.ExceptionInfo e
+         (error "post-request " url " error: " (.getMessage e))
+         ;(warn (.getData e))
+        ; (info (prn e))
+         (when-let [body (-> e .getData :body)]
+           (warn "body: " body)
+           (let [b (cheshire.core/parse-string body true)]
+             (warn "body: " b)
+             b)))
+       (catch Exception e
+         (error "post-request " provider " exception")
+         ;(error e)
+         (error "keys of error: " (keys e))
+         ;;(error (:body e))
+         )))))
+
+
+(defn put-request
+  ([provider url body-params]
+   (info "put-request " provider url body-params)
+   (let [header(get-auth-header provider)]
+     (debug "http/put " url)
+     (info "htttp/put url: " url " header: " (pr-str header))
+     (try
+       (-> (http/put url {:headers header
+                          :accept :json
+                          :body (cheshire.core/generate-string body-params)
+                          :content-type :json
+                          })
+           (:body)
+           (cheshire.core/parse-string true))
+       (catch clojure.lang.ExceptionInfo e
+         (error "put-request " url " error: " (.getMessage e))
+         ;(warn (.getData e))
+        ; (info (prn e))
+         (when-let [body (-> e .getData :body)]
+           (warn "body: " body)
+           (let [b (cheshire.core/parse-string body true)]
+             (warn "body: " b)
+             b)))
+       (catch Exception e
+         (error "put-request " provider " exception")
+         ;(error e)
+         (error "keys of error: " (keys e))
+         ;;(error (:body e))
+         )))))
+
+
+
 
 (comment
 

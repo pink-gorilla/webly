@@ -1,5 +1,6 @@
-(ns oauth2.local.pass
+(ns modular.oauth2.local.pass
   (:require
+   [clojure.set :refer [superset?]]
    [buddy.core.codecs :as codecs]
    [buddy.core.hash :as hash]
    [buddy.sign.jwt :as jwt]
@@ -17,16 +18,29 @@
   )
 
 (def users
-  {:demo {:roles [:admin :logistic]
+  {:demo {:roles #{:admin :logistic}]
           :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
           :email ["hoertlehner@gmail.com"]}})
+
+(defn get-user-roles [user]
+ (let [user-kw (keyword user)
+       user-data (user-kw users)]
+  (if user-data
+    (:roles user-data)
+    #{})))
+
+(defn authorized? [user required-roles]
+  (superset? (get-user-roles user) required-roles))
+
 
 (def secret "regenschirm13")
 
 (defn create-claim [user-name]
   (let [claim  {:user user-name}
         token (jwt/sign claim secret)]
-    token))
+  {:user user-name
+  :token token
+  }))
 
 (defn get-token [user-name user-password]
   (let [user-kw (keyword user-name)

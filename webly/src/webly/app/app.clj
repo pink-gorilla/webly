@@ -6,6 +6,7 @@
    [modular.webserver.middleware.dev :refer [wrap-dev]]
    [modular.oauth2.handler] ; side-effects
    [modular.oauth2.middleware :refer [print-oauth2-config]]
+   [modular.oauth2] ; side-effects
    [webly.build.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]
    [webly.web.server :refer [run-server]]

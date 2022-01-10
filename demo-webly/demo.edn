@@ -45,8 +45,11 @@
                 {:kb "alt-g 2" :handler [:bidi/goto :demo/party :location "Vienna"] :desc "goto party vienna"}
                 {:kb "alt-g 3" :handler [:bidi/goto :demo/help] :desc "goto help"}
                 {:kb "alt-g 4" :handler [:bidi/goto :demo/job] :desc "goto job"}
-                {:kb "alt-g 5" :handler [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}] :desc "goto party bali"}]}
-
-
-
-
+                {:kb "alt-g 5" :handler [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}] :desc "goto party bali"}
+                {:kb "alt-y l" :handler [:login/dialog ] :desc "login"}
+                {:kb "ctrl-y l" :handler [:login/dialog ] :desc "login"}
+                {:kb "win-y l" :handler [:login/dialog ] :desc "login"}
+                ]
+                
+;                
+}

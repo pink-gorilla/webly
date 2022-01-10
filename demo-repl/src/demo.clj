@@ -13,7 +13,9 @@
    [modular.config :as config]
    [modular.oauth2.store :refer [load-token]]
    [modular.oauth2.refresh :refer [refresh-auth-token]]
-   [modular.oauth2.request :refer [get-endpoint get-request get-request-xero]])
+   [modular.oauth2.request :refer [get-endpoint get-request get-request-xero post-request]]
+   [gsheet]
+   )
   (:import
    [com.auth0.jwt JWT]))
 
@@ -33,16 +35,20 @@
        (map #(select-keys % [:name :forks_count :watchers_count :open_issues_count]))
        (print-table)))
 
+
+
+
 (defn google []
   (refresh-auth-token :google)
   (info "google/userinfo: " (get-request :google/userinfo))
-  (->> (get-request :google/drive-files-list)
+  #_(->> (get-request :google/drive-files-list)
        :files
        (map #(dissoc % :kind :id :mimeType))
        (print-table))
 
  ; (get-request :google/search {:q "clojure" :num 10})
-
+  (gsheet/modify-cells)
+  
 
   ;
   )

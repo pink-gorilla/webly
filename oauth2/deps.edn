@@ -8,6 +8,9 @@
   com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
   cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
   day8.re-frame/http-fx {:mvn/version "0.2.3"}  ; reframe based http requests
+
+  nano-id/nano-id {:mvn/version "1.0.0"} ; nano id
+
   ;simplevalue/letsencrypt {:git/url "https://github.com/SimpleValue/sv.letsencrypt.git"
   ;                         :sha "8b1a85846acaaa37a58b054f2372d8fde0663b75"}
   
@@ -24,7 +27,9 @@
   ring-oauth2/ring-oauth2 {:mvn/version "0.1.5"}
 
   org.pinkgorilla/modular {:mvn/version "0.0.20"}
-  modular/frontend {:local/root "../frontend" :deps/manifest :deps}}
+  modular/frontend {:local/root "../frontend" :deps/manifest :deps}
+  modular/websocket {:local/root "../websocket" :deps/manifest :deps}
+  }
 
 
  :aliases

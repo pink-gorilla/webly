@@ -4,9 +4,7 @@
      [init]
      [modular.oauth2.store :refer [load-token]]
      [modular.oauth2.info :refer [get-header get-claims get-signature get-encoded-data]]
-  )
-)
-
+  ))
   
 
 (defn show-keys [p]
@@ -31,7 +29,7 @@
 
   ;; xero ************************************************************
 
-  (show-header :xero :access-token)
+  ;(show-header :xero :access-token)
   #_{:alg "RS256"
      :kid "1CAF8E66772D6DC028D6726FD0261581570EFC19"
      :typ "JWT"
@@ -53,17 +51,25 @@
   
   ;; tenant id is not matching ...
   ;; var tenantId = "791f3cb4-97b9-45f9-b5e6-7319cda87626";
-  (show-signature :xero :access-token)
-  (show-encoded-data :xero :access-token)
+  ;(show-signature :xero :access-token)
+  ;(show-encoded-data :xero :access-token)
  
 
-  (show-header :xero :id_token)
+  ;(show-header :xero :id_token)
   (show-claims :xero :id_token)
 
   ;; google ************************************************************
 
-  (show-keys :google)
-  (show-header :google :id_token)
+  ;(show-keys :google)
+  ;(show-header :google :id_token)
+  (show-claims :google :id_token)
+
+
+;(show-claims :google :refresh_token)
+;  (show-claims :google :access-token)
+
+
+(show-claims :github :access-token)
 
   ; this only works for xero.
   ;(get-token :google :access-token)

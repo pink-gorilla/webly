@@ -53,6 +53,7 @@
                :search "https://api.goog.io/v1/search"
                :drive-files-list "https://www.googleapis.com/drive/v3/files"
                ;https://developers.google.com/drive/api/v3/reference/files/list
+               :sheets "https://www.googleapis.com/v4/spreadsheets" ;{spreadsheetId}:batchUpdate
                }
 ; userinfo
    :user "https://www.googleapis.com/oauth2/v2/userinfo"
