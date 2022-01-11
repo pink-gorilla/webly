@@ -6,7 +6,7 @@
 (defn log-success [res]
   (info "ajax post success: " res))
 
-(defn log-success [res]
+(defn log-error [res]
   (error "ajax post error: " res))
 
 ; Authorization: "Basic " + base64encode(client_id + ":" + client_secret)
