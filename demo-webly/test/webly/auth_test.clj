@@ -8,8 +8,8 @@
    [modular.config :as config]
    [modular.oauth2.local.pass :as pass]
    [modular.oauth2.local.permission :as perm]
+   [modular.oauth2.local.handler :as h]
    [webly.web.handler :refer [make-handler]]
-   
 ))
 
 (deftest pwd-hash-test []
@@ -37,12 +37,43 @@
 
 
 (deftest perm-test []
+  (is (perm/authorized? nil nil )) ; no user for route without permission requirement is authorized
+  (is (perm/authorized? nil "demo" )) ; user for route with permssion is authorized
+  
+  (is (perm/authorized? #{} "demo" )) ; authorzed user required
+  (is (not (perm/authorized? #{} nil ))) ; no user for route with permission does not pass
+
   (is (perm/authorized? #{:admin} "demo" ))
   (is (not (perm/authorized? #{:heroic-warrior} "demo" )))
   (is (not (perm/authorized? #{:admin} "crazy-ponny" )))
   
   ;
   )
+
+(config/set! :permission
+ {:default nil
+  :service {:public2 nil
+            :hello #{}
+            :add #{:math}
+            :calc #{:logistic}
+            }
+     })
+
+(deftest service-test []
+  (is (h/service-authorized? :public1 "1"))
+  (is (h/service-authorized? :public2 "2"))
+  (is (not (h/service-authorized? :hello "3")))
+  (is (not (h/service-authorized? :add "4")))
+  (h/set-user! "3" "demo")
+  (h/set-user! "4" "demo")
+  (is (h/service-authorized? :hello "3"))
+  (is (not (h/service-authorized? :add "4")))
+  (is (h/service-authorized? :calc "3"))
+
+
+
+)
+
 
 
 

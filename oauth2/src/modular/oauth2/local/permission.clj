@@ -7,13 +7,23 @@
 
 (defn get-user-roles [user]
  (if-let [users (get-in-config [:users])]
-   (let [user-kw (keyword user)
-         user-data (user-kw users)]
-    (if user-data
-      (:roles user-data)
-      #{}))
-   (do (error "user roles missing: please add :users to config!")
+   (if user
+     (let [user-kw (keyword user)
+           user-data (user-kw users)]
+      (if user-data
+        (:roles user-data)
+        #{}))
+      (do (info "get-urser-roles for nil user")
+          nil)) 
+  (do (error "user roles missing: please add :users to config!")
        #{})))
 
 (defn authorized? [required-roles user]
-  (superset? (get-user-roles user) required-roles))
+  (if required-roles
+    (if user 
+      (superset? (get-user-roles user) required-roles)
+      false)
+    true ; no required-roles means authorized
+    ))
+
+
