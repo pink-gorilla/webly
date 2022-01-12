@@ -15,8 +15,7 @@
         token (load-token provider)
         access-token (:access-token token)
         header (get-provider-auth-header provider access-token)]
-     header))
-
+    header))
 
 (defn get-endpoint
   [provider_endpoint]
@@ -75,20 +74,17 @@
          (:body)
          (cheshire.core/parse-string true)))))
 
-
-
 (defn post-request
   ([provider url body-params]
    (info "post-request " provider url body-params)
-   (let [header(get-auth-header provider)]
+   (let [header (get-auth-header provider)]
      (debug "http/get " url)
      (info "htttp/post url: " url " header: " (pr-str header))
      (try
        (-> (http/post url {:headers header
-                          :accept :json
-                          :body (cheshire.core/generate-string body-params)
-                          :content-type :json
-                          })
+                           :accept :json
+                           :body (cheshire.core/generate-string body-params)
+                           :content-type :json})
            (:body)
            (cheshire.core/parse-string true))
        (catch clojure.lang.ExceptionInfo e
@@ -106,20 +102,17 @@
          (error "keys of error: " (keys e))
          ;;(error (:body e))
          )))))
-
-
 (defn put-request
   ([provider url body-params]
    (info "put-request " provider url body-params)
-   (let [header(get-auth-header provider)]
+   (let [header (get-auth-header provider)]
      (debug "http/put " url)
      (info "htttp/put url: " url " header: " (pr-str header))
      (try
        (-> (http/put url {:headers header
                           :accept :json
                           :body (cheshire.core/generate-string body-params)
-                          :content-type :json
-                          })
+                          :content-type :json})
            (:body)
            (cheshire.core/parse-string true))
        (catch clojure.lang.ExceptionInfo e
@@ -137,10 +130,6 @@
          (error "keys of error: " (keys e))
          ;;(error (:body e))
          )))))
-
-
-
-
 (comment
 
   (get-endpoint :google/userinfo)

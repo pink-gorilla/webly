@@ -50,6 +50,17 @@
                 {:kb "ctrl-y l" :handler [:login/dialog ] :desc "login"}
                 {:kb "win-y l" :handler [:login/dialog ] :desc "login"}
                 ]
+
+
+ :permission {:default nil
+              :service {:public2 nil
+                        :hello #{}
+                        :add #{:math}
+                        :calc #{:logistic}}}
+
+ :users {:demo {:roles #{:admin :logistic}
+                :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
+                :email ["john@doe.com"]}}
                 
 ;                
 }

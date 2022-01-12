@@ -12,9 +12,7 @@
    #?(:cljs [modular.oauth2.authorize.redirect-events])
    #?(:cljs [modular.oauth2.authorize.userinfo])
    #?(:cljs [modular.oauth2.authorize.token-events])
-   #?(:cljs [modular.oauth2.login.dialog])
-   
-   ))
+   #?(:cljs [modular.oauth2.login.dialog])))
 
 #?(:clj
    (defn get-config-server [server-profile-kw]
