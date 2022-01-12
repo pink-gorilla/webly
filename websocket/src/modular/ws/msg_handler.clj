@@ -46,10 +46,36 @@
     (errorf "ws event of unknown type. Please implement (-event-handler %s) event: %s" id event)
     (send-response req :ws/unknown event)))
 
-(defn event-msg-handler [{:keys [client-id id event ?data] :as req}]
+(defn everything-authorized? [service-kw uid]
+  (info "everything authorized: service: " service-kw "uid: " uid)
+  true)
+
+(defonce permission-fn-a 
+  (atom everything-authorized?))
+
+(def always-authorized 
+  #{:chsk/uidport-open
+   :chsk/uidport-close
+   :chsk/ws-ping
+   :chsk/handshake
+   :chsk/recv
+  })
+
+(defn ws-service-authorized? [event]
+  (let [a (contains? always-authorized event)]
+    (info "ws-service-authorized? " event ": " a)
+    a))
+
+(defn event-msg-handler [{:keys [client-id id event ?data uid] :as req}]
   (debugf "ws rcvd: evt: %s id: %s data: %s" event id ?data)
   (when req
-    (-event-msg-handler req)))
+    (let [msg-type (first event)]
+      (if (or (ws-service-authorized? msg-type)
+              (@permission-fn-a msg-type uid))
+        (-event-msg-handler req)
+        (send-response req event {:error "Not Authorized"
+                                  :error-message "You are not authorized for this service"})
+        ))))
 
 ; {:client-id "591b690d-5633-48c3-884d-348bbcf5c9ca"
 ; :uid "3c8e0a40-356c-4426-9391-1445140ff509"

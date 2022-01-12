@@ -48,6 +48,7 @@
   (or (get-in-config [:permission :service])
       {}))
 
+
 (defn service-authorized? [service-kw uid]
   (let [roles (or (service-kw (protected-services))
                   (default-roles))

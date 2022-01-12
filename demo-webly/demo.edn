@@ -49,18 +49,22 @@
                 {:kb "alt-y l" :handler [:login/dialog ] :desc "login"}
                 {:kb "ctrl-y l" :handler [:login/dialog ] :desc "login"}
                 {:kb "win-y l" :handler [:login/dialog ] :desc "login"}
+                {:kb "win-z l" :handler [:login/dialog ] :desc "login"}
                 ]
 
 
  :permission {:default nil
-              :service {:public2 nil
-                        :hello #{}
-                        :add #{:math}
-                        :calc #{:logistic}}}
+              :service {:time/now-date #{} ; only logged in users can access this service
+                        }}
 
- :users {:demo {:roles #{:admin :logistic}
+ :users {:demo {:roles #{:logistic}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
-                :email ["john@doe.com"]}}
+                :email ["john@doe.com"]}
+         :john {:roles #{:logistic}
+                :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
+                :email ["john@doe.com"]}       
+                
+                }
                 
 ;                
 }
