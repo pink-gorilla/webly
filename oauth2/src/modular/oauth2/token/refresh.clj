@@ -15,6 +15,7 @@
   {"Authorization" (str "Basic " token)})
 
 (defn auth-header-oauth-token [client-id client-secret]
+  ; Authorization: "Basic " + base64encode(client_id + ":" + client_secret)
   {"Authorization" (str "Basic " (base64-encode (str client-id ":" client-secret)))})
 
 (defn refresh-auth-token [provider]
@@ -23,14 +24,23 @@
         refresh-token (:refresh-token token)
         p (promise)
         provider-config (full-provider-config @config-atom provider)
-        {:keys [token-uri client-id client-secret]} provider-config]
-    (info "refreshing token for provider " provider "client-id:" client-id "refresh token: " refresh-token)
-    (ajax/POST token-uri
-      :headers (auth-header-oauth-token client-id client-secret)
-      :params {:client_id	 client-id
+        {:keys [token-uri client-id client-secret]} provider-config
+        header (auth-header-oauth-token client-id client-secret)
+        params {:client_id	 client-id
                :client_secret client-secret
                :refresh_token refresh-token
                :grant_type "refresh_token"}
+        ]
+    (info "refreshing token for provider " provider
+        "client-id:" client-id "refresh token: " refresh-token 
+        "header: " header
+        "params: " params
+        )
+    (ajax/POST token-uri
+      :headers header
+      ; grant_type=refresh_token
+        ;refresh_token=Your refresh token
+      :params params
       ; :format (ajax/json-request-format) ; {:keywords? true}
       :format (ajax/url-request-format) ; xero
       :timeout         5000                     ;; optional see API docs
@@ -39,7 +49,11 @@
                  (info "refresh-token " provider "success!")
                  (debug provider "/refresh-token success: " res)
                  (let [token-new (sanitize-token res)
-                       token-new (assoc token-new :refresh-token refresh-token)
+                       token-new (merge token token-new)
+                       ; some providers include a new refresh token, some dont
+                       ; so we merge the tokens so we use all fields from the new token,
+                       ; and carry forward the old token (in case we do not get a new refresh-token)
+                       ;(assoc token-new :refresh-token refresh-token)
                  ]
                    (debug "new access-token: " (:access-token token-new))
                    (save-token provider token-new)
