@@ -33,13 +33,12 @@
           (start-safe start-service))
       (warn "no services defined."))))
 
-
 (defn start-permissions []
-  (if (and (get-in-config [:permission]) 
+  (if (and (get-in-config [:permission])
            (get-in-config [:users]))
-     (do (info "starting webly ws services with PERMISSIONS enabled.")
-         (reset! permission-fn-a service-authorized?))
-     (warn "webly ws services are NOT PERMISSION enabled.")))
+    (do (info "starting webly ws services with PERMISSIONS enabled.")
+        (reset! permission-fn-a service-authorized?))
+    (warn "webly ws services are NOT PERMISSION enabled.")))
 
 (defn create-ring-handler
   "creates a ring-handler

@@ -22,7 +22,7 @@
   (let [secret (get-in-config [:oauth2 :local :client-secret])
         claim  {:user user-name}
         token (jwt/sign claim secret)]
-    (info "sign claim with secret: " secret)
+    (debug "sign claim with secret: " secret)
     {:user user-name
      :token token}))
 
@@ -43,7 +43,7 @@
 
 (defn verify-token [token]
   (let [secret (get-in-config [:oauth2 :local :client-secret])]
-    (info "verifying claim with secret: " secret)
+    (debug "verifying claim with secret: " secret)
     (try
       (jwt/unsign token secret)
       (catch Exception _

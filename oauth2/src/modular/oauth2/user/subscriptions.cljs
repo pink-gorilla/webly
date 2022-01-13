@@ -1,4 +1,4 @@
-(ns modular.oauth2.subscriptions
+(ns modular.oauth2.user.subscriptions
   (:require
    [re-frame.core :refer [reg-sub]]))
 

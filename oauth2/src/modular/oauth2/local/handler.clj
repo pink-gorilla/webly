@@ -1,12 +1,14 @@
 (ns modular.oauth2.local.handler
   (:require
    [cheshire.core :as json]
-   [taoensso.timbre :refer [info infof error]]
+   [taoensso.timbre :refer [debug debugf info infof error]]
+   [clj-jwt.core :refer [str->jwt]]
    [modular.config :refer [get-in-config]]
    [modular.ws.core :refer [send-all! send-response connected-uids]]
    [modular.ws.msg-handler :refer [-event-msg-handler]]
    [modular.oauth2.local.pass :refer [get-token]]
-   [modular.oauth2.local.permission :as perm]))
+   [modular.oauth2.local.permission :as perm]
+   [modular.oauth2.local.oidc :refer [find-user]]))
 
 (defn login-handler
   "Login endpoint.. Returns token
@@ -22,9 +24,9 @@
 (def connected-users (atom {}))
 
 (defn set-user! [uid user]
-  (info "ws uid: " uid " has user: " user)
+  (infof "ws uid: %s user: %s" uid user)
   (swap! connected-users assoc (keyword uid) user)
-  (info "connected-users: " (pr-str @connected-users)))
+  (info "ws users: " (pr-str @connected-users)))
 
 (defn get-user [uid]
   (let [uid-kw (keyword uid)]
@@ -32,13 +34,32 @@
 
 (defmethod -event-msg-handler :login/local
   [{:as req :keys [event id ?data ring-req ?reply-fn send-fn uid]}]
-  (infof ":login/local %s" ?data)
+  (debugf ":login/local %s" ?data)
   (let [{:keys [username password]} ?data
         login-result (get-token username password)]
-    (info "login result: " login-result " uid: " uid)
+    (info "login/local: " login-result " uid: " uid)
     (when-let [user (:user login-result)]
       (set-user! uid user))
     (send-response req :login/local login-result)))
+
+(defmethod -event-msg-handler :login/oidc
+  [{:as req :keys [event id ?data ring-req ?reply-fn send-fn uid]}]
+  (debugf ":login/oidc %s" ?data)
+  (let [{:keys [id-token]} ?data
+        login-result (str->jwt id-token)
+        email (get-in login-result [:claims :email])]
+    (debug "login result oidc: " login-result " uid: " uid)
+    (infof "login/oidc email: %s uid: %s" email uid)
+    (if-let [user (find-user email)]
+      (let [user (name user)]
+        (set-user! uid user)
+        (send-response req
+                       :login/local {:user user :token ?data}))
+      (do
+        (error "no user found for oidc login with email: " email)
+        (send-response req
+                       :login/local {:error :user-not-found
+                                     :error-message (str "No user found for [" email "].")})))))
 
 (defn default-roles []
   (or (get-in-config [:permission :default])
@@ -47,7 +68,6 @@
 (defn protected-services []
   (or (get-in-config [:permission :service])
       {}))
-
 
 (defn service-authorized? [service-kw uid]
   (let [roles (or (service-kw (protected-services))

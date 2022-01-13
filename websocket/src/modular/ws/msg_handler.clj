@@ -59,18 +59,20 @@
    :chsk/ws-ping
    :chsk/handshake
    :chsk/recv
+   :login/local
+   :login/oidc
   })
 
-(defn ws-service-authorized? [event]
+(defn ws-always-authorized? [event]
   (let [a (contains? always-authorized event)]
-    (info "ws-service-authorized? " event ": " a)
+    (info "ws-always-authorized? " event ": " a)
     a))
 
 (defn event-msg-handler [{:keys [client-id id event ?data uid] :as req}]
   (debugf "ws rcvd: evt: %s id: %s data: %s" event id ?data)
   (when req
     (let [msg-type (first event)]
-      (if (or (ws-service-authorized? msg-type)
+      (if (or (ws-always-authorized? msg-type)
               (@permission-fn-a msg-type uid))
         (-event-msg-handler req)
         (send-response req event {:error "Not Authorized"

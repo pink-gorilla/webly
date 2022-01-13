@@ -121,7 +121,7 @@
     "bg-red-300"
    "flex flex-row items-stretch mb-0 border border-solid border-blue-800 p-0"
    "flex flex-row items-stretch"
-
+   "w-full flex items-center justify-center bg-blue-800"
 ;
    ])
 

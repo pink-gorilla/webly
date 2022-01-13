@@ -1,14 +1,14 @@
-(ns modular.oauth2.authorize.token-events
+(ns modular.oauth2.authorize.code-2-token
   (:require
    [taoensso.timbre :refer-macros [info error]]
-   [re-frame.core :refer [reg-event-fx reg-event-db dispatch]]
+   [re-frame.core :as rf]
    [ajax.core :as ajax]
    [modular.oauth2.provider :refer [get-provider-config url-redirect]]))
 
 (defn  current-url []
   (-> js/window .-location .-href))
 
-(reg-event-fx
+(rf/reg-event-fx
  :oauth2/code->token
  (fn [{:keys [db]} [_ p data]]
    (info "getting token for provider " p " with data: " data)
@@ -25,6 +25,6 @@
                    ;:format (ajax/json-request-format {:keywords? true})
                    :timeout         5000                     ;; optional see API docs
                    :response-format (ajax/json-response-format {:keywords? true});; IMPORTANT!: You must provide this.
-                   :on-success      [:oauth2/save-token p]
+                   :on-success      [:oauth2/authorize-success p]
                    :on-failure      [:oauth2/save-error p]}})))
 

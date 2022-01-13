@@ -11,8 +11,8 @@
    [user-button :github]
    [user-button :google]
    [user-button :xero]
-   [:p [link-dispatch [:oauth2/login :github] "github login via popup"]]
-   [:p [link-dispatch [:oauth2/login :google] "google login via popup"]]
+   [:p [link-dispatch [:oauth2/authorize-start :github] "github login via popup"  :oauth2/save-server]]
+   [:p [link-dispatch [:oauth2/authorize-start :google] "google login via popup"  :oauth2/save-server]]
    ; [:p [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]
    [:div.border.border-blue-500.border-2.border-round.overflow-scroll
     [tokens-view]]])

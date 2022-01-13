@@ -1,4 +1,4 @@
-(ns modular.oauth2.login.dialog
+(ns modular.oauth2.user.login-dialog
   (:require
    [taoensso.timbre :refer-macros [info error]]
    [reagent.core :as r]
@@ -20,7 +20,7 @@
                                      {:username @username :password @password}]]))
         login-oidc (fn [provider]
                      (info "logging in oidc " provider " ..")
-                     (rf/dispatch [:oauth2/login provider]))]
+                     (rf/dispatch [:oauth2/authorize-start provider :oauth2/login-oauth-success]))]
 
     (fn []
       [:div {:class "w-full flex items-center justify-center bg-blue-800"}
@@ -54,6 +54,7 @@
         ;[:button {:class "w-full h-12 rounded-lg bg-gray-800 text-gray-200 uppercase font-semibold hover:bg-gray-900 text-gray-100 transition mb-4"}
         ;"Sign with Github"]
         ]])))
+
 (defn show-login-dialog []
   (rf/dispatch [:modal/open [:div [login-ui]]
                 :medium]))
@@ -75,3 +76,19 @@
    (if user
      (assoc db :user result)
      db)))
+
+(rf/reg-event-fx
+ :oauth2/login-oauth-success
+ (fn [{:keys [db]} [_ provider token]]
+   (info "oauth2 login success via oidc for provider " provider "token: " (pr-str token))
+   (rf/dispatch [:ws/send [:login/oidc token]])
+   nil))
+
+;; LOGOUT
+
+(rf/reg-event-fx
+ :oauth2/logout
+ (fn [{:keys [db]} [_ service]]
+   (let [new-db (update-in db [:token] dissoc service)]
+     {:db       new-db})))
+

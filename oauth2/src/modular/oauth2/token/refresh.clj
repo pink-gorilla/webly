@@ -1,6 +1,6 @@
 
 
-(ns modular.oauth2.refresh
+(ns modular.oauth2.token.refresh
   (:require
    [taoensso.timbre :as timbre :refer [debug info error]]
  ;   [clojure.data.codec.base64 :as b64]
@@ -8,7 +8,7 @@
    [ajax.core :as ajax]
    [modular.config :refer [get-in-config config-atom]]
    [modular.oauth2.provider :refer [full-provider-config]]
-   [modular.oauth2.store :refer [load-token save-token]]))
+   [modular.oauth2.token.store :refer [load-token save-token]]))
 
 (defn auth-header-basic [token]
   {"Authorization" (str "Basic " token)})

@@ -2,8 +2,8 @@
   (:require
      [taoensso.timbre :as timbre :refer [info error]]
      [init]
-     [modular.oauth2.store :refer [load-token]]
-     [modular.oauth2.info :refer [get-header get-claims get-signature get-encoded-data]]
+     [modular.oauth2.token.store :refer [load-token]]
+     [modular.oauth2.token.info :refer [get-header get-claims get-signature get-encoded-data]]
   ))
   
 
@@ -56,13 +56,13 @@
  
 
   ;(show-header :xero :id_token)
-  (show-claims :xero :id_token)
+  (show-claims :xero :id-token)
 
   ;; google ************************************************************
 
   ;(show-keys :google)
-  ;(show-header :google :id_token)
-  (show-claims :google :id_token)
+  ;(show-header :google :id-token)
+  (show-claims :google :id-token)
 
 
 ;(show-claims :google :refresh_token)

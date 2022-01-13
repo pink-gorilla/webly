@@ -23,6 +23,7 @@
        [:div.flex.flex-col
         [link-fn #(rf/dispatch [:ws/send [:time/now []]]) " request time"]
         [:p "the next service is secured and needs logged in user. user:demo pwd: 1234"]
+        [link-fn #(rf/dispatch [:login/dialog]) "login"]
         [link-fn #(rf/dispatch [:ws/send [:time/now-date []] set-time-date 5000]) " request time (as date)"]
         [link-fn #(rf/dispatch [:ws/send [:time/now-date-local []] set-time-date 5000]) " request time (as date local)"]
         [link-fn #(rf/dispatch [:ws/send [:demo/connected []] print-status 5000]) "request connections (see log)"]

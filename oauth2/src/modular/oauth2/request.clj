@@ -7,7 +7,7 @@
    [clojure.string :as string]
    [cheshire.core]
    [modular.oauth2.provider :refer [get-provider-config get-provider-auth-header]]
-   [modular.oauth2.store :refer [load-token]]))
+   [modular.oauth2.token.store :refer [load-token]]))
 
 (defn get-auth-header
   [provider]

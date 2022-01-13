@@ -60,6 +60,9 @@
  :users {:demo {:roles #{:logistic}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["john@doe.com"]}
+         :florian {:roles #{:logistic}
+                   :password "xxxxxxxx" 
+                   :email ["hoertlehner@gmail.com"]}
          :john {:roles #{:logistic}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["john@doe.com"]}       

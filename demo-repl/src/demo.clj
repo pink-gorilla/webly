@@ -11,8 +11,8 @@
 
    [modular.base64 :refer [base64-decode]]
    [modular.config :as config]
-   [modular.oauth2.store :refer [load-token]]
-   [modular.oauth2.refresh :refer [refresh-auth-token]]
+   [modular.oauth2.token.store :refer [load-token]]
+   [modular.oauth2.token.refresh :refer [refresh-auth-token]]
    [modular.oauth2.request :refer [get-endpoint get-request get-request-xero post-request]]
    [gsheet]
    )
