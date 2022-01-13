@@ -70,4 +70,6 @@
 
 (defn header-xero-tenant [tenant-id]
   {"Xero-Tenant-Id" tenant-id})
-   
+  
+; request success:
+;  "Status": "OK"

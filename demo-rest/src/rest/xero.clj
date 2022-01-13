@@ -42,8 +42,8 @@
 
     (let [qp 
       {:where ;"Date >= DateTime(2022, 01, 01)"
-              ;"(Type == \"ACCREC\")"       
-              "Date >= DateTime(2022, 01, 01) AND (Type == \"ACCREC\")" ;var invoicesFilter = "Date >= DateTime(" + sevenDaysAgo + ")";
+              "(Type == \"ACCREC\")"       
+              ;"Date >= DateTime(2022, 01, 01) AND (Type == \"ACCREC\")" ;var invoicesFilter = "Date >= DateTime(" + sevenDaysAgo + ")";
               ; Contact.Name=="Basket Case" AND Type=="ACCREC" AND STATUS=="AUTHORISED"
               ; Type=="BANK" Type=="ASSET"
               ; Status=="VOIDED" OR Status=="DELETED"
@@ -51,7 +51,6 @@
               ; EmailAddress!=null&&EmailAddress.StartsWith("boom")
               ; Date >= DateTime(2015, 01, 01) && Date < DateTime(2015, 12, 31)
               ; ifModifiedSince: Date = new Date("2020-02-06T12:17:43.202-08:00");
-              
        :page 1 ; page=1 – Up to 100 invoices will be returned in a single API call with line items shown for each invoice
        :unitdp 4 ; (Unit Decimal Places) You can opt in to use four decimal places for unit amounts
        :summaryOnly false ;  retrieve a smaller version of the response object. This returns only lightweight fields, excluding computation-heavy fields from the response, making the API calls quick and efficient.
@@ -75,6 +74,19 @@
            
            ;(info "invoices: ")
       ))
+
+      (info "invoices modified since: ")
+      (let [t (assoc t "If-Modified-Since" "2022-01-01T00:00:00" )
+            qp {:where "(Type == \"ACCREC\")"       
+                :page 1}]
+         (info "header: " t)
+         (->> (get-request :xero/invoice qp t "")
+               :Invoices
+               (map #(select-keys % [:Type :Status :InvoiceNumber  :DateString :Name :Total]))
+               (print-table)
+          ))
+
+
 
 
 
