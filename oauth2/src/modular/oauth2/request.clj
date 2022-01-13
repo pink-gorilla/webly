@@ -38,7 +38,7 @@
   ([provider_endpoint query-params]
    (info "get-request " provider_endpoint query-params)
    (let [{:keys [url header]} (get-endpoint provider_endpoint)]
-     (debug "http/get " url)
+     (info "http/get " url)
      (debug "headers: " (pr-str header))
      (try
        (-> (http/get url {:headers header
@@ -78,8 +78,8 @@
   ([provider url body-params]
    (info "post-request " provider url body-params)
    (let [header (get-auth-header provider)]
-     (debug "http/get " url)
-     (info "htttp/post url: " url " header: " (pr-str header))
+     (info "http/get " url)
+     (debug "htttp/post url: " url " header: " (pr-str header))
      (try
        (-> (http/post url {:headers header
                            :accept :json
@@ -102,12 +102,13 @@
          (error "keys of error: " (keys e))
          ;;(error (:body e))
          )))))
+
 (defn put-request
   ([provider url body-params]
    (info "put-request " provider url body-params)
    (let [header (get-auth-header provider)]
-     (debug "http/put " url)
-     (info "htttp/put url: " url " header: " (pr-str header))
+     (info "http/put " url)
+     (debug "htttp/put url: " url " header: " (pr-str header))
      (try
        (-> (http/put url {:headers header
                           :accept :json

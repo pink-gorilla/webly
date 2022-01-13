@@ -3,7 +3,7 @@
    [taoensso.timbre :refer-macros [debug info warn error]]
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [modular.oauth2.view :refer [tokens-view user-button]]
+   ;[modular.oauth2.user.view :refer [tokens-view user-button]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 ; WEBSOCKET

@@ -1,13 +1,15 @@
-(ns gsheet
+(ns rest.google
   (:require
    [clojure.pprint :refer [print-table]]
    [taoensso.timbre :as timbre :refer [info error]]
-   [modular.oauth2.request :refer [get-endpoint get-request get-request-xero 
-                                   post-request put-request]]))
+
+   [modular.oauth2.token.store :refer [load-token]]
+   [modular.oauth2.token.refresh :refer [refresh-auth-token]]
+   [modular.oauth2.request :refer [get-request post-request put-request]]))
 
 
 
-(defn modify-cells []
+(defn gsheet-modify-cells []
  (let [sheet-id "1oO-UlrkEwaED_fKcNm27lIN9EdcbwF8iCS5UiYFOnk8"]
   (put-request
    :google
@@ -33,3 +35,17 @@
 ;                            ["bodrum" "4"]]}]}
 ;   ))
 
+(defn google []
+  (refresh-auth-token :google)
+  (info "google/userinfo: " (get-request :google/userinfo))
+  #_(->> (get-request :google/drive-files-list)
+       :files
+       (map #(dissoc % :kind :id :mimeType))
+       (print-table))
+
+ ; (get-request :google/search {:q "clojure" :num 10})
+  (gsheet-modify-cells)
+  
+
+  ;
+  )

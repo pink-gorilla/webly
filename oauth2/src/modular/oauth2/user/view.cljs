@@ -1,4 +1,4 @@
-(ns modular.oauth2.view
+(ns modular.oauth2.user.view
   (:require
    [re-frame.core :refer [dispatch subscribe]]
    [frontend.tooltip :refer [with-tooltip]]))
@@ -26,10 +26,5 @@
         [:span.text-green-800 [header-icon (service-icon service)  [:oauth2/logout service] (str "log out: " @logged-in-email)]]
         [:span.text-red-500 [header-icon (service-icon service) [:oauth2/login service] "log in"]]))))
 
-(defn tokens-view []
-  (let [tokens (subscribe [:oauth2/tokens])]
-    (fn []
-      [:div ; .bg-yellow-200
-       [:p "oauth2 tokens"]
-       [:p (pr-str @tokens)]])))
+
 

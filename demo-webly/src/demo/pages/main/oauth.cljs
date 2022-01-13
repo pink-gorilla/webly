@@ -2,7 +2,8 @@
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :as rf]
-   [modular.oauth2.view :refer [tokens-view user-button]]
+   [modular.oauth2.user.view :refer [user-button]]
+   [modular.oauth2.token.ui :refer [provider-status-grid]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 ;; OAUTH
@@ -15,4 +16,7 @@
    [:p [link-dispatch [:oauth2/authorize-start :google] "google login via popup"  :oauth2/save-server]]
    ; [:p [:a.bg-blue-300 {:href "/oauth2/github/auth"} "github login via page-redirect (needs creds.edn)"]]
    [:div.border.border-blue-500.border-2.border-round.overflow-scroll
-    [tokens-view]]])
+    [provider-status-grid [:google :github :xero]]
+    
+    
+    ]])

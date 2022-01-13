@@ -17,6 +17,6 @@
 
 (defn block2 [name & children]
   (->  [:div.bg-blue-400.inline-block.w-full ; md:w-full
-        {:class "lg:p-5"}
-        [:p.text-4xl.pb-5 name]]
+        {:class "lg:p-2"}
+        [:p.text-4xl.pb-2 name]]
        (into children)))

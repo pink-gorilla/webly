@@ -5,7 +5,9 @@
    [re-frame.core :as rf]
    [modular.oauth2.authorize.redirect :refer [register-callback]]
    [modular.oauth2.token.save-handler] ; side effects
-   [modular.oauth2.provider :refer [url-authorize]]))
+   [modular.oauth2.provider :refer [url-authorize]]
+   [modular.oauth2.token.sanitize :refer [sanitize-token]]
+   ))
 
 ;; LOGIN
 
@@ -27,20 +29,12 @@
      (assoc-in db [:oauth-authorize] {:window window
                                       :success-event oauth-success-event}))))
 
-(defn safe [token]
-  (if-let [access-token (:access_token token)]
-    (-> token
-        (rename-keys {:access_token :access-token
-                      :refresh_token :refresh-token
-                      :id_token :id-token
-                      :token_type :token:type
-                      :expires_in :expires-in}))
-    token))
+
 
 (rf/reg-event-db
  :oauth2/authorize-success
  (fn [db [_ provider token]]
-   (let [token (safe token)
+   (let [token (sanitize-token token)
          access-token (:access-token token)
          {:keys [window success-event]} (:oauth-authorize db)]
      (info "oauth2 authorize success: " provider token)
