@@ -57,7 +57,10 @@
                }
 ; userinfo
    :user "https://www.googleapis.com/oauth2/v2/userinfo"
-   :user-parse user-parse})
+   :user-parse user-parse
+   
+   :icon "fab fa-google-plus"
+   })
 
 (defmethod provider-config :google [_]
   config)

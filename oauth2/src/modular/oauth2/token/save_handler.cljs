@@ -24,9 +24,6 @@
                  :uri            "/api/oauth2/save-token"
                  :params {:provider provider
                           :token token}
-                   ;:params {;:client_id	 clientId
-                   ;         ;:client_secret clientSecret
-                   ;         :code code}
                  :format (ajax/transit-request-format)
                  :timeout         5000                     ;; optional see API docs
                  :response-format (ajax/transit-response-format);; IMPORTANT!: You must provide this.

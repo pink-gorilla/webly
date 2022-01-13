@@ -61,6 +61,7 @@
    :chsk/recv
    :login/local
    :login/oidc
+   :tokens/summary
   })
 
 (defn ws-always-authorized? [event]

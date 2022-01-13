@@ -39,7 +39,10 @@
                }
    ; userinfo
    :user "https://api.github.com/user"
-   :user-parse user-parse})
+   :user-parse user-parse
+   
+   :icon  "fab fa-github-square"
+   })
 
 (defmethod provider-config :github [_]
   config)

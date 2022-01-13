@@ -5,13 +5,13 @@
         org.clojure/core.async {:mvn/version  "1.3.618"}
 
         ; logging
-        ; jetty brings:  org.slf4j/slf4j-api 2.0.0-alpha1
-        ; the nop logger needs to have the same version as jetty. 
-        org.slf4j/slf4j-nop {:mvn/version "2.0.0-alpha1"}
-        ;org.slf4j/slf4j-api {:mvn/version "1.7.30"} ; slf4j-timbre is incmpatibe with slf4j-api 2.0.0 that comes with jetty
-        ;com.fzakaria/slf4j-timbre {:mvn/version  "0.3.21"} ; slf4j ->timbre adapter (used by jetty)
+        ;org.slf4j/slf4j-api {:mvn/version "2.0.0-alpha1"}
+        ;org.fzakaria/slf4j-timbre {:git/url "https://github.com/SimpleValue/slf4j-timbre"
+        ;                           :sha "dc33c3a44069186496d119b8c63634e846bfd935"}
+        ;org.slf4j/slf4j-nop {:mvn/version "2.0.0-alpha1"} ; the nop logger needs to have the same version as jetty. 
+        ;com.fzakaria/slf4j-timbre {:mvn/version  "0.3.21"} ; slf4j ->timbre adapter (used by jetty) slf4j-timbre is incmpatibe with slf4j-api 2.0.0 that comes with jetty
+       
         ;; {ring.middleware.logger "0.5.0"}
-
         
         ;; old
         luminus/ring-ttl-session {:mvn/version "0.3.3"}
