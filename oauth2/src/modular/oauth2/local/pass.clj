@@ -1,9 +1,12 @@
-(ns oauth2.local.pass
+(ns modular.oauth2.local.pass
   (:require
+   [taoensso.timbre :as timbre :refer [debug info error]]
+   [clojure.set :refer [superset?]]
    [buddy.core.codecs :as codecs]
    [buddy.core.hash :as hash]
    [buddy.sign.jwt :as jwt]
-   [no.nsd.clj-jwt :as clj-jwt]))
+   [no.nsd.clj-jwt :as clj-jwt]
+   [modular.config :refer [get-in-config]]))
 
 (defn pwd-hash [pwd]
   (-> (hash/blake2b-128 pwd)
@@ -15,37 +18,37 @@
   (pwd-hash "")
 ;
   )
-
-(def users
-  {:demo {:roles [:admin :logistic]
-          :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
-          :email ["hoertlehner@gmail.com"]}})
-
-(def secret "regenschirm13")
-
 (defn create-claim [user-name]
-  (let [claim  {:user user-name}
+  (let [secret (get-in-config [:oauth2 :local :client-secret])
+        claim  {:user user-name}
         token (jwt/sign claim secret)]
-    token))
+    (debug "sign claim with secret: " secret)
+    {:user user-name
+     :token token}))
 
 (defn get-token [user-name user-password]
-  (let [user-kw (keyword user-name)
-        password-hashed (pwd-hash user-password)
-        user (user-kw users)]
-    (if user
-      (if (= password-hashed (:password user))
-        (create-claim user-name)
-        {:error :bad-passowrd
-         :error-message (str "Bad password for  [" user-name "].")})
-      {:error :user-unknown
-       :error-message (str "User [" user-name "] not found.")})))
+  (if-let [users (get-in-config [:users])]
+    (let [user-kw (keyword user-name)
+          password-hashed (pwd-hash user-password)
+          user (user-kw users)]
+      (if user
+        (if (= password-hashed (:password user))
+          (create-claim user-name)
+          {:error :bad-passowrd
+           :error-message (str "Bad password for  [" user-name "].")})
+        {:error :user-unknown
+         :error-message (str "User [" user-name "] not found.")}))
+    {:error :missing-user-config
+     :error-message "Please set :users modular.config"}))
 
 (defn verify-token [token]
-  (try
-    (jwt/unsign token secret)
-    (catch Exception _
-      {:error :bad-token
-       :error-message "Bad Token"})))
+  (let [secret (get-in-config [:oauth2 :local :client-secret])]
+    (debug "verifying claim with secret: " secret)
+    (try
+      (jwt/unsign token secret)
+      (catch Exception _
+        {:error :bad-token
+         :error-message "Bad Token"}))))
 
 (comment
 

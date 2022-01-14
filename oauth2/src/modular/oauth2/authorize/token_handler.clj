@@ -47,7 +47,8 @@
       :timeout         5000                     ;; optional see API docs
       :response-format (ajax/json-response-format {:keywords? true})
       :handler (fn [res]
-                 (info provider "/get-token success: " res)
+                 (info provider "/get-token success!")
+                 (debug provider "/get-token success: " res)
                  (deliver p res))
       :error-handler (fn [res]
                        (error provider "/get-token error: " res)

@@ -22,7 +22,7 @@
   (let [show-lazy1 (r/atom false)
         show-lazy2 (r/atom false)]
     (fn []
-      [block2 "lazy cljs component"
+      [block2 "lazy ui"
        [link-fn #(reset! show-lazy1 true) "lazy load1"]
        [link-fn #(reset! show-lazy2 true) "lazy load2 (not working)"]
        [:div "loaded lazy renderer: " (pr-str (available))]

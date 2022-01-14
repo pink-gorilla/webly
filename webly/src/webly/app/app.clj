@@ -6,6 +6,9 @@
    [modular.webserver.middleware.dev :refer [wrap-dev]]
    [modular.oauth2.handler] ; side-effects
    [modular.oauth2.middleware :refer [print-oauth2-config]]
+   [modular.ws.msg-handler :refer [permission-fn-a]]
+   [modular.oauth2.local.handler :refer [service-authorized?]]
+   [modular.oauth2] ; side-effects
    [webly.build.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]
    [webly.web.server :refer [run-server]]
@@ -30,6 +33,13 @@
           (start-safe start-service))
       (warn "no services defined."))))
 
+(defn start-permissions []
+  (if (and (get-in-config [:permission])
+           (get-in-config [:users]))
+    (do (info "starting webly ws services with PERMISSIONS enabled.")
+        (reset! permission-fn-a service-authorized?))
+    (warn "webly ws services are NOT PERMISSION enabled.")))
+
 (defn create-ring-handler
   "creates a ring-handler
    uses configuration in webly-config to do so
@@ -53,6 +63,7 @@
   (start-services profile)
   (info "webly starting webserver : " (:server profile))
   (create-ring-handler)
+  (start-permissions)
   (run-server ring-handler profile))
 
 (defn build-p [profile]

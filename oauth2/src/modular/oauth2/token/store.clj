@@ -1,4 +1,4 @@
-(ns modular.oauth2.store
+(ns modular.oauth2.token.store
   (:require
    [taoensso.timbre :refer [info error]]
    [clojure.java.io :as io]
