@@ -67,10 +67,13 @@
          )))))
 
 (defn post-request
-  ([provider url body-params]
-   (info "post-request " provider url body-params)
-   (let [header (get-auth-header provider)]
-     (info "http/get " url)
+  ([provider_endpoint body-params header-xtra url-xtra]
+   (info "post-request " provider_endpoint url-xtra body-params)
+   (let [; header (get-auth-header provider)
+         {:keys [url header]} (get-endpoint provider_endpoint)
+         header (merge header header-xtra)
+         url (str url url-xtra)]
+     (info "http/post " url)
      (debug "htttp/post url: " url " header: " (pr-str header))
      (try
        (-> (http/post url {:headers header
@@ -89,16 +92,19 @@
              (warn "body: " b)
              b)))
        (catch Exception e
-         (error "post-request " provider " exception")
+         (error "post-request " provider_endpoint " exception")
          ;(error e)
          (error "keys of error: " (keys e))
          ;;(error (:body e))
          )))))
 
 (defn put-request
-  ([provider url body-params]
-   (info "put-request " provider url body-params)
-   (let [header (get-auth-header provider)]
+  ([provider_endpoint body-params header-xtra url-xtra]
+   (info "put-request " provider_endpoint url body-params)
+   (let [;header (get-auth-header provider)
+         {:keys [url header]} (get-endpoint provider_endpoint)
+         header (merge header header-xtra)
+         url (str url url-xtra)]
      (info "http/put " url)
      (debug "htttp/put url: " url " header: " (pr-str header))
      (try
@@ -118,7 +124,7 @@
              (warn "body: " b)
              b)))
        (catch Exception e
-         (error "put-request " provider " exception")
+         (error "put-request " provider_endpoint " exception")
          ;(error e)
          (error "keys of error: " (keys e))
          ;;(error (:body e))

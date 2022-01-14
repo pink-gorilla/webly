@@ -28,7 +28,8 @@
    :endpoints {
                :userinfo "https://api.xero.com/api.xro/2.0/Organisation"
                :tenants "https://api.xero.com/connections"
-               :contacts "https://api.xero.com/api.xro/2.0/Contacts"
+               :contact "https://api.xero.com/api.xro/2.0/Contacts/"
+               :contact-group "https://api.xero.com/api.xro/2.0/ContactGroups/"
                :invoice "https://api.xero.com/api.xro/2.0/Invoices/"
                :branding-themes "https://api.xero.com/api.xro/2.0/BrandingThemes"}
    ; userinfo

@@ -1,17 +1,9 @@
 
-
-
    [clj-jwt.core :as clj-jwt]
    [buddy.sign.jwt :as jwt]
    [buddy.sign.jws :as jws]
    [buddy.auth :as auth]
 
-   [modular.base64 :refer [base64-decode]]
-   [modular.config :as config]
-   [modular.oauth2.token.store :refer [load-token]]
-   [modular.oauth2.token.refresh :refer [refresh-auth-token]]
-   [modular.oauth2.request :refer [get-endpoint get-request post-request]]
-   [gsheet]
    )
   (:import
    [com.auth0.jwt JWT]))
