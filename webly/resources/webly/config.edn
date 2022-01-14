@@ -122,12 +122,6 @@
                {:kb "alt-g t" :handler [:reframe10x-toggle] :desc "10x visibility toggle"}]
 
  :settings {:use-localstorage  false}
- 
- 
- :permission {:default nil
-              :service {}}
- :users {:demo {:roles #{:logistic}
-                :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
-                :email ["john@doe.com"]}}
+
  
  }
