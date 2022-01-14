@@ -131,10 +131,13 @@
 
          devtest-webserver-https (webly/clojure "webserver" "-X:webserver")
 
-         req-github {:doc "web requests to github"
-                     :task (webly/clojure "demo-repl" "-X:web-requests-github")}
-         req-google (webly/clojure "demo-repl" "-X:web-requests-google")
-         req-xero (webly/clojure "demo-repl" "-X:web-requests-xero")
+         tokens-summary {:doc "token summary"
+                             :task (webly/clojure "demo-rest" "-X:tokens-summary")}
+
+         rest-github {:doc "web requests to github"
+                     :task (webly/clojure "demo-rest" "-X:rest-github")}
+         rest-google (webly/clojure "demo-rest" "-X:rest-google")
+         rest-xero (webly/clojure "demo-rest" "-X:rest-xero")
 
 
  ;        

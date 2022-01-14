@@ -26,7 +26,7 @@
 
   ring-oauth2/ring-oauth2 {:mvn/version "0.1.5"}
 
-  org.pinkgorilla/modular {:mvn/version "0.0.21"}
+  org.pinkgorilla/modular {:mvn/version "0.0.22"}
   modular/frontend {:local/root "../frontend" :deps/manifest :deps}
   modular/websocket {:local/root "../websocket" :deps/manifest :deps}
   }

@@ -4,7 +4,7 @@
   clj-http/clj-http {:mvn/version "3.12.1"}
   commons-codec/commons-codec {:mvn/version "1.15"}
   uri/uri {:mvn/version "1.1.0"}
-  org.pinkgorilla/modular {:mvn/version "0.0.21"}
+  org.pinkgorilla/modular {:mvn/version "0.0.22"}
   org.pinkgorilla/modular-oauth2 {:local/root "../oauth2" :deps/manifest :deps}}
 
  :aliases
@@ -16,10 +16,7 @@
                        cider/cider-nrepl {:mvn/version,"0.27.2"}}
           :main-opts  ["-m" "nrepl.cmdline"]}
 
-  :tokens-summary {:exec-fn demo/tokens-summary
-                   :exec-args {:providers [:xero :github :google
-                                          ; :wonderland ; to test non existent tokens
-                                          ]}}
+   ; debugging
 
   :token-info-xero {:exec-fn demo/token-info
                     :exec-args {:provider :xero}}
@@ -29,6 +26,12 @@
 
   :token-info-github {:exec-fn demo/token-info
                       :exec-args {:provider :github}}
+  ; rest
+
+  :tokens-summary {:exec-fn demo/tokens-summary
+                   :exec-args {:providers [:xero :github :google
+                                          ; :wonderland ; to test non existent tokens
+                                          ]}}
 
   :rest-xero {:exec-fn demo/make-requests
                       :exec-args {:provider :xero}}

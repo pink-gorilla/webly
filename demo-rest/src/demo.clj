@@ -12,7 +12,7 @@
    [rest.xero :refer [xero]]))
 
 
-(load-config! "demo-config.edn")
+(load-config! ["webly/config.edn" "demo-config.edn" "creds.edn"])
 
 (defn make-requests [{:keys [provider]}]
   ; cli entry point

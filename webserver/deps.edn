@@ -22,7 +22,7 @@
         ; webserver
         info.sunng/ring-jetty9-adapter {:mvn/version  "0.15.2"} ; uses jetty 10.0.2, vlast version with java 9 : 0.14.0
         ; modular
-        org.pinkgorilla/modular {:mvn/version "0.0.21"} ; persistence
+        org.pinkgorilla/modular {:mvn/version "0.0.22"} ; persistence
         }
 
 
