@@ -6,8 +6,7 @@
    [modular.oauth2.authorize.redirect :refer [register-callback]]
    [modular.oauth2.token.save-handler] ; side effects
    [modular.oauth2.provider :refer [url-authorize]]
-   [modular.oauth2.token.sanitize :refer [sanitize-token]]
-   ))
+   [modular.oauth2.token.sanitize :refer [sanitize-token]]))
 
 ;; LOGIN
 
@@ -28,8 +27,6 @@
    (let [window (open-authorize-window db provider)]
      (assoc-in db [:oauth-authorize] {:window window
                                       :success-event oauth-success-event}))))
-
-
 
 (rf/reg-event-db
  :oauth2/authorize-success

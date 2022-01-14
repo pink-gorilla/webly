@@ -27,15 +27,13 @@
         {:keys [token-uri client-id client-secret]} provider-config
         header (auth-header-oauth-token client-id client-secret)
         params {:client_id	 client-id
-               :client_secret client-secret
-               :refresh_token refresh-token
-               :grant_type "refresh_token"}
-        ]
+                :client_secret client-secret
+                :refresh_token refresh-token
+                :grant_type "refresh_token"}]
     (info "refreshing token for provider " provider
-        "client-id:" client-id "refresh token: " refresh-token 
-        "header: " header
-        "params: " params
-        )
+          "client-id:" client-id "refresh token: " refresh-token
+          "header: " header
+          "params: " params)
     (ajax/POST token-uri
       :headers header
       ; grant_type=refresh_token
@@ -54,7 +52,7 @@
                        ; so we merge the tokens so we use all fields from the new token,
                        ; and carry forward the old token (in case we do not get a new refresh-token)
                        ;(assoc token-new :refresh-token refresh-token)
-                 ]
+                       ]
                    (debug "new access-token: " (:access-token token-new))
                    (save-token provider token-new)
                    (deliver p res)))

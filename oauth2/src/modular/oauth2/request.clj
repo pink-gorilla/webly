@@ -35,14 +35,13 @@
 (defn get-request
   ([provider_endpoint]
    (get-request provider_endpoint {}))
-  ([provider_endpoint query-params] 
+  ([provider_endpoint query-params]
    (get-request provider_endpoint query-params {} ""))
   ([provider_endpoint query-params header-xtra url-xtra]
    (info "get-request " provider_endpoint query-params)
    (let [{:keys [url header]} (get-endpoint provider_endpoint)
          header (merge header header-xtra)
-         url (str url url-xtra)
-         ]
+         url (str url url-xtra)]
      (info "http/get " url)
      (debug "headers: " (pr-str header))
      (try

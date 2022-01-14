@@ -9,13 +9,11 @@
  (fn [db [_]]
    (get-in db [:tokens/summary])))
 
-
 (rf/reg-event-db
  :tokens/summary
  (fn [db [_ ts]]
    (info "tokens/summary" ts)
-   (assoc-in db [:tokens/summary] ts)
-   ))
+   (assoc-in db [:tokens/summary] ts)))
 
 (defn connect [provider]
   (rf/dispatch [:oauth2/authorize-start provider :oauth2/save-server]))
@@ -23,12 +21,11 @@
 (defn provider-status [provider status]
   ;(info "provider: " provider " status: " status)
   [:<>
-    [:div (name provider)]
-    [:div (str (:available status))]
-    [:div {:on-click #(connect provider)
-           :class "hover:text-blue-700"}
-          "connect"]
-    ])
+   [:div (name provider)]
+   [:div (str (:available status))]
+   [:div {:on-click #(connect provider)
+          :class "hover:text-blue-700"}
+    "connect"]])
 
 (defn provider-status-grid [providers]
   (let [c (rf/subscribe [:ws/connected?])
@@ -36,18 +33,17 @@
         provider-status (fn [provider]
                           (provider-status provider (provider @tokens-status)))
         todo? (atom true)]
-     (fn [providers]
+    (fn [providers]
       (info "connected: " @c)
       (when @c
-         (when @todo?
-             (do (reset! todo? false)
-                 (rf/dispatch [:ws/send [:tokens/summary {:providers providers}]]))))
+        (when @todo?
+          (do (reset! todo? false)
+              (rf/dispatch [:ws/send [:tokens/summary {:providers providers}]]))))
 
-       (into 
-         [:div.grid.grid-cols-3
-          [:div "provider"]
-          [:div "status"]
-          [:div "c/d"]
-          ]
-         (map provider-status providers)))))
+      (into
+       [:div.grid.grid-cols-3
+        [:div "provider"]
+        [:div "status"]
+        [:div "c/d"]]
+       (map provider-status providers)))))
 

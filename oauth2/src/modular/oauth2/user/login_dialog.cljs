@@ -91,4 +91,3 @@
  (fn [{:keys [db]} [_ service]]
    (let [new-db (update-in db [:token] dissoc service)]
      {:db       new-db})))
-

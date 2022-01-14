@@ -9,8 +9,7 @@
    [modular.oauth2.local.pass :refer [get-token]]
    [modular.oauth2.local.permission :as perm]
    [modular.oauth2.local.oidc :refer [find-user]]
-   [modular.oauth2.token.info :refer [tokens-summary-map]]
-   ))
+   [modular.oauth2.token.info :refer [tokens-summary-map]]))
 
 (defn login-handler
   "Login endpoint.. Returns token
@@ -78,7 +77,6 @@
         a? (perm/authorized? roles user)]
     (info "authorized service " service-kw " user: " user "roles: " roles "authorized: " a?)
     a?))
-
 
 (defmethod -event-msg-handler :tokens/summary
   [{:as req :keys [event id ?data ring-req ?reply-fn send-fn uid]}]

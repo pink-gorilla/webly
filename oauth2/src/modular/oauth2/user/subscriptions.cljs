@@ -1,19 +1,17 @@
 (ns modular.oauth2.user.subscriptions
   (:require
-   [re-frame.core :refer [reg-sub]]))
+   [re-frame.core :as rf]))
 
-(reg-sub
+(rf/reg-sub
  :oauth2/tokens
  (fn [db [_]]
    (get-in db [:token])))
-
-
 
 (defn token? [token]
   (let [{:keys [access-token]} token]
     (if access-token true false)))   ;      (some? token)
 
-(reg-sub
+(rf/reg-sub
  :oauth2/logged-in?
  (fn [db [_ service]]
    (if-let [token (get-in db [:token service])]
@@ -21,7 +19,7 @@
      (token? token)
      false)))
 
-(reg-sub
+(rf/reg-sub
  :oauth2/logged-in-email-or-user
  (fn [db [_ service]]
    (let [email (get-in db [:token service :email])
@@ -30,3 +28,10 @@
      (if eu
        eu
        "unknown email"))))
+
+(rf/reg-sub
+ :oauth2/user
+ (fn [db [_]]
+   (let [user (get-in db [:user :user])]
+     user)))
+

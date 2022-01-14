@@ -25,8 +25,7 @@
    :accessTokenResponseKey "id_token"
    ; api requests
    :auth-header api-request-auth-header
-   :endpoints {
-               :userinfo "https://api.xero.com/api.xro/2.0/Organisation"
+   :endpoints {:userinfo "https://api.xero.com/api.xro/2.0/Organisation"
                :tenants "https://api.xero.com/connections"
                :contact "https://api.xero.com/api.xro/2.0/Contacts/"
                :contact-group "https://api.xero.com/api.xro/2.0/ContactGroups/"
@@ -48,13 +47,10 @@
 ; &scope=openid profile email accounting.transactions
 ; &state=123
 
-
-
 ; https://github.com/XeroAPI/Xero-OpenAPI
 
 ; https://xeroapi.github.io/xero-node/accounting/index.html
 ; https://github.com/XeroAPI/xero-node/blob/master/src/gen/api/accountingApi.ts
-
 
 ; var paginate = require("../paginate/paginate.js").paginate;
 
@@ -67,10 +63,8 @@
 ;; postman url:
 ;; https://app.getpostman.com/run-collection/d069793e904f7602770d#?env%5BOAuth%202.0%5D=W3sia2V5IjoiY2xpZW50X2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6ImNsaWVudF9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoicmVmcmVzaF90b2tlbiIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJhY2Nlc3NfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoieGVyby10ZW5hbnQtaWQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoicmVfZGlyZWN0VVJJIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6InNjb3BlcyIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJzdGF0ZSIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX1d
 
-
-
 (defn header-xero-tenant [tenant-id]
   {"Xero-Tenant-Id" tenant-id})
-  
+
 ; request success:
 ;  "Status": "OK"
