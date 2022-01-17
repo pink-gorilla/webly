@@ -9,7 +9,11 @@
    ; rest
    [rest.google :refer [google]]
    [rest.github :refer [github]]
-   [rest.xero :refer [xero]]))
+   [rest.xero :refer [xero]]
+   [rest.email :refer [email]]
+   [rest.telegram :refer [telegram]]
+   
+   ))
 
 
 (load-config! ["webly/config.edn" "demo-config.edn" "creds.edn"])
@@ -20,6 +24,8 @@
     :xero (xero)
     :google (google)
     :github (github)
+    :email (email)
+    :telegram (telegram)
     ;
     ))
 

@@ -4,7 +4,7 @@
 
 certbot certonly \
  -w ./certs \
- -d wien.hoertlehner.com \
+ -d panama.crbclean.com \
  --logs-dir /tmp \
  --config-dir ./certs \
  --work-dir ./certs \

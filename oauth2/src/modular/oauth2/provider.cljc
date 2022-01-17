@@ -1,18 +1,20 @@
 (ns modular.oauth2.provider
   (:require
    [clojure.string]
+   [clojure.set :refer [rename-keys]]
    [taoensso.timbre :as timbre :refer [debug info infof error]]
    [cemerick.url :refer [url url-encode]]
    [modular.oauth2.provider.google :as google]
    [modular.oauth2.provider.github :as github]
    [modular.oauth2.provider.xero :as xero]
+   [modular.oauth2.provider.woo :as woo]
    [modular.oauth2.protocol :refer [provider-config known-providers]]))
 
 ;; our page strucutre for different providers
 
 (defn provider-uri [provider]
   (let [provider-name (name provider)]
-    {:launch-uri       (str "/oauth2/auth/" provider-name)
+    {:start-uri       (str "/api/oauth2/start/" provider-name)
      :redirect-uri     (str "/oauth2/redirect/" provider-name)
      :landing-uri      (str "/oauth2/landing/" provider-name)}))
 
@@ -37,6 +39,12 @@
 
 ;; AUTHORIZE - START
 
+(defn url-start [provider-kw] ;current-url
+  (->> provider-kw
+       provider-uri
+       :start-uri
+       ;(set-relative-path current-url)
+       ))
 (defn scope->string [scope]
   (let [scope (if (nil? scope) "" scope)
         scope (if (string? scope)
@@ -61,21 +69,25 @@
        (set-relative-path current-url)))
 
 (defn url-authorize [config provider current-url]
-  (let [{:keys [authorize-uri authorize-response-type client-id scope]} (full-provider-config config provider)
+  (let [{:keys [authorize-uri client-id scope
+                authorize-query-params
+                authorize-nonce authorize-redirect-uri-name]} (full-provider-config config provider)
         query {:client_id client-id
                :redirect_uri  (url-redirect provider current-url)
                ; If the value is code, launches a Basic authorization code flow, requiring a POST to the token endpoint to obtain the tokens.
                ;  If the value is token id_token or id_token token, launches an Implicit flow
-               :response_type authorize-response-type ; response_type=token
+               ;:response_type authorize-response-type ; response_type=token
                :scope (scope->string scope)
                ; state: sessionid
                }
-        query (case provider
-                :xero (assoc query :returnUrl "https://login.xero.com/identity/identity/connect/authorize") ; not sure why this is needed.                 
-                :google
-                (assoc query :access_type "offline"; the client does not receive a refresh token unless a value of offline is specified. (online or offline
-                       :nonce (nonce))
-                query)]
+        query (if authorize-redirect-uri-name
+                (rename-keys query {:redirect_uri authorize-redirect-uri-name})
+                query)
+        query (if authorize-nonce
+                (assoc query :nonce (nonce))
+                query)
+        query (merge authorize-query-params query)]
+    (info "authorize query params: " authorize-query-params)
     (infof "oauth2 for: %s authorize-uri: %s params: %s" provider authorize-uri (pr-str query))
     (-> (url authorize-uri)
         (assoc :query query)

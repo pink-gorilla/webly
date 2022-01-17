@@ -26,6 +26,9 @@
 
   ring-oauth2/ring-oauth2 {:mvn/version "0.1.5"}
 
+  com.draines/postal {:mvn/version "2.0.5"} ; smtp email
+  telegrambot-lib/telegrambot-lib {:mvn/version "1.3.0"} ; telegram
+
   org.pinkgorilla/modular {:mvn/version "0.0.22"}
   modular/frontend {:local/root "../frontend" :deps/manifest :deps}
   modular/websocket {:local/root "../websocket" :deps/manifest :deps}

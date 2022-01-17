@@ -74,7 +74,7 @@
                :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
                             }
                :exec-fn webly.app.app/webly-run
-               :exec-args {:config ["webly/config.edn" "demo.edn" "creds.edn"]
+               :exec-args {:config ["webly/config.edn" "demo.edn" "creds-localhost.edn"]
                            :profile "npm-install"}}
 
 

@@ -42,7 +42,11 @@
   :rest-google {:exec-fn demo/make-requests
                 :exec-args {:provider :google}}
 
-
+  :rest-email {:exec-fn demo/make-requests
+                :exec-args {:provider :email}}
+  
+  :rest-telegram {:exec-fn demo/make-requests
+                  :exec-args {:provider :telegram}}
 
 ;
   }}

@@ -11,6 +11,6 @@
   [block2 "oauth2"
     [user-login]
     [:div.border.border-blue-500.border-2.border-round ; .overflow-scroll
-     [provider-status-grid [:google :github :xero
+     [provider-status-grid [:google :github :xero :woo
                             :wunderbar]]] ; not available. does not have token.
     ])

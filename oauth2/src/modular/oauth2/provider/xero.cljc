@@ -18,7 +18,9 @@
 (def config
   {; authorize
    :authorize-uri "https://login.xero.com/identity/connect/authorize"
-   :authorize-response-type "code"
+   :authorize-query-params {:response_type "code"
+                            :returnUrl "https://login.xero.com/identity/identity/connect/authorize" ; not sure why this is needed.    
+                            }
    :parse-authorize-response parse-authorize-response
    ; refresh token  
    :token-uri "https://identity.xero.com/connect/token"

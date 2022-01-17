@@ -48,7 +48,7 @@ https://github.com/ovotech/ring-jwt
    ["/user" {:get (fn [request] (ok (-> request :session :identity)))}]]])
 
 
-Thank you! That lead me to the right direction. I found that I could split the token and then get the values from it with that lib: (println (b64/decodeString (second (clojure.string/split token #"\."))))
+ I found that I could split the token and then get the values from it with that lib: (println (b64/decodeString (second (clojure.string/split token #"\."))))
 
 https://github.com/liquidz/clj-jwt/blob/master/src/clj_jwt/core.clj
 
@@ -150,23 +150,33 @@ Here is an example of such a document; the field names are those specified in Op
   ]
 }
 
-Google ID Tokens may contain the following fields (known as claims):
-Claim 	Provided 	Description
-aud 	always 	The audience that this ID token is intended for. It must be one of the OAuth 2.0 client IDs of your application.
-exp 	always 	Expiration time on or after which the ID token must not be accepted. Represented in Unix time (integer seconds).
-iat 	always 	The time the ID token was issued. Represented in Unix time (integer seconds).
-iss 	always 	The Issuer Identifier for the Issuer of the response. Always https://accounts.google.com or accounts.google.com for Google ID tokens.
-sub 	always 	An identifier for the user, unique among all Google accounts and never reused. A Google account can have multiple email addresses at different points in time, but the sub value is never changed. Use sub within your application as the unique-identifier key for the user. Maximum length of 255 case-sensitive ASCII characters.
-at_hash 		Access token hash. Provides validation that the access token is tied to the identity token. If the ID token is issued with an access_token value in the server flow, this claim is always included. This claim can be used as an alternate mechanism to protect against cross-site request forgery attacks, but if you follow Step 1 and Step 3 it is not necessary to verify the access token.
-azp 		The client_id of the authorized presenter. This claim is only needed when the party requesting the ID token is not the same as the audience of the ID token. This may be the case at Google for hybrid apps where a web application and Android app have a different OAuth 2.0 client_id but share the same Google APIs project.
-email 		The user's email address. This value may not be unique to this user and is not suitable for use as a primary key. Provided only if your scope included the email scope value.
-email_verified 		True if the user's e-mail address has been verified; otherwise false.
-family_name 		The user's surname(s) or last name(s). Might be provided when a name claim is present.
-given_name 		The user's given name(s) or first name(s). Might be provided when a name claim is present.
-hd 		The hosted G Suite domain of the user. Provided only if the user belongs to a hosted domain.
-locale 		The user's locale, represented by a BCP 47 language tag. Might be provided when a name claim is present.
-name 		The user's full name, in a displayable form. Might be provided when:
 
+aud The audience that this ID token is intended for. 
+    It must be one of the OAuth 2.0 client IDs of your application.
+exp Expiration time on or after which the ID token must not be accepted.
+    Represented in Unix time (integer seconds).
+iat	The time the ID token was issued. Represented in Unix time (integer seconds).
+iss The Issuer Identifier for the Issuer of the response. 
+    Always https://accounts.google.com or accounts.google.com for Google ID tokens.
+sub An identifier for the user, unique among all Google accounts and never reused. 
+    A Google account can have multiple email addresses at different points in time, but the sub value is never changed. Use sub within your application as the unique-identifier key for the user. Maximum length of 255 case-sensitive ASCII characters.
+at_hash Access token hash. 
+   Provides validation that the access token is tied to the identity token. If the ID token is issued with an access_token value in the server flow, this claim is always included. This claim can be used as an alternate mechanism to protect against cross-site request forgery attacks, but if you follow Step 1 and Step 3 it is not necessary to verify the access token.
+azp 		The client_id of the authorized presenter. 
+   This claim is only needed when the party requesting the ID token is not the same as the audience of the ID token. This may be the case at Google for hybrid apps where a web application and Android app have a different OAuth 2.0 client_id but share the same Google APIs project.
+email 		The user's email address. 
+   This value may not be unique to this user and is not suitable for use as a primary key. Provided only if your scope included the email scope value.
+email_verified 		True if the user's e-mail address has been verified; otherwise false.
+family_name 		The user's surname(s) or last name(s). 
+   Might be provided when a name claim is present.
+given_name 		The user's given name(s) or first name(s). 
+   Might be provided when a name claim is present.
+hd 		The hosted G Suite domain of the user. 
+   Provided only if the user belongs to a hosted domain.
+locale 		The user's locale, represented by a BCP 47 language tag. 
+   Might be provided when a name claim is present.
+name 		The user's full name, in a displayable form. 
+   Might be provided when:
     The request scope included the string "profile"
     The ID token is returned from a token refresh
 

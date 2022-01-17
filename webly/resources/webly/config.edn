@@ -107,7 +107,15 @@
                                   "accounting.contacts"
                                   "accounting.attachments"
                                   "accounting.transactions"
-                                  "accounting.transactions.read"]}}
+                                  "accounting.transactions.read"]}
+           :woo {:scope ["read" 
+                         ;"write" 
+                         ;"read_write"
+                         ]
+                 :app_name "goldly-crb"
+                 :user_id "goldly-crb"}
+                                  
+                                  }
 
  :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :info]
                    [#{"org.eclipse.jetty.*"} :info]

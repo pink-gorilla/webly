@@ -5,7 +5,7 @@
    [re-frame.core :as rf]
    [modular.oauth2.authorize.redirect :refer [register-callback]]
    [modular.oauth2.token.save-handler] ; side effects
-   [modular.oauth2.provider :refer [url-authorize]]
+   [modular.oauth2.provider :refer [url-start url-authorize]]
    [modular.oauth2.token.sanitize :refer [sanitize-token]]))
 
 ;; LOGIN
@@ -14,7 +14,8 @@
   (-> js/window .-location .-href))
 
 (defn open-authorize-window [db provider]
-  (let [url-auth (url-authorize (:config db) provider (current-url))]
+  (let [;url-auth (url-authorize (:config db) provider (current-url))
+        url-auth (url-start provider)]
     (info "opening oauth2 window: " url-auth)
     (.open js/window
            url-auth

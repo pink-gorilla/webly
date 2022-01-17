@@ -1,6 +1,8 @@
-(ns modular.oauth2.provider.google
+(ns  modular.oauth2.provider.woo
   (:require
    [modular.oauth2.protocol :refer [provider-config]]))
+
+; https://woocommerce.github.io/woocommerce-rest-api-docs/#rest-api-keys
 
 #_(defn parse-authorize-token-response [{:keys [anchor]}]
     ; #access_token=ya29.a0ARrdaM9mY4gaGPSU_5pMhS7x3wsgrPhDWhGy0fQVIwlsz7soPBlLVnAAEYQWl9SudGnfmapQ_2dq1oa6jS-SlJlR59cniSm1TAFkrK2KEqmBnvJHNI-mux6GDFtuVh-st5eysR97Z3xHSfjkxhsf9QknOZLv
@@ -10,8 +12,8 @@
     (let [{:keys [access_token scope expires_in token_type]} anchor]
       {:access-token access_token
        :scope scope
-       :expires #?(:cljs (js/parseInt expires_in)
-                   :clj (:expires_in anchor))
+       ;:expires #?(:cljs (js/parseInt expires_in)
+       ;            :clj (:expires_in anchor))
        :type token_type}))
 
 (defn parse-authorize-code-response [{:keys [query]}]
@@ -31,18 +33,12 @@
 (defn api-request-auth-header [token]
   {"Authorization" (str "Bearer " token)})
 
-; https://oauth2.example.com/code?state=security_token%3D138r5719ru3e1%26url%3Dhttps%3A%2F%2Foa2cb.example.com%2FmyHome&code=4/
-; https://developers.google.com/identity/protocols/oauth2/openid-connect#createxsrftoken
-; https://developers.google.com/identity/protocols/oauth2#5.-refresh-the-access-token,-if-necessary.
-; https://developers.google.com/accounts/docs/OAuth2WebServer
-
 (def config
   {; authorize
-   :authorize-uri "https://accounts.google.com/o/oauth2/v2/auth"
-   :authorize-query-params {:response_type "code" ; "token" ; 
-                            :access_type "offline"; the client does not receive a refresh token unless a value of offline is specified. (online or offline
-                            }
-   :authorize-nonce true
+   :authorize-uri "https://www.crbclean.com/wc-auth/v1/authorize"
+  ; :authorize-query-params {
+  ;   }
+   :authorize-redirect-uri-name :return_url ; URL the user will be redirected to after authentication
    :parse-authorize-response parse-authorize-code-response
 
     ; access token
@@ -52,38 +48,15 @@
 
    ; api requests
    :auth-header api-request-auth-header
-   :endpoints {:userinfo "https://www.googleapis.com/oauth2/v2/userinfo"
-               :search "https://api.goog.io/v1/search"
-               :drive-files-list "https://www.googleapis.com/drive/v3/files"
-               ;https://developers.google.com/drive/api/v3/reference/files/list
-               :sheets "https://sheets.googleapis.com/v4/spreadsheets/" ;{spreadsheetId}:batchUpdate
-               }
-; userinfo
-   :user "https://www.googleapis.com/oauth2/v2/userinfo"
+   :endpoints {:userinfo nil
+               :orders "http://www.crbclean.com/wp-json/wc/v3/orders"}
+   ; userinfo
+   :user nil
    :user-parse user-parse
 
    :icon "fab fa-google-plus"})
 
-(defmethod provider-config :google [_]
+(defmethod provider-config :woo [_]
   config)
 
-; Google refresh token -> access token. 
-;refresh_token: <REFRESH_TOKEN_FOR_THE_USER>
-;grant_type: refresh_token
-
-;In order to get an access token with a refresh token, you just need to ask for the offline 
-; access
-; type (for example in PHP: $client->setAccessType("offline");) and you will get it.
-; Just keep in mind you will get the access token with the refresh token only in 
-; the first authorization, so make sure to save that access token in the first time
-; , and you will be able to use it anytime.
-
-; Token query 
-; Grant type,: authorization_code
-; Code 
-
-; refresh_token
-; (Optional)
-; Dieses Feld ist nur vorhanden, wenn der Parameter 
- ; access_type in der Authentifizierungsanforderung 
-;   auf offline wurde. Weitere Informationen finden Sie unter Aktualisieren von Token .
+; https://woocommerce.github.io/woocommerce-rest-api-docs/

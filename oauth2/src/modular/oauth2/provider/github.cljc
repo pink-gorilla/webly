@@ -24,7 +24,9 @@
 (def config
   {; authorize
    :authorize-uri "https://github.com/login/oauth/authorize"
-   :authorize-response-type "code" ;  "token"
+   :authorize-query-params {:response_type "code" ;  "token"
+                            }
+
    :parse-authorize-response parse-authorize-response
 
    ; token
