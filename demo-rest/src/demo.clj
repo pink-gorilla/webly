@@ -6,20 +6,19 @@
    ; token info
    [modular.oauth2.token.info :as t]
    [token-info :refer [show]]
-   ; rest
+   ; martian apis
    [rest.google :refer [google]]
    [rest.github :refer [github]]
    [rest.xero :refer [xero]]
+   [rest.pets :refer [pets]]
+   [rest.woo :refer [woo]]
+   ; [rest.wordpress :refer [wordpress]]
+   ; rest via libs
    [rest.email :refer [email]]
    [rest.telegram :refer [telegram]]
-   ; martian apis:
-   [rest.woo :refer [woo]]
-   [rest.pets :refer [pets]]
-  ; [rest.wordpress :refer [wordpress]]
-
-
+   ; helper functions  
    [rest.schema :refer [infer-schema]]
-   
+   [rest.paging :refer [paging-xero]]
    ))
 
 
@@ -39,6 +38,7 @@
     :pets (pets)
  ;   :wordpress (wordpress)
     :schema (infer-schema)
+    :paging (paging-xero)
     ;
     ))
 

@@ -18,11 +18,12 @@
         t (martian-xero-tenant tenant-id)
         ;invoice-id "e10557d0-f6d4-4a86-b790-6a93e8281a52"
         ;t (header-xero-tenant tenant-id)
-        invoices (->> (martian/response-for t :invoice-list-since 
-                                   {:where "(Type == \"ACCREC\")"       
+        invoice-r (martian/response-for t :invoice-list ; -since 
+                                   {;:where "(Type == \"ACCREC\")"       
                                     :page 1})
-                  :body
-                  :Invoices)
+        invoices (->> invoice-r                  
+                      :body
+                      :Invoices)
         contacts (->> (martian/response-for t :contact-list
                                    {:page 1})
                   :body
@@ -44,6 +45,11 @@
      (->> (f/->schema contacts)
           (info "inferred schema for contacts: "))
 
+     
+     ;(info "contacts: " (pr-str contacts))
+     ;(info "invoices: " (pr-str invoices))
+     (spit "/tmp/invoices.edn" (pr-str invoice-r))
+     (spit "/tmp/contacts.edn" (pr-str contacts))
 
 ;
   ))

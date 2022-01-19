@@ -66,5 +66,8 @@
   :rest-schema {:exec-fn demo/make-requests
              :exec-args {:provider :schema}}
 
+  :rest-paging {:exec-fn demo/make-requests
+             :exec-args {:provider :paging}}
+
 ;
   }}
