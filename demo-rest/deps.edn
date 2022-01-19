@@ -8,6 +8,8 @@
   clj-oauth/clj-oauth {:mvn/version "1.5.2"}
                  ;[clj-http "1.1.2"]
 
+  funes/funes {:mvn/version "0.1.0"}
+
   org.pinkgorilla/modular {:mvn/version "0.0.22"}
   org.pinkgorilla/modular-oauth2 {:local/root "../oauth2" :deps/manifest :deps}}
 
@@ -61,6 +63,8 @@
   :rest-wordpress {:exec-fn demo/make-requests
              :exec-args {:provider :wordpress}}
 
+  :rest-schema {:exec-fn demo/make-requests
+             :exec-args {:provider :schema}}
 
 ;
   }}

@@ -28,7 +28,7 @@
     :produces ["application/json"]
     :consumes ["application/json"]}
    {:route-name :contact
-    :summary "list contacts"
+    :summary "get contact"
     :method :get
     :path-parts ["/api.xro/2.0/Contacts/" :contact-id]
     :path-schema {:contact-id s/Str}
@@ -40,6 +40,12 @@
     :path-parts ["/api.xro/2.0/Contacts/"]
    ;:path-schema {:contact-id s/Str}
     :body-schema {:c {:contacts s/Any}}
+    :produces ["application/json"]
+    :consumes ["application/json"]}
+   {:route-name :contact-list
+    :summary "list contacts"
+    :method :get
+    :path-parts ["/api.xro/2.0/Contacts/"]
     :produces ["application/json"]
     :consumes ["application/json"]}
    {:route-name :add-contacts-to-group

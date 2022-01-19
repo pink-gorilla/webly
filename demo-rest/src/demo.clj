@@ -16,6 +16,9 @@
    [rest.woo :refer [woo]]
    [rest.pets :refer [pets]]
   ; [rest.wordpress :refer [wordpress]]
+
+
+   [rest.schema :refer [infer-schema]]
    
    ))
 
@@ -34,7 +37,8 @@
     :telegram (telegram)
     :woo (woo)
     :pets (pets)
-    :wordpress (wordpress)
+ ;   :wordpress (wordpress)
+    :schema (infer-schema)
     ;
     ))
 
