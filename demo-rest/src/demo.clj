@@ -15,7 +15,7 @@
    ; martian apis:
    [rest.woo :refer [woo]]
    [rest.pets :refer [pets]]
-   [rest.wordpress :refer [wordpress]]
+  ; [rest.wordpress :refer [wordpress]]
    
    ))
 

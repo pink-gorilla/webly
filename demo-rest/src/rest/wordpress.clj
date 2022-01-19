@@ -2,8 +2,11 @@
  (:require
    [clojure.pprint :refer [print-table]]
    [taoensso.timbre :as timbre :refer [info error]]
-   [modular.oauth2.request :refer [get-request post-request put-request]]
+  
 ))
+
+
+;; this does not work. 
 
 
 ; If you are trying to view a protected endpoint (products, orders, users, etc), 
