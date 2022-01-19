@@ -36,13 +36,10 @@
 
    ; api requests
    :auth-header api-request-auth-header
-   :endpoints {:userinfo    "https://api.github.com/user"
-               :search-repo "https://api.github.com/search/repositories" ; q=user:USERNAME
-               }
+   :endpoints {:userinfo    "https://api.github.com/user"}
    ; userinfo
    :user "https://api.github.com/user"
    :user-parse user-parse
-
    :icon  "fab fa-github-square"})
 
 (defmethod provider-config :github [_]

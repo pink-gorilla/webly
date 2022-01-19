@@ -8,6 +8,7 @@
    [modular.oauth2.provider.github :as github]
    [modular.oauth2.provider.xero :as xero]
    [modular.oauth2.provider.woo :as woo]
+   [modular.oauth2.provider.wordpress :as wordpress]
    [modular.oauth2.protocol :refer [provider-config known-providers]]))
 
 ;; our page strucutre for different providers

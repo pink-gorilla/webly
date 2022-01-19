@@ -52,12 +52,7 @@
 
    ; api requests
    :auth-header api-request-auth-header
-   :endpoints {:userinfo "https://www.googleapis.com/oauth2/v2/userinfo"
-               :search "https://api.goog.io/v1/search"
-               :drive-files-list "https://www.googleapis.com/drive/v3/files"
-               ;https://developers.google.com/drive/api/v3/reference/files/list
-               :sheets "https://sheets.googleapis.com/v4/spreadsheets/" ;{spreadsheetId}:batchUpdate
-               }
+   :endpoints {:userinfo "https://www.googleapis.com/oauth2/v2/userinfo"}
 ; userinfo
    :user "https://www.googleapis.com/oauth2/v2/userinfo"
    :user-parse user-parse

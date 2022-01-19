@@ -27,12 +27,7 @@
    :accessTokenResponseKey "id_token"
    ; api requests
    :auth-header api-request-auth-header
-   :endpoints {:userinfo "https://api.xero.com/api.xro/2.0/Organisation"
-               :tenants "https://api.xero.com/connections"
-               :contact "https://api.xero.com/api.xro/2.0/Contacts/"
-               :contact-group "https://api.xero.com/api.xro/2.0/ContactGroups/"
-               :invoice "https://api.xero.com/api.xro/2.0/Invoices/"
-               :branding-themes "https://api.xero.com/api.xro/2.0/BrandingThemes"}
+   :endpoints {:userinfo "https://api.xero.com/api.xro/2.0/Organisation"}
    ; userinfo
    :user "https://api.xero.com/api.xro/2.0/Organisation"
    :user-parse user-parse})

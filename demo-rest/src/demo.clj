@@ -2,7 +2,7 @@
   (:require
    [clojure.pprint :refer [print-table]]
    [taoensso.timbre :as timbre :refer [info error]]
-   [modular.config :refer [load-config!]]
+   [modular.config :refer [load-config! get-in-config]]
    ; token info
    [modular.oauth2.token.info :as t]
    [token-info :refer [show]]
@@ -12,11 +12,17 @@
    [rest.xero :refer [xero]]
    [rest.email :refer [email]]
    [rest.telegram :refer [telegram]]
+   ; martian apis:
+   [rest.woo :refer [woo]]
+   [rest.pets :refer [pets]]
+   [rest.wordpress :refer [wordpress]]
    
    ))
 
 
 (load-config! ["webly/config.edn" "demo-config.edn" "creds.edn"])
+
+(info "oauth2 config: " (get-in-config [:oauth2]))
 
 (defn make-requests [{:keys [provider]}]
   ; cli entry point
@@ -26,6 +32,9 @@
     :github (github)
     :email (email)
     :telegram (telegram)
+    :woo (woo)
+    :pets (pets)
+    :wordpress (wordpress)
     ;
     ))
 

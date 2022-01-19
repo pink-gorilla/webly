@@ -4,6 +4,10 @@
   clj-http/clj-http {:mvn/version "3.12.1"}
   commons-codec/commons-codec {:mvn/version "1.15"}
   uri/uri {:mvn/version "1.1.0"}
+
+  clj-oauth/clj-oauth {:mvn/version "1.5.2"}
+                 ;[clj-http "1.1.2"]
+
   org.pinkgorilla/modular {:mvn/version "0.0.22"}
   org.pinkgorilla/modular-oauth2 {:local/root "../oauth2" :deps/manifest :deps}}
 
@@ -47,6 +51,16 @@
   
   :rest-telegram {:exec-fn demo/make-requests
                   :exec-args {:provider :telegram}}
+
+  :rest-pets {:exec-fn demo/make-requests
+            :exec-args {:provider :pets}}
+
+ :rest-woo {:exec-fn demo/make-requests
+            :exec-args {:provider :woo}}
+
+  :rest-wordpress {:exec-fn demo/make-requests
+             :exec-args {:provider :wordpress}}
+
 
 ;
   }}

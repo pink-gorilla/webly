@@ -3,7 +3,7 @@
    [clojure.pprint :refer [print-table]]
    [taoensso.timbre :as timbre :refer [info error]]
    [clojure.java.io :as io]
-   [modular.api.email :refer [send-email]]
+   [modular.rest.lib.email :refer [send-email]]
 ))
 
 (defn email []

@@ -1,4 +1,4 @@
-(ns modular.api.email
+(ns modular.rest.lib.email
   (:require
    [postal.core :as postal]
    [modular.config :refer [get-in-config]]))

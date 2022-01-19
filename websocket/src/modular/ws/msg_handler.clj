@@ -1,6 +1,6 @@
 (ns modular.ws.msg-handler
   (:require
-   [taoensso.timbre :refer [tracef debugf info infof warn warnf error errorf]]))
+   [taoensso.timbre :refer [tracef debug debugf info infof warn warnf error errorf]]))
 
 (defn ws-reply [{:keys [event id ?data ring-req ?reply-fn send-fn] :as req}
                 res]
@@ -66,7 +66,7 @@
 
 (defn ws-always-authorized? [event]
   (let [a (contains? always-authorized event)]
-    (info "ws-always-authorized? " event ": " a)
+    (debug "ws-always-authorized? " event ": " a)
     a))
 
 (defn event-msg-handler [{:keys [client-id id event ?data uid] :as req}]
