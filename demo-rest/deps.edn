@@ -69,5 +69,8 @@
   :rest-paging {:exec-fn demo/make-requests
              :exec-args {:provider :paging}}
 
+  :rest-validate {:exec-fn demo/make-requests
+             :exec-args {:provider :validate}}
+
 ;
   }}

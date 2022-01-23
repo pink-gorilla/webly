@@ -6,6 +6,7 @@
    [funes.core :as f]
    [funes.schema :as s]
    [modular.oauth2.token.refresh :refer [refresh-auth-token]]
+   [modular.rest.paging :refer [request-paginated]]
    [modular.rest.martian.xero :refer [martian-xero martian-xero-tenant]]))
 
 
@@ -24,6 +25,10 @@
         invoices (->> invoice-r                  
                       :body
                       :Invoices)
+        params {;:where "(Type == \"ACCREC\")"
+                } ;"Date >= DateTime(2022, 01, 01)"
+
+        invoices (request-paginated t :invoice-list params :Invoices)             
         contacts (->> (martian/response-for t :contact-list
                                    {:page 1})
                   :body
@@ -48,7 +53,7 @@
      
      ;(info "contacts: " (pr-str contacts))
      ;(info "invoices: " (pr-str invoices))
-     (spit "/tmp/invoices.edn" (pr-str invoice-r))
+     (spit "/tmp/invoices.edn" (pr-str invoices))
      (spit "/tmp/contacts.edn" (pr-str contacts))
 
 ;

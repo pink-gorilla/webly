@@ -19,6 +19,7 @@
    ; helper functions  
    [rest.schema :refer [infer-schema]]
    [rest.paging :refer [paging-xero]]
+   [rest.validate :refer [validate]]
    ))
 
 
@@ -39,6 +40,7 @@
  ;   :wordpress (wordpress)
     :schema (infer-schema)
     :paging (paging-xero)
+    :validate (validate)
     ;
     ))
 
