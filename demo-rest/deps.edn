@@ -18,8 +18,8 @@
                           org.slf4j/slf4j-nop {:mvn/version "1.7.32"}}
              :main-opts ["-m" "antq.core"]}
 
-  :nrepl {:extra-deps {nrepl/nrepl  {:mvn/version "0.8.3"}
-                       cider/cider-nrepl {:mvn/version,"0.27.2"}}
+  :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "0.9.0"}
+                       cider/cider-nrepl {:mvn/version "0.28.3"}}
           :main-opts  ["-m" "nrepl.cmdline"]}
 
    ; debugging

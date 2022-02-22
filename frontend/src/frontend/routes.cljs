@@ -25,17 +25,10 @@
     (info "entry-path-adjust path: " path " adjusted: " path-adjusted)
     path-adjusted))
 
-
-
 (defn html-static-adjust [path]
   (if (str/ends-with? path "/index.html")
     (str/replace path "/index.html" "/")
     path))
-
-
-
-
-
 
 ; bidi does not handle query params
 ; idea how to solve the problem: https://github.com/juxt/bidi/issues/51
@@ -89,7 +82,7 @@
 ; pushy
 
 (defn- path->route
-  [routes path-with-qp & {:as options}]
+  [routes path-with-qp options]
   (let [{:keys [path query]} (cemerick.url/url path-with-qp)
         query-params (->> query
                           (map (fn [[k v]] [(keyword k) v]))
@@ -124,6 +117,8 @@
         path (entry-path-adjust path)
         path (html-static-adjust path)]
     (info "adjusted path: " path)
+    ;(info "routes: " @routes)
+    ;(info "options:  " options)
     (path->route @routes path options))) ; options
 
 ; see: 

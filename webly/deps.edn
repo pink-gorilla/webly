@@ -2,7 +2,7 @@
          "resources"  ; webly resources (svg/img)
          ]
  :deps {org.clojure/clojure {:mvn/version  "1.10.3"}
-        org.clojure/core.async {:mvn/version  "1.3.618"}
+        org.clojure/core.async {:mvn/version  "1.5.648"}
 
         ; logging
         ;org.slf4j/slf4j-api {:mvn/version "2.0.0-alpha1"}
@@ -30,10 +30,10 @@
         ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler
         ; will fail because shadow contains core.async which is not compatible with 
         ; self hosted clojurescript
-        thheller/shadow-cljs {:mvn/version "2.15.2"}
+        thheller/shadow-cljs {:mvn/version "2.17.4"}
                               ;:exclusions [org.clojure/tools.reader] ; outdated
         ;{thheller/shadow-cljsjs "0.0.21"}  ; already referred to from shadow-cljs
-        org.clojure/clojurescript {:mvn/version "1.10.879"}
+        ;org.clojure/clojurescript {:mvn/version "1.10.879"} ; already referred from shadow-cljs
 
         ; modular
         modular/webserver {:local/root "../webserver" :deps/manifest :deps} ; brings modular
