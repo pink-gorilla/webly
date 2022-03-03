@@ -12,7 +12,7 @@
         (if user-data
           (:roles user-data)
           #{}))
-      (do (info "get-urser-roles for nil user")
+      (do (info "get-user-roles for nil user")
           nil))
     (do (error "user roles missing: please add :users to config!")
         #{})))
