@@ -10,9 +10,9 @@
    [modular.ws.middleware :refer [wrap-ws]]))
 
 ; wrapping not needd and fucks up the redirection
-#_(def handler-oauth2-start-wrapped
-    (-> handler-oauth2-start
-        wrap-api-handler))
+(def handler-oauth2-start-wrapped
+  (-> handler-oauth2-start
+      wrap-api-handler))
 
 (def handler-oauth2-redirect-wrapped
   (-> handler-oauth2-redirect
@@ -26,7 +26,7 @@
   (-> handler-oauth2-save
       wrap-api-handler))
 
-(add-ring-handler :oauth2/start handler-oauth2-start)
+(add-ring-handler :oauth2/start handler-oauth2-start-wrapped)
 (add-ring-handler :oauth2/redirect handler-oauth2-redirect-wrapped)
 (add-ring-handler :oauth2/token token-handler-wrapped)
 (add-ring-handler :oauth2/save-token handler-oauth2-save-wrapped)

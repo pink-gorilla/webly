@@ -6,10 +6,14 @@
    [modular.oauth2.provider :refer [url-authorize]]))
 
 (defn handler-oauth2-start [req]
-  (debug "oauth2/authorize-start: params:" (:params req))
-  ;(info "oauth2/authorize-start: query-params:" (:query-params req))
+  (info "oauth2/authorize-start: "
+        "params:" (:params req)
+        "query-params:" (:query-params req))
+  (info "oauth2/authorize-start: req:" req)
   (let [{:keys [scheme server-name server-port uri]} req
-        ; {:scheme :http :server-name "localhost" :server-port 8080
+        current-url (get-in req [:query-params "current-url"])
+        _ (info "current url query-param: " current-url)
+         ; {:scheme :http :server-name "localhost" :server-port 8080
         ;  :uri "/api/oauth2/start/github" :protocol "HTTP/1.1"}
         ; :headers {"host" "localhost:8080"}, 
         oauth-config (get-in-config [])
@@ -18,8 +22,9 @@
         _  (info "oauth2 start for provider: " provider-kw)
         ;current-url (get-in req [:query-params :current-url])
         ;current-url "http://localhost:8080/"
-        current-url (str (name scheme) "://" server-name ":" server-port uri)
-        _ (debug "current url: " current-url)
+        current-url (or current-url
+                        (str (name scheme) "://" server-name ":" server-port uri))
+        _ (info "current url: " current-url)
         url-auth (url-authorize oauth-config provider-kw current-url)]
     (debug "url auth: " url-auth)
     (-> (response/redirect url-auth)

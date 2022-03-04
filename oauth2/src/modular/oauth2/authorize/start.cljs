@@ -14,8 +14,7 @@
   (-> js/window .-location .-href))
 
 (defn open-authorize-window [db provider]
-  (let [;url-auth (url-authorize (:config db) provider (current-url))
-        url-auth (url-start provider)]
+  (let [url-auth (url-start provider (current-url))]
     (info "opening oauth2 window: " url-auth)
     (.open js/window
            url-auth

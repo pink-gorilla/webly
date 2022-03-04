@@ -40,12 +40,13 @@
 
 ;; AUTHORIZE - START
 
-(defn url-start [provider-kw] ;current-url
-  (->> provider-kw
-       provider-uri
-       :start-uri
-       ;(set-relative-path current-url)
-       ))
+(defn url-start [provider-kw current-url]
+  (let [provider-path (-> provider-kw provider-uri :start-uri)]
+    (-> (url current-url)
+        (assoc :query {:current-url current-url}
+               :path provider-path)
+        (str))))
+
 (defn scope->string [scope]
   (let [scope (if (nil? scope) "" scope)
         scope (if (string? scope)
