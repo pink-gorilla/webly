@@ -6,8 +6,7 @@
    [modular.oauth2.provider :refer [url-authorize]]))
 
 (defn handler-oauth2-start [req]
-  ;(info "oauth2/authorize-start: " req)
-  (info "oauth2/authorize-start: params:" (:params req))
+  (debug "oauth2/authorize-start: params:" (:params req))
   ;(info "oauth2/authorize-start: query-params:" (:query-params req))
   (let [{:keys [scheme server-name server-port uri]} req
         ; {:scheme :http :server-name "localhost" :server-port 8080

@@ -63,11 +63,29 @@
       (assoc :path path)
       (.toString)))
 
+;(defn url-without-qp [url-str]
+;  (let [{:keys [proto host port path]} (url url-str)
+;        port-str (if (< 0 port)
+;                   (str ":" port)
+;                   "")
+;        url-str-no-qp (str proto ":" host port-str path)]
+;    (info "url without qp: " url-str-no-qp)
+;    url-str-no-qp))
+
+(defn url-without-qp [url-str]
+  (info "url with qp: " url-str)
+  (let [url-no-qp-str (-> (url url-str)
+                          (assoc :query nil :anchor nil)
+                          str)]
+    (info "url without qp: " url-no-qp-str)
+    url-no-qp-str))
+
 (defn url-redirect [provider-kw current-url]
   (->> provider-kw
        provider-uri
        :redirect-uri
-       (set-relative-path current-url)))
+       (set-relative-path current-url)
+       (url-without-qp)))
 
 (defn url-authorize [config provider current-url]
   (let [{:keys [authorize-uri client-id scope
