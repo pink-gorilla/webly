@@ -72,6 +72,12 @@
                                         :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
           :main-opts ["-m" "clj-check.check"]}
 
+ ; tree and list are here just because tools.deps.alpha does not work on my machine
+  :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
+         :exec-fn clojure.tools.cli.api/tree}
+:list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
+       :exec-fn clojure.tools.cli.api/list}
+  
 
 ;
   }}

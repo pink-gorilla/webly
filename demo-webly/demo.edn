@@ -14,10 +14,10 @@
          :title "Webly Demo"
          :start-user-app [:demo/start]
          :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
-                                     false []} }
+                                     false []}}
                  :current {:emoji    false}}}
 
- 
+
  :static-main-path "/webly" ; for static-page build (github pages)
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
@@ -27,6 +27,22 @@
                            [#{"webly.user.*"} :info]
                            [#{"webly.*"} :info]
                            [#{"*"} :info]]}
+
+ :timbre/clj {:min-level [[#{"org.eclipse.jetty.*"} :warn]
+                          [#{"modular.oauth2.token.refresh"} :warn]
+                          [#{"*"} :info]]
+              :appenders {:default {:type :console-color}
+                          :file {:type :file
+                                 :fname "target/file.log"}
+                          :rolling {:type :file-rolling
+                                    :path "target/rolling.log"
+                                    :pattern :monthly}
+                          :workflow {:type :file-rolling-context
+                                     :context :scheduled-data-import
+                                     :path "target/workflow.log"
+                                     :pattern :monthly}}}
+
+
 
  :settings {:use-localstorage  true  ; allow user to change settings via localstorage
             :bongo 777}
@@ -46,11 +62,10 @@
                 {:kb "alt-g 3" :handler [:bidi/goto :demo/help] :desc "goto help"}
                 {:kb "alt-g 4" :handler [:bidi/goto :demo/job] :desc "goto job"}
                 {:kb "alt-g 5" :handler [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}] :desc "goto party bali"}
-                {:kb "alt-y l" :handler [:login/dialog ] :desc "login"}
-                {:kb "ctrl-y l" :handler [:login/dialog ] :desc "login"}
-                {:kb "win-y l" :handler [:login/dialog ] :desc "login"}
-                {:kb "win-z l" :handler [:login/dialog ] :desc "login"}
-                ]
+                {:kb "alt-y l" :handler [:login/dialog] :desc "login"}
+                {:kb "ctrl-y l" :handler [:login/dialog] :desc "login"}
+                {:kb "win-y l" :handler [:login/dialog] :desc "login"}
+                {:kb "win-z l" :handler [:login/dialog] :desc "login"}]
 
 
  :permission {:default nil
@@ -61,11 +76,11 @@
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["john@doe.com"]}
          :florian {:roles #{:logistic}
-                   :password "xxxxxxxx" 
+                   :password "xxxxxxxx"
                    :email ["hoertlehner@gmail.com"]}
          :john {:roles #{:logistic}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["john@doe.com"]}}
-                
+
 ;                
-}
+ }
