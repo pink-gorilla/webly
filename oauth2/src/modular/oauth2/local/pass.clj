@@ -5,7 +5,7 @@
    [buddy.core.codecs :as codecs]
    [buddy.core.hash :as hash]
    [buddy.sign.jwt :as jwt]
-   [no.nsd.clj-jwt :as clj-jwt]
+   ;[no.nsd.clj-jwt :as clj-jwt]
    [modular.config :refer [get-in-config]]))
 
 (defn pwd-hash [pwd]

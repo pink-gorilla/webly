@@ -3,7 +3,8 @@
    [modular.oauth2.token.store :refer [load-token]]
    [buddy.sign.jwt :as jwt]
    [clj-jwt.core :refer [str->jwt]]
-   [no.nsd.clj-jwt :as clj-jwt]))
+   ;[no.nsd.clj-jwt :as clj-jwt]
+   ))
 
 (defn get-token [p kw]
   (-> (load-token p)
