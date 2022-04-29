@@ -10,11 +10,10 @@
                            "resources"
                            "test"
                            "test/resources"]
-             :extra-deps {org.slf4j/slf4j-nop {:mvn/version "1.7.32"}
-                          org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
+             :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
                           io.github.cognitect-labs/test-runner
                           {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                           :sha "dd6da11611eeb87f08780a30ac8ea6012d4c05ce"}
+                           :sha "cc75980b43011773162b485f46f939dc5fba91e4"}
                           ring/ring-mock {:mvn/version "0.4.0"}}
              :main-opts ["-m" "cognitect.test-runner"]
              :exec-fn cognitect.test-runner.api/test}

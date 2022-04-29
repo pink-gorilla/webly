@@ -22,11 +22,11 @@
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
- :timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
-                   [#{"modular.ws.*"} :info]
-                   [#{"webly.user.*"} :info]
-                   [#{"webly.*"} :info]
-                   [#{"*"} :info]]
+ :timbre/cljs {:min-level [[#{"org.eclipse.jetty.*"} :info]
+                           [#{"modular.ws.*"} :info]
+                           [#{"webly.user.*"} :info]
+                           [#{"webly.*"} :info]
+                           [#{"*"} :info]]}
 
  :settings {:use-localstorage  true  ; allow user to change settings via localstorage
             :bongo 777}

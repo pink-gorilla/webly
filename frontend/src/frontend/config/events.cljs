@@ -58,7 +58,7 @@
          fx {:db (assoc-in (:db cofx) [:config] config)
              :dispatch [after-config-load static?]}]
      (info "config load-success!")
-     (timbre-config! config)
+     (timbre-config! (:timbre/cljs config))
      (debug "config: " config)
      (if after-config-load
        fx

@@ -18,7 +18,7 @@
        
         ; webly/core
         hiccup/hiccup {:mvn/version "1.0.5"}   ; server side templating
-        reagent/reagent {:mvn/version "1.1.0"} ; https://github.com/reagent-project/reagent
+        reagent/reagent {:mvn/version "1.1.1"} ; https://github.com/reagent-project/reagent
         re-frame/re-frame {:mvn/version "1.2.0"}
         cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
         day8.re-frame/http-fx {:mvn/version "0.2.3"}  ; reframe based http requests

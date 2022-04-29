@@ -10,12 +10,11 @@
 
   funes/funes {:mvn/version "0.1.0"}
 
-  org.pinkgorilla/modular {:mvn/version "0.0.22"}
+  org.pinkgorilla/modular {:mvn/version "0.0.23"}
   org.pinkgorilla/modular-oauth2 {:local/root "../oauth2" :deps/manifest :deps}}
 
  :aliases
- {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}
-                          org.slf4j/slf4j-nop {:mvn/version "1.7.32"}}
+ {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
              :main-opts ["-m" "antq.core"]}
 
   :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "0.9.0"}

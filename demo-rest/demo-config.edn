@@ -1,8 +1,8 @@
-{:timbre-loglevel [[#{"org.eclipse.jetty.*"} :info]
-                   [#{"modular.ws.*"} :info]
-                   [#{"webly.user.*"} :info]
-                   [#{"webly.*"} :info]
-                   [#{"*"} :info]]
+{:timbre/cljs {:min-level [[#{"org.eclipse.jetty.*"} :info]
+                           [#{"modular.ws.*"} :info]
+                           [#{"webly.user.*"} :info]
+                           [#{"webly.*"} :info]
+                           [#{"*"} :info]]}
 
  :oauth2 {:token-path "../demo-webly/.webly/tokenstore/"}
 

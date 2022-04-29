@@ -13,15 +13,13 @@
                                             false []}
                              :tailwind-full {"light" ["tailwindcss/dist/tailwind.min.css"]
                                              "dark" ["tailwindcss/dist/tailwind-dark.min.css"]
-                                             false []
-                                             }
+                                             false []}
                              :tailwind-girouette {true ["girouette.css"]
                                                   false []}
                              :fontawesome {true ["@fortawesome/fontawesome-free/css/all.min.css"]
                                            false []}
                              :fonts-google    {true ["fonts-google/fonts.css"]
-                                               false []
-                                               }}
+                                               false []}}
                  :current {:webly-dialog true
                            :tailwind-full false ; "light" ; true
                            :tailwind-girouette true
@@ -99,7 +97,7 @@
 
           :xero {:client-id        ""
                  :client-secret    ""
-                 :token-prefix "Bearer " 
+                 :token-prefix "Bearer "
                  :scope          ["offline_access" ; refresh_token
                                   "openid"
                                   "profile"
@@ -111,19 +109,17 @@
                                   "accounting.attachments"
                                   "accounting.transactions"
                                   "accounting.transactions.read"]}
-           :woo {:scope ["read" 
+          :woo {:scope ["read"
                          ;"write" 
                          ;"read_write"
-                         ]
-                 :app_name "goldly-crb"
-                 :user_id "goldly-crb"}
-                                  
-                                  }
+                        ]
+                :app_name "goldly-crb"
+                :user_id "goldly-crb"}}
 
- :timbre-loglevel [[#{"pinkgorilla.nrepl.client.connection"} :info]
-                   [#{"org.eclipse.jetty.*"} :info]
-                   [#{"webly.*"} :info]
-                   [#{"*"} :info]]
+ :timbre/cljs {:min-level [[#{"pinkgorilla.nrepl.client.connection"} :info]
+                           [#{"org.eclipse.jetty.*"} :info]
+                           [#{"webly.*"} :info]
+                           [#{"*"} :info]]}
 
  :keybindings [; https://github.com/piranha/keybind
                ; shift, ctrl, alt, win, cmd, defmod, "left" "right"
@@ -132,7 +128,4 @@
                {:kb "esc"     :handler [:modal/close]            :desc "Dialog Close"} ; for ALL dialogs!
                {:kb "alt-g t" :handler [:reframe10x-toggle] :desc "10x visibility toggle"}]
 
- :settings {:use-localstorage  false}
-
- 
- }
+ :settings {:use-localstorage  false}}
