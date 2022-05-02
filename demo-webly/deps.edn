@@ -69,26 +69,20 @@
   ; 1. ilustrate links in web-app
   ; 2. run unit tests 
 
-   :webly {:extra-paths ["src" "resources" "test" "test/resources"]
-           :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
-                             }
-           :exec-fn modular.system/start!
-           :exec-args {:config ["webly/config.edn" "demo.edn" "creds-localhost.edn"] ; does not get used!
-                       :services "onceservice.edn"
-                       :run :once
-                       :profile :npm-install}}
-  
+  ; BUILD BUNDLE (then exit)
+  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}} ; http cors test
+          :extra-paths ["src" "resources" "test" "test/resources"]
+          :exec-fn webly.app.app/webly-build
+          :exec-args {:config ["webly/config.edn" "demo.edn" "creds-localhost.edn"] ; does not get used!
+                      :profile "npm-install"}}
 
-  :demo-webly {:extra-paths ["src"
-                             "resources"
-                             "test"
-                             "test/resources"]
-               :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
-                            }
+  ; RUN SERVICES (keep running)
+  :demo-webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}} ; http cors test
+               :extra-paths ["src" "resources" "test" "test/resources"]
                :exec-fn modular.system/start!
                :exec-args {:config ["webly/config.edn" "demo.edn" "creds-localhost.edn"] ; does not get used!
-                           :services "demoservices.edn"
-                           :profile "npm-install"}}
+                           :profile "watch2"
+                           :services "demoservices.edn"}}
 
 
   ; tree and list are here just because tools.deps.alpha does not work on my machine

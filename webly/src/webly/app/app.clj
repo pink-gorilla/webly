@@ -2,6 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [modular.config :refer [get-in-config config-atom load-config! resolve-config-key]]
+   [modular.require :refer [require-namespaces]]
    [modular.system :as system]
    [modular.writer :refer [write-status]]
    [modular.webserver.middleware.dev :refer [wrap-dev]]
@@ -84,5 +85,10 @@
   (when shadow
     (stop-shadow shadow)))
 
-(defn webly-runner [arguments system-config running-system]
-  (warn "webly-runner. args: " arguments))
+(defn webly-build [{:keys [config profile]}]
+  (load-config! config)
+  (require-namespaces (get-in-config [:ns-clj]))
+  (resolve-config-key config [:webly :routes])
+  (let [profile (setup-profile profile)]
+    (when (:bundle profile)
+      (build-p profile))))

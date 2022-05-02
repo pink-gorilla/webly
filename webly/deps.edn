@@ -10,12 +10,12 @@
         ;                           :sha "dc33c3a44069186496d119b8c63634e846bfd935"}
         ;org.slf4j/slf4j-nop {:mvn/version "2.0.0-alpha1"} ; the nop logger needs to have the same version as jetty. 
         ;com.fzakaria/slf4j-timbre {:mvn/version  "0.3.21"} ; slf4j ->timbre adapter (used by jetty) slf4j-timbre is incmpatibe with slf4j-api 2.0.0 that comes with jetty
-       
+
         ;; {ring.middleware.logger "0.5.0"}
-        
+
         ;; old
         luminus/ring-ttl-session {:mvn/version "0.3.3"}
-       
+
         ; webly/core
         hiccup/hiccup {:mvn/version "1.0.5"}   ; server side templating
         reagent/reagent {:mvn/version "1.1.1"} ; https://github.com/reagent-project/reagent
@@ -25,7 +25,7 @@
         day8.re-frame/re-frame-10x {:mvn/version  "1.1.12"} ;; https://github.com/day8/re-frame-10x
         ;day8.re-frame/tracing {:mvn/version  "0.6.2"} ; https://github.com/day8/re-frame-debux
         ;{day8.re-frame/tracing-stubs "0.6.2"}
-        
+
         ; shadow-cljs
         ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler
         ; will fail because shadow contains core.async which is not compatible with 
@@ -39,8 +39,7 @@
         modular/webserver {:local/root "../webserver" :deps/manifest :deps} ; brings modular
         modular/websocket {:local/root "../websocket" :deps/manifest :deps}
         modular/frontend {:local/root "../frontend" :deps/manifest :deps}
-        modular/oauth2 {:local/root "../oauth2" :deps/manifest :deps}
-        }
+        modular/oauth2 {:local/root "../oauth2" :deps/manifest :deps}}
  :aliases
  {; https://github.com/weavejester/cljfmt
   :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
@@ -75,9 +74,9 @@
  ; tree and list are here just because tools.deps.alpha does not work on my machine
   :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
          :exec-fn clojure.tools.cli.api/tree}
-:list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
-       :exec-fn clojure.tools.cli.api/list}
-  
+  :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
+         :exec-fn clojure.tools.cli.api/list}
+
 
 ;
   }}

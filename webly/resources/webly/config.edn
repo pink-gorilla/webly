@@ -46,8 +46,6 @@
                     :key-password "password"; Password you gave when creating the keystore
                     :jetty-ws {"/api/chsk" :ws/chsk-get}}
 
-
-
  :google-analytics {:enabled false ; true
                     :id "UA-154548494-1"} ; not a secret 
 

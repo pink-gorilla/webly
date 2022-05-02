@@ -35,7 +35,7 @@
                                    ;:exclusions [ch.qos.logback/logback-classic]
                                    } ; telegram
 
-  org.pinkgorilla/modular {:mvn/version "0.0.28"}
+  org.pinkgorilla/modular {:mvn/version "0.0.30"}
   modular/frontend {:local/root "../frontend" :deps/manifest :deps}
   modular/websocket {:local/root "../websocket" :deps/manifest :deps}
   }

@@ -75,7 +75,6 @@
          :john {:roles #{:logistic}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["john@doe.com"]}}
-
   
  :ns-clj [demo.time
           demo.routes
