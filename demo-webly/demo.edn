@@ -2,10 +2,6 @@
          ; routes can be a map or a symbol.
          ; if you do lots of merging of routes, you might prefer a symbol
          :routes demo.routes/routes
-
-         ; clj
-         :ns-clj [demo.app]
-         :start-service demo.time/start-time-sender!
          ; cljs
          :ns-cljs [demo.app]
          :modules {:snippets [snippets.snip]
@@ -41,8 +37,6 @@
                                      :context :scheduled-data-import
                                      :path "target/workflow.log"
                                      :pattern :monthly}}}
-
-
 
  :settings {:use-localstorage  true  ; allow user to change settings via localstorage
             :bongo 777}
@@ -82,5 +76,11 @@
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["john@doe.com"]}}
 
+  
+ :ns-clj [demo.time
+          demo.routes
+          demo.handler]
+
+ :runner webly.app.app/webly-runner
 ;                
  }

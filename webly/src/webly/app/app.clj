@@ -1,8 +1,9 @@
 (ns webly.app.app
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
+   [modular.config :refer [get-in-config config-atom load-config! resolve-config-key]]
+   [modular.system :as system]
    [modular.writer :refer [write-status]]
-   [modular.config :refer [get-in-config config-atom load-config!]]
    [modular.webserver.middleware.dev :refer [wrap-dev]]
    [modular.oauth2.handler] ; side-effects
    [modular.oauth2.middleware :refer [print-oauth2-config]]
@@ -11,27 +12,12 @@
    [modular.oauth2] ; side-effects
    [webly.build.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]
-   [webly.web.server :refer [run-server]]
+   [webly.build.shadow :refer [stop-shadow]]
+   [webly.web.server :as web-server]
    [webly.web.handler :refer [make-handler]]
    [webly.app.handler :refer [app-handler]]
    [webly.app.routes :refer [make-routes-frontend make-routes-backend]])
   (:gen-class))
-
-(defn start-safe [service-symbol]
-  (try
-    (info "start-service:" service-symbol)
-    (if-let [f (resolve service-symbol)]
-      (f)
-      (error "services symbol [" service-symbol "] could not get resolved!"))
-    (catch Exception e
-      (error "Exception starting service: " (pr-str e)))))
-
-(defn start-services [profile]
-  (let [start-service (get-in-config [:webly :start-service])]
-    (if start-service
-      (do (info "starting services : " (:server profile))
-          (start-safe start-service))
-      (warn "no services defined."))))
 
 (defn start-permissions []
   (if (and (get-in-config [:permission])
@@ -60,37 +46,43 @@
     (def ring-handler h)))
 
 (defn run-server-p [profile]
-  (start-services profile)
   (info "webly starting webserver : " (:server profile))
   (create-ring-handler)
   (start-permissions)
-  (run-server ring-handler profile))
+  (web-server/start ring-handler profile))
 
 (defn build-p [profile]
   (debug "webly starting build:  " (:bundle profile))
   (build profile))
 
-(defn webly-run!
-  [profile-name config]
-  (when (empty? @config-atom)
-    (info "config is empty.. loading config now!")
-    (load-config! config))
+(defn run-profile [profile-name]
   (let [profile (setup-profile profile-name)]
     (if (:server profile)
       (run-server-p profile)
       (info "not running web server"))
     (if (:bundle profile)
       (build-p profile)
-      (info "not building bundle."))))
+      (info "not building bundle."))
+    (:server profile) ; return value
+    ))
 
-(defn webly-run [{:keys [profile config]}]
-  (webly-run! profile config))
+(defn start-webly [config profile-name]
+  (resolve-config-key config [:webly :routes])
+  (let [profile (setup-profile profile-name)
+        webserver  (when (:server profile)
+                     (run-server-p profile))
+        shadow (when (:bundle profile)
+                 (build-p profile))]
+    {:profile profile
+     :webserver webserver
+     :shadow shadow}))
 
-#_(defn -main ; for lein alias
-    ([]
-     (webly-run {}))
-    ([profile]
-     (webly-run {:profile profile}))
-    ([config profile]   ; when config and profile are passed, config first (because profile then can get changed in cli)
-     (webly-run {:profile profile
-                 :config config})))
+(defn stop-webly [{:keys [profile webserver shadow]}]
+  (info "stopping webly..")
+  (when webserver
+    (web-server/stop webserver))
+  (when shadow
+    (stop-shadow shadow)))
+
+(defn webly-runner [arguments system-config running-system]
+  (warn "webly-runner. args: " arguments))

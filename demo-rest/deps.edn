@@ -10,7 +10,7 @@
 
   funes/funes {:mvn/version "0.1.0"}
 
-  org.pinkgorilla/modular {:mvn/version "0.0.25"}
+  org.pinkgorilla/modular {:mvn/version "0.0.28"}
   org.pinkgorilla/modular-oauth2 {:local/root "../oauth2" :deps/manifest :deps}}
 
  :aliases

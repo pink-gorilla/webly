@@ -1,0 +1,22 @@
+{;:secrets #include "secrets.edn" ;; externalised and usually "mounted" as a docker/kubernetes secret
+ :components
+ {:config {:start (modular.config/load-config! ["webly/config.edn"])}
+
+  :ns-require {:start (modular.require/require-namespaces
+                       (:ns-clj (deref (clip/ref :config))))}
+
+  :timbre {:start (modular.log/timbre-config!
+                   (:timbre/clj (deref (clip/ref :config))))}
+
+  :bongo {:start (println "bongo is started! config: "
+                          (:web-server (deref (clip/ref :config))))
+          :stop (println "bongo is stopped!")}
+
+
+  :webly {:start (println "webly profile: " #profile {:default "watch2"
+                                                      :compile "compile"
+                                                      :compile-advanced "compile-adv"
+                                                      :release "release"})}
+
+  :nrepl {:start (nrepl.server/start-server :bind "0.0.0.0" :port 9100)
+          :stop (.close this)}}}

@@ -13,24 +13,22 @@
                                             false []}
                              :tailwind-full {"light" ["tailwindcss/dist/tailwind.min.css"]
                                              "dark" ["tailwindcss/dist/tailwind-dark.min.css"]
-                                             false []}
-                             :tailwind-girouette {true ["girouette.css"]
-                                                  false []}
+                                             true []}
+                             ;:tailwind-girouette {true ["girouette.css"]
+                             ;                     false []}
                              :fontawesome {true ["@fortawesome/fontawesome-free/css/all.min.css"]
                                            false []}
                              :fonts-google    {true ["fonts-google/fonts.css"]
                                                false []}}
                  :current {:webly-dialog true
-                           :tailwind-full false ; "light" ; true
-                           :tailwind-girouette true
+                           :tailwind-full  "light"
+                           ;:tailwind-girouette false
                            :fontawesome true
                            :fonts-google false}}
          ; cljs
          :ns-cljs []
          :modules {}
          ; clj
-         :ns-clj []
-         :start-service nil
          :ring-handler "webly.app.app/ring-handler" ; no need to change 
          ; routes
          :routes {:app {}
@@ -128,4 +126,8 @@
                {:kb "esc"     :handler [:modal/close]            :desc "Dialog Close"} ; for ALL dialogs!
                {:kb "alt-g t" :handler [:reframe10x-toggle] :desc "10x visibility toggle"}]
 
- :settings {:use-localstorage  false}}
+ :settings {:use-localstorage  false}
+
+:ns-clj []
+ 
+ }

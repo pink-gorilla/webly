@@ -1,0 +1,10 @@
+{:paths ["src"
+         "resources"  ; dialog css
+         ]
+ :deps {
+         ; tailwind
+        ;girouette/girouette {:mvn/version "0.0.5"}
+        girouette/processor {:mvn/version "0.0.5"}
+
+;
+        }}

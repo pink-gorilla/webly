@@ -28,8 +28,8 @@
                    (webly/clean-project "./webserver"))
          tailwind-girouette-usage (webly/clojure "demo-webly" "-X:tailwind-girouette-usage")
          tailwind-girouette-webly (webly/clojure "demo-webly" "-X:tailwind-girouette-webly")
-         npm-install (webly/run "demo-webly" "demo-webly" "npm-install")
-         build-ci (webly/run "demo-webly" "demo-webly" "ci")
+         npm-install (webly/run "demo-webly" "webly" :npm-install)
+         build-ci (webly/run "demo-webly" "webly" :ci)
          copy-resources (shell {:dir "demo-webly"} "../script/copy_res.sh")
          get-fonts  (shell {:dir "demo-webly"} "../script/get-fonts.sh")
 

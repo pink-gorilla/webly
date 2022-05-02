@@ -1,7 +1,0 @@
-  merge-deps (deps/merge-deps "./demo-webly"
-                                     ["./frontend"
-                                      "./webserver"
-                                      "./websocket"
-                                      "./oauth2"
-                                      "./webly"]
-                                     "./ci/deps.edn")
