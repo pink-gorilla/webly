@@ -1,7 +1,7 @@
-{:shadow {:dev-http {:port 8000}
+{:ns-clj []
+ :shadow {:dev-http {:port 8000}
           :http {:port 8001 :host "0.0.0.0"}; "localhost"}
           :nrepl {:port 8002}}
-
  :webly {; user app
          :title "webly"
          :spinner "webly/loading.svg"
@@ -126,6 +126,6 @@
 
  :settings {:use-localstorage  false}
 
-:ns-clj []
+
  
  }

@@ -64,7 +64,7 @@
               :compile (do (info "shadow build: compile")
                            (shadow-api/compile cljs-build shadow-opts)) ; dev build (one bundle per ns, source-maps)
               :watch (do (info "shadow build: watch")
-                 ;(watch-cli cljs-build)
+                         ;(watch-cli cljs-build)
                          (watch-api cljs-build)  ; hot reloading
                          )
               (debug "not building cljs bundle"))]
