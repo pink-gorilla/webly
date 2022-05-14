@@ -47,6 +47,13 @@
                           :shadow-mode :compile  ; compile has source maps
                           :size-report true}}
 
+   :compile2    {:prefs   {:tenx false}
+                 :bundle {:shadow-verbose false
+                          :cljs-build :webly
+                          :shadow-mode :compile  ; compile has source maps
+                          :size-report true}}
+
+
    :watch       {:prefs   {:tenx true}
                  :bundle {:shadow-verbose true
                           :cljs-build :webly
