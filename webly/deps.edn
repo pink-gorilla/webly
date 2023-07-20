@@ -1,8 +1,8 @@
 {:paths ["src"
          "resources"  ; webly resources (svg/img)
          ]
- :deps {org.clojure/clojure {:mvn/version  "1.10.3"}
-        org.clojure/core.async {:mvn/version  "1.5.648"}
+ :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
+        org.clojure/core.async {:mvn/version  "1.6.673"}
 
         ; logging
         ;org.slf4j/slf4j-api {:mvn/version "2.0.0-alpha1"}
@@ -30,7 +30,7 @@
         ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler
         ; will fail because shadow contains core.async which is not compatible with 
         ; self hosted clojurescript
-        thheller/shadow-cljs {:mvn/version "2.17.4"}
+        thheller/shadow-cljs {:mvn/version "2.24.1"} ; 2.17.4
                               ;:exclusions [org.clojure/tools.reader] ; outdated
         ;{thheller/shadow-cljsjs "0.0.21"}  ; already referred to from shadow-cljs
         ;org.clojure/clojurescript {:mvn/version "1.10.879"} ; already referred from shadow-cljs
@@ -64,7 +64,7 @@
               :exec-args   {:src-ns-path  ["src"]
                             :test-ns-path ["test"]}}
 
-  :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+  :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1095"}}
              :main-opts ["-m" "antq.core"]}
 
   :check {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"

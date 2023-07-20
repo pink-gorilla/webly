@@ -1,5 +1,5 @@
 {:paths ["src"]
- :deps {org.clojure/clojure    {:mvn/version "1.10.3"}
+ :deps {org.clojure/clojure    {:mvn/version "1.11.1"}
         org.clojure/data.json {:mvn/version "2.4.0"} ; https://github.com/thheller/shadow-cljs/issues/872
         ; ring middleware
         bidi/bidi {:mvn/version "2.1.6"}
@@ -22,7 +22,7 @@
         ; webserver
         info.sunng/ring-jetty9-adapter {:mvn/version  "0.15.2"} ; uses jetty 10.0.2, vlast version with java 9 : 0.14.0
         ; modular
-        org.pinkgorilla/modular {:mvn/version "0.0.30"} ; persistence
+        org.pinkgorilla/modular {:mvn/version "0.0.33"} ; persistence
         }
 
 
