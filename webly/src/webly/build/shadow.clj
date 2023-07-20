@@ -23,11 +23,16 @@
   ;; and a server restart is not required for them to be picked up
   (npm-deps/main config opts))
 
-(defn generate-bundlesize-report []
-  (shadow.cljs.build-report/generate
-   :webly
-   {:print-table true
-    :report-file "target/webly/public/bundlesizereport.html"})) ;".webly/bundlesizereport.html"
+(defn generate-bundlesize-report [profile shadow-config]
+  ;(println "generate-bundlesize-report profile:" profile " shadow-config: " shadow-config)
+  (let [build-data (-> shadow-config :builds :webly)]
+    (println "generate-bundlesize-report build-data: " build-data)
+    (shadow.cljs.build-report/generate
+     (merge build-data {:build-id :webly}) ; previously this was only the build-id as a keyword
+     {; tag
+    ; data-file
+      :print-table true
+      :report-file "target/webly/public/bundlesizereport.html"}))) ;".webly/bundlesizereport.html"
 
 (defn watch-cli [cljs-build]
   (let [id  (name cljs-build)]
@@ -49,7 +54,8 @@
   (shadow-server/stop!))
 
 (defn shadow-build [profile shadow-config]
-  (let [{:keys [shadow-verbose cljs-build shadow-mode size-report npm-install static?]} (get profile :bundle)
+  (let [full-profile  (get profile :bundle)
+        {:keys [shadow-verbose cljs-build shadow-mode size-report npm-install static?]} full-profile
         shadow-opts {:verbose shadow-verbose}]
     (ensure-package-json)
     (ensure-karma)
@@ -71,7 +77,7 @@
 
       (when size-report
         (info "creating size report ..")
-        (generate-bundlesize-report))
+        (generate-bundlesize-report profile shadow-config))
 
       (when static?
         (info "creating static page ..")
