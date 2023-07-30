@@ -22,7 +22,7 @@
                            [#{"modular.ws.*"} :info]
                            [#{"webly.user.*"} :info]
                            [#{"webly.*"} :info]
-                           [#{"*"} :info]]}
+                           [#{"*"} :debug]]}
 
  :timbre/clj {:min-level [[#{"org.eclipse.jetty.*"} :warn]
                           [#{"modular.oauth2.token.refresh"} :warn]
@@ -70,7 +70,7 @@
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["john@doe.com"]}
          :florian {:roles #{:logistic}
-                   :password "xxxxxxxx"
+                   :password "a231498f6c1f441aa98482ea0b224ffa" ; 1234
                    :email ["hoertlehner@gmail.com"]}
          :john {:roles #{:logistic}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"

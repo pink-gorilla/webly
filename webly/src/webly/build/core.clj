@@ -11,6 +11,7 @@
     (write filename config)))
 
 (defn build [profile]
+  (info "webly build profile: " profile)
   (let [bundle (get profile :bundle)
         shadow-config (shadow-config profile)]
     (if bundle

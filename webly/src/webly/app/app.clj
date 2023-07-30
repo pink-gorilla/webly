@@ -1,14 +1,13 @@
 (ns webly.app.app
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [modular.config :refer [get-in-config config-atom load-config! resolve-config-key]]
+   [modular.config :refer [load-config! config-atom]]
    [modular.require :refer [require-namespaces]]
    [modular.system :as system]
    [modular.writer :refer [write-status]]
-   [modular.webserver.middleware.dev :refer [wrap-dev]]
    [modular.oauth2.handler] ; side-effects
-   [modular.oauth2.middleware :refer [print-oauth2-config]]
-   [modular.ws.msg-handler :refer [permission-fn-a]]
+   ;[modular.oauth2.middleware :refer [print-oauth2-config]]
+   [modular.ws.core :refer [init-ws!]]
    [modular.oauth2.local.handler :refer [service-authorized?]]
    [modular.oauth2] ; side-effects
    [webly.build.profile :refer [setup-profile server?]]
@@ -17,64 +16,54 @@
    [webly.web.server :as web-server]
    [webly.web.handler :refer [make-handler]]
    [webly.app.handler :refer [app-handler]]
-   [webly.app.routes :refer [make-routes-frontend make-routes-backend]])
+   [webly.app.routes :refer [make-routes-frontend make-routes-backend]]
+   [webly.app.permission :refer [start-permissions]])
   (:gen-class))
-
-(defn start-permissions []
-  (if (and (get-in-config [:permission])
-           (get-in-config [:users]))
-    (do (info "starting webly ws services with PERMISSIONS enabled.")
-        (reset! permission-fn-a service-authorized?))
-    (warn "webly ws services are NOT PERMISSION enabled.")))
 
 (defn create-ring-handler
   "creates a ring-handler
    uses configuration in webly-config to do so
    the def statement defines a variable in this ns. This is used by shadow-cljs to resolve the handler.
    "
-  []
-  (debug "webly creating ring handler.. ")
-  (let [routes (get-in-config [:webly :routes])
-        routes-backend (make-routes-backend (:app routes) (:api routes))
+  [routes]
+  (info "create-ring-handler: " routes)
+  (let [routes-backend (make-routes-backend (:app routes) (:api routes))
         routes-frontend (make-routes-frontend (:app routes))
         ;_ (info "all-api-routes:" routes-backend "all-app-routes:" routes-frontend)
-        wrap-handler-reload (get-in-config [:wrap-handler-reload])
-        h (make-handler app-handler routes-backend routes-frontend)
-        h (if wrap-handler-reload (wrap-dev h) h)]
-
+        h (make-handler app-handler routes-backend routes-frontend)]
     (write-status "routes" {:frontend routes-frontend :backend routes-backend})
-    (print-oauth2-config)
-    (def ring-handler h)))
+    (def ring-handler h) ; needed by shadow-watch
+    h))
 
-(defn run-server-p [profile]
-  (info "webly starting webserver : " (:server profile))
-  (create-ring-handler)
+(defn watch? [profile-name]
+  (case profile-name
+    "watch" true
+    "watch2" true
+    false))
+
+(defn hack-routes-symbol [routes]
+  (if (symbol? routes)
+    (let [routes (-> routes requiring-resolve var-get)]
+      (swap! config-atom assoc-in [:webly :routes] routes)
+      routes)
+    routes))
+
+(defn start-webly [config server-type]
+  (info "start-webly: " server-type)
   (start-permissions)
-  (web-server/start ring-handler profile))
-
-(defn build-p [profile]
-  (debug "webly starting build:  " (:bundle profile))
-  (build profile))
-
-(defn run-profile [profile-name]
-  (let [profile (setup-profile profile-name)]
-    (if (:server profile)
-      (run-server-p profile)
-      (info "not running web server"))
-    (if (:bundle profile)
-      (build-p profile)
-      (info "not building bundle."))
-    (:server profile) ; return value
-    ))
-
-(defn start-webly [config profile-name]
-  (resolve-config-key config [:webly :routes])
-  (let [profile (setup-profile profile-name)
-        webserver  (when (:server profile)
-                     (run-server-p profile))
-        shadow (when (:bundle profile)
-                 (build-p profile))]
-    {:profile profile
+  (let [ring-handler (let [routes (get-in config [:webly :routes])
+                           routes (hack-routes-symbol routes)]
+                       (create-ring-handler routes))
+        webserver  (if (watch? server-type)
+                     (web-server/start ring-handler :jetty)
+                     (web-server/start ring-handler (keyword server-type)))
+        shadow   (when (watch? server-type)
+                  ; (init-ws! :undertow)
+                   (let [profile-full (setup-profile server-type)]
+                     (when (:bundle profile-full)
+                       (build profile-full))))]
+    ; return config of started services (needed to stop)
+    {:profile server-type
      :webserver webserver
      :shadow shadow}))
 
@@ -85,10 +74,12 @@
   (when shadow
     (stop-shadow shadow)))
 
+;; BUILD
+
 (defn webly-build [{:keys [config profile]}]
   (load-config! config)
-  (require-namespaces (get-in-config [:ns-clj]))
-  (resolve-config-key config [:webly :routes])
+  ;(require-namespaces (get-in-config [:ns-clj])) ; 2023 07 awb: not needed for build
+  ;(resolve-config-key config [:webly :routes]); 2023 07 awb: not needed for build
   (let [profile (setup-profile profile)]
     (when (:bundle profile)
-      (build-p profile))))
+      (build profile))))

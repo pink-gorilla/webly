@@ -20,25 +20,39 @@
         ws-map (jetty-ws-map)]
     ws-map))
 
-(defn start [ring-handler profile]
-  (let [{:keys [type api wrap-handler-reload]} (get-in profile [:server])
-        jetty-config (get-in-config [:webly/web-server])
-        api true ; always use non blocking mode
-        jetty-config (if api
-                       (do  (debug "using web-server-api")
-                            (assoc jetty-config :join? false))
-                       (assoc jetty-config :join? true))]
-    (warn "jetty config: " jetty-config)
-    (case type
-      :jetty (run-jetty-server ring-handler
-                               (jetty-ws-handler)
-                               jetty-config)
-      ;:undertow (run-undertow-server ring-handler port host api)
-      ;:httpkit (run-httpkit-server ring-handler port host api)
-      ;:shadow (run-shadow-server)
-      (error "start-server failed: server type not found: " type))))
+(defn stop-jetty
+  [server]
+  ;https://github.com/dharrigan/websockets/blob/master/src/online/harrigan/api/router.clj
+  (info "stopping jetty-server..")
+  (.stop server) ; stop is async
+  (.join server)) ; so let's make sure it's really stopped!
 
-(defn stop [jetty-instance]
-  (info "stopping jetty..")
-  ;(info jetty-instance)
-  (.stop jetty-instance))
+(defn start [ring-handler server-type]
+  (let [config  (get-in-config [:webly/web-server])
+        server (case server-type
+                 :jetty (run-jetty-server ring-handler
+                                          (jetty-ws-handler)
+                                          (assoc config :join? false))
+                  ;:undertow (run-undertow-server ring-handler port host api)
+                 :httpkit (let [run-server (requiring-resolve 'modular.webserver.httpkit/run-server)]
+                            (run-server ring-handler config)
+                            (init-ws! :httpkit))
+                  ;:shadow (run-shadow-server)
+                 (do (error "start-server failed: server type not found: " type)
+                     nil))]
+
+    {:server-type server-type
+     :server server}))
+
+(defn stop-httpkit [server]
+  (info "stopping httpkit server..")
+  ;(server) ; Immediate shutdown (breaks existing reqs)
+  ;; Graceful shutdown (wait <=100 msecs for existing reqs to complete):
+  (server :timeout 100))
+
+(defn stop [{:keys [server server-type]}]
+  (when server
+    (case server-type
+      :jetty (stop-jetty server)
+      :httpkit (stop-httpkit server)
+      (info "there was no server started."))))

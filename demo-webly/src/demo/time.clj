@@ -16,7 +16,8 @@
   (let [running? (atom true)]
     (go-loop []
       (<! (async/timeout 5000))
-      (send-all! [:demo/time (now-str)])
+      (when  @running?
+        (send-all! [:demo/time (now-str)]))
       (if @running? 
         (recur)  
         (info "time sender is stopping.."))
@@ -26,7 +27,9 @@
 (defmethod -event-msg-handler :time/now
   [{:as req :keys [event id ?data ring-req ?reply-fn send-fn]}]
   (infof ":time/now: %s" event)
-  (send-response req :demo/time (now-str)))
+  (let [stime (now-str)]
+    (info "sending time: " stime)
+    (send-response req :demo/time stime)))
 
 (defmethod -event-msg-handler :time/now-date
   [{:as req :keys [event id ?data ring-req ?reply-fn send-fn]}]

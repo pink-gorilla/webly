@@ -57,27 +57,15 @@
                  :bundle {:shadow-verbose true
                           :cljs-build :webly
                           :shadow-mode :watch
-                          :size-report false}
-                 :server {:type :jetty
-                          :wrap-handler-reload false
-                          :api true  ; 
-                          }}
+                          :size-report false}}
 
    :watch2       {:prefs   {:tenx false}
                   :bundle {:shadow-verbose true
                            :cljs-build :webly
                            :shadow-mode :watch
-                           :size-report false}
-                  :server {:type :jetty
-                           :wrap-handler-reload false
-                           :api true  ; 
-                           }}
+                           :size-report false}}
 
-   :jetty       {:prefs   {:tenx true}
-                 :server {:type :jetty
-                          :wrap-handler-reload false}}
-
-   ;:httpkit      {:prefs   {:tenx true}
+;:httpkit      {:prefs   {:tenx true}
    ;               :server {:type :httpkit
    ;                        :wrap-handler-reload false}}
 

@@ -12,9 +12,11 @@
 
 (defn get-adapter [server-type]
   (case server-type
-    ;:undertow  (undertow)
+    :undertow (let [get-sch-adapter (requiring-resolve 'modular.ws.adapter.undertow/get-sch-adapter)]
+                (get-sch-adapter))
     :jetty (jetty/get-sch-adapter)
-    ;:httpkit (httpkit)
+    :httpkit (let [get-sch-adapter (requiring-resolve 'modular.ws.adapter.httpkit/get-sch-adapter)]
+                (get-sch-adapter))
     ;
     ))
 

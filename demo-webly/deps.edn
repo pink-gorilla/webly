@@ -70,20 +70,28 @@
   ; 2. run unit tests 
 
   ; BUILD BUNDLE (then exit)
-  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}} ; http cors test
-          :extra-paths ["src" "resources" "test" "test/resources"]
-          :exec-fn webly.app.app/webly-build
-          :exec-args {:config ["webly/config.edn" "demo.edn" "creds-localhost.edn"] ; does not get used!
-                      :profile "npm-install"}}
-
+  :demo-build {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}} ; http cors test
+                :extra-paths ["src" "resources" "test" "test/resources"]
+                :exec-fn webly.app.app/webly-build
+                :exec-args {:config ["webly/config.edn" "demo.edn" "creds-localhost.edn"] ; does not get used!
+                            :profile "npm-install"}}
+  :npm-install {:exec-args {:profile "npm-install"}}
+  :compile {:exec-args {:profile "compile2"}}
+  :release {:exec-args {:profile "release"}}
+  
   ; RUN SERVICES (keep running)
-  :demo-webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}} ; http cors test
+  :demo-run {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}} ; http cors test
                :extra-paths ["src" "resources" "test" "test/resources"]
                :exec-fn modular.system/start!
                :exec-args {:config ["webly/config.edn" "demo.edn" "creds-localhost.edn"] ; does not get used!
-                           :profile "watch2"
+                           :profile "jetty"
                            :services "demoservices.edn"}}
 
+  :httpkit {:extra-deps {http-kit/http-kit {:mvn/version "2.5.3"}}
+            :exec-args {:profile "httpkit"}}
+  :jetty {:exec-args {:profile "jetty"}}
+  :watch {:exec-args {:profile "watch2"}}
+  
 
   ; tree and list are here just because tools.deps.alpha does not work on my machine
   :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
@@ -91,6 +99,8 @@
   :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
          :exec-fn clojure.tools.cli.api/list}
 
+  :password {:exec-fn demo.password/password
+             :exec-args {:password "1234"}}
 
   ;
   }}

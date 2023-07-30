@@ -10,7 +10,7 @@
  (fn [db [_ routes-frontend routes-backend]]
    (info "bidi init ..")
    (reset! routes routes-frontend)
-   (debug "bidi routes-frontend are: " routes-frontend)
+   (info "bidi routes-frontend are: " routes-frontend)
    (let [db (or db {})]
      (info "starting pushy")
      (pushy/start! history) ; link url => state

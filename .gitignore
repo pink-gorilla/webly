@@ -34,3 +34,7 @@ creds.edn
 creds-wien.edn
 creds-localhost.edn
 .clj-kondo
+*~
+\#*\#
+.\#*
+.~*
