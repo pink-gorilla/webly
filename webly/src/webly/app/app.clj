@@ -17,7 +17,7 @@
    [webly.web.handler :refer [make-handler]]
    [webly.app.handler :refer [app-handler]]
    [webly.app.routes :refer [make-routes-frontend make-routes-backend]]
-   [webly.app.permission :refer [start-permissions]])
+   [modular.permission.app :refer [start-permissions]])
   (:gen-class))
 
 (defn create-ring-handler

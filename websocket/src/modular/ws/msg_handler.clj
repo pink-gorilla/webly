@@ -1,6 +1,8 @@
 (ns modular.ws.msg-handler
   (:require
-   [taoensso.timbre :refer [tracef debug debugf info infof warn warnf error errorf]]))
+   [taoensso.timbre :refer [tracef debug debugf info infof warn warnf error errorf]]
+   [modular.permission.app :refer [service-authorized?]]
+   ))
 
 (defn ws-reply [{:keys [event id ?data ring-req ?reply-fn send-fn] :as req}
                 res]
@@ -46,13 +48,6 @@
     (errorf "ws event of unknown type. Please implement (-event-handler %s) event: %s" id event)
     (send-response req :ws/unknown event)))
 
-(defn everything-authorized? [service-kw uid]
-  (info "everything authorized: service: " service-kw "uid: " uid)
-  true)
-
-(defonce permission-fn-a 
-  (atom everything-authorized?))
-
 (def always-authorized 
   #{:chsk/uidport-open
    :chsk/uidport-close
@@ -64,14 +59,10 @@
    :tokens/summary
   })
 
-(defn ws-always-authorized? [event]
-  (let [a (contains? always-authorized event)]
-    (debug "ws-always-authorized? " event ": " a)
-    a))
-
 (defn is-authorized? [msg-type uid]
-  (or (ws-always-authorized? msg-type)
-      (@permission-fn-a msg-type uid)))
+  (if (contains? always-authorized msg-type)
+    true    
+    (service-authorized? msg-type uid)))
 
 (defn send-reject-response [req msg-type]
   (send-response req
