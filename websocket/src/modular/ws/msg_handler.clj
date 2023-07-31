@@ -73,9 +73,11 @@
   (or (ws-always-authorized? msg-type)
       (@permission-fn-a msg-type uid)))
 
-(defn send-reject-response [req event]
-  (send-response req event {:error "Not Authorized"
-                            :error-message "You are not authorized for this service"}))
+(defn send-reject-response [req msg-type]
+  (send-response req
+                 msg-type
+                 {:error "Not Authorized"
+                  :error-message "You are not authorized for this service"}))
 
 (defn event-msg-handler [{:keys [client-id id event ?data uid] :as req}]
   (debugf "ws rcvd: evt: %s id: %s data: %s" event id ?data)
@@ -83,7 +85,7 @@
     (let [msg-type (first event)]
       (if (is-authorized? msg-type uid)
         (-event-msg-handler req)
-        (send-reject-response req event)
+        (send-reject-response req msg-type)
         ))))
 
 ; {:client-id "591b690d-5633-48c3-884d-348bbcf5c9ca"

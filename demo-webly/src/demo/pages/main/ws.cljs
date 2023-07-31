@@ -25,6 +25,8 @@
         [:p "the next service is secured and needs logged in user. user:demo pwd: 1234"]
         [link-fn #(rf/dispatch [:login/dialog]) "login"]
         [link-fn #(rf/dispatch [:ws/send [:time/now-date []] set-time-date 5000]) " request time (as date)"]
+        [:p "date-local needs supervisor role, which demo does not have!"]
+        [:p "user: boss pwd:1234  does have the supervisor role!"]
         [link-fn #(rf/dispatch [:ws/send [:time/now-date-local []] set-time-date 5000]) " request time (as date local)"]
         [link-fn #(rf/dispatch [:ws/send [:demo/connected []] print-status 5000]) "request connections (see log)"]
         [link-fn #(rf/dispatch [:ws/send [:demo/xxx [123 456 789]]]) "no-server-handler (see log)"]

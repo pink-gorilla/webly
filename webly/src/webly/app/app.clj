@@ -8,7 +8,7 @@
    [modular.oauth2.handler] ; side-effects
    ;[modular.oauth2.middleware :refer [print-oauth2-config]]
    [modular.ws.core :refer [init-ws!]]
-   [modular.oauth2.local.handler :refer [service-authorized?]]
+   [modular.permission.service :refer [service-authorized?]]
    [modular.oauth2] ; side-effects
    [webly.build.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]

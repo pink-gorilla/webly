@@ -1,9 +1,6 @@
 (ns modular.ws.ws
   (:require
-   [taoensso.timbre :as log :refer [debugf]]
-   ;[ring.middleware.keyword-params]
-   ;[ring.middleware.params]
-   ))
+   [taoensso.timbre :as log :refer [debugf]]))
 
 (defn send! [conn uid data]
   (let [{:keys [chsk-send!]} conn]

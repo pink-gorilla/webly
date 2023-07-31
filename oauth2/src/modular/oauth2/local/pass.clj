@@ -6,7 +6,8 @@
    [buddy.core.hash :as hash]
    [buddy.sign.jwt :as jwt]
    ;[no.nsd.clj-jwt :as clj-jwt]
-   [modular.config :refer [get-in-config]]))
+   [modular.config :refer [get-in-config]]
+   [modular.permission.user :refer [get-user]]))
 
 (defn pwd-hash [pwd]
   (-> (hash/blake2b-128 pwd)
@@ -20,7 +21,7 @@
   )
 (defn create-claim [user-name]
   (let [secret (get-in-config [:oauth2 :local :client-secret])
-        claim  {:user user-name}
+        claim  {:user (name user-name)}
         token (jwt/sign claim secret)]
     (debug "sign claim with secret: " secret)
     {:user user-name
@@ -29,12 +30,12 @@
 (defn get-token [user-name user-password]
   (if-let [users (get-in-config [:users])]
     (let [user-kw (keyword user-name)
-          password-hashed (pwd-hash user-password)
-          user (user-kw users)]
+          user (get-user user-kw)
+          password-hashed (pwd-hash user-password)]
       (if user
         (if (= password-hashed (:password user))
-          (create-claim user-name)
-          {:error :bad-passowrd
+          (create-claim (:id user))
+          {:error :bad-password
            :error-message (str "Bad password for  [" user-name "].")})
         {:error :user-unknown
          :error-message (str "User [" user-name "] not found.")}))
@@ -45,7 +46,8 @@
   (let [secret (get-in-config [:oauth2 :local :client-secret])]
     (debug "verifying claim with secret: " secret)
     (try
-      (jwt/unsign token secret)
+      (-> (jwt/unsign token secret)
+          (update :user keyword))
       (catch Exception _
         {:error :bad-token
          :error-message "Bad Token"}))))

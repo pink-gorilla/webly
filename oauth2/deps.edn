@@ -38,6 +38,7 @@
   org.pinkgorilla/modular {:mvn/version "0.0.33"}
   modular/frontend {:local/root "../frontend" :deps/manifest :deps}
   modular/websocket {:local/root "../websocket" :deps/manifest :deps}
+  modular/permission {:local/root "../permission" :deps/manifest :deps}
   }
 
 

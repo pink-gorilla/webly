@@ -29,3 +29,4 @@ cpr @fortawesome/fontawesome-free/webfonts "*.*"
 
 cpr @icon/fontisto-emoji "fontisto*.*"
 cpr @icon/fontisto-emoji/icons "*.svg"
+

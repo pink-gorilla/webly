@@ -28,8 +28,8 @@
                    (webly/clean-project "./webserver"))
          tailwind-girouette-usage (webly/clojure "demo-webly" "-X:tailwind-girouette-usage")
          tailwind-girouette-webly (webly/clojure "demo-webly" "-X:tailwind-girouette-webly")
-         npm-install (webly/run "demo-webly" "webly" :npm-install)
-         build-ci (webly/run "demo-webly" "webly" :ci)
+         npm-install (webly/run "demo-webly" "demo-build" :npm-install)
+         build-ci (webly/run "demo-webly" "demo-build" :ci)
          copy-resources (shell {:dir "demo-webly"} "../script/copy_res.sh")
          get-fonts  (shell {:dir "demo-webly"} "../script/get-fonts.sh")
 
@@ -39,19 +39,19 @@
                                tailwind-girouette-webly
                                copy-resources
                                get-fonts]
-                     :task (shell "echo" "cljs bundle has been built!")}
+                     :task (println "cljs bundle has been built!")}
          test-clj (webly/clojure "demo-webly" "-M:test-clj")
          test-cljs (shell {:dir "demo-webly"} "npm" "test")
          ci-check {:depends [cljfmt-check
                              test-build
                              test-clj
                              test-cljs]
-                   :task (shell "echo" "ci checks are ok!")}
+                   :task (println "ci checks are ok!")}
          commit-check {:doc "if this succeeds, then the github ci pipeline will work too."
                        :depends [clean
                                  cljfmt-fix
                                  ci-check]
-                       :task (shell "echo" "all good - you can push to github")}
+                       :task (println "all good - you can push to github")}
 
          ;; JAR ******************************************************************************
          jar {:doc "Builds the jar"
@@ -132,7 +132,7 @@
          devtest-webserver-https (webly/clojure "webserver" "-X:webserver")
 
          tokens-summary {:doc "token summary"
-                             :task (webly/clojure "demo-rest" "-X:tokens-summary")}
+                         :task (webly/clojure "demo-rest" "-X:tokens-summary")}
 
          rest-github {:doc "web requests to github"
                      :task (webly/clojure "demo-rest" "-X:rest-github")}

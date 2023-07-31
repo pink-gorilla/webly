@@ -40,7 +40,9 @@
         modular/webserver {:local/root "../webserver" :deps/manifest :deps} ; brings modular
         modular/websocket {:local/root "../websocket" :deps/manifest :deps}
         modular/frontend {:local/root "../frontend" :deps/manifest :deps}
-        modular/oauth2 {:local/root "../oauth2" :deps/manifest :deps}}
+        modular/oauth2 {:local/root "../oauth2" :deps/manifest :deps}
+        modular/permission {:local/root "../permission" :deps/manifest :deps}
+        }
  :aliases
  {; https://github.com/weavejester/cljfmt
   :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
