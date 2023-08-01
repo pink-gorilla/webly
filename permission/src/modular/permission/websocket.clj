@@ -8,9 +8,12 @@
 (def connected-users (atom {}))
 
 (defn set-user! [uid user]
-  (infof "ws uid: %s =>  user: %s" uid user)
-  (swap! connected-users assoc uid user)
-  (info "ws users: " (pr-str @connected-users)))
+  (let [user (if (string? user)
+               (keyword user)
+               user)]
+    (infof "ws uid: %s =>  user: %s" uid user)
+    (swap! connected-users assoc uid user)
+    (info "ws users: " (pr-str @connected-users))))
 
 (defn get-user [uid]
   (get @connected-users uid))
