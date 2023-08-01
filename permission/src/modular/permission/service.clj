@@ -10,9 +10,9 @@
 (defn add-permissioned-services [perm-table]
   ; {:time/now-date #{} 
   ;  :time/local nil}
-  (info "add permissioned services: " (keys perm-table))
+  (debug "add permissioned services: " (keys perm-table))
   (swap! permissioned-services merge perm-table)
-  (warn "permissioned table: " @permissioned-services)
+  (debug "permissioned table: " @permissioned-services)
   )
 
 (defn has-permission-for-service [service-kw-or-symbol]
