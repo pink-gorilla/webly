@@ -22,7 +22,7 @@
   (get @permissioned-services service-kw-or-symbol))
 
 (defn service-authorized? [service-kw user-id]
-  (info "service-authorized? service: " service-kw " user-id: " user-id)
+  (debug "service-authorized? service: " service-kw " user-id: " user-id)
   (let [user (get-user user-id)
         has-permission? (has-permission-for-service service-kw)
         required-roles (required-permission-for-service service-kw)
