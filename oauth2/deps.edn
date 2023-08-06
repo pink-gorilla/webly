@@ -27,18 +27,11 @@
 
   ring-oauth2/ring-oauth2 {:mvn/version "0.1.5"}
 
-  com.github.oliyh/martian {:mvn/version "0.1.20"}
-  com.github.oliyh/martian-clj-http {:mvn/version "0.1.20"}
-
-  com.draines/postal {:mvn/version "2.0.5"} ; smtp email
-  telegrambot-lib/telegrambot-lib {:mvn/version "2.0.0" ; "1.5.0" ; 2.0.0 no longer has logback.
-                                   ;:exclusions [ch.qos.logback/logback-classic]
-                                   } ; telegram
-
   org.pinkgorilla/modular {:mvn/version "0.0.33"}
+  org.pinkgorilla/permission {:mvn/version "0.0.13"}
   modular/frontend {:local/root "../frontend" :deps/manifest :deps}
   modular/websocket {:local/root "../websocket" :deps/manifest :deps}
-  modular/permission {:local/root "../permission" :deps/manifest :deps}
+  
   }
 
 

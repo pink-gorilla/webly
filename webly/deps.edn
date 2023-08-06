@@ -41,7 +41,8 @@
         modular/websocket {:local/root "../websocket" :deps/manifest :deps}
         modular/frontend {:local/root "../frontend" :deps/manifest :deps}
         modular/oauth2 {:local/root "../oauth2" :deps/manifest :deps}
-        modular/permission {:local/root "../permission" :deps/manifest :deps}
+        org.pinkgorilla/permission {:mvn/version "0.0.13"}
+        ;modular/rest {:local/root "../rest" :deps/manifest :deps}
         }
  :aliases
  {; https://github.com/weavejester/cljfmt
