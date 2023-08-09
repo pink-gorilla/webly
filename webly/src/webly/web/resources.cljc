@@ -28,6 +28,9 @@
             (modular.webserver.handler.files/->FilesMaybe {:dir "target/webly/public"}))
    :cljs (def file-handler-bundel :webly/files-bundel))
 
+#?(:clj   (def file-handler-code
+            (modular.webserver.handler.files/->ResourcesMaybe {:prefix ""}))
+   :cljs (def file-handler-code :webly/resources-code))
 
 
 

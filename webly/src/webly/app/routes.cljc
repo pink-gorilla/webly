@@ -1,6 +1,6 @@
 (ns webly.app.routes
   (:require
-   [webly.web.resources :refer [resource-handler file-handler-nodejs file-handler-bundel]]))
+   [webly.web.resources :refer [resource-handler file-handler-nodejs file-handler-bundel file-handler-code]]))
 
 (def webly-routes-api
   {"config" {:get :webly/config}
@@ -33,7 +33,7 @@
           #{"r" "bundel"} file-handler-bundel ;["r"]  ; first from file, thereafter from resource.
           #{"r" "node"} file-handler-nodejs
           #{"r" "jarres"} resource-handler  ;"r"
-
+          "code/" file-handler-code
         ;[true      :webly/not-found]  ; not working as we need to process frontend routes also
           }]))
 
