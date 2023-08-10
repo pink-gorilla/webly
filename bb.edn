@@ -55,6 +55,7 @@
 
          ;; JAR ******************************************************************************
          jar {:doc "Builds the jar"
+              :depends [clean]
               :task (webly/clojure "demo-webly" "-T:build" "jar")}
 
          clojars {:doc "Deploys the jar to clojars"
