@@ -7,6 +7,7 @@
          :modules {:snippets [snippets.snip]
                    :hello [snippets.hello
                            snippets.bye]}
+         :module-loader-init true
          :title "Webly Demo"
          :start-user-app [:demo/start]
          :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]

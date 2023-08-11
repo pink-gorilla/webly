@@ -27,14 +27,7 @@
            :depends-on #{:webly}}}))
 
 (defn module-config [ns-cljs modules]
-  (let [main {:webly  {:entries (main-config-dynamic ns-cljs)}
-              ;:webly_dynamic {:init-fn 'webly.app.dynamic/start
-              ;                :depends-on #{:webly_shared}
-              ;                :entries '[webly.app.dynamic]}
-              ;:webly_static {:init-fn 'webly.app.static/start
-              ;               :depends-on #{:webly_shared}
-              ;               :entries '[webly.app.static]}
-              }
+  (let [main {:webly  {:entries (main-config-dynamic ns-cljs)}}
         sub (map sub-module-config modules)
         subs (apply merge sub)]
     (merge main subs)))
@@ -46,7 +39,7 @@
         shadow-verbose (get-in profile [:bundle :shadow-verbose])
         static? (get-in profile [:bundle :static?])
         ;; CONFIG **************************************************
-        {:keys [ns-cljs ring-handler modules title start-user-app]
+        {:keys [ns-cljs ring-handler modules title start-user-app module-loader-init]
          :or {modules {}}} (get-in-config [:webly])
         ring-handler (symbol ring-handler)
         dev-http-port (get-in-config [:shadow :dev-http :port])
@@ -77,10 +70,12 @@
      :nrepl {:port nrepl-port
            ;:middleware [] ; optional list of namespace-qualified symbols
              }
+
    ;:user-config {}
    ;
      :builds {:webly {:target :browser
                       :module-loader true
+                      :module-loader-init module-loader-init
                       :output-dir "target/webly/public"
                       :asset-path asset-path
                       :modules (module-config ns-cljs modules)
