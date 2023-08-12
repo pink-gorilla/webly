@@ -5,7 +5,7 @@
         akiroz.re-frame/storage {:mvn/version "0.1.4"} ; localstorage 
       
         com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
-        org.pinkgorilla/ui-bidi {:mvn/version "0.0.5"}
+        org.pinkgorilla/ui-bidi {:mvn/version "0.0.11"}
 
 ;
         }}
