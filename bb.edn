@@ -52,7 +52,6 @@
 
          ;; JAR ******************************************************************************
          jar {:doc "Builds the jar"
-              :depends [clean]
               :task (webly/clojure "demo-webly" "-T:build" "jar")}
 
          clojars {:doc "Deploys the jar to clojars"
@@ -70,12 +69,14 @@
                  ;; ensure sequential order becauce tag reads from info.edn made
                  ;; by build.clj
                     :task (do
+                            (run 'clean)
+                            (run 'npm-install)
+                            (run 'copy-resources)
+                            (run 'get-fonts)
                             (run 'jar)
                             (run 'clojars)
                             (run 'tag))}
-
-         jar-extract {:doc "Extracts generated jar (for debugging)"
-                      :task (shell {:dir "demo-webly/target"} "fastjar" "xf" "webly-0.4.516.jar")}
+ 
 
 
          ;; demos **********************************************************************************
@@ -121,7 +122,6 @@
                                     (run 'npm-install)
                                     (run 'get-fonts)
                                     (run 'demo-compile-static)
-                                    (run 'tailwind-girouette-webly)
                                     (run 'copy-resources)
                                     (run 'static-copy))} 
 
