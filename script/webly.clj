@@ -23,7 +23,6 @@
   (fs/delete-tree (str dir "/target")))
 
 
-
 (defn run [dir alias profile]
   (println "RUNNING WEBLY ALIAS:" alias "PROFILE: " profile  "in dir: " dir)
   (shell {:dir dir} "clojure" (str "-X:" alias) ":profile" profile))
@@ -32,4 +31,3 @@
 (defn clojure [dir & args]
   (apply shell {:dir dir} "clojure" args))
 
-; clojure -X:webly :profile '"npm-install"'

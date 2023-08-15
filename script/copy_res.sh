@@ -15,10 +15,6 @@ cpr () {
 }
 
 
-#mkdir -p target/node_modules/public/tailwindcss/dist
-# cp node_modules/tailwindcss/dist/*.*  target/node_modules/public/tailwindcss/dist
-cpr "tailwindcss/dist" "*.*" 
-
 #mkdir -p target/node_modules/public/@fortawesome/fontawesome-free/css
 # cp node_modules/@fortawesome/fontawesome-free/css/*.*  target/node_modules/public/@fortawesome/fontawesome-free/css
 cpr @fortawesome/fontawesome-free/css "*.*"

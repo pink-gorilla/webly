@@ -38,18 +38,8 @@ A simple demo is on [Webly Github Pages](https://pink-gorilla.github.io/webly/)
 - touse trace-fn see:
   - https://github.com/day8/re-frame-debux is included in watch profile
   - frontend.notifications.events
-  - select :notification/add in tenx dev consol
+  - select :notification/add in tenx dev console
 
-## Bidi Routing
-
-Bidi is not as highly starred as compojure, but it has important benefits:
-- It is isomorphic (clj and cljs) (forget compojure AND secretary) 
-- It has a clear separation of concerns with handlers (both for 
-  clj (ring-handler) and cljs (pushy)
-- It is bi-directional; this allows making links! 
-- It does not use macros, this means routes can be easily tested, transformed, sent between client-server, stored, modified. 
-- No linting errors due to macros.
-- Easy testing of route definitions, and handler results (including wrapping routes)
 
 ## web app
 - dynamically generated app html that works with csrf

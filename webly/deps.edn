@@ -43,6 +43,7 @@
         modular/oauth2 {:local/root "../oauth2" :deps/manifest :deps}
         org.pinkgorilla/permission {:mvn/version "0.0.13"}
         ;modular/rest {:local/root "../rest" :deps/manifest :deps}
+        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         }
  :aliases
  {; https://github.com/weavejester/cljfmt

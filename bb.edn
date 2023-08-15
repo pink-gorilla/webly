@@ -26,8 +26,6 @@
                    (webly/clean-project "./demo-repl")
                    (webly/clean-project "./webly")
                    (webly/clean-project "./webserver"))
-         tailwind-girouette-usage (webly/clojure "demo-webly" "-X:tailwind-girouette-usage")
-         tailwind-girouette-webly (webly/clojure "demo-webly" "-X:tailwind-girouette-webly")
          npm-install (webly/run "demo-webly" "demo-build" :npm-install)
          build-ci (webly/run "demo-webly" "demo-build" :ci)
          copy-resources (shell {:dir "demo-webly"} "../script/copy_res.sh")
@@ -36,7 +34,6 @@
          ; CI TESTS **************************************************************************
          test-build {:depends [npm-install
                                build-ci
-                               tailwind-girouette-webly
                                copy-resources
                                get-fonts]
                      :task (println "cljs bundle has been built!")}
