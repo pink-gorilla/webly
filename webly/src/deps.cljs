@@ -12,14 +12,5 @@
             ;"karma-junit-reporter"  "2.0.1"
             ;"cross-env": "^6.0.3",
 
-            ;; 2021 11 22 awb99: deps.cljs from frontend need to be copied here.
-            ;; shadow-cljs is not picking them up.
-
-            ; fonts
-            "@fortawesome/fontawesome-free" "^5.14.0"
-            "get-google-fonts" "^1.2.2"
-
-            "@icon/fontisto-emoji" "^3.0.4-alpha.0" ; this leads to warnings in dependent projects, perhaps due to alpha text
-
 ;
             }}

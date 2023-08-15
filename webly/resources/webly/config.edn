@@ -11,21 +11,8 @@
          :module-loader-init true
          ; theme
          :theme {:available {:webly-dialog {true ["webly/dialog.css"]
-                                            false []}
-                             :tailwind-full {"light" ["tailwindcss/dist/tailwind.min.css"]
-                                             "dark" ["tailwindcss/dist/tailwind-dark.min.css"]
-                                             true []}
-                             ;:tailwind-girouette {true ["girouette.css"]
-                             ;                     false []}
-                             :fontawesome {true ["@fortawesome/fontawesome-free/css/all.min.css"]
-                                           false []}
-                             :fonts-google    {true ["fonts-google/fonts.css"]
-                                               false []}}
-                 :current {:webly-dialog true
-                           :tailwind-full  "light"
-                           ;:tailwind-girouette false
-                           :fontawesome true
-                           :fonts-google false}}
+                                            false []}}
+                 :current {:webly-dialog true}}
          ; cljs
          :ns-cljs []
          :modules {}
