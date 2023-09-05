@@ -82,7 +82,6 @@
         ]
     (dispatch [:bidi/init routes-frontend])))
 
-
 (reg-event-db
  :webly/app-after-config-load
  (fn [db [_ static?]]

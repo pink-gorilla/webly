@@ -41,13 +41,12 @@
     {:server-type server-type
      :server server}))
 
-(defn start 
+(defn start
   ([ring-handler server-type]
-    (let [config (get-in-config [:webly/web-server])]
-      (start2 config ring-handler server-type)))
-  ([config ring-handler server-type]
+   (let [config (get-in-config [:webly/web-server])]
      (start2 config ring-handler server-type)))
-
+  ([config ring-handler server-type]
+   (start2 config ring-handler server-type)))
 
 (defn stop-httpkit [server]
   (info "stopping httpkit server..")
