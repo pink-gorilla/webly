@@ -22,8 +22,7 @@
                                                   {:root (:dir options)}))
                          (wrap-content-type options)
                          (wrap-not-modified)
-                         (wrap-gzip)
-                         )))))
+                         (wrap-gzip))))))
   (unresolve-handler [this m]
     (when (= this (:handler m)) "")))
 
@@ -43,7 +42,6 @@
                            (fn [req] (resource-response (str (:prefix options) path)))
                            (wrap-content-type options)
                            (wrap-not-modified) ; awb99 hack
-                           (wrap-gzip)
-                           ))))))
+                           (wrap-gzip)))))))
   (unresolve-handler [this m]
     (when (= this (:handler m)) "")))
