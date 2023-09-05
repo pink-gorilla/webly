@@ -15,8 +15,8 @@
   (is (= (bidi/path-for routes-frontend :demo/main) "/"))
   (is (= (bidi/path-for routes-frontend :demo/help) "/help"))
   (is (= (bidi/path-for routes-frontend :demo/party :location "Vienna") "/party/Vienna"))
-  (is (= (bidi/path-for routes-backend :api/test) "/api/test"))
-  (is (= (bidi/path-for routes-backend :api/time) "/api/time")))
+  (is (= (bidi/path-for routes-backend 'demo.handler.test/test-handler) "/api/test"))
+  (is (= (bidi/path-for routes-backend 'demo.handler/time-handler) "/api/time")))
 
 (defn GET [url]
   (bidi/match-route routes-backend url :request-method :get))
@@ -27,8 +27,8 @@
 (deftest path->handler []
   ;(is (= (:handler (GET "/")) :demo/main))
   ;(is (= (:handler (GET "/help")) :demo/help))
-  (is (= (:handler (GET "/api/time")) :api/time))
-  (is (= (:handler (POST "/api/test")) :api/test)))
+  (is (= (:handler (GET "/api/time")) 'demo.handler/time-handler))
+  (is (= (:handler (POST "/api/test")) 'demo.handler.test/test-handler)))
 
 (deftest resource-routes []
   (is (not (= (:handler (GET "/r/webly/icon/silver.ico")) nil)))

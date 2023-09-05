@@ -93,7 +93,7 @@
   
  :ns-clj [demo.time
           demo.routes
-          demo.handler]
+          demo.handler2]
 
  :runner webly.app.app/webly-runner
 ;                

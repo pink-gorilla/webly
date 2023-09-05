@@ -1,9 +1,9 @@
 (ns webly.routes)
 
 (def routes-api
-  {"time"   {:get :api/time}
-   "test"   {:get :api/test
-             :post :api/test  ; used in unit-test
+  {"time"   {:get 'demo.handler/time-handler}
+   "test"   {:get 'demo.handler.test/test-handler
+             :post 'demo.handler.test/test-handler  ; used in unit-test
              }
    "snippet"   {:get :api/snippet}})
 

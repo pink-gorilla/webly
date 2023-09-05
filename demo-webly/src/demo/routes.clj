@@ -6,8 +6,8 @@
   {:api {"time"   {:get 'demo.handler/time-handler}
          "timejava"   {:get :api/time-java}
          "biditest"   {:get :api/bidi-test}
-         "test"   {:get :api/test
-                   :post :api/test  ; used in unit-test
+         "test"   {:get 'demo.handler.test/test-handler
+                   :post 'demo.handler.test/test-handler  ; used in unit-test
                    }
          "snippet"   {:get :api/snippet}
          "bindata" :api/binary}
