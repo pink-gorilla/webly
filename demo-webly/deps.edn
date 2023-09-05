@@ -1,7 +1,9 @@
 {:paths ["src"
          "target/node_modules"  ; css png resources from npm modules (tailwind)
          ]
- :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}}
+ :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
+        
+        }
  :aliases
  {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
              :main-opts ["-m" "antq.core"]}
@@ -42,7 +44,9 @@
   ; 2. run unit tests 
 
   ; BUILD BUNDLE (then exit)
-  :demo-build {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}} ; http cors test
+  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}  ; http cors test
+                       org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
+                       } 
                 :extra-paths ["src" "resources" "test" "test/resources"]
                 :exec-fn webly.app.app/webly-build
                 :exec-args {:config ["webly/config.edn" "demo.edn" "creds-localhost.edn"] ; does not get used!
@@ -52,12 +56,9 @@
   :release {:exec-args {:profile "release"}}
   
   ; RUN SERVICES (keep running)
-  :demo-run {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}} ; http cors test
-               :extra-paths ["src" "resources" "test" "test/resources"]
-               :exec-fn modular.system/start!
-               :exec-args {:config ["webly/config.edn" "demo.edn" "creds-localhost.edn"] ; does not get used!
-                           :profile "jetty"
-                           :services "demoservices.edn"}}
+  :run {:exec-fn modular.system/start!
+        :exec-args {:profile "jetty"
+                    :services "demoservices.edn"}}
 
   :httpkit {:extra-deps {http-kit/http-kit {:mvn/version "2.5.3"}}
             :exec-args {:profile "httpkit"}}

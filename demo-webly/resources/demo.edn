@@ -11,9 +11,16 @@
          :title "Webly Demo"
          :start-user-app [:demo/start]
          :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
-                                     false []}}
-                 :current {:emoji    false}}}
-
+                                     false []}
+                             :tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
+                                        "dark"  ["tailwindcss/dist/tailwind-dark.min.css"]}
+                             :webly-dialog {true ["webly/dialog.css"]
+                                            false []}
+                             }
+                 :current {:emoji    false
+                           :tailwind "light"
+                           :webly-dialog true
+                           }}}
 
  :static-main-path "/webly" ; for static-page build (github pages)
 

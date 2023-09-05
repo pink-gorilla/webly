@@ -1,7 +1,6 @@
 (ns demo.emoji)
 
-;; font awesome example:
-;;  [:i.fas.fa-trash]
+
 
 ; https://fontello.com/ - icon font generator
 

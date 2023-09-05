@@ -26,8 +26,8 @@
                    (webly/clean-project "./demo-repl")
                    (webly/clean-project "./webly")
                    (webly/clean-project "./webserver"))
-         npm-install (webly/run "demo-webly" "demo-build" :npm-install)
-         build-ci (webly/run "demo-webly" "demo-build" :ci)      
+         npm-install (webly/run "demo-webly" "webly" :npm-install)
+         build-ci (webly/run "demo-webly" "webly" :ci)      
 
          ; CI TESTS **************************************************************************
          test-build {:depends [npm-install
@@ -77,7 +77,7 @@
 
          demo-webly {:doc "webly demo with shadow-cljs watch"
                      :task (do  (run 'tailwind-girouette-webly)
-                                (webly/run "demo-webly" "demo-webly" "watch2"))}
+                                (webly/run "demo-webly" "webly" "watch2"))}
          demo-webly-tenx {:doc "webly demo with shadow-cljs watch"
                           :task (do  (run 'tailwind-girouette-webly)
                                      (webly/run "demo-webly" "demo-webly" "watch"))}

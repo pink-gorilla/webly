@@ -28,7 +28,7 @@
    [webly.app.tenx.events]
    [webly.app.views :refer [webly-app]]
    [webly.app.events]
-   [webly.app.routes :refer [make-routes-frontend make-routes-backend]]
+   [webly.app.routes :refer [make-routes-frontend #_make-routes-backend]]
    [webly.app.status.page] ; side-effects
 
    [webly.build.prefs :refer [pref]]
@@ -78,8 +78,10 @@
 
 (defn setup-bidi [user-routes-api user-routes-app]
   (let [routes-frontend (make-routes-frontend user-routes-app)
-        routes-backend (make-routes-backend user-routes-app user-routes-api)]
-    (dispatch [:bidi/init routes-frontend routes-backend])))
+        ;routes-backend (make-routes-backend user-routes-app user-routes-api)
+        ]
+    (dispatch [:bidi/init routes-frontend])))
+
 
 (reg-event-db
  :webly/app-after-config-load
@@ -91,7 +93,7 @@
      (dispatch [:webly/status :configuring-app])
      (setup-bidi (:api routes) (:app routes))
      (dispatch [:ga/init])
-     (dispatch [:keybindings/init])
+     (dispatch [:keybindings/init (get-in db [:config :keybindings])])
      (dispatch [:css/init])
      (dispatch [:settings/init])
      (if static?
