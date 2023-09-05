@@ -18,11 +18,10 @@
       (<! (async/timeout 5000))
       (when  @running?
         (send-all! [:demo/time (now-str)]))
-      (if @running? 
-        (recur)  
-        (info "time sender is stopping.."))
-      )
-     running?))
+      (if @running?
+        (recur)
+        (info "time sender is stopping..")))
+    running?))
 
 (defmethod -event-msg-handler :time/now
   [{:as req :keys [event id ?data ring-req ?reply-fn send-fn]}]
@@ -40,7 +39,6 @@
   [{:as req :keys [event id ?data ring-req ?reply-fn send-fn]}]
   (infof ":time/now: %s" event)
   (send-response req :demo/time-date-local (now-local)))
-
 
 (defmethod -event-msg-handler :demo/connected
   [{:as req :keys [event id ?data ring-req ?reply-fn send-fn]}]

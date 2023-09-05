@@ -29,5 +29,4 @@
           [:span "emoji not loaded"])
         [:p "tailwind theme switcher (requires full tailwind css)"]
         [link-dispatch [:css/set-theme-component :tailwind "light"] "tailwind light"]
-        [link-dispatch [:css/set-theme-component :tailwind "dark"] "tailwind dark"]
-        ]])))
+        [link-dispatch [:css/set-theme-component :tailwind "dark"] "tailwind dark"]]])))

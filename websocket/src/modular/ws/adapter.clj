@@ -6,9 +6,7 @@
    [modular.encoding.transit :as e]
    [modular.ws.id :refer [get-sente-session-uid]]
    [modular.ws.msg-handler :refer [event-msg-handler]]
-   [modular.ws.adapter.jetty :as jetty]
-   ))
-
+   [modular.ws.adapter.jetty :as jetty]))
 
 (defn get-adapter [server-type]
   (case server-type
@@ -16,7 +14,7 @@
                 (get-sch-adapter))
     :jetty (jetty/get-sch-adapter)
     :httpkit (let [get-sch-adapter (requiring-resolve 'modular.ws.adapter.httpkit/get-sch-adapter)]
-                (get-sch-adapter))
+               (get-sch-adapter))
     ;
     ))
 

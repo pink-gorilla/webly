@@ -1,5 +1,5 @@
 (ns webly.auth-test
-(:require
+  (:require
    [taoensso.timbre :as timbre :refer [debug info error]]
    [clojure.test :refer [deftest is testing]]
    [ring.mock.request :refer [request] :rename {request mock-request}]
@@ -8,25 +8,23 @@
    [modular.config :as config]
    [modular.oauth2.local.pass :as pass]
    [webly.web.handler :refer [make-handler]]
-   [modular.permission.service :refer [ add-permissioned-services]]
+   [modular.permission.service :refer [add-permissioned-services]]
    [modular.permission.role :as role]
    [modular.permission.websocket :refer [set-user! service-authorized?]]
-   [modular.permission.user :refer [print-users]]
- ))
+   [modular.permission.user :refer [print-users]]))
 
 (deftest pwd-hash-test []
   (is (= (pass/pwd-hash "1234") "a231498f6c1f441aa98482ea0b224ffa")))
 
-
 ; set the required config for the auth test
 
-(config/set! :oauth2 
-            {:local {:client-secret "123456789"}})
+(config/set! :oauth2
+             {:local {:client-secret "123456789"}})
 
 (config/set! :users
- {:demo {:roles #{:admin :logistic}
-         :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
-         :email ["john@doe.com"]}})
+             {:demo {:roles #{:admin :logistic}
+                     :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
+                     :email ["john@doe.com"]}})
 
 (print-users)
 
@@ -36,30 +34,25 @@
     (info "get-token result token: " (pr-str t))
     (is (= user :demo))
     (is (= {:user :demo} (pass/verify-token token)))))
-  
-
 
 (deftest perm-test []
-  (is (role/authorized? nil nil )) ; no user for route without permission requirement is authorized
-  (is (role/authorized? nil :demo )) ; user for route with permssion is authorized
-  
-  (is (= (role/authorized? #{} :demo) true)) ; authorized user required
-  (is (= (role/authorized? #{} nil ) false)) ; no user for route with permission does not pass
+  (is (role/authorized? nil nil)) ; no user for route without permission requirement is authorized
+  (is (role/authorized? nil :demo)) ; user for route with permssion is authorized
 
-  (is (role/authorized? #{:admin} :demo ))
-  (is (not (role/authorized? #{:heroic-warrior} :demo )))
-  (is (not (role/authorized? #{:admin} :crazy-ponny )))
-  
+  (is (= (role/authorized? #{} :demo) true)) ; authorized user required
+  (is (= (role/authorized? #{} nil) false)) ; no user for route with permission does not pass
+
+  (is (role/authorized? #{:admin} :demo))
+  (is (not (role/authorized? #{:heroic-warrior} :demo)))
+  (is (not (role/authorized? #{:admin} :crazy-ponny)))
+
   ;
   )
-
-
 (add-permissioned-services
-  {:public2 nil
-   :hello #{}
-   :add #{:math}
-   :calc #{:logistic}
-   })
+ {:public2 nil
+  :hello #{}
+  :add #{:math}
+  :calc #{:logistic}})
 
 (deftest service-test []
   (is (= (service-authorized? :public2 "2") true)) ; public2 does not need any permission => authorized
@@ -73,8 +66,7 @@
   ; "3" => :demo [:admin :logistic}
   ; :hello does not need any role ==> authorized    
   (is (not (service-authorized? :add "4")))
-  (is (service-authorized? :calc "3"))
-)
+  (is (service-authorized? :calc "3")))
 
 
 

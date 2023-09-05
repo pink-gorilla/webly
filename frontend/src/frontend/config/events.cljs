@@ -34,10 +34,8 @@
                    :on-success      [:config/load-success static? after-config-load]
                    :on-failure      [:config/load-error]}})))
 
-
 ;(def config
 ;  {'bidi.bidi.TaggedMatch bidi/map->TaggedMatch})
-
 
 ;(defn read-str [s]
 ;  (read-string

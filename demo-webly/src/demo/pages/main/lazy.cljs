@@ -17,7 +17,6 @@
     [:div
      [ui-add-more 7 7]]))
 
-
 (defn demo-lazy []
   (let [show-lazy1 (r/atom false)
         show-lazy2 (r/atom false)]
@@ -29,6 +28,5 @@
        (when @show-lazy1
          [lazy1])
        (when @show-lazy2
-         [lazy2])
-       ])))
+         [lazy2])])))
 

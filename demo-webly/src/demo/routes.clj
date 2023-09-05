@@ -3,7 +3,7 @@
    [bidi.bidi :as bidi]))
 
 (def routes
-  {:api {"time"   {:get :api/time}
+  {:api {"time"   {:get 'demo.handler/time-handler}
          "timejava"   {:get :api/time-java}
          "biditest"   {:get :api/bidi-test}
          "test"   {:get :api/test

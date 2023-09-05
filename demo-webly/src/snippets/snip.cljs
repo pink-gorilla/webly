@@ -16,7 +16,5 @@
       (swap! x inc)
       [:p "addition result: " (+ a b @x)])))
 
-
 (defn ui-add-more [a b]
-   [ui-add-more-impl a b]
-  )
+  [ui-add-more-impl a b])

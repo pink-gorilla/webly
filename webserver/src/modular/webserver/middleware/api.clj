@@ -22,5 +22,5 @@
       ;(wrap-format) ; muuntaja https://github.com/metosin/muuntaja
       (wrap-format muuntaja)
       ;(wrap-json-response)
-      ;(wrap-gzip)
+      (wrap-gzip)
       wrap-fallback-exception))

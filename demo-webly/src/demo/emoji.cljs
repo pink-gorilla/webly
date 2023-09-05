@@ -1,7 +1,5 @@
 (ns demo.emoji)
 
-
-
 ; https://fontello.com/ - icon font generator
 
 (defn emoji [name]

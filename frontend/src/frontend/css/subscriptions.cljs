@@ -21,8 +21,7 @@
           :or {available {}
                current {}}}
          (get-in db [:theme])
-         prefix (get-in db [:config :prefix])
-         ]
+         prefix (get-in db [:config :prefix])]
      (debug "app theme link prefix: " prefix)
      (css-app prefix available current))))
 

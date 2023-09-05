@@ -1,8 +1,7 @@
 (ns modular.ws.msg-handler
   (:require
    [taoensso.timbre :refer [tracef debug debugf info infof warn warnf error errorf]]
-   [modular.permission.app :refer [service-authorized?]]
-   ))
+   [modular.permission.app :refer [service-authorized?]]))
 
 (defn ws-reply [{:keys [event id ?data ring-req ?reply-fn send-fn] :as req}
                 res]
@@ -48,20 +47,19 @@
     (errorf "ws event of unknown type. Please implement (-event-handler %s) event: %s" id event)
     (send-response req :ws/unknown event)))
 
-(def always-authorized 
+(def always-authorized
   #{:chsk/uidport-open
-   :chsk/uidport-close
-   :chsk/ws-ping
-   :chsk/handshake
-   :chsk/recv
-   :login/local
-   :login/oidc
-   :tokens/summary
-  })
+    :chsk/uidport-close
+    :chsk/ws-ping
+    :chsk/handshake
+    :chsk/recv
+    :login/local
+    :login/oidc
+    :tokens/summary})
 
 (defn is-authorized? [msg-type uid]
   (if (contains? always-authorized msg-type)
-    true    
+    true
     (service-authorized? msg-type uid)))
 
 (defn send-reject-response [req msg-type]
@@ -76,8 +74,7 @@
     (let [msg-type (first event)]
       (if (is-authorized? msg-type uid)
         (-event-msg-handler req)
-        (send-reject-response req msg-type)
-        ))))
+        (send-reject-response req msg-type)))))
 
 ; {:client-id "591b690d-5633-48c3-884d-348bbcf5c9ca"
 ; :uid "3c8e0a40-356c-4426-9391-1445140ff509"

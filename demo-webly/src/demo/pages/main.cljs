@@ -11,8 +11,7 @@
    ; frontend
    [demo.pages.main.settings :refer [demo-settings]]
    [demo.pages.main.dialog :refer [demo-dialog]]
-   [demo.pages.main.keybinding :refer [demo-keybinding]]
-   ))
+   [demo.pages.main.keybinding :refer [demo-keybinding]]))
 
 (defn main []
   [:div.dark
@@ -20,7 +19,7 @@
                   "w-screen h-screen overflow-hidden m-0 p-0"
                   "bg-gray-300 text-gray-900 "
                   "dark:bg-gray-800 dark:text-white "
-                  "grid gap-0 " 
+                  "grid gap-0 "
                   "grid-cols-1 "
                   "md:grid-cols-2 "
                   "lg:grid-cols-3 "
@@ -33,8 +32,7 @@
     [demo-lazy]
     [demo-dialog]
     [demo-settings]
-    [demo-keybinding]
-    ]])
+    [demo-keybinding]]])
 
 (defmethod reagent-page :demo/main [& args]
   [main])

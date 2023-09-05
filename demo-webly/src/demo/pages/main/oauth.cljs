@@ -9,8 +9,8 @@
 ;; OAUTH
 (defn demo-oauth []
   [block2 "oauth2"
-    [user-login]
-    [:div.border.border-blue-500.border-2.border-round ; .overflow-scroll
-     [provider-status-grid [:google :github :xero :woo :wordpress
-                            :wunderbar]]] ; not available. does not have token.
-    ])
+   [user-login]
+   [:div.border.border-blue-500.border-2.border-round ; .overflow-scroll
+    [provider-status-grid [:google :github :xero :woo :wordpress
+                           :wunderbar]]] ; not available. does not have token.
+   ])

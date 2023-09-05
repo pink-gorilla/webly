@@ -11,9 +11,10 @@
    [demo.handler.binary :as binary]
    [demo.handler.bidi :as bidi]))
 
+(def time-handler (wrap-api-handler time/time-handler))
 
 (add-ring-handler :api/test test/test-handler)
-(add-ring-handler :api/time (wrap-api-handler time/time-handler))
+(add-ring-handler :api/time time-handler)
 (add-ring-handler :api/time-java (wrap-api-handler time/time-java-handler))
 (add-ring-handler :api/ping (wrap-api-handler ping/ping-handler))
 (add-ring-handler :api/binary binary/binary-handler)

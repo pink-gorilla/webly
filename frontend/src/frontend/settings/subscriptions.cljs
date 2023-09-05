@@ -9,8 +9,6 @@
  (fn [db _]
    (get-in db [:settings])))
 
-
-
 (reg-sub
  :prefix
  (fn [db _]
