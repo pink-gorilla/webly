@@ -2,7 +2,7 @@
   (:require
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [frontend.page :refer [reagent-page]]
+   [frontend.page :refer [add-page]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 ; themeable css for party
@@ -38,7 +38,9 @@
        [:a {:href "/party/kabul"}
         [:p.bg-red-400.m-3 "secret party"]]])))
 
-(defmethod reagent-page :demo/party [{:keys [handler route-params query-params]}]
+(defn party-page [{:keys [handler route-params query-params]}]
   (let [{:keys [location]} route-params
         {:keys [expected-guests]} query-params]
     [party location expected-guests]))
+
+(add-page :demo/party party-page)

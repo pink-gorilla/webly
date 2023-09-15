@@ -9,7 +9,7 @@
 
 (defn create-html [app-page jsname html-name]
   (let [csrf-token "llXxTmFvjm6KXhKBjY7nemz4GNRwF/ZgZbycGDgw8cdF1B/cbmX5JZElY3MCnyEYUUGCi7Cw3k3mUpMI"
-        html (app-page csrf-token)
+        html (app-page @config-atom csrf-token)
         filename html-name]
     (info "writing static page: " filename)
     (spit filename html)))

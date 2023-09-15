@@ -1,7 +1,7 @@
 (ns demo.pages.main.route
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
-   [webly.app.views :refer [refresh-page]]
+   [frontend.page.viewer :refer [refresh-page]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 ;; BIDI ROUTING

@@ -1,7 +1,7 @@
 (ns demo.pages.main
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
-   [frontend.page :refer [reagent-page]]
+   [frontend.page :refer [add-page]]
    ; webly
    [demo.pages.main.lazy :refer [demo-lazy]]
    [demo.pages.main.route :refer [demo-routing]]
@@ -13,7 +13,7 @@
    [demo.pages.main.dialog :refer [demo-dialog]]
    [demo.pages.main.keybinding :refer [demo-keybinding]]))
 
-(defn main []
+(defn main [_route]
   [:div.dark
    [:div {:class (str
                   "w-screen h-screen overflow-hidden m-0 p-0"
@@ -34,8 +34,7 @@
     [demo-settings]
     [demo-keybinding]]])
 
-(defmethod reagent-page :demo/main [& args]
-  [main])
+(add-page :demo/main main)
 
 
 

@@ -8,7 +8,8 @@
    [modular.webserver.handler.registry :refer [add-ring-handler]]
    [modular.webserver.middleware.api :refer [wrap-api-handler]]
    [modular.ws.middleware :refer [wrap-ws]]
-   [webly.app.page :refer [app-page-dynamic]]))
+   [webly.app.page :refer [app-page-dynamic]]
+   [modular.config :refer [config-atom]]))
 
 ; CSRF TOKEN
 
@@ -25,13 +26,14 @@
 ;; APP
 
 (defn app-handler-raw [req]
-  (let [; csrf-token and session are sente requirements
+  (let [webly-config @config-atom
+        ; csrf-token and session are sente requirements
         csrf-token (get-csrf-token)
         ;session  (sente-session-with-uid req)
         res (response/content-type
              {:status 200
               ;:session session
-              :body (app-page-dynamic csrf-token)}
+              :body (app-page-dynamic webly-config csrf-token)}
              "text/html")]
     ;(response/header res "session" session)
     res))

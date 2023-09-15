@@ -2,7 +2,7 @@
   (:require
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [frontend.page :refer [reagent-page]]
+   [frontend.page :refer [add-page]]
    [pinkgorilla.repl.cljs.http :refer [get-json]]))
 
 (defn link-fn [fun text]
@@ -22,7 +22,7 @@
 
 (def prefix-atom (rf/subscribe [:prefix]))
 
-(defn help []
+(defn help [_route]
   [:div
    [:h1 "webly help"]
    (when @firstt
@@ -38,5 +38,4 @@
    [:p "a moon image should show below. this is a test for webly resource handler."]
    [:img {:src (str @prefix-atom "moon.jpg")}]])
 
-(defmethod reagent-page :demo/help [& args]
-  [help])
+(add-page :demo/help help)

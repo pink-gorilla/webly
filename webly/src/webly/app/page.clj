@@ -3,7 +3,6 @@
    [clojure.string :as str]
    [hiccup.page :as page]
    [taoensso.timbre :refer [debug info error]]
-   [modular.config :refer [config-atom]]
    [frontend.analytics.google-tag :refer [script-tag-src script-tag-config]]
    [frontend.css.config :refer [css-app]]
    [webly.app.tenx.view :refer [tenx-script]]))
@@ -89,16 +88,15 @@
       (loading (str prefix spinner))
       [:div#webly page]])))
 
-(defn app-page-dynamic [csrf-token]
-  (let [config @config-atom]
-    (layout config
-            [:div
-             [:div#sente-csrf-token {:data-csrf-token csrf-token}]
-             [:div#app]
-             [:div  ; .w-screen.h-screen
-              [:script {:src (str (:prefix config) "webly.js")
-                        :type "text/javascript"
-                        :onload "webly.app.app.start ('dynamic');"}]]])))
+(defn app-page-dynamic [webly-config csrf-token]
+  (layout webly-config
+          [:div
+           [:div#sente-csrf-token {:data-csrf-token csrf-token}]
+           [:div#app]
+           [:div  ; .w-screen.h-screen
+            [:script {:src (str (:prefix webly-config) "webly.js")
+                      :type "text/javascript"
+                      :onload "webly.app.app.start ('dynamic');"}]]]))
 
 (defn config-prefix-adjust [config]
   (let [prefix (:prefix config)
@@ -107,8 +105,8 @@
     (info "static asset path: " asset-path)
     (assoc config :prefix asset-path)))
 
-(defn app-page-static [csrf-token]
-  (let [config (config-prefix-adjust @config-atom)]
+(defn app-page-static [webly-config csrf-token]
+  (let [config (config-prefix-adjust webly-config)]
     (layout config ; :prefix "/r/"
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]

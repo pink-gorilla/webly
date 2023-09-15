@@ -2,7 +2,6 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [modular.config :refer [load-config! config-atom]]
-   [modular.require :refer [require-namespaces]]
    [modular.system :as system]
    [modular.writer :refer [write-status]]
    [modular.oauth2.handler] ; side-effects

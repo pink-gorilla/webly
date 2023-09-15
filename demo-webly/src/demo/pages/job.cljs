@@ -1,7 +1,7 @@
 (ns demo.pages.job
   (:require
    [re-frame.core :as rf]
-   [frontend.page :refer [reagent-page]]))
+   [frontend.page :refer [add-page]]))
 
 ; ui helper   
 
@@ -23,5 +23,4 @@
 
    [:p "params: " (pr-str p)]])
 
-(defmethod reagent-page :demo/job [args]
-  [job args])
+(add-page :demo/job job)
