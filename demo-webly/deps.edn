@@ -49,8 +49,13 @@
                        } 
                 :extra-paths ["src" "resources" "test" "test/resources"]
                 :exec-fn webly.app.app/webly-build
-                :exec-args {:config ["webly/config.edn" "demo.edn" "creds-localhost.edn"] ; does not get used!
+                :exec-args {:config ["webly/config.edn" 
+                                     "demo.edn" 
+                                     ;"creds-localhost.edn"
+                                     "/home/florian/repo/myLinux/myvault/trateg/creds.edn"
+                                     ] ; does not get used!
                             :profile "npm-install"}}
+  
   :npm-install {:exec-args {:profile "npm-install"}}
   :compile {:exec-args {:profile "compile2"}}
   :release {:exec-args {:profile "release"}}
