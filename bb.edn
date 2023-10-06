@@ -13,8 +13,8 @@
                     [babashka.fs :as fs]]
          ; dev tools
          lint (webly/clojure "webly" "-M:lint" "src" "../oauth2" "../webserver")
-         cljfmt-check (webly/clojure "webly" "-M:cljfmt" "check" "src" "../oauth2" "../webserver")
-         cljfmt-fix (webly/clojure "webly" "-M:cljfmt" "fix" "src" "../oauth2" "../webserver")
+         cljfmt-check (webly/clojure "webly" "-M:cljfmt" "check" "src" )
+         cljfmt-fix (webly/clojure "webly" "-M:cljfmt" "fix" "src")
          deps-tree (webly/clojure "webly" "-X:deps" "tree")
          outdated (webly/clojure "webly" "-M:outdated")
          
@@ -24,8 +24,7 @@
                    (webly/clean-project ".")
                    (webly/clean-project "./demo-webly")
                    (webly/clean-project "./demo-repl")
-                   (webly/clean-project "./webly")
-                   (webly/clean-project "./webserver"))
+                   (webly/clean-project "./webly"))
          npm-install (webly/run "demo-webly" "webly" :npm-install)
          build-ci (webly/run "demo-webly" "webly" :ci)      
 
