@@ -11,8 +11,6 @@
   - keybindings
   - loading animation
   - notifications and dialogs
-  - api endpoints
-  - oauth2
   - google analytics (can be disabled)
 
 - webly is used in [Goldly](https://github.com/pink-gorilla/goldly).

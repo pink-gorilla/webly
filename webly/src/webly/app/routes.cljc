@@ -3,7 +3,7 @@
    [webly.web.resources :refer [resource-handler file-handler-nodejs file-handler-bundel file-handler-code]]))
 
 (def webly-routes-api
-  {"config" {:get :webly/config} 
+  {"config" {:get :webly/config}
    ; ws
    "token"  :ws/token
    "chsk"  {:get  :ws/chsk-get
@@ -21,7 +21,7 @@
         ;app-routes  (merge webly-routes-app user-routes-app)
         ]
     ["/" {"api/"    api-routes
-          
+
           ; todo: remove this endpoint once the provider oauth2 setup is changed
           ["oauth2/redirect/" :provider] 'modular.oauth2.handler/handler-oauth2-redirect-wrapped ;  either client OR server side
 
