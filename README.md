@@ -44,7 +44,7 @@ A simple demo is on [Webly Github Pages](https://pink-gorilla.github.io/webly/)
 - ring middleware for api calls
 - routing with bidi (this allows to have links within the web-app)
 - this means a registry for ring-handlers and reagent-views
-- oauth2 with github
+
 
 ## webly build 
   - this feature is available for apps that use webly
@@ -52,8 +52,6 @@ A simple demo is on [Webly Github Pages](https://pink-gorilla.github.io/webly/)
   - does not require shadow-cljs.edn
   - bundle-size report at compile time
 
-
-## [oauth2 (separate readme)](/oauth2/README.md)
 
 # webly - how to use:
 

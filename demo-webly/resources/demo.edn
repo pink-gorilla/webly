@@ -3,9 +3,7 @@
          ; if you do lots of merging of routes, you might prefer a symbol
          :routes demo.routes/routes
          ; cljs
-         :ns-cljs [demo.app
-                   modular.oauth2 ; todo: remove once oauth2 goldly plugin works
-                   ]
+         :ns-cljs [demo.app]
          :modules {:snippets [snippets.snip]
                    :hello [snippets.hello
                            snippets.bye]}

@@ -71,8 +71,7 @@
   :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
          :exec-fn clojure.tools.cli.api/list}
 
-  :password {:exec-fn demo.password/password
-             :exec-args {:password "1234"}}
+ 
 
   ;
   }}

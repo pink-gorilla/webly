@@ -12,7 +12,7 @@
                     [clojure.edn :as edn]
                     [babashka.fs :as fs]]
          ; dev tools
-         lint (webly/clojure "webly" "-M:lint" "src" "../oauth2" "../webserver")
+         lint (webly/clojure "webly" "-M:lint" "src" )
          cljfmt-check (webly/clojure "webly" "-M:cljfmt" "check" "src" )
          cljfmt-fix (webly/clojure "webly" "-M:cljfmt" "fix" "src")
          deps-tree (webly/clojure "webly" "-X:deps" "tree")
