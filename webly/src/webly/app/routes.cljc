@@ -3,20 +3,14 @@
    [webly.web.resources :refer [resource-handler file-handler-nodejs file-handler-bundel file-handler-code]]))
 
 (def webly-routes-api
-  {"config" {:get :webly/config}
-   ;"md"     {:get :api/md}
-   "oauth2/" {["start/" :provider] {:get :oauth2/start}
-              "token"  {:get :oauth2/token}
-              ;  ["redirect/" :provider] {:get :oauth2/redirect}
-              "save-token" {:post :oauth2/save-token}}
+  {"config" {:get :webly/config} 
    ; ws
    "token"  :ws/token
    "chsk"  {:get  :ws/chsk-get
             :post :ws/chsk-post}})
 
 (def webly-routes-app
-  {;["md/" :file] :ui/markdown
-   ;["oauth2/redirect/" :provider] :oauth2/redirect  : either client OR server side
+  {;["oauth2/redirect/" :provider] :oauth2/redirect  : either client OR server side
    })
 
 (defn make-routes-frontend [user-routes-app]
@@ -27,7 +21,9 @@
         ;app-routes  (merge webly-routes-app user-routes-app)
         ]
     ["/" {"api/"    api-routes
-          ["oauth2/redirect/" :provider] :oauth2/redirect  ;  either client OR server side
+          
+          ; todo: remove this endpoint once the provider oauth2 setup is changed
+          ["oauth2/redirect/" :provider] 'modular.oauth2.handler/handler-oauth2-redirect-wrapped ;  either client OR server side
 
        ; ""       app-routes
           #{"r" "bundel"} file-handler-bundel ;["r"]  ; first from file, thereafter from resource.

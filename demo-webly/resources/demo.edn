@@ -3,7 +3,9 @@
          ; if you do lots of merging of routes, you might prefer a symbol
          :routes demo.routes/routes
          ; cljs
-         :ns-cljs [demo.app]
+         :ns-cljs [demo.app
+                   modular.oauth2 ; todo: remove once oauth2 goldly plugin works
+                   ]
          :modules {:snippets [snippets.snip]
                    :hello [snippets.hello
                            snippets.bye]}
@@ -93,7 +95,9 @@
   
  :ns-clj [demo.time
           demo.routes
-          demo.handler2]
+          demo.handler2
+          demo.app
+          ]
 
  :runner webly.app.app/webly-runner
 ;                

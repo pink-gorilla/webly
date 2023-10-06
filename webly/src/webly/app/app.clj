@@ -4,11 +4,8 @@
    [modular.config :refer [load-config! config-atom]]
    [modular.system :as system]
    [modular.writer :refer [write-status]]
-   [modular.oauth2.handler] ; side-effects
-   ;[modular.oauth2.middleware :refer [print-oauth2-config]]
    [modular.ws.core :refer [init-ws!]]
    [modular.permission.service :refer [service-authorized?]]
-   [modular.oauth2] ; side-effects
    [webly.build.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]
    [webly.build.shadow :refer [stop-shadow]]

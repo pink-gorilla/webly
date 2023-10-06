@@ -7,7 +7,6 @@
    ; side-effects
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
    [day8.re-frame.http-fx]
-   [modular.oauth2]
    [modular.ws.events]
    [modular.ws.core]
    ; frontend
