@@ -21,11 +21,7 @@
         ;app-routes  (merge webly-routes-app user-routes-app)
         ]
     ["/" {"api/"    api-routes
-
-          ; todo: remove this endpoint once the provider oauth2 setup is changed
-          ["oauth2/redirect/" :provider] 'modular.oauth2.handler/handler-oauth2-redirect-wrapped ;  either client OR server side
-
-       ; ""       app-routes
+          ; ""       app-routes
           #{"r" "bundel"} file-handler-bundel ;["r"]  ; first from file, thereafter from resource.
           #{"r" "node"} file-handler-nodejs
           #{"r" "jarres"} resource-handler  ;"r"
