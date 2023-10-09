@@ -22,7 +22,7 @@
    the def statement defines a variable in this ns. This is used by shadow-cljs to resolve the handler.
    "
   [routes]
-  (info "create-ring-handler: " routes)
+  (debug "create-ring-handler: " routes) ; debugt because we write full config to routes.edn file.
   (let [routes-backend (make-routes-backend (:app routes) (:api routes))
         routes-frontend (make-routes-frontend (:app routes))
         ;_ (info "all-api-routes:" routes-backend "all-app-routes:" routes-frontend)
