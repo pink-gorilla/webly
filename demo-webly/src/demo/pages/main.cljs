@@ -1,13 +1,11 @@
 (ns demo.pages.main
   (:require
-   [taoensso.timbre :refer-macros [debug info warn error]]
    [frontend.page :refer [add-page]]
    ; webly
    [demo.pages.main.lazy :refer [demo-lazy]]
    [demo.pages.main.route :refer [demo-routing]]
    [demo.pages.main.css :refer [demo-css]]
    [demo.pages.main.ws :refer [demo-ws]]
-   [demo.pages.main.oauth :refer [demo-oauth]]
    ; frontend
    [demo.pages.main.settings :refer [demo-settings]]
    [demo.pages.main.dialog :refer [demo-dialog]]
@@ -27,7 +25,6 @@
     [demo-routing]
     [demo-css]
     [demo-ws]
-    [demo-oauth]
 
     [demo-lazy]
     [demo-dialog]
