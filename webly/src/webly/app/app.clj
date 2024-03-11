@@ -11,8 +11,7 @@
    [webly.build.shadow :refer [stop-shadow]]
    [webly.web.server :as web-server]
    [webly.spa.handler.core :as webly-handler]
-   [webly.spa.handler.routes.config :refer [create-config-routes]]
-   )
+   [webly.spa.handler.routes.config :refer [create-config-routes]])
   (:gen-class))
 
 
@@ -26,13 +25,13 @@
 
 (defn hack-routes-symbol [routes]
   (if (symbol? routes)
-      (-> routes requiring-resolve var-get)
-      routes))
-    
+    (-> routes requiring-resolve var-get)
+    routes))
 
-(defn create-ring-handler [config routes config-route websocket-routes]
+
+(defn create-ring-handler [spa-config config routes config-route websocket-routes]
   (let [routes (hack-routes-symbol routes)
-        {:keys [handler routes]} (webly-handler/create-ring-handler config routes config-route websocket-routes)]
+        {:keys [handler routes]} (webly-handler/create-ring-handler spa-config config routes config-route websocket-routes)]
     (def ring-handler handler) ; needed by shadow-watch
     (write-status "routes" routes)
     handler))
@@ -50,22 +49,31 @@
    :key-password "password"; Password you gave when creating the keystore
    :jetty-ws ["/api/chsk"]})
 
-(defn start-webly [{:keys [web-server sente-debug?]
+(def spa-default
+  {:title "webly"
+   :spinner "webly/loading.svg"
+   :icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
+   :loading-image-url "webly/loadimage/library.jpg" ; 
+   :start-user-app [:webly/start-default]  ; after config loaded}
+   })
+
+(defn start-webly [{:keys [web-server sente-debug? spa]
                     :or {sente-debug? false
                          web-server webserver-default
-                         }
-                    :as config} server-type]
+                         spa {}}
+                    :as config}
+                   server-type]
   (info "start-webly: " server-type)
-  (let [server-type (ensure-keyword server-type)
+  (let [spa (merge spa-default spa)
+        server-type (ensure-keyword server-type)
         permission (start-permissions)
         routes (hack-routes-symbol (get-in config [:webly :routes]))
         frontend-routes (:app routes)
-        _ (warn "routes frontend: " frontend-routes)
+     ;   _ (warn "routes frontend: " frontend-routes)
         config-route (create-config-routes config frontend-routes)
-        sente-debug? false
         websocket (start-websocket-server server-type sente-debug?)
         websocket-routes (:bidi-routes websocket)
-        ring-handler (create-ring-handler config routes config-route websocket-routes)
+        ring-handler (create-ring-handler spa config routes config-route websocket-routes)
         webserver (if (watch? server-type)
                     (web-server/start web-server ring-handler websocket :jetty)
                     (web-server/start web-server ring-handler websocket (keyword server-type)))

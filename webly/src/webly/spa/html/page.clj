@@ -78,9 +78,8 @@
     (into head
           (css->hiccup prefix webly-config))))
 
-(defn layout [webly-config page]
-  (let [{:keys [webly prefix]} webly-config
-        {:keys [spinner]} webly]
+(defn layout [{:keys [spinner] :as spa-config} webly-config page]
+  (let [{:keys [prefix]} webly-config]
     (page/html5
      {:mode :html}
      (head webly-config)
@@ -88,8 +87,8 @@
       (loading (str prefix spinner))
       [:div#webly page]])))
 
-(defn app-page-dynamic [webly-config csrf-token]
-  (layout webly-config
+(defn app-page-dynamic [spa-config webly-config csrf-token]
+  (layout spa-config webly-config
           [:div
            [:div#sente-csrf-token {:data-csrf-token csrf-token}]
            [:div#app]

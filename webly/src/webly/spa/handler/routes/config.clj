@@ -16,6 +16,7 @@
                              :timbre/cljs 
                              :shadow ; todo remove. this does not look right.
                              :webly; todo remove. this does not look right.
+                             :spa
                              ])
         config (assoc config :frontend-routes frontend-routes)
         config-handler (fn [_] (response config)) 

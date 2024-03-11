@@ -8,8 +8,7 @@
                    :hello [snippets.hello
                            snippets.bye]}
          :module-loader-init true
-         :title "Webly Demo"
-         :start-user-app [:demo/start]
+        
          :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
                                      false []}
                              :tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
@@ -21,6 +20,10 @@
                            :tailwind "light"
                            :webly-dialog true
                            }}}
+
+ :spa {:title "Webly Demo"
+       :start-user-app [:demo/start]}
+ 
 
  :static-main-path "/webly" ; for static-page build (github pages)
 

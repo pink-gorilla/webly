@@ -98,14 +98,17 @@
 (reg-event-db
  :webly/app-after-config-load
  (fn [db [_ static?]]
-   (let [frontend-routes (get-in db [:config :frontend-routes])
-         start-user-app (get-in db [:config :webly :start-user-app])]
+   (let [spa (get-in db [:config :spa])
+         start-user-app (-> spa :start-user-app)
+         frontend-routes (get-in db [:config :frontend-routes])
+         keybindings (get-in db [:config :keybindings])
+         ]
      (info "webly config after-load")
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
      (setup-bidi frontend-routes)
      (dispatch [:ga/init])
-     (dispatch [:keybindings/init (get-in db [:config :keybindings])])
+     (dispatch [:keybindings/init keybindings])
      (dispatch [:css/init])
      (dispatch [:settings/init])
      (if static?
