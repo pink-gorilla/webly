@@ -58,9 +58,9 @@
 
 (defn head [{:keys [title loading-image-url icon] :as _spa} 
             theme
-            webly-config]
-  (let [{:keys [google-analytics prefix]} webly-config
-        head [:head
+            prefix
+            google-analytics]
+  (let [head [:head
               [:meta {:http-equiv "Content-Type"
                       :content "text/html; charset=utf-8"}]
               [:meta {:name "viewport"
@@ -79,42 +79,41 @@
     (into head
           (css->hiccup prefix theme))))
 
-(defn layout [{:keys [spinner] :as spa-config} 
+(defn layout [{:keys [spinner] :as spa} 
               theme 
-              webly-config page]
-  (let [{:keys [prefix]} webly-config]
+              prefix
+              google-analytics
+              page]
     (page/html5
      {:mode :html}
-     (head spa-config theme webly-config)
+     (head spa theme prefix google-analytics)
      [:body.loading
       (loading (str prefix spinner))
-      [:div#webly page]])))
+      [:div#webly page]]))
 
-(defn app-page-dynamic [spa-config theme webly-config csrf-token]
-  (layout spa-config theme webly-config
+(defn app-page-dynamic [spa theme prefix google-analytics csrf-token]
+  (layout spa theme prefix google-analytics
           [:div
            [:div#sente-csrf-token {:data-csrf-token csrf-token}]
            [:div#app]
            [:div  ; .w-screen.h-screen
-            [:script {:src (str (:prefix webly-config) "webly.js")
+            [:script {:src (str prefix "webly.js")
                       :type "text/javascript"
                       :onload "webly.app.app.start ('dynamic');"}]]]))
 
-(defn config-prefix-adjust [config]
-  (let [prefix (:prefix config)
-        static-main-path (:static-main-path config)
-        asset-path (str static-main-path prefix)]
+(defn config-prefix-adjust [prefix static-main-path]
+  (let [asset-path (str static-main-path prefix)]
     (info "static asset path: " asset-path)
-    (assoc config :prefix asset-path)))
+    asset-path))
 
-(defn app-page-static [spa-config webly-config csrf-token]
-  (let [config (config-prefix-adjust webly-config)]
-    (layout spa-config config ; :prefix "/r/"
+(defn app-page-static [spa theme prefix google-analytics csrf-token static-main-path]
+  (let [prefix (config-prefix-adjust prefix static-main-path)]
+    (layout spa theme prefix google-analytics ; :prefix "/r/"
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
              [:div#app]
              [:div  ; .w-screen.h-screen
-              [:script {:src (str (:prefix config) "webly.js")
+              [:script {:src (str prefix "webly.js")
                         :type "text/javascript"
                         :onload "webly.app.app.start ('static');"}]]])))
 

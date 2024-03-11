@@ -21,7 +21,7 @@
 
 ;; APP
 
-(defn make-handler-raw  [spa theme webly-config]
+(defn make-handler-raw  [spa theme prefix google-analytics]
   (fn [req]
     (let [; csrf-token and session are sente requirements
           csrf-token (get-csrf-token)
@@ -29,12 +29,12 @@
           res (response/content-type
                {:status 200
               ;:session session
-                :body (app-page-dynamic spa theme webly-config csrf-token)}
+                :body (app-page-dynamic spa theme prefix google-analytics csrf-token)}
                "text/html")]
     ;(response/header res "session" session)
       res)))
 
-  (defn app-handler [spa theme webly-config]
-    (-> (make-handler-raw spa theme webly-config)
+  (defn app-handler [spa theme prefix google-analytics]
+    (-> (make-handler-raw spa theme prefix google-analytics)
         wrap-ws))
 

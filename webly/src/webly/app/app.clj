@@ -63,11 +63,17 @@
                             false []}}
    :current {:webly-dialog true}})
 
-(defn start-webly [{:keys [web-server sente-debug? spa theme]
+(def google-analytics-default 
+  {:enabled false} ; set to false to disable google-analytics tracking. 
+  )
+ 
+(defn start-webly [{:keys [web-server sente-debug? spa theme google-analytics prefix]
                     :or {sente-debug? false
                          web-server webserver-default
                          spa {}
-                         theme theme-default}
+                         theme theme-default
+                         google-analytics google-analytics-default
+                         prefix "/r/"}
                     :as config}
                    server-type]
   (info "start-webly: " server-type)
@@ -80,7 +86,7 @@
         config-route (create-config-routes config frontend-routes)
         websocket (start-websocket-server server-type sente-debug?)
         websocket-routes (:bidi-routes websocket)
-        app-handler (app-handler spa theme config)
+        app-handler (app-handler spa theme prefix google-analytics)
         ring-handler (create-ring-handler app-handler routes config-route websocket-routes)
         webserver (if (watch? server-type)
                     (web-server/start web-server ring-handler websocket :jetty)
