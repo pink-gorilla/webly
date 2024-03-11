@@ -48,12 +48,6 @@
   (let [routes-frontend (make-routes-frontend user-routes-app)]
     (dispatch [:bidi/init routes-frontend])))
 
-
-
-(defn mount-app []
-  (reagent.dom/render [webly-app]
-                      (.getElementById js/document "app")))
-
 ;; see:
 ;; https://shadow-cljs.github.io/docs/UsersGuide.html#_lifecycle_hooks
 ;; https://code.thheller.com/blog/shadow-cljs/2019/08/25/hot-reload-in-clojurescript.html
@@ -65,7 +59,9 @@
 ;; before-reload is a good place to stop application stuff before we reload.
 
 
-
+(defn mount-app []
+  (reagent.dom/render [webly-app]
+                      (.getElementById js/document "app")))
 
 (defn ^:dev/before-load
   before-load []
@@ -101,6 +97,7 @@
    (let [spa (get-in db [:config :spa])
          start-user-app (-> spa :start-user-app)
          frontend-routes (get-in db [:config :frontend-routes])
+         theme (get-in db [:config :theme])
          keybindings (get-in db [:config :keybindings])
          ]
      (info "webly config after-load")
@@ -109,7 +106,7 @@
      (setup-bidi frontend-routes)
      (dispatch [:ga/init])
      (dispatch [:keybindings/init keybindings])
-     (dispatch [:css/init])
+     (dispatch [:css/init theme])
      (dispatch [:settings/init])
      (if static?
        (warn "websockets are deactivated in static mode.")

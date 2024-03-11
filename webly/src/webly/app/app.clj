@@ -81,9 +81,24 @@
         server-type (ensure-keyword server-type)
         permission (start-permissions)
         routes (hack-routes-symbol (get-in config [:webly :routes]))
-        frontend-routes (:app routes)
-     ;   _ (warn "routes frontend: " frontend-routes)
-        config-route (create-config-routes config frontend-routes)
+        user-config  (select-keys config
+                                 [:static-main-path
+                                  :static?
+                                  :runner
+                                  ; application specific keys
+                                  :settings ; localstorage
+                                  :keybindings
+                                  :timbre/cljs
+                                  :shadow ; todo remove. this does not look right.
+                                  :webly; todo remove. this does not look right.
+                                  ])
+        frontend-config (merge user-config {:prefix prefix
+                                            :spa spa
+                                            :frontend-routes (:app routes)
+                                            :theme theme
+                                            :google-analytics google-analytics
+                                            })
+        config-route (create-config-routes frontend-config)
         websocket (start-websocket-server server-type sente-debug?)
         websocket-routes (:bidi-routes websocket)
         app-handler (app-handler spa theme prefix google-analytics)
@@ -102,7 +117,7 @@
      :webserver webserver
      :shadow shadow}))
 
-(defn stop-webly [{:keys [profile webserver shadow]}]
+(defn stop-webly [{:keys [webserver websocket shadow]}]
   (info "stopping webly..")
   (when webserver
     (web-server/stop webserver))

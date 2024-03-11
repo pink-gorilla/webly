@@ -7,23 +7,26 @@
          :modules {:snippets [snippets.snip]
                    :hello [snippets.hello
                            snippets.bye]}
-         :module-loader-init true
-        
-         :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
-                                     false []}
-                             :tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
-                                        "dark"  ["tailwindcss/dist/tailwind-dark.min.css"]}
-                             :webly-dialog {true ["webly/dialog.css"]
-                                            false []}
-                             }
-                 :current {:emoji    false
-                           :tailwind "light"
-                           :webly-dialog true
-                           }}}
+         :module-loader-init true}
 
  :spa {:title "Webly Demo"
-       :start-user-app [:demo/start]}
- 
+       :start-user-app [:demo/start]
+       :spinner "webly/loading.svg"
+       :icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
+       :loading-image-url "webly/loadimage/library.jpg" ; 
+       }
+
+ :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
+                             false []}
+                     :tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
+                                "dark"  ["tailwindcss/dist/tailwind-dark.min.css"]}
+                     :webly-dialog {true ["webly/dialog.css"]
+                                    false []}}
+         :current {:emoji    false
+                   :tailwind "light"
+                   :webly-dialog true}}
+
+
 
  :static-main-path "/webly" ; for static-page build (github pages)
 
@@ -77,8 +80,7 @@
               :service {:time/now nil ; no permission needed for this.
                         :time/now-date #{} ; only logged in users can access this service
                         :time/now-date-local #{:supervisor}
-                        :demo/connected nil
-                        }}
+                        :demo/connected nil}}
 
  :users {:demo {:roles #{:logistic}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
@@ -86,18 +88,17 @@
          :boss {:roles #{:logistic :supervisor :accounting}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["boss@doe.com"]}
-         
+
          :florian {:roles #{:logistic}
                    :password "a231498f6c1f441aa98482ea0b224ffa" ; 1234
                    :email ["hoertlehner@gmail.com"]}
          :john {:roles #{:logistic}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["john@doe.com"]}}
-  
+
  :ns-clj [demo.time
           demo.routes
-          demo.app
-          ]
+          demo.app]
 
  :runner webly.app.app/webly-runner
 ;                
