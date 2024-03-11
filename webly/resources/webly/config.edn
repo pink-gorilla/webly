@@ -1,6 +1,5 @@
 {
 
- :prefix "/r/" ; resource route prefix ; most web-apps can leave this at default values
 
  :google-analytics {:enabled false ; true
                     :id "UA-154548494-1"} ; not a secret 

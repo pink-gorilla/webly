@@ -8,13 +8,14 @@
          :modules {:snippets [snippets.snip]
                    :hello [snippets.hello
                            snippets.bye]}
-         :module-loader-init true}
+         ;:module-loader-init true
+         }
 
  :spa {:title "Webly Demo"
        :start-user-app [:demo/start]
-       :spinner "webly/loading.svg"
-       :icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
-       :loading-image-url "webly/loadimage/library.jpg" ; 
+       ;:spinner "webly/loading.svg"
+       ;:icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
+       ;:loading-image-url "webly/loadimage/library.jpg" ; 
        }
 
  :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]

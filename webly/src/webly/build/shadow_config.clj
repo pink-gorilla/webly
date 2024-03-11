@@ -45,7 +45,10 @@
         shadow-verbose (get-in profile [:bundle :shadow-verbose])
         static? (get-in profile [:bundle :static?])
         ;; CONFIG **************************************************
-        {:keys [ns-cljs modules module-loader-init]} build
+        build (merge default/build build) ; in case user just specified some keys
+        spa (merge default/spa spa)
+        shadow (merge default/shadow shadow)
+        {:keys [ns-cljs modules module-loader-init output-dir]} build
         {:keys [start-user-app]} spa
         dev-http-port (get-in shadow [:dev-http :port])
         http-port (get-in shadow [:http :port])
@@ -80,7 +83,7 @@
      :builds {:webly {:target :browser
                       :module-loader true
                       :module-loader-init module-loader-init
-                      :output-dir "target/webly/public"
+                      :output-dir output-dir
                       :asset-path asset-path
                       :modules (module-config ns-cljs modules)
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")

@@ -36,6 +36,8 @@
 (def build 
  {:ns-cljs []
   :modules {}
-  :module-loader-init true})
+  :module-loader-init true
+  :output-dir "target/webly/public"
+  })
 
 (def prefix "/r/")
