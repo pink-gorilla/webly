@@ -114,9 +114,10 @@
 
 ;; 1. build!!!
 ;; 2. webly.app.status.page.cljs uses get-in-config-cljs.
-;; 3. resolve all handlers immediately -> so we can fail if they dont work!
+
 ;; 4. remove the keyword registry!!!
 ;; 5. permission config.
 ;; 6. oauth2 config!
 
+;; 3. resolve all handlers immediately -> so we can fail if they dont work!
 

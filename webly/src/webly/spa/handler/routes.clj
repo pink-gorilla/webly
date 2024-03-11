@@ -7,12 +7,6 @@
   ["/" user-routes-app ;(merge webly-routes-app user-routes-app)
   ])
 
-(def webly-routes-api
-  {"config" {:get 'webly.spa.handler.config-handler/config-handler-wrapped}
-   ; ws
-   "token"  :ws/token
-   "chsk"  {:get  :ws/chsk-get
-            :post :ws/chsk-post}})
 
 (defn make-routes-backend [user-routes-api config-route websocket-routes]
   (let [api-routes (merge config-route websocket-routes user-routes-api)]
