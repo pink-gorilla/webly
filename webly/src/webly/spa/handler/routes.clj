@@ -1,6 +1,8 @@
 (ns webly.spa.handler.routes
   (:require
-   [webly.spa.handler.resources :refer [resource-handler file-handler-nodejs file-handler-bundel file-handler-code]]))
+   [webly.spa.handler.resources :refer [resource-handler file-handler-nodejs file-handler-bundel file-handler-code]]
+   [webly.spa.handler.config-handler] ; side-effects
+   ))
 
 #_(def webly-routes-app
   {;["oauth2/redirect/" :provider] :oauth2/redirect  : either client OR server side
@@ -11,7 +13,7 @@
   ])
 
 (def webly-routes-api
-  {"config" {:get :webly/config}
+  {"config" {:get 'webly.spa.handler.config-handler/config-handler-wrapped}
    ; ws
    "token"  :ws/token
    "chsk"  {:get  :ws/chsk-get

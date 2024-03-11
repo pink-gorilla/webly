@@ -32,21 +32,20 @@
 (defn create-ring-handler [routes]
   (let [routes (hack-routes-symbol routes)
         {:keys [handler routes]} (webly-handler/create-ring-handler routes)]
-      (def ring-handler handler) ; needed by shadow-watch
+    (def ring-handler handler) ; needed by shadow-watch
     (write-status "routes" routes)
-    handler
-    ))
+    handler))
 
 (defn start-webly [config server-type]
   (info "start-webly: " server-type)
   (start-permissions)
   (let [ring-handler (let [routes (get-in config [:webly :routes])]
                        (create-ring-handler routes))
-        webserver  (if (watch? server-type)
-                     (web-server/start ring-handler :jetty)
-                     (web-server/start ring-handler (keyword server-type)))
+        webserver  (let [webserver-config (get-in config [:webly/web-server])]
+                     (if (watch? server-type)
+                       (web-server/start webserver-config ring-handler :jetty)
+                       (web-server/start webserver-config ring-handler (keyword server-type))))
         shadow   (when (watch? server-type)
-                  ; (init-ws! :undertow)
                    (let [profile-full (setup-profile server-type)]
                      (when (:bundle profile-full)
                        (build profile-full))))]

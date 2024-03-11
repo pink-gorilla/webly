@@ -4,9 +4,7 @@
    [ring.util.response :as response]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [bidi.ring]
-   [modular.webserver.handler.config :refer [config-handler]]
    [modular.webserver.handler.registry :refer [add-ring-handler]]
-   [modular.webserver.middleware.api :refer [wrap-api-handler]]
    [modular.ws.middleware :refer [wrap-ws]]
    [webly.spa.html.page :refer [app-page-dynamic]]
    [modular.config :refer [config-atom]]))
@@ -42,6 +40,7 @@
   (-> app-handler-raw
       wrap-ws))
 
+
+
 (add-ring-handler :webly/app-bundle app-handler)
 
-(add-ring-handler :webly/config (wrap-api-handler config-handler))
