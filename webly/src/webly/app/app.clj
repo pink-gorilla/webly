@@ -1,7 +1,7 @@
 (ns webly.app.app
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [modular.config :refer [load-config! config-atom]]
+   [modular.config :refer [load-config!]]
    [modular.writer :refer [write-status]]
    [modular.permission.service :refer [service-authorized?]]
    [modular.permission.app :refer [start-permissions]]
@@ -12,7 +12,8 @@
    [webly.web.server :as web-server]
    [webly.spa.handler.core :as webly-handler]
    [webly.spa.html.handler :refer [app-handler]]
-   [webly.spa.handler.routes.config :refer [create-config-routes]])
+   [webly.spa.handler.routes.config :refer [create-config-routes]]
+   [webly.spa.default :as default])
   (:gen-class))
 
 
@@ -41,43 +42,18 @@
   (if (keyword? kw)
     kw
     (keyword kw)))
-
-(def webserver-default
-  {:port 8080
-   :host "0.0.0.0"
-   :ssl-port 8443
-   :keystore "../webserver/certs/keystore.p12"
-   :key-password "password"; Password you gave when creating the keystore
-   :jetty-ws ["/api/chsk"]})
-
-(def spa-default
-  {:title "webly"
-   :spinner "webly/loading.svg"
-   :icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
-   :loading-image-url "webly/loadimage/library.jpg" ; 
-   :start-user-app [:webly/start-default]  ; after config loaded}
-   })
-
-(def theme-default 
-  {:available {:webly-dialog {true ["webly/dialog.css"]
-                            false []}}
-   :current {:webly-dialog true}})
-
-(def google-analytics-default 
-  {:enabled false} ; set to false to disable google-analytics tracking. 
-  )
  
 (defn start-webly [{:keys [web-server sente-debug? spa theme google-analytics prefix]
                     :or {sente-debug? false
-                         web-server webserver-default
+                         web-server default/webserver
                          spa {}
-                         theme theme-default
-                         google-analytics google-analytics-default
+                         theme default/theme
+                         google-analytics default/google-analytics
                          prefix "/r/"}
                     :as config}
                    server-type]
   (info "start-webly: " server-type)
-  (let [spa (merge spa-default spa)
+  (let [spa (merge default/spa spa)
         server-type (ensure-keyword server-type)
         permission (start-permissions)
         routes (hack-routes-symbol (get-in config [:webly :routes]))
@@ -133,4 +109,10 @@
   (let [profile (setup-profile profile)]
     (when (:bundle profile)
       (build profile))))
+
+
+;; TODO:
+
+;; 1. build!!!
+;; 2. webly.app.status.page.cljs uses get-in-config-cljs.
 
