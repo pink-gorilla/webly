@@ -7,7 +7,7 @@
          :icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
          :loading-image-url "webly/loadimage/library.jpg" ; 
          :start-user-app [:webly/start-default]  ; after config loaded
-         :module-loader-init true
+       
          ; theme
          :theme {:available {:webly-dialog {true ["webly/dialog.css"]
                                             false []}}
@@ -15,6 +15,8 @@
          ; cljs
          :ns-cljs []
          :modules {}
+         :module-loader-init true
+
          ; clj
          :ring-handler "webly.app.app/ring-handler" ; no need to change 
          ; routes
@@ -24,14 +26,6 @@
          }
 
  :prefix "/r/" ; resource route prefix ; most web-apps can leave this at default values
-
-
- :webly/web-server {:port 8080
-                    :host "0.0.0.0"
-                    :ssl-port 8443
-                    :keystore "../webserver/certs/keystore.p12"
-                    :key-password "password"; Password you gave when creating the keystore
-                    :jetty-ws ["/api/chsk"]}
 
  :google-analytics {:enabled false ; true
                     :id "UA-154548494-1"} ; not a secret 

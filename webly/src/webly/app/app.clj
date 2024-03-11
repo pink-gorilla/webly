@@ -42,8 +42,18 @@
     kw
     (keyword kw)))
 
-(defn start-webly [{:keys [sente-debug?]
-                    :or {sente-debug false}
+(def webserver-default
+  {:port 8080
+   :host "0.0.0.0"
+   :ssl-port 8443
+   :keystore "../webserver/certs/keystore.p12"
+   :key-password "password"; Password you gave when creating the keystore
+   :jetty-ws ["/api/chsk"]})
+
+(defn start-webly [{:keys [web-server sente-debug?]
+                    :or {sente-debug? false
+                         web-server webserver-default
+                         }
                     :as config} server-type]
   (info "start-webly: " server-type)
   (let [server-type (ensure-keyword server-type)
@@ -56,10 +66,9 @@
         websocket (start-websocket-server server-type sente-debug?)
         websocket-routes (:bidi-routes websocket)
         ring-handler (create-ring-handler config routes config-route websocket-routes)
-        webserver  (let [webserver-config (get-in config [:webly/web-server])]
-                     (if (watch? server-type)
-                       (web-server/start webserver-config ring-handler websocket :jetty)
-                       (web-server/start webserver-config ring-handler websocket (keyword server-type))))
+        webserver (if (watch? server-type)
+                    (web-server/start web-server ring-handler websocket :jetty)
+                    (web-server/start web-server ring-handler websocket (keyword server-type)))
         shadow   (when (watch? server-type)
                    (let [profile-full (setup-profile server-type)]
                      (when (:bundle profile-full)

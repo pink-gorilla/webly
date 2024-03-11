@@ -35,7 +35,7 @@
 ;   [frontend.config.core :refer [webly-mode-atom]]
    ))
 
-;; copied from webly.app.routes
+;; bidi
 
 (def webly-routes-app
   {;["oauth2/redirect/" :provider] :oauth2/redirect  : either client OR server side
@@ -44,7 +44,10 @@
 (defn make-routes-frontend [user-routes-app]
   ["/" (merge webly-routes-app user-routes-app)])
 
-;; end webly.app.routes copy
+(defn setup-bidi [user-routes-app]
+  (let [routes-frontend (make-routes-frontend user-routes-app)]
+    (dispatch [:bidi/init routes-frontend])))
+
 
 
 (defn mount-app []
@@ -90,9 +93,7 @@
     (when (.contains body-classes "loading")
       (.remove body-classes "loading"))))
 
-(defn setup-bidi [user-routes-app]
-  (let [routes-frontend (make-routes-frontend user-routes-app)]
-    (dispatch [:bidi/init routes-frontend])))
+
 
 (reg-event-db
  :webly/app-after-config-load
