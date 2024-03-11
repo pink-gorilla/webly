@@ -21,7 +21,7 @@
 
 ;; APP
 
-(defn make-handler-raw  [spa-config webly-config]
+(defn make-handler-raw  [spa theme webly-config]
   (fn [req]
     (let [; csrf-token and session are sente requirements
           csrf-token (get-csrf-token)
@@ -29,12 +29,12 @@
           res (response/content-type
                {:status 200
               ;:session session
-                :body (app-page-dynamic spa-config webly-config csrf-token)}
+                :body (app-page-dynamic spa theme webly-config csrf-token)}
                "text/html")]
     ;(response/header res "session" session)
       res)))
 
-  (defn app-handler [spa-config webly-config]
-    (-> (make-handler-raw spa-config webly-config)
+  (defn app-handler [spa theme webly-config]
+    (-> (make-handler-raw spa theme webly-config)
         wrap-ws))
 

@@ -11,6 +11,7 @@
    [webly.build.shadow :refer [stop-shadow]]
    [webly.web.server :as web-server]
    [webly.spa.handler.core :as webly-handler]
+   [webly.spa.html.handler :refer [app-handler]]
    [webly.spa.handler.routes.config :refer [create-config-routes]])
   (:gen-class))
 
@@ -29,9 +30,9 @@
     routes))
 
 
-(defn create-ring-handler [spa-config config routes config-route websocket-routes]
+(defn create-ring-handler [app-handler routes config-route websocket-routes]
   (let [routes (hack-routes-symbol routes)
-        {:keys [handler routes]} (webly-handler/create-ring-handler spa-config config routes config-route websocket-routes)]
+        {:keys [handler routes]} (webly-handler/create-ring-handler app-handler routes config-route websocket-routes)]
     (def ring-handler handler) ; needed by shadow-watch
     (write-status "routes" routes)
     handler))
@@ -57,10 +58,16 @@
    :start-user-app [:webly/start-default]  ; after config loaded}
    })
 
-(defn start-webly [{:keys [web-server sente-debug? spa]
+(def theme-default 
+  {:available {:webly-dialog {true ["webly/dialog.css"]
+                            false []}}
+   :current {:webly-dialog true}})
+
+(defn start-webly [{:keys [web-server sente-debug? spa theme]
                     :or {sente-debug? false
                          web-server webserver-default
-                         spa {}}
+                         spa {}
+                         theme theme-default}
                     :as config}
                    server-type]
   (info "start-webly: " server-type)
@@ -73,7 +80,8 @@
         config-route (create-config-routes config frontend-routes)
         websocket (start-websocket-server server-type sente-debug?)
         websocket-routes (:bidi-routes websocket)
-        ring-handler (create-ring-handler spa config routes config-route websocket-routes)
+        app-handler (app-handler spa theme config)
+        ring-handler (create-ring-handler app-handler routes config-route websocket-routes)
         webserver (if (watch? server-type)
                     (web-server/start web-server ring-handler websocket :jetty)
                     (web-server/start web-server ring-handler websocket (keyword server-type)))

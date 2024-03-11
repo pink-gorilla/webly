@@ -15,9 +15,8 @@
           :type "text/css"
           :href link}])
 
-(defn css->hiccup [prefix webly-config]
-  (let [theme (get-in webly-config [:webly :theme])
-        {:keys [available current]} theme
+(defn css->hiccup [prefix theme]
+  (let [{:keys [available current]} theme
         css-links (css-app prefix available current)]
     (debug "css links: " css-links)
     (doall (map css-link css-links))))
@@ -56,9 +55,11 @@
 
 ;; APP
 
-(defn head [webly-config]
-  (let [{:keys [webly google-analytics prefix]} webly-config
-        {:keys [title loading-image-url icon]} webly
+
+(defn head [{:keys [title loading-image-url icon] :as _spa} 
+            theme
+            webly-config]
+  (let [{:keys [google-analytics prefix]} webly-config
         head [:head
               [:meta {:http-equiv "Content-Type"
                       :content "text/html; charset=utf-8"}]
@@ -76,19 +77,21 @@
               (script-tag-src google-analytics)
               (script-tag-config google-analytics)]]
     (into head
-          (css->hiccup prefix webly-config))))
+          (css->hiccup prefix theme))))
 
-(defn layout [{:keys [spinner] :as spa-config} webly-config page]
+(defn layout [{:keys [spinner] :as spa-config} 
+              theme 
+              webly-config page]
   (let [{:keys [prefix]} webly-config]
     (page/html5
      {:mode :html}
-     (head webly-config)
+     (head spa-config theme webly-config)
      [:body.loading
       (loading (str prefix spinner))
       [:div#webly page]])))
 
-(defn app-page-dynamic [spa-config webly-config csrf-token]
-  (layout spa-config webly-config
+(defn app-page-dynamic [spa-config theme webly-config csrf-token]
+  (layout spa-config theme webly-config
           [:div
            [:div#sente-csrf-token {:data-csrf-token csrf-token}]
            [:div#app]
@@ -104,9 +107,9 @@
     (info "static asset path: " asset-path)
     (assoc config :prefix asset-path)))
 
-(defn app-page-static [webly-config csrf-token]
+(defn app-page-static [spa-config webly-config csrf-token]
   (let [config (config-prefix-adjust webly-config)]
-    (layout config ; :prefix "/r/"
+    (layout spa-config config ; :prefix "/r/"
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
              [:div#app]
