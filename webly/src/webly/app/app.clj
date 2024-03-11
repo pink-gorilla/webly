@@ -2,15 +2,13 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [modular.config :refer [load-config! config-atom]]
-   [modular.system :as system]
    [modular.writer :refer [write-status]]
-   [modular.ws.core :refer [init-ws!]]
-   [modular.permission.service :refer [service-authorized?]]
    [webly.build.profile :refer [setup-profile server?]]
    [webly.build.core :refer [build]]
    [webly.build.shadow :refer [stop-shadow]]
    [webly.web.server :as web-server]
    [webly.spa.handler.core :as webly-handler]
+   [modular.permission.service :refer [service-authorized?]]
    [modular.permission.app :refer [start-permissions]])
   (:gen-class))
 

@@ -11,7 +11,6 @@
    [modular.encoding.edn :refer [read-edn]]
    [frontend.notifications.core :refer [add-notification]]
    [frontend.routes :refer [static-main-path-atom]]
-  ; [webly.build.prefs :refer [pref]]
    ))
 
 ; load configuration
