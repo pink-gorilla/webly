@@ -27,13 +27,25 @@
    [webly.app.tenx.events]
    [webly.app.views :refer [webly-app]]
    [webly.app.events]
-   [webly.app.routes :refer [make-routes-frontend #_make-routes-backend]]
+   ;[webly.app.routes :refer [make-routes-frontend #_make-routes-backend]]
    [webly.app.status.page] ; side-effects
 
    [webly.build.prefs :refer [pref]]
 ;   [webly.app.static :refer [make-static-adjustment]]
 ;   [frontend.config.core :refer [webly-mode-atom]]
    ))
+
+;; copied from webly.app.routes
+
+(def webly-routes-app
+  {;["oauth2/redirect/" :provider] :oauth2/redirect  : either client OR server side
+   })
+
+(defn make-routes-frontend [user-routes-app]
+  ["/" (merge webly-routes-app user-routes-app)])
+
+;; end webly.app.routes copy
+
 
 (defn mount-app []
   (reagent.dom/render [webly-app]
@@ -48,6 +60,9 @@
 ;; - OR shadow-cljs.edn :devtools section   
 
 ;; before-reload is a good place to stop application stuff before we reload.
+
+
+
 
 (defn ^:dev/before-load
   before-load []

@@ -5,7 +5,7 @@
    [modular.writer :refer [write write-status write-target]]
    [modular.resource.load :refer [write-resources-to]]
    [modular.config :refer [config-atom]]
-   [webly.app.page :refer [app-page-static app-page-dynamic]]))
+   [webly.spa.html.page :refer [app-page-static app-page-dynamic]]))
 
 (defn create-html [app-page jsname html-name]
   (let [csrf-token "llXxTmFvjm6KXhKBjY7nemz4GNRwF/ZgZbycGDgw8cdF1B/cbmX5JZElY3MCnyEYUUGCi7Cw3k3mUpMI"

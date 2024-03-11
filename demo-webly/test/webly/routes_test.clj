@@ -3,10 +3,10 @@
    [clojure.test :refer [deftest is testing]]
    [ring.mock.request :refer [request] :rename {request mock-request}]
    [bidi.bidi :as bidi]
-   [webly.web.resources]
-   [webly.web.handler]
+   [webly.spa.handler.resources]
+   [webly.spa.handler.handler]
    [webly.routes :refer [routes-api routes-app]]
-   [webly.app.routes :refer [make-routes-backend make-routes-frontend]]))
+   [webly.spa.handler.routes :refer [make-routes-backend make-routes-frontend]]))
 
 (def routes-backend (make-routes-backend routes-app routes-api))
 (def routes-frontend (make-routes-frontend routes-app))

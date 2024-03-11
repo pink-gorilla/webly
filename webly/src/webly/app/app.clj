@@ -10,32 +10,17 @@
    [webly.build.core :refer [build]]
    [webly.build.shadow :refer [stop-shadow]]
    [webly.web.server :as web-server]
-   [webly.web.handler :refer [make-handler]]
-   [webly.app.handler :refer [app-handler]]
-   [webly.app.routes :refer [make-routes-frontend make-routes-backend]]
+   [webly.spa.handler.core :as webly-handler]
    [modular.permission.app :refer [start-permissions]])
   (:gen-class))
-
-(defn create-ring-handler
-  "creates a ring-handler
-   uses configuration in webly-config to do so
-   the def statement defines a variable in this ns. This is used by shadow-cljs to resolve the handler.
-   "
-  [routes]
-  (debug "create-ring-handler: " routes) ; debugt because we write full config to routes.edn file.
-  (let [routes-backend (make-routes-backend (:app routes) (:api routes))
-        routes-frontend (make-routes-frontend (:app routes))
-        ;_ (info "all-api-routes:" routes-backend "all-app-routes:" routes-frontend)
-        h (make-handler app-handler routes-backend routes-frontend)]
-    (write-status "routes" {:frontend routes-frontend :backend routes-backend})
-    (def ring-handler h) ; needed by shadow-watch
-    h))
 
 (defn watch? [profile-name]
   (case profile-name
     "watch" true
     "watch2" true
     false))
+
+;; HANDLER RELATED
 
 (defn hack-routes-symbol [routes]
   (if (symbol? routes)
@@ -44,11 +29,18 @@
       routes)
     routes))
 
+(defn create-ring-handler [routes]
+  (let [routes (hack-routes-symbol routes)
+        {:keys [handler routes]} (webly-handler/create-ring-handler routes)]
+      (def ring-handler handler) ; needed by shadow-watch
+    (write-status "routes" routes)
+    handler
+    ))
+
 (defn start-webly [config server-type]
   (info "start-webly: " server-type)
   (start-permissions)
-  (let [ring-handler (let [routes (get-in config [:webly :routes])
-                           routes (hack-routes-symbol routes)]
+  (let [ring-handler (let [routes (get-in config [:webly :routes])]
                        (create-ring-handler routes))
         webserver  (if (watch? server-type)
                      (web-server/start ring-handler :jetty)

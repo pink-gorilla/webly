@@ -21,6 +21,12 @@ Clone this repo and run: `bb demo-webly`
 
 ```
 clj -X:demo-webly :profile :npm-install
+
+cd demo-webly
+clj -X:webly:npm-install
+clj -X:webly:compile
+clj -X:webly:run 
+
 ```
 
 The demo runs a webserver on port 8080 with shadow-cljs "watch" mode.
