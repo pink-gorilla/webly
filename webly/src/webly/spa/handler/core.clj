@@ -10,7 +10,7 @@
    the def statement defines a variable in this ns. This is used by shadow-cljs to resolve the handler.
    "
   [routes]
-  (let [routes-backend (make-routes-backend (:app routes) (:api routes))
+  (let [routes-backend (make-routes-backend (:api routes))
         routes-frontend (make-routes-frontend (:app routes))
         h (make-handler app-handler routes-backend routes-frontend)]
     {:routes {:frontend routes-frontend :backend routes-backend}

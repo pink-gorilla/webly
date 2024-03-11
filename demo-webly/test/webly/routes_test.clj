@@ -8,7 +8,7 @@
    [webly.routes :refer [routes-api routes-app]]
    [webly.spa.handler.routes :refer [make-routes-backend make-routes-frontend]]))
 
-(def routes-backend (make-routes-backend routes-app routes-api))
+(def routes-backend (make-routes-backend routes-api))
 (def routes-frontend (make-routes-frontend routes-app))
 
 (deftest handler->path []
