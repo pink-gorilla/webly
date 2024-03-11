@@ -93,7 +93,6 @@
   
  :ns-clj [demo.time
           demo.routes
-          demo.handler2
           demo.app
           ]
 

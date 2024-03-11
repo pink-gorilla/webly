@@ -4,10 +4,8 @@
    [ring.util.response :as response]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [bidi.ring]
-   [modular.webserver.handler.registry :refer [add-ring-handler]]
    [modular.ws.middleware :refer [wrap-ws]]
-   [webly.spa.html.page :refer [app-page-dynamic]]
-   [modular.config :refer [config-atom]]))
+   [webly.spa.html.page :refer [app-page-dynamic]]))
 
 ; CSRF TOKEN
 
@@ -23,24 +21,20 @@
 
 ;; APP
 
-(defn app-handler-raw [req]
-  (let [webly-config @config-atom
-        ; csrf-token and session are sente requirements
-        csrf-token (get-csrf-token)
+(defn make-handler-raw  [webly-config]
+  (fn [req]
+    (let [; csrf-token and session are sente requirements
+          csrf-token (get-csrf-token)
         ;session  (sente-session-with-uid req)
-        res (response/content-type
-             {:status 200
+          res (response/content-type
+               {:status 200
               ;:session session
-              :body (app-page-dynamic webly-config csrf-token)}
-             "text/html")]
+                :body (app-page-dynamic webly-config csrf-token)}
+               "text/html")]
     ;(response/header res "session" session)
-    res))
+      res)))
 
-(def app-handler
-  (-> app-handler-raw
-      wrap-ws))
-
-
-
-(add-ring-handler :webly/app-bundle app-handler)
+  (defn app-handler [webly-config]
+    (-> (make-handler-raw webly-config)
+        wrap-ws))
 
