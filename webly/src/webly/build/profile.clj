@@ -1,8 +1,6 @@
 (ns webly.build.profile
   (:require
    [taoensso.timbre :as timbre :refer [info error]]
-   [modular.config :refer [config-atom]]
-   [modular.writer :refer [write-target]]
    [webly.build.prefs :refer [prefs-atom]]))
 
 (defonce profiles
@@ -101,7 +99,7 @@
       (error "no profile. valid profiles are: " (profiles-available))
       (do
         (info "webly profile-name: " profile-name " profile: " profile)
-        (swap! config-atom merge {:profile profile})
+        ;(swap! config-atom merge {:profile profile})
         (swap! prefs-atom merge (get-build-prefs profile))
         (swap! prefs-atom assoc :profile (str profile-name))
         (info "build prefs: " @prefs-atom)))

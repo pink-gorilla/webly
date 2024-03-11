@@ -46,7 +46,7 @@
           :exec-fn webly.app.app/webly-build
           :exec-args {:config ["webly/config.edn"
                                "demo.edn"
-                                     ;"creds-localhost.edn"
+                               ;"creds-localhost.edn"
                                "/home/florian/repo/myLinux/myvault/trateg/creds.edn"] ; does not get used!
                       :profile "npm-install"}}
 

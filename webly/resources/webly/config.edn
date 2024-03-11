@@ -1,16 +1,4 @@
-{:shadow {:dev-http {:port 8000}
-          :http {:port 8001 :host "0.0.0.0"}; "localhost"}
-          :nrepl {:port 8002}}
- :webly {; cljs
-         :ns-cljs []
-         :modules {}
-         :module-loader-init true
-         ; clj
-         :ring-handler "webly.app.app/ring-handler" ; no need to change 
-         ; routes
-         :routes {:app {}
-                  :api {}}}
-
+{
 
  :prefix "/r/" ; resource route prefix ; most web-apps can leave this at default values
 

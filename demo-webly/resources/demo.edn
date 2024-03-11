@@ -2,8 +2,9 @@
          ; routes can be a map or a symbol.
          ; if you do lots of merging of routes, you might prefer a symbol
          :routes demo.routes/routes
-         ; cljs
-         :ns-cljs [demo.app]
+        }
+
+ :build {:ns-cljs [demo.app]
          :modules {:snippets [snippets.snip]
                    :hello [snippets.hello
                            snippets.bye]}

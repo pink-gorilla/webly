@@ -10,10 +10,10 @@
   (let [filename "shadow-cljs.edn"]
     (write filename config)))
 
-(defn build [profile]
+(defn build [opts profile]
   (info "webly build profile: " profile)
   (let [bundle (get profile :bundle)
-        shadow-config (shadow-config profile)]
+        shadow-config (shadow-config opts profile)]
     (if bundle
       (do (info "building bundle: " bundle)
           ;(debug "shadow-config: " shadow-config) ; can be seen in generated shadow-cljs.edn

@@ -3,6 +3,7 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info]]
    [clojure.string :as str]
+   [webly.spa.default :as default]
    [modular.config :refer [get-in-config]]
    [modular.writer :refer [write-target]]
    [webly.build.prefs :refer [if-pref-fn prefs-atom]]))
@@ -33,24 +34,27 @@
     (merge main subs)))
 
 ;; shadow config
-(defn shadow-config [profile]
+(defn shadow-config [{:keys [build shadow spa prefix]
+                      :or {build default/build
+                           shadow default/shadow
+                           spa default/spa
+                           prefix default/prefix}
+                      :as config} profile]
   (let [;; PROFILE *************************************************
         advanced? (get-in profile [:bundle :advanced])
         shadow-verbose (get-in profile [:bundle :shadow-verbose])
         static? (get-in profile [:bundle :static?])
         ;; CONFIG **************************************************
-        {:keys [ns-cljs ring-handler modules title start-user-app module-loader-init]
-         :or {modules {}}} (get-in-config [:webly])
-        ring-handler (symbol ring-handler)
-        dev-http-port (get-in-config [:shadow :dev-http :port])
-        http-port (get-in-config [:shadow :http :port])
-        http-host (get-in-config [:shadow :http :host])
-        nrepl-port (get-in-config [:shadow :nrepl :port])
+        {:keys [ns-cljs modules module-loader-init]} build
+        {:keys [start-user-app]} spa
+        dev-http-port (get-in shadow [:dev-http :port])
+        http-port (get-in shadow [:http :port])
+        http-host (get-in shadow [:http :host])
+        nrepl-port (get-in shadow [:nrepl :port])
         main-path (if static?
                     (get-in-config [:static-main-path])
                     "")
-        prefix (str main-path
-                    (get-in-config [:prefix]))
+        prefix (str main-path prefix)
         asset-path  (subs prefix 0 (dec (count prefix))) ;  "/r/" => "/r"
         ]
     (swap! prefs-atom assoc
@@ -64,7 +68,7 @@
      :verbose (if shadow-verbose true false)
      :lein false
      :dev-http {dev-http-port {;:root "public" ; shadow does not need to serve resources
-                               :handler ring-handler}}
+                               :handler (-> shadow :ring-handler symbol)}}
      :http {:port http-port  ; shadow dashboard
             :host http-host}
      :nrepl {:port nrepl-port
