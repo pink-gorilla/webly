@@ -1,27 +1,19 @@
 (ns webly.web.server.jetty
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   ; modular
-   [modular.webserver.jetty :refer [run-jetty-server]]
-   [modular.webserver.handler.registry :refer [handler-registry]] 
-   [modular.ws.core :refer [init-ws!]]))
+   [modular.webserver.jetty :refer [run-jetty-server]]))
 
-(defn jetty-ws-map [jetty-ws]
-  (let [v  (map (fn [[route kw]]
-                  [route (get @handler-registry kw)])
-                jetty-ws)]
-    (debug "jetty ws map:" jetty-ws)
-    (into {} v)))
-
-(defn jetty-ws-handler [jetty-ws]
-  (let [conn (init-ws! :jetty)
-        ws-map (jetty-ws-map jetty-ws)]
-    ws-map))
+(defn jetty-ws-map [websocket jetty-ws-routes]
+  (let [chsk-get-handler (get-in websocket [:bidi-routes "chsk" :get])]
+  (->> (map (fn [route]
+              [route chsk-get-handler])
+            jetty-ws-routes)
+       (into {}))))
 
 (defn start-jetty
-  [ring-handler config]
+  [ring-handler websocket config]
   (run-jetty-server ring-handler
-                    (jetty-ws-handler (:jetty-ws config))
+                    (jetty-ws-map websocket (:jetty-ws config) )
                     (assoc config :join? false)))
 
 (defn stop-jetty

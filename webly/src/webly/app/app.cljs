@@ -90,21 +90,19 @@
     (when (.contains body-classes "loading")
       (.remove body-classes "loading"))))
 
-(defn setup-bidi [user-routes-api user-routes-app]
-  (let [routes-frontend (make-routes-frontend user-routes-app)
-        ;routes-backend (make-routes-backend user-routes-app user-routes-api)
-        ]
+(defn setup-bidi [user-routes-app]
+  (let [routes-frontend (make-routes-frontend user-routes-app)]
     (dispatch [:bidi/init routes-frontend])))
 
 (reg-event-db
  :webly/app-after-config-load
  (fn [db [_ static?]]
-   (let [routes (get-in db [:config :webly :routes])
+   (let [frontend-routes (get-in db [:config :frontend-routes])
          start-user-app (get-in db [:config :webly :start-user-app])]
      (info "webly config after-load")
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
-     (setup-bidi (:api routes) (:app routes))
+     (setup-bidi frontend-routes)
      (dispatch [:ga/init])
      (dispatch [:keybindings/init (get-in db [:config :keybindings])])
      (dispatch [:css/init])

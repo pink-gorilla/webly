@@ -31,7 +31,7 @@
                     :ssl-port 8443
                     :keystore "../webserver/certs/keystore.p12"
                     :key-password "password"; Password you gave when creating the keystore
-                    :jetty-ws {"/api/chsk" :ws/chsk-get}}
+                    :jetty-ws ["/api/chsk"]}
 
  :google-analytics {:enabled false ; true
                     :id "UA-154548494-1"} ; not a secret 

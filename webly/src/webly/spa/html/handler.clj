@@ -4,7 +4,7 @@
    [ring.util.response :as response]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [bidi.ring]
-   [modular.ws.middleware :refer [wrap-ws]]
+   [modular.ws.service.middleware :refer [wrap-ws]]
    [webly.spa.html.page :refer [app-page-dynamic]]))
 
 ; CSRF TOKEN
