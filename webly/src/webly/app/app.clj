@@ -112,10 +112,13 @@
 
 ;; TODO:
 
-;; 2. webly.app.status.page.cljs uses get-in-config-cljs.
+;; - remove the keyword registry!!!
+;; => we log errors, it is a one liner to remove it.
 
-;; 4. remove the keyword registry!!!
-;; 5. permission config.
-;; 6. oauth2 config!
+;; - webly.app.status.page.cljs uses get-in-config-cljs.
 
-; 7. :static-main-path (static builds)
+
+;; - permission config.
+;; - oauth2 config!
+
+;; - :static-main-path (static builds)
