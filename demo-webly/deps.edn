@@ -2,7 +2,7 @@
          "target/node_modules"  ; css png resources from npm modules (tailwind)
          ]
  :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
-        org.pinkgorilla/oauth2 {:mvn/version "0.0.19"}}
+        org.pinkgorilla/oauth2 {:mvn/version "0.0.20"}}
  :aliases
  {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
              :main-opts ["-m" "antq.core"]}

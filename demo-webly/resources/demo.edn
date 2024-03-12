@@ -4,7 +4,17 @@
          :routes demo.routes/routes
         }
 
- :build {:ns-cljs [demo.app]
+ :build {:ns-cljs [demo.pages.main
+                   demo.pages.help
+                   demo.pages.party
+                   demo.pages.job
+                   demo.time
+                   demo.events
+                   ; to include modular.oauth2.
+                   modular.oauth2
+                   modular.oauth2.token.ui
+                   modular.oauth2.user.view
+                   ]
          :modules {:snippets [snippets.snip]
                    :hello [snippets.hello
                            snippets.bye]}

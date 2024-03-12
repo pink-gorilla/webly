@@ -1,5 +1,6 @@
 (ns webly.spa.handler.routes
   (:require
+   [modular.writer :refer [write-status]]
    [modular.webserver.handler.files :refer [->ResourcesMaybe ->FilesMaybe]]
    [webly.spa.handler.routes-resolve :refer [resolve-handler]]))
 
@@ -17,7 +18,7 @@
 ;; Resources will return a 404 response if the resource cannot be found, while
 ;;  ResourcesMaybe will return nil, allowing subsequent routes to be tried.
 
-(def resource-handler 
+(def resource-handler
   {#{"r" "bundel"} (->FilesMaybe {:dir "target/webly/public"})
    #{"r" "node"}   (->FilesMaybe {:dir "node_modules"})
    #{"r" "jarres"} (->ResourcesMaybe {:prefix "public"})
@@ -26,8 +27,8 @@
 
 (defn make-routes-backend [user-routes-api config-route websocket-routes]
   (let [api-routes (merge config-route websocket-routes user-routes-api)
-        api-routes (resolve-handler api-routes)
-        ]
+        _ (write-status "webly-api-handlers" api-routes)
+        api-routes (resolve-handler api-routes)]
     ["/" {"api/"    api-routes
           ; ""       app-routes
           "" resource-handler
