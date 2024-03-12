@@ -4,7 +4,7 @@
 
 (def routes
   {:api {"time"   {:get 'demo.handler/time-handler}
-         "timejava"   {:get 'time-java-handler-wrapped}
+         "timejava"   {:get 'demo.handler/time-java-handler-wrapped}
          "biditest"   {:get 'demo.handler/bidi-test-handler-wrapped}
          "test"   {:get 'demo.handler.test/test-handler
                    :post 'demo.handler.test/test-handler  ; used in unit-test

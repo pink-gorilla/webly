@@ -3,7 +3,7 @@
          ]
  :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
         org.clojure/core.async {:mvn/version  "1.6.673"}
-
+        com.rpl/specter {:mvn/version "1.1.4"}
         ; logging
         ;org.slf4j/slf4j-api {:mvn/version "2.0.0-alpha1"}
         ;org.fzakaria/slf4j-timbre {:git/url "https://github.com/SimpleValue/slf4j-timbre"

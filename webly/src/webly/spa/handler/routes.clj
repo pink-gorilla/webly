@@ -1,6 +1,7 @@
 (ns webly.spa.handler.routes
   (:require
    [webly.spa.handler.resources :refer [resource-handler file-handler-nodejs file-handler-bundel file-handler-code]]
+   [webly.spa.handler.routes-resolve :refer [resolve-handler]]
    ))
 
 (defn make-routes-frontend [user-routes-app]
@@ -9,7 +10,9 @@
 
 
 (defn make-routes-backend [user-routes-api config-route websocket-routes]
-  (let [api-routes (merge config-route websocket-routes user-routes-api)]
+  (let [api-routes (merge config-route websocket-routes user-routes-api)
+        api-routes (resolve-handler api-routes)
+        ]
     ["/" {"api/"    api-routes
           ; ""       app-routes
           #{"r" "bundel"} file-handler-bundel ;["r"]  ; first from file, thereafter from resource.
