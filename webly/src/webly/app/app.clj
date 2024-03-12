@@ -108,17 +108,3 @@
     (let [profile (setup-profile profile)]
       (when (:bundle profile)
         (build config profile)))))
-
-
-;; TODO:
-
-;; - remove the keyword registry!!!
-;; => we log errors, it is a one liner to remove it.
-
-;; - webly.app.status.page.cljs uses get-in-config-cljs.
-
-
-;; - permission config.
-;; - oauth2 config!
-
-;; - :static-main-path (static builds)
