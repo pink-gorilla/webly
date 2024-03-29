@@ -10,8 +10,6 @@
 
 (defonce lazy-ns-a (atom {}))
 
-(defn add-module [module-name]
-   (swap! lazy-modules-a assoc module-name false))
 
 (defn module-list->map [module-list]
   (->> (map (fn [n] [n false]) module-list)

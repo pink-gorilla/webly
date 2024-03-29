@@ -10,14 +10,20 @@
 (defn add-lazy-module-namespaces [{:keys [name cljs-ns-bindings]}]
   (let [ns-map (->> (map (fn [[ns-name ns-def]]
                            [(pr-str ns-name) {:module name
-                                     :ns-def (pr-str ns-def)}])
+                                              :ns-def (if (map? ns-def)
+                                                        (pr-str (keys ns-def))
+                                                        (pr-str ns-def))
+                                              :loadable ns-def}])
                          cljs-ns-bindings) ; namespaces per module is needed to find the module that needs to be loaded for a ns
                     (into {}))]
     (swap! lazy-ns-a merge ns-map)))
 
 (defmacro get-lazy-ns []
-  (warn "lazy namespaces:" @lazy-ns-a)
-  @lazy-ns-a)
+  (let [safe (->> (map (fn [[k v]]
+                         [k (select-keys v [:module :ns-def])]) @lazy-ns-a)
+                  (into {}))]
+    (warn "lazy namespaces:" safe)
+    safe))
 
 
 (defmacro define-lazy-ns [ns-name]
