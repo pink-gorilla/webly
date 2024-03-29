@@ -6,8 +6,7 @@
    [demo.handler.ping :as ping]
    [demo.handler.snippet :as snippet]
    [demo.handler.binary :as binary]
-   [demo.handler.bidi :as bidi]
-   ))
+   [demo.handler.bidi :as bidi]))
 
 ; handlers that are used with symbol
 

@@ -71,7 +71,9 @@
   :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
          :exec-fn clojure.tools.cli.api/list}
 
+  :demo-build {:extra-deps {org.pinkgorilla/ui-highcharts {:mvn/version "0.0.26"}
+                            org.pinkgorilla/ui-vega {:mvn/version "0.0.31"}}
+               :exec-fn demo.test/test}
  
-
   ;
   }}
