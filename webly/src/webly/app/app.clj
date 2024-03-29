@@ -1,6 +1,7 @@
 (ns webly.app.app
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
+   [extension :refer [discover write-service]]
    [modular.config :refer [load-config! get-in-config]]
    [modular.writer :refer [write-status]]
    [modular.permission.service :refer [service-authorized?]]
@@ -103,8 +104,13 @@
 
 (defn webly-build [{:keys [config profile]}]
   (load-config! config)
-  (let [config (get-in-config [])]
+  (let [config (get-in-config [])
+        ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})
+                    }
+        exts (discover ext-config)]
+    (write-service exts :extensions-all (:extensions exts))
+     (write-service exts :extensions-disabled (:extensions-disabled exts))
     (write-status "webly-build-config" config)
     (let [profile (setup-profile profile)]
       (when (:bundle profile)
-        (build config profile)))))
+        (build exts config profile)))))

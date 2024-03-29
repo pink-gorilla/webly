@@ -4,21 +4,15 @@
          :routes demo.routes/routes
         }
 
- :build {:ns-cljs [demo.pages.main
-                   demo.pages.help
-                   demo.pages.party
-                   demo.pages.job
-                   demo.time
-                   demo.events
-                   ; to include modular.oauth2.
-                   modular.oauth2
-                   modular.oauth2.token.ui
-                   modular.oauth2.user.view
-                   ]
-         :modules {:snippets [snippets.snip]
-                   :hello [snippets.hello
-                           snippets.bye]}
-         ;:module-loader-init true
+ :build {:disabled-extensions #{; extensions using sci-configs will not work in webly.
+                                "reagent" "re-frame" 
+                                "funcool-promesa" 
+                                "applied-science.js-interop"
+                                ; webly2 is now in webly. needs to be removed from ui-repl.
+                                "webly2"
+                                "ui-repl"
+                                "cljs-ajax"
+                                }
          }
 
  :spa {:title "Webly Demo"

@@ -17,10 +17,10 @@
         ;{day8.re-frame/tracing-stubs "0.6.2"}
 
         ; modular
-        org.pinkgorilla/webserver {:mvn/version "0.0.9"} ; brings modular
+        org.pinkgorilla/webserver {:mvn/version "0.0.12"} ; brings modular
         org.pinkgorilla/websocket {:mvn/version "0.0.9"}
         modular/frontend {:local/root "../frontend" :deps/manifest :deps}
-        org.pinkgorilla/permission {:mvn/version "0.0.13"}
+        org.pinkgorilla/permission {:mvn/version "0.0.15"}
         ;modular/rest {:local/root "../rest" :deps/manifest :deps}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         }

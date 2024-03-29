@@ -3,7 +3,10 @@
          "resources"
          ]
  :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
-        org.pinkgorilla/oauth2 {:mvn/version "0.0.20"}}
+        org.pinkgorilla/oauth2 {:mvn/version "0.0.20"}
+        ; lazy ui modules:
+        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.26"}
+        org.pinkgorilla/ui-vega {:mvn/version "0.0.31"}}
  :aliases
  {:outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
              :main-opts ["-m" "antq.core"]}
@@ -12,7 +15,7 @@
                            "resources"
                            "test"
                            "test/resources"]
-             :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"} ; http cors test
+             :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.74"} ; http cors test
                           io.github.cognitect-labs/test-runner
                           {:git/url "https://github.com/cognitect-labs/test-runner.git"
                            :sha "cc75980b43011773162b485f46f939dc5fba91e4"}
@@ -41,7 +44,7 @@
   ; 2. run unit tests 
 
   ; BUILD BUNDLE (then exit)
-  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.34"}  ; http cors test
+  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.74"}  ; http cors test
                        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}}
           :extra-paths ["src" "resources" "test" "test/resources"]
           :exec-fn webly.app.app/webly-build

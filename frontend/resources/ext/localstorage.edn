@@ -1,0 +1,7 @@
+{:name "localstorage"
+ ; build
+ :lazy false
+ :cljs-namespace [frontend.settings.local-storage]
+ :cljs-ns-bindings {'localstorage {'ls-get frontend.settings.local-storage/ls-get
+                                   'ls-set! frontend.settings.local-storage/ls-set!
+                                   'ls-remove! frontend.settings.local-storage/ls-remove!}}}

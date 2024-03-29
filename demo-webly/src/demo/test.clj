@@ -7,8 +7,7 @@
   (println "creating modules..")
   (let [exts (discover)
         modules (create-modules exts)
-        shadow-modules (shadow-module-config modules)
-        ]
+        shadow-modules (shadow-module-config modules)]
     (write-service exts :shadow-modules shadow-modules)
     (println "creating modules..done!")))
 

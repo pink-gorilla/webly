@@ -1,8 +1,8 @@
 {:name "demo-webly"
- :ns-cljs [demo.pages.main
-           demo.pages.help
-           demo.pages.party
-           demo.pages.job
-           demo.time
-           demo.events]
- }
+ :lazy-sci false
+ :cljs-namespace [demo.pages.main
+                  demo.pages.help
+                  demo.pages.party
+                  demo.pages.job
+                  demo.time
+                  demo.events]}

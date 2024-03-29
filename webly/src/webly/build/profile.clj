@@ -62,14 +62,8 @@
                            :cljs-build :webly
                            :shadow-mode :watch
                            :size-report false}}
-
-;:httpkit      {:prefs   {:tenx true}
-   ;               :server {:type :httpkit
-   ;                        :wrap-handler-reload false}}
-
-   ;:undertow    {:server {:type :undertow
-   ;                       :wrap-handler-reload false}}
    })
+
 (defn str->profile [profile-str]
   (let [p (keyword profile-str)]
     (get profiles p)))

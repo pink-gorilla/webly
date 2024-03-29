@@ -1,0 +1,4 @@
+{:name "webly-spa"
+ :lazy-sci false
+ :cljs-namespace [webly.app.app]
+ }

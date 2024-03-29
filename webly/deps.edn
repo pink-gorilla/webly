@@ -28,12 +28,12 @@
         
         luminus/ring-undertow-adapter {:mvn/version "1.3.1"}
         ; modular
-        org.pinkgorilla/extension {:mvn/version "0.0.10"}
-        org.pinkgorilla/webserver {:mvn/version "0.0.9"} ; brings modular
+        org.pinkgorilla/extension {:mvn/version "0.0.11"}
+        org.pinkgorilla/webserver {:mvn/version "0.0.12"} ; brings modular
         org.pinkgorilla/websocket {:mvn/version "0.0.9"}
         modular/frontend {:local/root "../frontend" :deps/manifest :deps}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
-        org.pinkgorilla/permission {:mvn/version "0.0.13"}
+        org.pinkgorilla/permission {:mvn/version "0.0.15"}
         ;modular/rest {:local/root "../rest" :deps/manifest :deps}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         }
