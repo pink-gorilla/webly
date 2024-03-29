@@ -36,5 +36,26 @@
     (write-service exts :cljsbuild-module-main main-modules)
 
     (doall (map add-lazy-module lazy-modules))
-    (reset! lazy-modules-a modules)))
+    (reset! lazy-modules-a modules)
+    {:modules {:main main-modules
+               :lazy lazy-modules}}))
+
+
+(defn main-shadow-module [main-modules]
+  (let [entries (->> (map :cljs-namespace main-modules)
+                     (apply concat)
+                     (into []))]
+    [:webly {:entries entries}]))
+
+(defn lazy-shadow-module [{:keys [name cljs-namespace]}]
+  [(keyword name) {:entries (vec cljs-namespace)
+                   :depends-on #{:webly}}])
+
+(defn shadow-module-config [{:keys [modules]}]
+  (let [{:keys [main lazy]} modules
+        modules-lazy (map lazy-shadow-module lazy)
+        module-main (main-shadow-module main)
+        modules (conj modules-lazy module-main )]
+    (into {} modules)))
+
 
