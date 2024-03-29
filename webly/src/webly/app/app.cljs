@@ -24,7 +24,7 @@
    [frontend.routes :refer [set-main-path!]]
    ; webly
    [webly.build.lazy]
-   [webly.module.build :refer [add-lazy-modules lazy-modules-a]]
+   [webly.module.build :refer [add-lazy-modules lazy-modules-a lazy-ns-a]]
    [webly.app.tenx.events]
    [webly.app.views :refer [webly-app]]
    [webly.app.events]
@@ -108,6 +108,8 @@
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
      (info "lazy modules: " @lazy-modules-a)
+     (info "lazy ns: " @lazy-ns-a)
+
      (setup-bidi frontend-routes)
      (dispatch [:ga/init])
      (dispatch [:keybindings/init keybindings])

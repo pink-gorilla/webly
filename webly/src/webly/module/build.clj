@@ -3,21 +3,43 @@
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [extension :refer [get-extensions write-service]]))
 
+;; lazy namespace
+
+(defonce lazy-ns-a (atom {}))
+
+(defn add-lazy-module-namespaces [{:keys [name cljs-ns-bindings]}]
+  (let [ns-map (->> (map (fn [[ns-name ns-def]]
+                           [(pr-str ns-name) {:module name
+                                     :ns-def (pr-str ns-def)}])
+                         cljs-ns-bindings) ; namespaces per module is needed to find the module that needs to be loaded for a ns
+                    (into {}))]
+    (swap! lazy-ns-a merge ns-map)))
+
+(defmacro get-lazy-ns []
+  (warn "lazy namespaces:" @lazy-ns-a)
+  @lazy-ns-a)
+
+
+(defmacro define-lazy-ns [ns-name]
+  (let [m (get @lazy-ns-a ns-name)]
+    `(shadow.lazy/loadable ~m)))
+
 ;; lazy modules
 
 (defonce lazy-modules-a (atom []))
 
-(defn- add-lazy-module [{:keys [name cljs-ns-bindings]}]
+(defn- add-lazy-module [{:keys [name] :as module}]
+  (add-lazy-module-namespaces module)
   (swap! lazy-modules-a conj name))
 
 (defmacro get-lazy-modules []
-   (warn "lazy modules:" @lazy-modules-a)
-   (into [] @lazy-modules-a)
-   )
+  (warn "lazy modules:" @lazy-modules-a)
+  (into [] @lazy-modules-a))
 
-(defmacro define-module [module-name]
-  (let [m (get @lazy-modules-a module-name)]
-    `(shadow.lazy/loadable ~m)))
+
+
+
+
 
 ;; module
 
@@ -57,7 +79,7 @@
   (let [{:keys [main lazy]} modules
         modules-lazy (map lazy-shadow-module lazy)
         module-main (main-shadow-module main)
-        modules (conj modules-lazy module-main )]
+        modules (conj modules-lazy module-main)]
     (into {} modules)))
 
 
