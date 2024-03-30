@@ -1,12 +1,10 @@
 (ns webly.module.build
   (:require-macros
-   [webly.module.build :refer [get-lazy-modules get-lazy-ns set-ns-loadables! set-ns-loadables2! set-ns-vars!]])
+   [webly.module.build :refer [get-lazy-modules get-lazy-ns set-ns-loadables! set-ns-vars!]])
   (:require
    [promesa.core :as p]
    [taoensso.timbre :refer-macros [debug info warn error]]
    [shadow.lazy]))
-
-
 
 
 (defonce lazy-modules-a (atom {}))
@@ -21,13 +19,11 @@
 ; a seq of strings (equaling to ns-names)
 
 (defonce lazy-ns-loadable-a (atom {}))
-
 (defonce lazy-ns-vars-a (atom {}))
 
-(defonce lazy-ns-loadable2-a (atom {}))
 
-
- (set-ns-loadables2!)
+(set-ns-loadables!)
+(set-ns-vars!)
 
 (defn add-lazy-modules
   ;"adds modules to the build. Needs to be called from the cljs-app."
@@ -40,8 +36,7 @@
         ]
     (reset! lazy-modules-a modules-map)
     (reset! lazy-ns-a ns-list)
-    (set-ns-loadables!)
-    (set-ns-vars!)
+   
    
     (println "compile-time lazy-ns-a: " @lazy-ns-a)
     ;(println "compile-time loadable-config: " loadable-spec)
@@ -51,10 +46,30 @@
 (defn print-build-summary []
   (println "webly-build summary:")
   (println "lazy modules: " (keys @lazy-modules-a))
-  (println "lazy namespaces: " (keys @lazy-ns-loadable-a))
+  (println "lazy-ns-loadable: " (keys @lazy-ns-loadable-a))
+  (println "lazy-ns-loadable FULL: "  @lazy-ns-loadable-a)
   (println "lazy-ns-vars: " (keys @lazy-ns-vars-a))
-  (println "lazy-ns-loadable: "  @lazy-ns-loadable2-a)
   )
+
+
+(defn load-namespace-raw
+  "returns a promise containing the resolved loadables for a namespace"
+  [ns-name]
+  (let [loadable  (get @lazy-ns-loadable-a ns-name)
+        rp (p/deferred)
+        on-error (fn [err]
+                   (error "could not load ns: " ns-name "! ERROR: " err)
+                   (p/reject! rp err))
+        on-success (fn [vars]
+                     (info "ns [" ns-name "] loaded successfully!")
+                     (p/resolve! rp vars))]
+    ; lazy/load does return a google deferred, so we cannot use promises here.
+    (try
+      (shadow.lazy/load loadable on-success on-error)
+      (catch :default ex
+        (error "shadow.lazy/load could not load ns: " ns-name "error: " ex)
+        (p/reject! rp ex)))
+    rp))
 
 
 (defn load-namespace

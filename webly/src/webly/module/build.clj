@@ -72,40 +72,28 @@
   (let [ns-vars @lazy-ns-vars-a]
     `(reset! webly.module.build/lazy-ns-vars-a ~ns-vars)))
 
-(defn make-loadable [[ns-name spec]]
-  [ns-name `('shadow.lazy/loadable ~spec)])
-
-(defmacro set-ns-loadables! []
-  (let [loadables @lazy-ns-a]
+#_(defmacro set-ns-loadables-test! []
     ;specs
     ; lazy/loadable macro. It expects one argument which is 
     ; - a qualified symbol, 
     ; - a vector of symbols or
     ; - a map of keyword to symbol.
     `(reset! webly.module.build/lazy-ns-loadable-a
-             {:bongistan {:ns-vars [:shout :bark]
-                          :loadable (shadow.lazy/loadable
-                                     [snippets.snip/add
-                                      snippets.snip/ui-add])}})))
+             {:'bongistan.core (shadow.lazy/loadable
+                                 [snippets.snip/add
+                                  snippets.snip/ui-add])}))
 
-(defn wrap-lazy-loadable [loadable]
-   (list 'shadow.lazy/loadable loadable))
-
-
-(defmacro set-ns-loadables2! []
-  (let [loadables @lazy-ns-loadable-a
-        load-vecs (vals loadables)]
+(defmacro set-ns-loadables! []
+  (let [loadables @lazy-ns-loadable-a]
     ;specs
     ; lazy/loadable macro. It expects one argument which is 
     ; - a qualified symbol, 
     ; - a vector of symbols or
     ; - a map of keyword to symbol.
-    `(reset! webly.module.build/lazy-ns-loadable2-a
-             ~(->> (map (fn [l]
-                     `(shadow.lazy/loadable ~l)
-                     ) load-vecs)
-                   (into [])))))
-
+    `(reset! webly.module.build/lazy-ns-loadable-a
+             ~(->> (map (fn [[ns-kw l]]
+                          `[~ns-kw (shadow.lazy/loadable ~l)]) loadables)
+                   (into {})))))
 
 
 (comment

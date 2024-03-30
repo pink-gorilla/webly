@@ -5,7 +5,7 @@
    [promesa.core :as p]
    [re-frame.core :as rf]
    [webly.build.lazy :refer-macros [wrap-lazy] :refer [available]]
-   [webly.module.build :refer [load-namespace]]
+   [webly.module.build :refer [load-namespace-raw]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 (defn lazy1 []
@@ -20,18 +20,25 @@
      [ui-add-more 7 7]]))
 
 (defn load-namespace-test [& _]
-  (let [rp (load-namespace :bongistan)]
+  (let [rp (load-namespace-raw :bongistan)]
     (p/then rp (fn [r]
                  (println "*** NS LOAD SUCCESS: " r)))
     (p/catch rp (fn [x]
                   (println "*** NS LOAD ERROR: " x)))))
 
 (defn load-namespace-test-bad [& _]
-  (let [rp (load-namespace :bongistan1234567)]
+  (let [rp (load-namespace-raw :bongistan1234567)]
     (p/then rp (fn [r]
-                 (println "*** NS LOADED !!! result: " r)))
+                 (println "*** NS LOAD SUCCESS: " r)))
     (p/catch rp (fn [x]
-                  (println "*** NS LOADED ERROR: err: " x)))))
+                  (println "*** NS LOAD ERROR: err: " x)))))
+
+(defn load-namespace-highcharts [& _]
+  (let [rp (load-namespace-raw :'ui.highcharts)]
+    (p/then rp (fn [r]
+                 (println "*** NS HIGHCHARTS LOAD SUCCESS: " r)))
+    (p/catch rp (fn [x]
+                  (println "*** NS HIGHCHARTS LOAD ERROR: err: " x)))))
 
 
 (defn demo-lazy []
@@ -43,6 +50,7 @@
        [link-fn #(reset! show-lazy2 true) "lazy load2 (not working)"]
        [link-fn load-namespace-test "lazy-namespace"]
        [link-fn load-namespace-test-bad "lazy-non-existing-namespace"]
+       [link-fn load-namespace-highcharts "lazy-highcharts"]
        [:div "loaded lazy renderer: " (pr-str (available))]
        (when @show-lazy1
          [lazy1])
