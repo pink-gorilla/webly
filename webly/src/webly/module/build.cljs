@@ -36,20 +36,19 @@
         ]
     (reset! lazy-modules-a modules-map)
     (reset! lazy-ns-a ns-list)
-   
-   
+
+
     (println "compile-time lazy-ns-a: " @lazy-ns-a)
     ;(println "compile-time loadable-config: " loadable-spec)
     (println "compile-time lazy-loadable-a: " @lazy-ns-loadable-a)
     :ok))
 
 (defn print-build-summary []
-  (println "webly-build summary:")
-  (println "lazy modules: " (keys @lazy-modules-a))
-  (println "lazy-ns-loadable: " (keys @lazy-ns-loadable-a))
-  (println "lazy-ns-loadable FULL: "  @lazy-ns-loadable-a)
-  (println "lazy-ns-vars: " (keys @lazy-ns-vars-a))
-  )
+  (info "webly-build summary:")
+  (info "lazy modules: " (keys @lazy-modules-a))
+  (info "lazy-ns-loadable: " (keys @lazy-ns-loadable-a))
+  ;(info "lazy-ns-loadable FULL: "  @lazy-ns-loadable-a)
+  (info "lazy-ns-vars: " (keys @lazy-ns-vars-a)))
 
 
 (defn load-namespace-raw
@@ -72,27 +71,22 @@
     rp))
 
 
+(defn- ns-assemble [ns-vars vars]
+  (->> (map (fn [n v]
+              [n v]) ns-vars vars)
+       (into {})))
+
 (defn load-namespace
   "returns a promise containing 
    a map. keys = ns publics, values = vars"
   [ns-name]
-  (let [{:keys [loadable ns-vars]} (get @lazy-ns-loadable-a ns-name)
-        rp (p/deferred)
-        on-error (fn [err]
-                   (println "could not load ns: " ns-name "! ERROR!")
-                   (println "ns load error: " err)
-                   (p/reject! rp err))
-        on-success (fn [vars]
-                     (info "ns [" ns-name "] loaded successfully!")
-                     (let [ns-map (->> (map (fn [n v]
-                                              [n v]) ns-vars vars) ; @loadable
-                                       (into {}))]
-                       (println "ns-map: " ns-map)
-                       (p/resolve! rp ns-map)))]
-    ; lazy/load does return a google deferred, so we cannot use promises here.
-    (try
-      (shadow.lazy/load loadable on-success on-error)
-      (catch :default ex
-        (error "shadow.lazy/load could not load ns: " ns-name "error: " ex)
-        (p/reject! rp ex)))
+  (let [ns-vars (get @lazy-ns-vars-a ns-name)
+        rp (p/deferred)]
+    (if ns-vars
+      (let [rp2 (load-namespace-raw ns-name)]
+        (-> rp2
+            (p/then (fn [vars]
+                      (info "load-namespace vars successfully received!")
+                      (p/resolve! rp (ns-assemble ns-vars vars))))))
+      (p/reject! rp (str "cannot load-namespace: " ns-name " - no ns-map defined (sci-config ns)")))
     rp))

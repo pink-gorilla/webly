@@ -5,7 +5,7 @@
    [promesa.core :as p]
    [re-frame.core :as rf]
    [webly.build.lazy :refer-macros [wrap-lazy] :refer [available]]
-   [webly.module.build :refer [load-namespace-raw]]
+   [webly.module.build :refer [load-namespace-raw load-namespace]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 (defn lazy1 []
@@ -34,7 +34,7 @@
                   (println "*** NS LOAD ERROR: err: " x)))))
 
 (defn load-namespace-highcharts [& _]
-  (let [rp (load-namespace-raw :'ui.highcharts)]
+  (let [rp (load-namespace :'ui.highcharts)]
     (p/then rp (fn [r]
                  (println "*** NS HIGHCHARTS LOAD SUCCESS: " r)))
     (p/catch rp (fn [x]

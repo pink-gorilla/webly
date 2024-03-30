@@ -25,7 +25,7 @@
        (into {})))
 
 (defn ns-map->vars [ns-map]
-  (->> (map (fn [[ns-name {:keys [_module ns-vars _loadable]}]]
+  (->> (map (fn [[ns-name {:keys [ns-vars]}]]
               (when ns-vars
                 [ns-name ns-vars])) ns-map)
        (remove nil?)
