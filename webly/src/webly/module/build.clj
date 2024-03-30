@@ -19,16 +19,37 @@
     (swap! lazy-ns-a merge ns-map)))
 
 (defmacro get-lazy-ns []
-  (let [safe (->> (map (fn [[k v]]
-                         [k (select-keys v [:module :ns-def])]) @lazy-ns-a)
-                  (into {}))]
-    (warn "lazy namespaces:" safe)
-    safe))
+  (let [l (keys @lazy-ns-a)]
+    (warn "lazy namespaces: " l)
+    (into [] l)))
 
+;; LOADABLE NS:  ns-name  loadable:  nil
 
-(defmacro define-lazy-ns [ns-name]
-  (let [m (get @lazy-ns-a ns-name)]
-    `(shadow.lazy/loadable ~m)))
+(defn get-loadable-data []
+  (let [l (map (fn [[k v]]
+                 [(str k) (:loadable v)]) @lazy-ns-a)]
+    (warn "loadables: " l)
+    l))
+
+(defn make-loadable [[ns-name spec]]
+  [ns-name `('shadow.lazy/loadable ~spec)])
+
+(defmacro get-loadables []
+  (let [loadables (get-loadable-data)
+ ;       specs (->> (map make-loadable loadables)
+ ;                  (into {}))
+        ]
+    ;specs
+    ; lazy/loadable macro. It expects one argument which is 
+    ; - a qualified symbol, 
+    ; - a vector of symbols or
+    ; - a map of keyword to symbol.
+    `(reset! webly.module.build/lazy-ns-loadable-a
+             {:bongistan {:ns-vars [:shout :bark]
+                          :loadable (shadow.lazy/loadable
+                                     [snippets.snip/add
+                                      snippets.snip/ui-add])}})))
+
 
 ;; lazy modules
 
@@ -42,7 +63,13 @@
   (warn "lazy modules:" @lazy-modules-a)
   (into [] @lazy-modules-a))
 
+(comment
+  (str 'clojure.core)
+  (name 'clojure.core)
+  (symbol "clojure.core")
 
+  (map str ['a 'bingo.bongo 'ui.highcharts])
+  (map name ['a 'bingo.bongo 'ui.highcharts]))
 
 
 

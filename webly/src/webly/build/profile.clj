@@ -43,13 +43,13 @@
                  :bundle {:shadow-verbose false
                           :cljs-build :webly
                           :shadow-mode :compile  ; compile has source maps
-                          :size-report true}}
+                          :size-report false}}
 
    :compile2    {:prefs   {:tenx false}
                  :bundle {:shadow-verbose false
                           :cljs-build :webly
                           :shadow-mode :compile  ; compile has source maps
-                          :size-report true}}
+                          :size-report false}}
 
    :watch       {:prefs   {:tenx true}
                  :bundle {:shadow-verbose true
