@@ -1,6 +1,6 @@
 (ns webly.module.build
   (:require-macros
-   [webly.module.build :refer [get-lazy-modules get-lazy-ns get-loadables]])
+   [webly.module.build :refer [get-lazy-modules get-lazy-ns get-loadables set-ns-vars!]])
   (:require
    [promesa.core :as p]
    [taoensso.timbre :refer-macros [debug info warn error]]
@@ -19,6 +19,8 @@
 
 (defonce lazy-ns-loadable-a (atom {}))
 
+(defonce lazy-ns-vars-a (atom {}))
+
 (defn add-lazy-modules
   ;"adds modules to the build. Needs to be called from the cljs-app."
   []
@@ -32,7 +34,8 @@
     (reset! lazy-ns-a ns-list)
     (get-loadables)
     ;(reset! lazy-ns-loadable-a loadable-spec)
-
+    (set-ns-vars!)
+    
     (println "compile-time lazy-ns-a: " @lazy-ns-a)
     ;(println "compile-time loadable-config: " loadable-spec)
     (println "compile-time lazy-loadable-a: " @lazy-ns-loadable-a)
@@ -41,7 +44,10 @@
 (defn print-build-summary []
   (println "webly-build summary:")
   (println "lazy modules: " (keys @lazy-modules-a))
-  (println "lazy namespaces: " (keys @lazy-ns-loadable-a)))
+  (println "lazy namespaces: " (keys @lazy-ns-loadable-a))
+  (println "lazy-ns-vars: " (keys @lazy-ns-vars-a))
+  
+  )
 
 
 (defn load-namespace

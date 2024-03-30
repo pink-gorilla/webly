@@ -8,13 +8,13 @@
 (defn convert-ns-def [module-name ns-def]
   (if (map? ns-def)
     {:module module-name
-     :ns-vars (->> (keys ns-def) (into []))
+     :ns-vars (->> (keys ns-def) (map keyword) (into []))
      :loadable (->> (vals ns-def) (into []))}
     {:module module-name
      :loadable ns-def}))
 
 (defn convert-ns [module-name [ns-name ns-def]]
-  [(pr-str ns-name) (convert-ns-def module-name ns-def)])
+  [(keyword ns-name) (convert-ns-def module-name ns-def)])
 
 (defn module->ns [{:keys [name cljs-ns-bindings]}]
   ; namespaces per module is needed to find the module that needs to be loaded for a ns
@@ -24,10 +24,19 @@
   (->> (reduce concat [] (map module->ns modules))
        (into {})))
 
+(defn ns-map->vars [ns-map]
+  (->> (map (fn [[ns-name {:keys [_module ns-vars _loadable]}]]
+         (when ns-vars 
+           [ns-name ns-vars])) ns-map)
+       (remove nil?)
+       (into {})))
+ 
 ;; lazy namespace
 
-(defonce lazy-ns-a (atom {}))
 (defonce lazy-modules-a (atom []))
+(defonce lazy-ns-a (atom {}))
+(defonce lazy-ns-vars-a (atom {}))
+
 
 (defmacro get-lazy-modules []
   (warn "lazy modules:" @lazy-modules-a)
@@ -37,13 +46,21 @@
   (let [l (keys @lazy-ns-a)]
     (warn "lazy namespaces: " l)
     (into [] l)))
+               
 
 (defn- set-lazy-modules! [exts lazy-modules]
-  (let [spec (modules->ns-map lazy-modules)]
+  (let [spec (modules->ns-map lazy-modules)
+        ns-vars (ns-map->vars spec)]
     (write-service exts :cljsbuild-lazy-namespaces spec)  
+    (write-service exts :cljsbuild-lazy-ns-vars ns-vars)  
     (reset! lazy-modules-a (map :name lazy-modules))
-    (reset! lazy-ns-a spec)))
+    (reset! lazy-ns-a spec)
+    (reset! lazy-ns-vars-a ns-vars)))
        
+
+(defmacro set-ns-vars! []
+  (let [ns-vars @lazy-ns-vars-a]
+    `(reset! webly.module.build/lazy-ns-vars-a ~ns-vars)))
 
 (defn make-loadable [[ns-name spec]]
   [ns-name `('shadow.lazy/loadable ~spec)])
