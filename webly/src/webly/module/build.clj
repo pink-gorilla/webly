@@ -26,17 +26,24 @@
 
 (defn ns-map->vars [ns-map]
   (->> (map (fn [[ns-name {:keys [_module ns-vars _loadable]}]]
-         (when ns-vars 
-           [ns-name ns-vars])) ns-map)
+              (when ns-vars
+                [ns-name ns-vars])) ns-map)
        (remove nil?)
        (into {})))
- 
+
+(defn ns-map->loadable [ns-map]
+  (->> (map (fn [[ns-name {:keys [loadable]}]]
+              (when loadable
+                [ns-name loadable])) ns-map)
+       (remove nil?)
+       (into {})))
+
 ;; lazy namespace
 
 (defonce lazy-modules-a (atom []))
 (defonce lazy-ns-a (atom {}))
 (defonce lazy-ns-vars-a (atom {}))
-
+(defonce lazy-ns-loadable-a (atom {}))
 
 (defmacro get-lazy-modules []
   (warn "lazy modules:" @lazy-modules-a)
@@ -46,17 +53,20 @@
   (let [l (keys @lazy-ns-a)]
     (warn "lazy namespaces: " l)
     (into [] l)))
-               
+
 
 (defn- set-lazy-modules! [exts lazy-modules]
   (let [spec (modules->ns-map lazy-modules)
-        ns-vars (ns-map->vars spec)]
-    (write-service exts :cljsbuild-lazy-namespaces spec)  
-    (write-service exts :cljsbuild-lazy-ns-vars ns-vars)  
+        ns-vars (ns-map->vars spec)
+        ns-loadable (ns-map->loadable spec)]
+    (write-service exts :cljsbuild-lazy-namespaces spec)
+    (write-service exts :cljsbuild-lazy-ns-vars ns-vars)
+    (write-service exts :cljsbuild-lazy-ns-loadable ns-loadable)
     (reset! lazy-modules-a (map :name lazy-modules))
     (reset! lazy-ns-a spec)
-    (reset! lazy-ns-vars-a ns-vars)))
-       
+    (reset! lazy-ns-vars-a ns-vars)
+    (reset! lazy-ns-loadable-a ns-loadable)))
+
 
 (defmacro set-ns-vars! []
   (let [ns-vars @lazy-ns-vars-a]
@@ -65,11 +75,8 @@
 (defn make-loadable [[ns-name spec]]
   [ns-name `('shadow.lazy/loadable ~spec)])
 
-(defmacro get-loadables []
-  (let [loadables @lazy-ns-a
- ;       specs (->> (map make-loadable loadables)
- ;                  (into {}))
-        ]
+(defmacro set-ns-loadables! []
+  (let [loadables @lazy-ns-a]
     ;specs
     ; lazy/loadable macro. It expects one argument which is 
     ; - a qualified symbol, 
@@ -80,6 +87,26 @@
                           :loadable (shadow.lazy/loadable
                                      [snippets.snip/add
                                       snippets.snip/ui-add])}})))
+
+(defn wrap-lazy-loadable [loadable]
+   (list 'shadow.lazy/loadable loadable))
+
+
+(defmacro set-ns-loadables2! []
+  (let [loadables @lazy-ns-loadable-a
+        load-vecs (vals loadables)]
+    ;specs
+    ; lazy/loadable macro. It expects one argument which is 
+    ; - a qualified symbol, 
+    ; - a vector of symbols or
+    ; - a map of keyword to symbol.
+    `(reset! webly.module.build/lazy-ns-loadable2-a
+             ~(->> (map (fn [l]
+                     `(shadow.lazy/loadable ~l)
+                     ) load-vecs)
+                   (into [])))))
+
+
 
 (comment
   (str 'clojure.core)
@@ -100,7 +127,7 @@
 (defn- lazy-module? [{:keys [lazy-sci]}]
   lazy-sci)
 
-(defn create-modules 
+(defn create-modules
   "processes discovered extensions
    outputs a state that contains module information
    consider it the start-fn of a service."
@@ -130,7 +157,7 @@
   [(keyword name) {:entries (vec cljs-namespace)
                    :depends-on #{:webly}}])
 
-(defn shadow-module-config 
+(defn shadow-module-config
   "input: the state created by create-modules
    output: the :modules section of the shadow-config"
   [{:keys [modules]}]
