@@ -7,22 +7,19 @@
    ; side-effects
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
    [day8.re-frame.http-fx]
-   [modular.ws.events]
-   [modular.ws.core]
+
    ; frontend
-   [frontend.config.events]
-   [frontend.config.subscription]
-   [frontend.routes.events]
-   [frontend.css.events]
-   [frontend.css.loading]
-   [frontend.css.subscriptions]
-   [frontend.keybindings.events]
-   [frontend.analytics.events]
    [frontend.settings.events]
    [frontend.settings.subscriptions]
    [frontend.dialog]
    [frontend.routes :refer [set-main-path!]]
    [frontend.page]
+   [webly.app.service.keybindings :refer [start-keybindings]]
+   [webly.app.service.theme :refer [start-theme]]
+   [webly.app.service.ga :refer [start-ga]]
+   [webly.app.service.bidi :refer [start-bidi]]
+   [webly.app.service.ws :refer [start-ws]]
+   [webly.app.service.config :refer [start-config]]
    ; webly
    [webly.build.lazy]
    [webly.module.build :refer [add-lazy-modules print-build-summary webly-resolve]]
@@ -43,16 +40,7 @@
 (frontend.page/set-resolver! webly-resolve)
 ;; bidi
 
-(def webly-routes-app
-  {;["oauth2/redirect/" :provider] :oauth2/redirect  : either client OR server side
-   })
 
-(defn make-routes-frontend [user-routes-app]
-  ["/" (merge webly-routes-app user-routes-app)])
-
-(defn setup-bidi [user-routes-app]
-  (let [routes-frontend (make-routes-frontend user-routes-app)]
-    (dispatch [:bidi/init routes-frontend])))
 
 ;; see:
 ;; https://shadow-cljs.github.io/docs/UsersGuide.html#_lifecycle_hooks
@@ -112,14 +100,15 @@
      (dispatch [:webly/status :configuring-app])
      (print-build-summary)
      
-     (setup-bidi frontend-routes)
-     (dispatch [:ga/init])
-     (dispatch [:keybindings/init keybindings])
-     (dispatch [:css/init theme])
+     (start-bidi frontend-routes)
+     (start-ga)
+     (start-keybindings keybindings)
+     (start-theme theme)
      (dispatch [:settings/init])
      (if static?
        (warn "websockets are deactivated in static mode.")
-       (dispatch [:ws/init]))
+       (start-ws)
+       )
      (dispatch [:webly/set-status :configured? true])
 
      (if start-user-app
@@ -142,5 +131,5 @@
     (dispatch [:reframe10x-init])
     (dispatch [:webly/status :route-init])
     (dispatch [:webly/status :loading-config])
-    (dispatch [:config/load :webly/app-after-config-load static? main-path])
+    (start-config static? main-path)
     (mount-app)))
