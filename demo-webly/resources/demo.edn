@@ -1,14 +1,11 @@
-{
- :build {:disabled-extensions #{; extensions using sci-configs will not work in webly.
-                                "reagent" "re-frame" 
-                                "funcool-promesa" 
+{:build {:disabled-extensions #{; extensions using sci-configs will not work in webly.
+                                "reagent" "re-frame"
+                                "funcool-promesa"
                                 "applied-science.js-interop"
                                 ; webly2 is now in webly. needs to be removed from ui-repl.
                                 "webly2"
                                 "ui-repl"
-                                "cljs-ajax"
-                                }
-         }
+                                "cljs-ajax"}}
 
  :spa {:title "Webly Demo"
        :start-user-app [:demo/start]
@@ -16,17 +13,6 @@
        ;:icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
        ;:loading-image-url "webly/loadimage/library.jpg" ; 
        }
-
- :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
-                             false []}
-                     :tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
-                                "dark"  ["tailwindcss/dist/tailwind-dark.min.css"]}
-                     :webly-dialog {true ["webly/dialog.css"]
-                                    false []}}
-         :current {:emoji    false
-                   :tailwind "light"
-                   :webly-dialog true}}
-
 
 
  :static-main-path "/webly" ; for static-page build (github pages)

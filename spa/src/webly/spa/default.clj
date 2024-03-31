@@ -17,11 +17,6 @@
    :start-user-app [:webly/start-default]  ; after config loaded}
    })
 
-(def theme
-  {:available {:webly-dialog {true ["webly/dialog.css"]
-                              false []}}
-   :current {:webly-dialog true}})
-
 (def google-analytics
   {:enabled false} ; set to false to disable google-analytics tracking. 
   )

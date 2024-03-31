@@ -29,5 +29,16 @@
                "job2"   :demo/job ;  (bidi/tag :demo/job {:flags 3 :context :wunderbar})
                "save"    :demo/save-non-existing ; there is no handler defined for this on purpose
                }
+ 
+ :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
+                            false []}
+                    :tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
+                               "dark"  ["tailwindcss/dist/tailwind-dark.min.css"]}
+                    :webly-dialog {true ["webly/dialog.css"]
+                                   false []}}
+        :current {:emoji    false
+                  :tailwind "light"
+                  :webly-dialog true}}
+
  ;
  }

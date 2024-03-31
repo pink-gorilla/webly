@@ -17,14 +17,13 @@
     [webly.spa.default :as default])
    (:gen-class))
 
-
  (defn watch? [profile-name]
    (case profile-name
      "watch" true
      "watch2" true
      false))
 
-;; HANDLER RELATED
+;; EXTENSION CONFIG
 
  (defn- get-api-routes [exts]
    (->> (get-extensions exts {:api-routes {}})
@@ -40,14 +39,15 @@
   {:api (get-api-routes exts)
    :app (get-cljs-routes exts)})
 
+ (defn- get-theme [exts]
+   (let [themes (->> (get-extensions exts {:theme {:available {} :current {}}})
+                     (map :theme))]
+     {:available (reduce merge {} (map :available themes))
+      :current (reduce merge {} (map :current themes))
+      }))
 
-#_(defn- theme-split [theme]
- (let [theme (or theme {})
-       {:keys [available current]
-        :or {available {}
-             current {}}} theme]
-   [available current]))
 
+;; HANDLER RELATED
 
 (defn create-ring-handler [app-handler routes config-route websocket-routes]
   (let [{:keys [handler routes]} (webly-handler/create-ring-handler app-handler routes config-route websocket-routes)]
@@ -55,16 +55,16 @@
     (write-status "routes" routes)
     handler))
 
+
 (defn ensure-keyword [kw]
   (if (keyword? kw)
     kw
     (keyword kw)))
 
-(defn start-webly [{:keys [web-server sente-debug? spa theme google-analytics prefix]
+(defn start-webly [{:keys [web-server sente-debug? spa google-analytics prefix]
                     :or {sente-debug? false
                          web-server default/webserver
                          spa {}
-                         theme default/theme
                          google-analytics default/google-analytics
                          prefix default/prefix}
                     :as config}
@@ -73,6 +73,7 @@
   (let [ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
         exts (discover ext-config)
         routes (get-routes exts)
+        theme (get-theme exts)
         spa (merge default/spa spa)
         server-type (ensure-keyword server-type)
         permission (start-permissions)
@@ -139,6 +140,8 @@
   (get-api-routes exts)
   (get-cljs-routes exts)
   (get-routes exts)
+  (get-theme exts)
+
 
  ; 
   )
