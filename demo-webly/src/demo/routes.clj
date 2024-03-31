@@ -19,9 +19,8 @@
                     ["redirect/" :provider] 'modular.oauth2.handler/handler-oauth2-redirect-wrapped}  ;  either client OR server side
          }
    :app  {""        :demo/main
-          "help"    :demo/help
-          "prose"   :demo/prose
-          ["party/" :location] :demo/party
+          "help"    'demo.page/help ; :demo/help
+          ["party/" :location]  :demo/party ; 'demo.page/party
           "job"     (bidi/tag :demo/job :wunderbar)
           "job2"     (bidi/tag :demo/job {:flags 3
                                           :context :wunderbar})

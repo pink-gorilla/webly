@@ -22,7 +22,7 @@
 (defonce lazy-ns-vars-a (atom {}))
 
 (defn adjust-ns-def [ns-def]
-  (info "adjusting ns-def: " ns-def)
+  ;(info "adjusting ns-def: " ns-def)
   (->> (map symbol ns-def)
        (into [])))
 
@@ -31,7 +31,7 @@
                            [(symbol ns-kw) (adjust-ns-def ns-def)])
                          ns-map)
                     (into {}))]
-    (warn "modified ns-map: " ns-map)
+    ;(warn "modified ns-map: " ns-map)
     (reset! lazy-ns-vars-a ns-map)))
 
 (defn set-ns-loadables [ns-map]

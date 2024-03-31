@@ -1,14 +1,15 @@
 {:name "demo-webly"
  :lazy-sci false
  :cljs-namespace [demo.pages.main
-                  demo.pages.help
+                  ;demo.pages.help
                   demo.pages.party
-                  demo.pages.job
+                  ;demo.pages.job
                   demo.time
                   demo.events]
- :cljs-ns-bindings {'demo.page {'main demo.pages.main/main
-                                'party demo.pages.party/party-page
-                                'job demo.pages.job/job
-                                'help demo.pages.help/help}}
+ :cljs-ns-bindings {'demo.page.main {'main demo.pages.main/main
+                                     'party demo.pages.party/party-page
+                                     ;'job demo.pages.job/job
+                                    ;'help demo.pages.help/help
+                                    }}
  ;
  }

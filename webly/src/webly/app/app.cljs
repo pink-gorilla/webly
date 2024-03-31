@@ -22,9 +22,10 @@
    [frontend.settings.subscriptions]
    [frontend.dialog]
    [frontend.routes :refer [set-main-path!]]
+   [frontend.page]
    ; webly
    [webly.build.lazy]
-   [webly.module.build :refer [add-lazy-modules print-build-summary]]
+   [webly.module.build :refer [add-lazy-modules print-build-summary webly-resolve]]
    [webly.app.tenx.events]
    [webly.app.views :refer [webly-app]]
    [webly.app.events]
@@ -38,6 +39,8 @@
 
 (add-lazy-modules)
 
+(warn "setting frontend.page resolver to webly-resolve..")
+(frontend.page/set-resolver! webly-resolve)
 ;; bidi
 
 (def webly-routes-app
