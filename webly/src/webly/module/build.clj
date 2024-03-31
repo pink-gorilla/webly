@@ -1,22 +1,28 @@
 (ns webly.module.build
   (:require
+   [clojure.string :as str]
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [extension :refer [get-extensions write-service]]))
 
+
 ;; NAMESPACE
 
-(defn convert-ns-def [module-name ns-def]
+(defn ->keyword [s]
+  (-> s str (str/replace  #"'" "") keyword))
+
+(defn- convert-ns-def [module-name ns-def]
   (if (map? ns-def)
     {:module module-name
-     :ns-vars (->> (keys ns-def) (map keyword) (into []))
+     :ns-vars (->> (keys ns-def) (map ->keyword) (into []))
      :loadable (->> (vals ns-def) (into []))}
     {:module module-name
      :loadable ns-def}))
 
-(defn convert-ns [module-name [ns-name ns-def]]
-  [(keyword ns-name) (convert-ns-def module-name ns-def)])
+(defn- convert-ns [module-name [ns-name ns-def]]
+  ;(println "ns-name: " (pr-str ns-name) "keyword: " (->keyword ns-name))
+  [(->keyword ns-name) (convert-ns-def module-name ns-def)])
 
-(defn module->ns [{:keys [name cljs-ns-bindings]}]
+(defn- module->ns [{:keys [name cljs-ns-bindings]}]
   ; namespaces per module is needed to find the module that needs to be loaded for a ns
   (map #(convert-ns name %) cljs-ns-bindings))
 
@@ -70,7 +76,8 @@
 
 (defmacro set-ns-vars! []
   (let [ns-vars @lazy-ns-vars-a]
-    `(reset! webly.module.build/lazy-ns-vars-a ~ns-vars)))
+    ;`(reset! webly.module.build/lazy-ns-vars-a ~ns-vars)
+    `(webly.module.build/set-ns-vars ~ns-vars)))
 
 #_(defmacro set-ns-loadables-test! []
     ;specs
@@ -80,8 +87,8 @@
     ; - a map of keyword to symbol.
     `(reset! webly.module.build/lazy-ns-loadable-a
              {:'bongistan.core (shadow.lazy/loadable
-                                 [snippets.snip/add
-                                  snippets.snip/ui-add])}))
+                                [snippets.snip/add
+                                 snippets.snip/ui-add])}))
 
 (defmacro set-ns-loadables! []
   (let [loadables @lazy-ns-loadable-a]
@@ -90,10 +97,11 @@
     ; - a qualified symbol, 
     ; - a vector of symbols or
     ; - a map of keyword to symbol.
-    `(reset! webly.module.build/lazy-ns-loadable-a
-             ~(->> (map (fn [[ns-kw l]]
-                          `[~ns-kw (shadow.lazy/loadable ~l)]) loadables)
-                   (into {})))))
+    ;`(reset! webly.module.build/lazy-ns-loadable-a
+    `(webly.module.build/set-ns-loadables
+      ~(->> (map (fn [[ns-kw l]]
+                   `[~ns-kw (shadow.lazy/loadable ~l)]) loadables)
+            (into {})))))
 
 
 (comment

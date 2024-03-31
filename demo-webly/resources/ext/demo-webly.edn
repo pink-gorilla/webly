@@ -5,4 +5,10 @@
                   demo.pages.party
                   demo.pages.job
                   demo.time
-                  demo.events]}
+                  demo.events]
+ :cljs-ns-bindings {'demo.page {'main demo.pages.main/main
+                                'party demo.pages.party/party-page
+                                'job demo.pages.job/job
+                                'help demo.pages.help/help}}
+ ;
+ }

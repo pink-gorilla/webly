@@ -21,6 +21,25 @@
 (defonce lazy-ns-loadable-a (atom {}))
 (defonce lazy-ns-vars-a (atom {}))
 
+(defn adjust-ns-def [ns-def]
+  (info "adjusting ns-def: " ns-def)
+  (->> (map symbol ns-def)
+       (into [])))
+
+(defn set-ns-vars [ns-map]
+  (let [ns-map (->> (map (fn [[ns-kw ns-def]]
+                           [(symbol ns-kw) (adjust-ns-def ns-def)])
+                         ns-map)
+                    (into {}))]
+    (warn "modified ns-map: " ns-map)
+    (reset! lazy-ns-vars-a ns-map)))
+
+(defn set-ns-loadables [ns-map]
+  (let [ns-map (->> (map (fn [[ns-kw l-def]]
+                           [(symbol ns-kw) l-def])
+                         ns-map)
+                    (into {}))]
+    (reset! lazy-ns-loadable-a ns-map)))
 
 (set-ns-loadables!)
 (set-ns-vars!)
@@ -36,15 +55,12 @@
         ]
     (reset! lazy-modules-a modules-map)
     (reset! lazy-ns-a ns-list)
-
-
     (println "compile-time lazy-ns-a: " @lazy-ns-a)
-    ;(println "compile-time loadable-config: " loadable-spec)
-    (println "compile-time lazy-loadable-a: " @lazy-ns-loadable-a)
+
     :ok))
 
 (defn print-build-summary []
-  (info "webly-build summary:")
+  (warn "webly-build summary:")
   (info "lazy modules: " (keys @lazy-modules-a))
   (info "lazy-ns-loadable: " (keys @lazy-ns-loadable-a))
   ;(info "lazy-ns-loadable FULL: "  @lazy-ns-loadable-a)
@@ -54,6 +70,7 @@
 (defn load-namespace-raw
   "returns a promise containing the resolved loadables for a namespace"
   [ns-name]
+  (warn "lazy-ns-loadable-keys: " (keys @lazy-ns-loadable-a) "ns: " ns-name)
   (let [loadable  (get @lazy-ns-loadable-a ns-name)
         rp (p/deferred)
         on-error (fn [err]
@@ -88,5 +105,27 @@
             (p/then (fn [vars]
                       (info "load-namespace vars successfully received!")
                       (p/resolve! rp (ns-assemble ns-vars vars))))))
-      (p/reject! rp (str "cannot load-namespace: " ns-name " - no ns-map defined (sci-config ns)")))
+      (do (error "load-namespace [" (pr-str ns-name)
+                 "failed (no ns-vars defined, could be sci-config-ns)")
+          (p/reject! rp (str "cannot load-namespace: "
+                             ns-name " - no ns-vars defined (could be sci-config-ns)"))))
+    rp))
+
+
+(defn webly-resolve [fq-symbol]
+  (info "resolving: " fq-symbol)
+  (let [rp (p/deferred)
+        ns-symbol (-> fq-symbol namespace symbol)
+        fn-symbol (-> fq-symbol name symbol)
+        ns-rp (load-namespace ns-symbol)]
+    (-> ns-rp
+        (p/then (fn [ns-map]
+                  (if-let [fun (get ns-map fn-symbol)]
+                    (do (info "resolved successfully: " fq-symbol)
+                        (p/resolve! rp fun))
+                    (do (error "could not resolve: " fq-symbol)
+                        (p/reject! rp (str "namespace does not contain function: " fn-symbol))))))
+        (p/catch (fn [err]
+                   (error "error in resolving " fq-symbol ": namespace not found: " ns-symbol " error: " err)
+                   (p/reject! rp (str "namespace could not get loaded: " ns-symbol)))))
     rp))
