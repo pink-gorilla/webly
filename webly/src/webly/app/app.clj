@@ -1,40 +1,56 @@
 (ns webly.app.app
-  (:require
-   [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [extension :refer [discover write-service]]
-   [modular.config :refer [load-config! get-in-config]]
-   [modular.writer :refer [write-status]]
-   [modular.permission.service :refer [service-authorized?]]
-   [modular.permission.app :refer [start-permissions]]
-   [modular.ws.core :refer [start-websocket-server]]
-   [webly.build.profile :refer [setup-profile server?]]
-   [webly.build.core :refer [build]]
-   [webly.build.shadow :refer [stop-shadow]]
-   [webly.web.server :as web-server]
-   [webly.spa.handler.core :as webly-handler]
-   [webly.spa.html.handler :refer [app-handler]]
-   [webly.spa.handler.routes.config :refer [create-config-routes]]
-   [webly.spa.default :as default])
-  (:gen-class))
+   (:require
+    [taoensso.timbre :as timbre :refer [debug info warn error]]
+    [extension :refer [discover write-service get-extensions]]
+    [modular.config :refer [load-config! get-in-config]]
+    [modular.writer :refer [write-status]]
+    [modular.permission.service :refer [service-authorized?]]
+    [modular.permission.app :refer [start-permissions]]
+    [modular.ws.core :refer [start-websocket-server]]
+    [webly.build.profile :refer [setup-profile server?]]
+    [webly.build.core :refer [build]]
+    [webly.build.shadow :refer [stop-shadow]]
+    [webly.web.server :as web-server]
+    [webly.spa.handler.core :as webly-handler]
+    [webly.spa.html.handler :refer [app-handler]]
+    [webly.spa.handler.routes.config :refer [create-config-routes]]
+    [webly.spa.default :as default])
+   (:gen-class))
 
 
-(defn watch? [profile-name]
-  (case profile-name
-    "watch" true
-    "watch2" true
-    false))
+ (defn watch? [profile-name]
+   (case profile-name
+     "watch" true
+     "watch2" true
+     false))
 
 ;; HANDLER RELATED
 
-(defn hack-routes-symbol [routes]
-  (if (symbol? routes)
-    (-> routes requiring-resolve var-get)
-    routes))
+ (defn- get-api-routes [exts]
+   (->> (get-extensions exts {:api-routes {}})
+        (map :api-routes)
+        (apply merge)))
+
+  (defn- get-cljs-routes [exts]
+   (->> (get-extensions exts {:cljs-routes {}})
+        (map :cljs-routes)
+        (apply merge)))
+
+(defn- get-routes [exts]
+  {:api (get-api-routes exts)
+   :app (get-cljs-routes exts)})
+
+
+#_(defn- theme-split [theme]
+ (let [theme (or theme {})
+       {:keys [available current]
+        :or {available {}
+             current {}}} theme]
+   [available current]))
 
 
 (defn create-ring-handler [app-handler routes config-route websocket-routes]
-  (let [routes (hack-routes-symbol routes)
-        {:keys [handler routes]} (webly-handler/create-ring-handler app-handler routes config-route websocket-routes)]
+  (let [{:keys [handler routes]} (webly-handler/create-ring-handler app-handler routes config-route websocket-routes)]
     (def ring-handler handler) ; needed by shadow-watch
     (write-status "routes" routes)
     handler))
@@ -54,10 +70,12 @@
                     :as config}
                    server-type]
   (info "start-webly: " server-type)
-  (let [spa (merge default/spa spa)
+  (let [ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
+        exts (discover ext-config)
+        routes (get-routes exts)
+        spa (merge default/spa spa)
         server-type (ensure-keyword server-type)
         permission (start-permissions)
-        routes (hack-routes-symbol (get-in config [:webly :routes]))
         user-config  (select-keys config
                                   [:static-main-path
                                    :static?
@@ -105,12 +123,23 @@
 (defn webly-build [{:keys [config profile]}]
   (load-config! config)
   (let [config (get-in-config [])
-        ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})
-                    }
+        ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
         exts (discover ext-config)]
     (write-service exts :extensions-all (:extensions exts))
-     (write-service exts :extensions-disabled (:extensions-disabled exts))
+    (write-service exts :extensions-disabled (:extensions-disabled exts))
     (write-status "webly-build-config" config)
     (let [profile (setup-profile profile)]
       (when (:bundle profile)
         (build exts config profile)))))
+
+
+(comment
+  (def exts (discover {}))
+  (get-extensions exts {:api-routes {}})
+  (get-api-routes exts)
+  (get-cljs-routes exts)
+  (get-routes exts)
+
+ ; 
+  )
+

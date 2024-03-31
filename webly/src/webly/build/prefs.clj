@@ -14,6 +14,9 @@
 (defmacro pref []
   @prefs-atom)
 
+(defmacro get-pref [kw]
+  (get @prefs-atom kw))
+
 (defmacro if-pref [kw with without]
   (list 'do
         (if (get @prefs-atom kw)
@@ -26,4 +29,4 @@
     without))
 
 (defn write-build-prefs []
-  (write-target "build" @prefs-atom))
+  (write-target "cljsbuild-prefs" @prefs-atom))
