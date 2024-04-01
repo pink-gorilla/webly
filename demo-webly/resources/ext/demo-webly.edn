@@ -2,12 +2,10 @@
  :lazy-sci false
  :cljs-namespace [demo.pages.main
                   ;demo.pages.help
-                  demo.pages.party
                   ;demo.pages.job
                   demo.time
                   demo.events]
  :cljs-ns-bindings {'demo.page.main {'main demo.pages.main/main
-                                     'party demo.pages.party/party-page
                                      ;'job demo.pages.job/job
                                     ;'help demo.pages.help/help
                                      }}
@@ -24,7 +22,7 @@
 
  :cljs-routes {""        :demo/main
                "help"    demo.page/help ; :demo/help
-               ["party/" :location]  :demo/party ; 'demo.page/party
+               ["party/" :location]  demo.page/party 
                "job"     :demo/job ;(bidi/tag :demo/job :wunderbar)
                "job2"   :demo/job ;  (bidi/tag :demo/job {:flags 3 :context :wunderbar})
                "save"    :demo/save-non-existing ; there is no handler defined for this on purpose

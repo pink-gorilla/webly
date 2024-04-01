@@ -49,4 +49,14 @@
      :frontend-config frontend-config}
     ))
 
+ (comment
+   (def exts (discover {}))
+   (get-extensions exts {:api-routes {}})
+   (get-api-routes exts)
+   (get-cljs-routes exts)
+   (get-routes exts)
+   (get-theme exts)
  
+ 
+  ; 
+   )

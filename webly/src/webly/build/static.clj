@@ -12,7 +12,7 @@
 (def page-name "index")
 
 (def resource-path
-  (str "target/static/" page-name "_files/"))
+   "target/static/r/")
 
 (defn- ensure-directory [path]
   (when-not (.exists (io/file path))
@@ -22,7 +22,7 @@
 (defn save-resources []
   (info "exporting resources..")
   (write-resources-to "target/static" "public")
-  (fs/move "target/static/public" (str "target/static/" page-name "_files")))
+  (fs/move "target/static/public" "target/static/r"))
 
 (defn copy-pattern [from dest p]
   (let [files (fs/glob from p)]
@@ -58,5 +58,3 @@
   (copy-js)
 ;  
 )
-
-; file:///home/florian/repo/pink-gorilla/webly/demo-webly/target/static/r/webly.js

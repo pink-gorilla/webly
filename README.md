@@ -104,8 +104,10 @@ Check this to see what goes on:  https://unpkg.com/@ricokahler/oauth2-popup-flow
 ## static build
 
 ```
+  cd demo-webly
   clj -X:webly:compile
   clj -X:webly:static
+  cp node_modules/@icon target/static/index_files -r
  ./http-server.sh
 
 ```

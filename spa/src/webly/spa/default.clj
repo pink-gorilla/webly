@@ -31,7 +31,7 @@
 (def build 
  {:ns-cljs []
   :modules {}
-  :module-loader-init true
+  :module-loader-init false ; important, because we need to load on different paths
   :output-dir "target/webly/public"
   })
 

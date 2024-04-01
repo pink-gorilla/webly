@@ -64,7 +64,7 @@
    ;
      :builds {:webly {:target :browser
                       :module-loader true
-                      :module-loader-init module-loader-init
+                      :module-loader-init module-loader-init ; bool, true = auto-init, false = manual-init
                       :output-dir output-dir
                       :asset-path asset-path
                       :modules shadow-modules

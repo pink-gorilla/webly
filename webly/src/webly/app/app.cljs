@@ -6,7 +6,6 @@
    ; side-effects
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
    [day8.re-frame.http-fx]
-
    ; frontend
    [frontend.settings.events]
    [frontend.settings.subscriptions]
@@ -19,6 +18,7 @@
    [webly.app.service.bidi :refer [start-bidi]]
    [webly.app.service.ws :refer [start-ws]]
    [webly.app.service.config :refer [start-config]]
+   [webly.app.service.timbre :refer [timbre-config!]]
    ; webly
    [webly.build.lazy]
    [webly.module.build :refer [add-lazy-modules print-build-summary webly-resolve]]
@@ -27,7 +27,7 @@
    [webly.app.events]
    [webly.app.status.page] ; side-effects
    [webly.build.prefs :refer [pref]]
-   [modular.log :refer [timbre-config!]]
+   
    [webly.app.mode :refer [set-mode! mode-a get-resource-path]]))
 
 

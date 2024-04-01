@@ -2,7 +2,6 @@
   (:require
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [frontend.page :refer [add-page]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 ; themeable css for party
@@ -42,5 +41,3 @@
   (let [{:keys [location]} route-params
         {:keys [expected-guests]} query-params]
     [party location expected-guests]))
-
-(add-page :demo/party party-page)
