@@ -2,7 +2,7 @@
   (:require
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [frontend.page :refer [add-page]]
+   [webly.app.mode :refer [get-resource-path]]
    [pinkgorilla.repl.cljs.http :refer [get-json]]))
 
 (defn link-fn [fun text]
@@ -36,6 +36,6 @@
    [:div.bg-red-300 "config data:" (pr-str @data-config)]
 
    [:p "a moon image should show below. this is a test for webly resource handler."]
-   [:img {:src (str @prefix-atom "moon.jpg")}]])
+   [:img {:src (str (get-resource-path) "demo/moon.jpg")}]])
 
-(add-page :demo/help help)
+

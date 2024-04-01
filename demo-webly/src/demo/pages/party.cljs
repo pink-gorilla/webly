@@ -8,9 +8,9 @@
 ; themeable css for party
 
 (def components
-  {:party {:blue  ["party-theme-blue.css"]
-           :red ["party-theme-red.css"]
-           :cool ["party-theme-cool.css"]}})
+  {:party {:blue  ["demo/party-theme-blue.css"]
+           :red ["demo/party-theme-red.css"]
+           :cool ["demo/party-theme-cool.css"]}})
 
 (def config
   {:party :red})

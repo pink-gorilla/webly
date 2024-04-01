@@ -43,9 +43,9 @@
 
 (deftest resources-demo []
   (is (= "text/plain"
-         (-> "/r/hello.txt" GET content-type)))
+         (-> "/r/demo/hello.txt" GET content-type)))
   (is (= "image/jpeg"
-         (-> "/r/moon.jpg" GET content-type))))
+         (-> "/r/demo/moon.jpg" GET content-type))))
 
 ; application
 
