@@ -28,7 +28,7 @@
    [webly.app.status.page] ; side-effects
    [webly.build.prefs :refer [pref]]
    [modular.log :refer [timbre-config!]]
-   ))
+   [webly.app.mode :refer [set-mode! mode-a get-resource-path]]))
 
 
 (add-lazy-modules)
@@ -91,14 +91,13 @@
          frontend-routes (get-in db [:config :frontend-routes])
          theme (get-in db [:config :theme])
          keybindings (get-in db [:config :keybindings])
-         timbre-cljs (get-in db [:config :timbre/cljs])
-         ]
+         timbre-cljs (get-in db [:config :timbre/cljs])]
      (info "webly config after-load")
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
      (print-build-summary)
-     (timbre-config! timbre-cljs )
-     
+     (timbre-config! timbre-cljs)
+
      (start-bidi frontend-routes)
      (start-ga)
      (start-keybindings keybindings)
@@ -106,8 +105,7 @@
      (dispatch [:settings/init])
      (if static?
        (warn "websockets are deactivated in static mode.")
-       (start-ws)
-       )
+       (start-ws))
      (dispatch [:webly/set-status :configured? true])
 
      (if start-user-app
@@ -120,15 +118,9 @@
 
 (defn ^:export start [mode]
   (enable-console-print!)
-  (println "webly starting mode:" mode)
-  (info "webly starting mode: " mode " prefs: " (pref))
-  (let [static? (= mode "static")
-        main-path (:main-path (pref))
-        asset-path (:asset-path (pref))]
-    (when static?
-      (set-main-path! main-path))
-    (dispatch [:reframe10x-init])
-    (dispatch [:webly/status :route-init])
-    (dispatch [:webly/status :loading-config])
-    (start-config static? main-path)
-    (mount-app)))
+  (set-mode! mode)
+  (dispatch [:reframe10x-init])
+  (dispatch [:webly/status :route-init])
+  (dispatch [:webly/status :loading-config])
+  (start-config)
+  (mount-app))

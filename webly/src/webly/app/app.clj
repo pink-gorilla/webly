@@ -15,7 +15,7 @@
     [webly.spa.html.handler :refer [app-handler]]
     [webly.spa.handler.routes.config :refer [create-config-routes]]
     [webly.spa.default :as default]
-    [webly.build.static :refer [prepare-static-page]]
+    [webly.build.static :refer [build-static]]
     [webly.app.config :refer [configure]]
     )
    (:gen-class))
@@ -97,7 +97,7 @@
         (build exts config profile))
       (when (:static? profile)
         (info "creating static page ..")
-        (prepare-static-page frontend-config))
+        (build-static (assoc frontend-config :prefix "./index_files/")))
       
       )))
 

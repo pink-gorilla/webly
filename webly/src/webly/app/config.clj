@@ -27,7 +27,6 @@
      :current (reduce merge {} (map :current themes))}))
 
 
-
 (defn configure [{:keys [spa google-analytics prefix]
                   :or {spa {}
                        google-analytics default/google-analytics

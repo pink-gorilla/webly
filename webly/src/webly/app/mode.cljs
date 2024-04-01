@@ -2,18 +2,24 @@
   (:require-macros 
    [webly.build.prefs :refer [get-pref]])
   (:require 
-   [webly.app.mode.shadow-loader :refer [shadow-load-hack]]))
+   [taoensso.timbre :refer-macros [info warn]]
+   [webly.app.mode.url :refer [application-url app-load-path]]
+   [webly.app.mode.shadow-load :refer [set-shadow-load-dir]]))
+
+;; mode
 
 (defonce mode-a (atom :dynamic))
 
+(defn get-mode []
+  @mode-a)
+
+;; resource-path
+
 (defonce resource-path-a (atom (get-pref :asset-path)))
-
-(defonce route-base (atom "/"))
-
 
 (defn set-resource-path [rp]
   (reset! resource-path-a rp)
-  (shadow-load-hack rp))
+  (set-shadow-load-dir rp))
 
 (defn get-resource-path []
   @resource-path-a)
@@ -23,3 +29,25 @@
 ; Shadow-cljs module loader
 ; Css-loader
 ; Sci-ns-loader
+
+;; routing
+
+(defonce route-base (atom "/"))
+
+;; service
+
+(defn set-mode! [mode]
+  (warn "webly starting in mode: " mode)  
+  (when (= mode "static")
+    (warn "static mode!!")  
+    (reset! mode-a :static)
+    (let [path (application-url)
+          ;resource-path (str path "/r")
+          ;resource-path "./index.html_files/"
+          resource-path (str (application-url) "index_files/")
+          ;resource-path  "./index_files/"
+          ] ; relative load path  
+      (warn "app url: " path)
+      (warn "resource-path: " resource-path)
+      (set-resource-path resource-path))))
+

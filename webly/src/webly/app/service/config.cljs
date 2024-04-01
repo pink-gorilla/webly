@@ -5,5 +5,5 @@
    [frontend.config.subscription]))
 
 
-(defn start-config [static? main-path]
-  (dispatch [:config/load :webly/app-after-config-load static? main-path]))
+(defn start-config [ ]
+  (dispatch [:config/load :webly/app-after-config-load]))

@@ -101,6 +101,19 @@ Check this to see what goes on:  https://unpkg.com/@ricokahler/oauth2-popup-flow
 - clj `bb test-clj`
 - cljs: `bb test-cljs`
 
+## static build
+
+```
+  clj -X:webly:compile
+  clj -X:webly:static
+ ./http-server.sh
+
+```
+
+  
+
+
+
 # notes
 
 - 2022 02 22: disabled gh pages. error in ci. 
