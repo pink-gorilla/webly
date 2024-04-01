@@ -3,9 +3,8 @@
    [webly.build.prefs :refer [get-pref]])
   (:require 
    [taoensso.timbre :refer-macros [info warn]]
-   [webly.app.mode.url :refer [application-url app-load-path]]
-   [shadow.loader :as shadow-loader]
-   [webly.app.mode.shadow-load :refer [set-shadow-load-dir]]))
+   [webly.app.mode.url :refer [current-path entry-path]]
+   [shadow.loader :as shadow-loader]))
 
 ;; mode
 
@@ -14,19 +13,21 @@
 (defn get-mode []
   @mode-a)
 
-;; resource-path
+;; resource path
 
 (defonce resource-path-a (atom (get-pref :asset-path)))
 
-(defn set-resource-path [rp]
-  (reset! resource-path-a rp)
- ; (set-shadow-load-dir rp "/index_files/")
- ; (shadow-loader/init "/index_files/") ; prefix to the path loader
-  
-  )
-
 (defn get-resource-path []
   @resource-path-a)
+
+;; routing path
+
+(defonce routing-path-a (atom "/"))
+
+(defn get-routing-path []
+  @routing-path-a)
+
+
 
 ; resource-path “/r” (ex prefix)
 ; frontend-config
@@ -34,25 +35,20 @@
 ; Css-loader
 ; Sci-ns-loader
 
-;; routing
-
-(defonce route-base (atom "/"))
-
 ;; service
 
 (defn set-mode! [mode]
   (if (= mode "static")
-    (let [path (application-url)
+    (let [cpath (current-path)
+          epath (entry-path)
           default-resources "r/"
-          ;resource-path (str path "/r")
-          ;resource-path "./index.html_files/"
-          resource-path (str path default-resources)
-          ;resource-path  "./index_files/"
-          ] ; relative load path  
+          resource-path (str epath default-resources)] 
       (reset! mode-a :static)
-      (info "static mode app-url: " path " resource-path:" resource-path)  
-      (shadow-loader/init "")
-      (set-resource-path resource-path))
-    (shadow-loader/init "/r/")
-    ))
+      (info "static mode: routing-path:" cpath " resource-path:" resource-path)  
+      (reset! routing-path-a cpath)
+      (reset! resource-path-a resource-path)
+      (shadow-loader/init epath))
+    (do 
+      (info "dynamic mode: routing-path:" (get-routing-path) " resource-path:" (get-resource-path))  
+      (shadow-loader/init "/r/"))))
 

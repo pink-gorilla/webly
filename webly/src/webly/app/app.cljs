@@ -10,7 +10,6 @@
    [frontend.settings.events]
    [frontend.settings.subscriptions]
    [frontend.dialog]
-   [frontend.routes :refer [set-main-path!]]
    [frontend.page]
    [webly.app.service.keybindings :refer [start-keybindings]]
    [webly.app.service.theme :refer [start-theme]]

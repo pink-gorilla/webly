@@ -97,7 +97,7 @@
         (build exts config profile))
       (when (:static? profile)
         (info "creating static page ..")
-        (build-static (assoc frontend-config :prefix "/r/")))
+        (build-static (assoc frontend-config :prefix "./r/")))
       
       )))
 

@@ -107,8 +107,9 @@
     (info "static asset path: " asset-path)
     asset-path))
 
-(defn app-page-static [frontend-config csrf-token]
+(defn app-page-static [frontend-config csrf-token] 
   (let [{:keys [spa theme prefix google-analytics]} frontend-config]
+    (info "static prefix: " prefix)
     (layout spa theme prefix google-analytics ; :prefix "/r/"
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
