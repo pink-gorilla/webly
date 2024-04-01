@@ -10,14 +10,7 @@
                           :shadow-mode :release
                           :size-report false}}
 
-   :static  {:prefs   {:tenx false
-                       :static? true}
-             :bundle {:shadow-verbose false
-                      :cljs-build :webly
-                      :shadow-mode :release ; production build - no source maps
-                      :advanced true
-                      :size-report false
-                      :static? true}}
+   :static  {:static? true}
 
    :release     {:prefs   {:tenx false}
                  :bundle {:shadow-verbose false

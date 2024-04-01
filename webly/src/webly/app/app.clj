@@ -14,7 +14,10 @@
     [webly.spa.handler.core :as webly-handler]
     [webly.spa.html.handler :refer [app-handler]]
     [webly.spa.handler.routes.config :refer [create-config-routes]]
-    [webly.spa.default :as default])
+    [webly.spa.default :as default]
+    [webly.build.static :refer [prepare-static-page]]
+    [webly.app.config :refer [configure]]
+    )
    (:gen-class))
 
  (defn watch? [profile-name]
@@ -22,29 +25,6 @@
      "watch" true
      "watch2" true
      false))
-
-;; EXTENSION CONFIG
-
- (defn- get-api-routes [exts]
-   (->> (get-extensions exts {:api-routes {}})
-        (map :api-routes)
-        (apply merge)))
-
-  (defn- get-cljs-routes [exts]
-   (->> (get-extensions exts {:cljs-routes {}})
-        (map :cljs-routes)
-        (apply merge)))
-
-(defn- get-routes [exts]
-  {:api (get-api-routes exts)
-   :app (get-cljs-routes exts)})
-
- (defn- get-theme [exts]
-   (let [themes (->> (get-extensions exts {:theme {:available {} :current {}}})
-                     (map :theme))]
-     {:available (reduce merge {} (map :available themes))
-      :current (reduce merge {} (map :current themes))
-      }))
 
 
 ;; HANDLER RELATED
@@ -64,39 +44,20 @@
 (defn start-webly [{:keys [web-server sente-debug? spa google-analytics prefix]
                     :or {sente-debug? false
                          web-server default/webserver
-                         spa {}
                          google-analytics default/google-analytics
                          prefix default/prefix}
                     :as config}
                    server-type]
   (info "start-webly: " server-type)
-  (let [ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
+  (let [server-type (ensure-keyword server-type)
+        ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
         exts (discover ext-config)
-        routes (get-routes exts)
-        theme (get-theme exts)
-        spa (merge default/spa spa)
-        server-type (ensure-keyword server-type)
+        {:keys [routes frontend-config]} (configure config exts)
         permission (start-permissions)
-        user-config  (select-keys config
-                                  [:static-main-path
-                                   :static?
-                                   :runner
-                                  ; application specific keys
-                                   :settings ; localstorage
-                                   :keybindings
-                                   :timbre/cljs
-                                   :shadow ; todo remove. this does not look right.
-                                   :webly; todo remove. this does not look right.
-                                   ])
-        frontend-config (merge user-config {:prefix prefix
-                                            :spa spa
-                                            :frontend-routes (:app routes)
-                                            :theme theme
-                                            :google-analytics google-analytics})
         config-route (create-config-routes frontend-config)
         websocket (start-websocket-server server-type sente-debug?)
         websocket-routes (:bidi-routes websocket)
-        app-handler (app-handler spa theme prefix google-analytics)
+        app-handler (app-handler frontend-config)
         ring-handler (create-ring-handler app-handler routes config-route websocket-routes)
         webserver (if (watch? server-type)
                     (web-server/start web-server ring-handler websocket :jetty)
@@ -125,13 +86,20 @@
   (load-config! config)
   (let [config (get-in-config [])
         ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
-        exts (discover ext-config)]
+        exts (discover ext-config)
+        {:keys [routes frontend-config] :as opts} (configure config exts)
+        ]
     (write-service exts :extensions-all (:extensions exts))
     (write-service exts :extensions-disabled (:extensions-disabled exts))
     (write-status "webly-build-config" config)
     (let [profile (setup-profile profile)]
       (when (:bundle profile)
-        (build exts config profile)))))
+        (build exts config profile))
+      (when (:static? profile)
+        (info "creating static page ..")
+        (prepare-static-page frontend-config))
+      
+      )))
 
 
 (comment

@@ -91,7 +91,8 @@
       (loading (str prefix spinner))
       [:div#webly page]]))
 
-(defn app-page-dynamic [spa theme prefix google-analytics csrf-token]
+(defn app-page-dynamic [frontend-config csrf-token]
+   (let [{:keys [spa theme prefix google-analytics]} frontend-config]
   (layout spa theme prefix google-analytics
           [:div
            [:div#sente-csrf-token {:data-csrf-token csrf-token}]
@@ -99,15 +100,15 @@
            [:div  ; .w-screen.h-screen
             [:script {:src (str prefix "webly.js")
                       :type "text/javascript"
-                      :onload "webly.app.app.start ('dynamic');"}]]]))
+                      :onload "webly.app.app.start ('dynamic');"}]]])))
 
 (defn config-prefix-adjust [prefix static-main-path]
   (let [asset-path (str static-main-path prefix)]
     (info "static asset path: " asset-path)
     asset-path))
 
-(defn app-page-static [spa theme prefix google-analytics csrf-token static-main-path]
-  (let [prefix (config-prefix-adjust prefix static-main-path)]
+(defn app-page-static [frontend-config csrf-token]
+  (let [{:keys [spa theme prefix google-analytics]} frontend-config]
     (layout spa theme prefix google-analytics ; :prefix "/r/"
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]

@@ -6,7 +6,6 @@
    [cljs.reader :refer [read-string]]
    [bidi.bidi]
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
-   [modular.log :refer [timbre-config!]]
    [modular.encoding.transit :refer [decode]]
    [modular.encoding.edn :refer [read-edn]]
    [frontend.notifications.core :refer [add-notification]]
@@ -55,7 +54,6 @@
          fx {:db (assoc-in (:db cofx) [:config] config)
              :dispatch [after-config-load static?]}]
      (info "config load-success!")
-     (timbre-config! (:timbre/cljs config))
      (debug "config: " config)
      (if after-config-load
        fx

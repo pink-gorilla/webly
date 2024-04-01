@@ -1,7 +1,6 @@
 (ns webly.app.app
   (:require
    [reagent.dom]
-   ;[cljs.pprint]
    [taoensso.timbre :refer-macros [info warn]]
    [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db reg-sub]]
    ; side-effects
@@ -27,10 +26,8 @@
    [webly.app.views :refer [webly-app]]
    [webly.app.events]
    [webly.app.status.page] ; side-effects
-
    [webly.build.prefs :refer [pref]]
-;   [webly.app.static :refer [make-static-adjustment]]
-;   [frontend.config.core :refer [webly-mode-atom]]
+   [modular.log :refer [timbre-config!]]
    ))
 
 
@@ -94,11 +91,13 @@
          frontend-routes (get-in db [:config :frontend-routes])
          theme (get-in db [:config :theme])
          keybindings (get-in db [:config :keybindings])
+         timbre-cljs (get-in db [:config :timbre/cljs])
          ]
      (info "webly config after-load")
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
      (print-build-summary)
+     (timbre-config! timbre-cljs )
      
      (start-bidi frontend-routes)
      (start-ga)

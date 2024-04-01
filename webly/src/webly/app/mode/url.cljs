@@ -12,3 +12,9 @@
         url-base (subs url 0 (last-index-of url "/"))]
     (info "dynamic-base: " url-base)
     url-base))
+
+
+(defn entry-path []
+  (let [{:keys [protocol port host path]} (application-url)]
+   ;(str/replace path #"(.*/)(.*)$" change-config)
+    path))

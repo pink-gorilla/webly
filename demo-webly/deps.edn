@@ -57,7 +57,8 @@
   :npm-install {:exec-args {:profile "npm-install"}}
   :compile {:exec-args {:profile "compile2"}}
   :release {:exec-args {:profile "release"}}
-
+  :static {:exec-args {:profile "static"}}
+  
   ; RUN SERVICES (keep running)
   :run {:exec-fn modular.system/start!
         :exec-args {:profile "jetty"

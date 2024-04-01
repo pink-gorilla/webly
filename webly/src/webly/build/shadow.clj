@@ -7,7 +7,6 @@
    [shadow.cljs.devtools.api :as shadow-api]
    [shadow.cljs.devtools.server :as shadow-server]
    [shadow.cljs.build-report]
-   [webly.build.static :refer [prepare-static-page]]
    [webly.build.npm-writer :refer [ensure-package-json ensure-karma]]))
 
 ;https://github.com/thheller/shadow-cljs/blob/master/src/main/shadow/cljs/devtools/cli_actual.clj
@@ -78,12 +77,4 @@
       (when size-report
         (info "creating size report ..")
         (generate-bundlesize-report profile shadow-config))
-
-      (when static?
-        (info "creating static page ..")
-        (prepare-static-page))
-
-      s
-
-     ; 
-      )))
+      s)))

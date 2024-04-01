@@ -14,9 +14,6 @@
        ;:loading-image-url "webly/loadimage/library.jpg" ; 
        }
 
-
- :static-main-path "/webly" ; for static-page build (github pages)
-
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
  :timbre/cljs {:min-level [[#{"org.eclipse.jetty.*"} :info]
@@ -86,6 +83,5 @@
  :ns-clj [demo.time
           demo.app]
 
- :runner webly.app.app/webly-runner
 ;                
  }
