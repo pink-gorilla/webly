@@ -2,7 +2,9 @@
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :as rf]
-   [frontend.css.config :refer [css-app]]))
+   [frontend.css.config :refer [css-app]]
+   [webly.app.mode :refer [get-resource-path]]
+   ))
 
 (rf/reg-sub
  :css/theme
@@ -21,7 +23,7 @@
           :or {available {}
                current {}}}
          (get-in db [:theme])
-         prefix (get-in db [:config :prefix])]
+         prefix (get-resource-path)]
      (debug "app theme link prefix: " prefix)
      (css-app prefix available current))))
 

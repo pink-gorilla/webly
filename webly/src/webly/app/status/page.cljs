@@ -5,15 +5,17 @@
    [modular.config :refer-macros [get-in-config-cljs]]
    [webly.app.status.subscriptions] ; side-effects
    [webly.app.status.events] ; side-effects
+   [webly.app.mode :refer [get-resource-path]]
    ))
 
 (defn status-page []
   (let [status (subscribe [:webly/status])
         loading-image-url (get-in-config-cljs [:webly :loading-image-url])
         spinner (get-in-config-cljs [:webly :spinner])
-        prefix (get-in-config-cljs [:prefix])]
-    (info "compile time config " {:prefix prefix :webly {:spinner spinner
-                                                         :loading-image-url loading-image-url}})
+        prefix (get-resource-path)]
+    (info "compile time config " {:webly {:spinner spinner
+                                          :loading-image-url loading-image-url}})
+    (info "runtime resource path:" prefix)
     (fn []
       [:div
        {:style {:background-image (str "url(" prefix loading-image-url ")") ; no-repeat center center fixed"

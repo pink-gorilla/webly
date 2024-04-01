@@ -20,7 +20,6 @@
 (def data-config (r/atom {:data nil}))
 (def firstt (r/atom true))
 
-(def prefix-atom (rf/subscribe [:prefix]))
 
 (defn help [_route]
   [:div
