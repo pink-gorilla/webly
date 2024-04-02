@@ -48,8 +48,7 @@
                        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}}
           :extra-paths ["src" "resources" "test" "test/resources"]
           :exec-fn webly.app.app/webly-build
-          :exec-args {:config ["webly/config.edn"
-                               "demo.edn"
+          :exec-args {:config ["demo.edn"
                                ;"creds-localhost.edn"
                                "/home/florian/repo/myLinux/myvault/trateg/creds.edn"] ; does not get used!
                       :profile "npm-install"}}
@@ -68,13 +67,6 @@
             :exec-args {:profile "httpkit"}}
   :jetty {:exec-args {:profile "jetty"}}
   :watch {:exec-args {:profile "watch2"}}
-
-
-  ; tree and list are here just because tools.deps.alpha does not work on my machine
-  :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
-         :exec-fn clojure.tools.cli.api/tree}
-  :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
-         :exec-fn clojure.tools.cli.api/list}
 
   :demo-build {:extra-deps {org.pinkgorilla/ui-highcharts {:mvn/version "0.0.26"}
                             org.pinkgorilla/ui-vega {:mvn/version "0.0.31"}}

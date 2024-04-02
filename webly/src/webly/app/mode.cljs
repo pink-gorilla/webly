@@ -27,8 +27,6 @@
 (defn get-routing-path []
   @routing-path-a)
 
-
-
 ; resource-path “/r” (ex prefix)
 ; frontend-config
 ; Shadow-cljs module loader
@@ -41,8 +39,7 @@
   (if (= mode "static")
     (let [cpath (current-path)
           epath (entry-path)
-          default-resources "r/"
-          resource-path (str epath default-resources)] 
+          resource-path (str epath "r/")] 
       (reset! mode-a :static)
       (info "static mode: routing-path:" cpath " resource-path:" resource-path)  
       (reset! routing-path-a cpath)

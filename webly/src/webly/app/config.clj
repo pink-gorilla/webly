@@ -27,36 +27,36 @@
      :current (reduce merge {} (map :current themes))}))
 
 
-(defn configure [{:keys [spa google-analytics prefix]
+(defn configure [{:keys [spa google-analytics prefix keybindings settings]
                   :or {spa {}
+                       keybindings default/keybindings
+                       settings default/settings
                        google-analytics default/google-analytics
                        prefix default/prefix}
                   :as config} exts]
-  (let [routes (get-routes exts)
+  (let [timbre-cljs (or (:timbre/cljs config) default/timbre-cljs)
+        routes (get-routes exts)
         theme (get-theme exts)
         spa (merge default/spa spa)
-        user-config  (select-keys config
-                                  [; application specific keys
-                                   :settings ; localstorage
-                                   :keybindings
-                                   :timbre/cljs])
-        frontend-config (merge user-config {:prefix prefix
-                                            :spa spa
-                                            :frontend-routes (:app routes)
-                                            :theme theme
-                                            :google-analytics google-analytics})]
+        frontend-config  {:prefix prefix
+                          :spa spa
+                          :frontend-routes (:app routes)
+                          :theme theme
+                          :keybindings keybindings
+                          :settings settings
+                          :timbre/cljs timbre-cljs
+                          :google-analytics google-analytics}]
     {:routes routes
-     :frontend-config frontend-config}
-    ))
+     :frontend-config frontend-config}))
 
- (comment
-   (def exts (discover {}))
-   (get-extensions exts {:api-routes {}})
-   (get-api-routes exts)
-   (get-cljs-routes exts)
-   (get-routes exts)
-   (get-theme exts)
- 
- 
+(comment
+  (def exts (discover {}))
+  (get-extensions exts {:api-routes {}})
+  (get-api-routes exts)
+  (get-cljs-routes exts)
+  (get-routes exts)
+  (get-theme exts)
+
+
   ; 
-   )
+  )

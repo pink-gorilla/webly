@@ -1,6 +1,6 @@
 (ns webly.app.service.ws
   (:require
-   [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db reg-sub]]
+   [re-frame.core :refer [dispatch]]
    [modular.ws.events]
    [modular.ws.core]))
 
