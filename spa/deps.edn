@@ -6,8 +6,7 @@
         ;; old
         luminus/ring-ttl-session {:mvn/version "0.3.3"}
 
-        ; webly/core
-
+        ; frontend
         reagent/reagent {:mvn/version "1.1.1"} ; https://github.com/reagent-project/reagent
         re-frame/re-frame {:mvn/version "1.2.0"}
         cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
@@ -21,29 +20,7 @@
         org.pinkgorilla/websocket {:mvn/version "0.0.9"}
         modular/frontend {:local/root "../frontend" :deps/manifest :deps}
         org.pinkgorilla/permission {:mvn/version "0.0.15"}
-        ;modular/rest {:local/root "../rest" :deps/manifest :deps}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
-        }
- :aliases
- {; https://github.com/weavejester/cljfmt
-  :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
-           :main-opts ["-m" "cljfmt.main"
-                       "--indents" "cljfmt.edn"
-                       ; "fix"  "check"
-                       ]}
-
- ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
-  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
-         :main-opts ["-m" "clj-kondo.main"
-                     "--fail-level" "error"
-                     "--config" "cljkondo.edn"
-                     "--lint"]}
-
-  :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1095"}}
-             :main-opts ["-m" "antq.core"]}
-
-
-
-;
-  }}
+        org.pinkgorilla/ui-bidi {:mvn/version "0.0.29"}
+        org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.5"}}}
 

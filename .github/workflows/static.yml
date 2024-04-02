@@ -52,7 +52,7 @@ jobs:
         run: |
           cd demo-webly
           clojure -X:webly:npm-install
-          clojure -X:webly:compile
+          clojure -X:webly:release-adv
           clojure -X:webly:static
           cp node_modules/@icon target/static/index_files -r
       - name: Upload artifact

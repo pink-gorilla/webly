@@ -105,7 +105,7 @@ Check this to see what goes on:  https://unpkg.com/@ricokahler/oauth2-popup-flow
 
 ```
   cd demo-webly
-  clj -X:webly:compile  or clojure -X:webly::release-adv
+  clj -X:webly:compile  or clojure -X:webly:release-adv
   clj -X:webly:static
   cp node_modules/@icon target/static/index_files -r
  ./http-server.sh
@@ -113,11 +113,3 @@ Check this to see what goes on:  https://unpkg.com/@ricokahler/oauth2-popup-flow
 ```
 
   
-
-
-
-# notes
-
-- 2022 02 22: disabled gh pages. error in ci. 
-
-

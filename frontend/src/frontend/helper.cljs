@@ -15,21 +15,6 @@
                           ""))]
     (str proto ":" (:host app-url) port-postfix (str/replace (:path app-url) #"[^/]*$" path))))
 
-(defn change-config [match]
-  (str (second match) "config.edn"))
-
-(defn config-path [path]
-  (str/replace path
-               #"(.*/)(.*)$"
-               change-config))
-
-(defn static-config-url []
-  (let [{:keys [protocol port host path]} (application-url)
-        port-postfix (if (< 0 port)
-                       (str ":" port)
-                       "")]
-    (let [path-adjust (config-path path)]
-      (str protocol "://" host port-postfix path-adjust))))
 
 #_(defn sente-ws-url [db]
     (let [app-url (application-url)
