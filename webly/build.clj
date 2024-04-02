@@ -16,6 +16,7 @@
   (-> opts
       (assoc :lib lib
              :version version
+             :src-pom "pom-template.xml"
              :transitive true)
       (bb/jar)))
 
