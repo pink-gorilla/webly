@@ -38,11 +38,9 @@
     kw
     (keyword kw)))
 
-(defn start-webly [{:keys [web-server sente-debug? spa google-analytics prefix]
+(defn start-webly [{:keys [web-server sente-debug?]
                     :or {sente-debug? false
-                         web-server default/webserver
-                         google-analytics default/google-analytics
-                         prefix default/prefix}
+                         web-server default/webserver}
                     :as config}
                    server-type]
   (info "start-webly: " server-type)

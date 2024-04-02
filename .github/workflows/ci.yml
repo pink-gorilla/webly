@@ -35,7 +35,7 @@ jobs:
     - name: test cljs+clj
       if: success()
       run: |
-       cd ../demo-webly
+       cd demo-webly
        clojure -X:webly:npm-install
        clojure -X:webly:ci
        npm test
@@ -50,7 +50,7 @@ jobs:
       run: |
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
-        cd ../webly
+        cd webly
         clojure -T:build jar
         clojure -T:build deploy
       # bash <(curl -s https://codecov.io/bash)
