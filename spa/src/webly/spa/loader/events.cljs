@@ -1,4 +1,4 @@
-(ns webly.app.status.events
+(ns webly.spa.loader.events
   (:require
    [re-frame.core :refer [reg-event-db]]))
 

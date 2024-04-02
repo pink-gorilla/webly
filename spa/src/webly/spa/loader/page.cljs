@@ -1,12 +1,12 @@
-(ns webly.app.status.page
+(ns webly.spa.loader.page
   (:require
    [taoensso.timbre :refer-macros [info infof error]]
    [re-frame.core :refer [subscribe]]
-   [webly.app.status.subscriptions] ; side-effects
-   [webly.app.status.events] ; side-effects
+   [webly.spa.loader.subscriptions] ; side-effects
+   [webly.spa.loader.events] ; side-effects
    [webly.spa.mode :refer [get-resource-path]]))
 
-(defn status-page []
+(defn loader-page []
   (let [status (subscribe [:webly/status])
         config (subscribe [:webly/config])
         loading-image-url (get-in @config [:spa :loading-image-url])

@@ -1,4 +1,4 @@
-(ns webly.app.service.timbre
+(ns webly.spa.service.timbre
   (:require
    [modular.log]))
 

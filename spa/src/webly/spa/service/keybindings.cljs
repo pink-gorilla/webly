@@ -1,4 +1,4 @@
-(ns webly.app.service.keybindings
+(ns webly.spa.service.keybindings
   (:require
    [re-frame.core :refer [dispatch]]
    [frontend.keybindings.events]))

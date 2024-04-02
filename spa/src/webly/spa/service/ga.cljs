@@ -1,4 +1,4 @@
-(ns webly.app.service.ga
+(ns webly.spa.service.ga
   (:require
    [re-frame.core :refer [dispatch]]
    [frontend.analytics.events]))

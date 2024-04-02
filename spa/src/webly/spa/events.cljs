@@ -1,4 +1,4 @@
-(ns webly.app.events
+(ns webly.spa.events
   (:require
    [taoensso.timbre :as timbre :refer [info]]
    [re-frame.core :refer [reg-event-db dispatch]]))

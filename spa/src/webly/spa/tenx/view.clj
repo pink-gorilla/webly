@@ -1,4 +1,4 @@
-(ns webly.app.tenx.view
+(ns webly.spa.tenx.view
   (:require
    [webly.build.prefs :refer [if-pref-fn]]))
 

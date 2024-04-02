@@ -1,4 +1,4 @@
 {:name "webly-spa"
  :lazy false
- :cljs-namespace [webly.app.app]
+ :cljs-namespace [webly.spa]
 }

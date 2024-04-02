@@ -10,8 +10,8 @@
 ;; build-options
 (defn build-ns-aliases []
   (if-pref-fn :tenx
-              {'webly.app.tenx.events 'webly.app.tenx.events-on}
-              {'webly.app.tenx.events 'webly.app.tenx.events-off
+              {'webly.spa.tenx.events 'webly.spa.tenx.events-on}
+              {'webly.spa.tenx.events 'webly.spa.tenx.events-off
                ;'day8.re-frame.tracing 'day8.re-frame.tracing-stubs
                }))
 

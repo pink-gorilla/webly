@@ -1,4 +1,4 @@
-(ns webly.app.service.ws
+(ns webly.spa.service.ws
   (:require
    [re-frame.core :refer [dispatch]]
    [modular.ws.events]

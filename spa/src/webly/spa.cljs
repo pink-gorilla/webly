@@ -1,4 +1,4 @@
-(ns webly.app.app
+(ns webly.spa
   (:require
    [reagent.dom]
    [taoensso.timbre :refer-macros [info warn]]
@@ -10,20 +10,20 @@
 
    [frontend.dialog]
    [frontend.page]
-   [webly.app.service.keybindings :refer [start-keybindings]]
-   [webly.app.service.theme :refer [start-theme]]
-   [webly.app.service.ga :refer [start-ga]]
-   [webly.app.service.bidi :refer [start-bidi]]
-   [webly.app.service.ws :refer [start-ws]]
-   [webly.app.service.config :refer [start-config]]
-   [webly.app.service.timbre :refer [timbre-config!]]
+   [webly.spa.service.keybindings :refer [start-keybindings]]
+   [webly.spa.service.theme :refer [start-theme]]
+   [webly.spa.service.ga :refer [start-ga]]
+   [webly.spa.service.bidi :refer [start-bidi]]
+   [webly.spa.service.ws :refer [start-ws]]
+   [webly.spa.service.config :refer [start-config]]
+   [webly.spa.service.timbre :refer [timbre-config!]]
    ; webly
    [webly.build.lazy]
    [webly.module.build :refer [add-lazy-modules print-build-summary webly-resolve]]
-   [webly.app.tenx.events]
-   [webly.app.views :refer [webly-app]]
-   [webly.app.events]
-   [webly.app.status.page] ; side-effects
+   [webly.spa.tenx.events]
+   [webly.spa.views :refer [webly-app]]
+   [webly.spa.events] ; side effects
+   [webly.spa.loader.page] ; side-effects
    [webly.build.prefs :refer [pref]]
    [webly.spa.mode :refer [set-mode! mode-a get-resource-path]]))
 
@@ -61,7 +61,7 @@
 
   (info "mounting webly-app ..")
   (dispatch [:ga/event {:category "webly" :action "mounted" :label 77 :value 13}])
-  (webly.app.app/mount-app))
+  (mount-app))
 
 (defn remove-spinner []
   (let [spinner (.. js/document (getElementById "spinner"))

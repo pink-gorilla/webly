@@ -5,7 +5,7 @@
    [taoensso.timbre :refer [debug info error]]
    [frontend.analytics.google-tag :refer [script-tag-src script-tag-config]]
    [frontend.css.config :refer [css-app]]
-   [webly.app.tenx.view :refer [tenx-script]]))
+   [webly.spa.tenx.view :refer [tenx-script]]))
 
 ;; CSS
 
@@ -100,7 +100,7 @@
            [:div  ; .w-screen.h-screen
             [:script {:src (str prefix "webly.js")
                       :type "text/javascript"
-                      :onload "webly.app.app.start ('dynamic');"}]]])))
+                      :onload "webly.spa.start ('dynamic');"}]]])))
 
 (defn config-prefix-adjust [prefix static-main-path]
   (let [asset-path (str static-main-path prefix)]
@@ -117,7 +117,7 @@
              [:div  ; .w-screen.h-screen
               [:script {:src (str prefix "webly.js")
                         :type "text/javascript"
-                        :onload "webly.app.app.start ('static');"}]]])))
+                        :onload "webly.spa.start ('static');"}]]])))
 
 
 

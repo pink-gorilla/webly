@@ -1,4 +1,4 @@
-(ns webly.app.status.subscriptions
+(ns webly.spa.loader.subscriptions
   (:require
    [re-frame.core :as rf]))
 
