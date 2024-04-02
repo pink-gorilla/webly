@@ -4,7 +4,6 @@
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [extension :refer [get-extensions write-service]]))
 
-
 ;; NAMESPACE
 
 (defn ->keyword [s]
@@ -60,7 +59,6 @@
     (warn "lazy namespaces: " l)
     (into [] l)))
 
-
 (defn- set-lazy-modules! [exts lazy-modules]
   (let [spec (modules->ns-map lazy-modules)
         ns-vars (ns-map->vars spec)
@@ -72,7 +70,6 @@
     (reset! lazy-ns-a spec)
     (reset! lazy-ns-vars-a ns-vars)
     (reset! lazy-ns-loadable-a ns-loadable)))
-
 
 (defmacro set-ns-vars! []
   (let [ns-vars @lazy-ns-vars-a]
@@ -103,7 +100,6 @@
                    `[~ns-kw (shadow.lazy/loadable ~l)]) loadables)
             (into {})))))
 
-
 (comment
   (str 'clojure.core)
   (name 'clojure.core)
@@ -111,9 +107,6 @@
 
   (map str ['a 'bingo.bongo 'ui.highcharts])
   (map name ['a 'bingo.bongo 'ui.highcharts]))
-
-
-
 
 ;; SERVICE
 

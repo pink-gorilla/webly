@@ -2,8 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer-macros [debug debugf info warn error]]
    [clojure.string :refer [last-index-of ends-with?]]
-   [cemerick.url :refer [url]]
-   ))
+   [cemerick.url :refer [url]]))
 
 (defn current-url []
   (-> js/window .-location .-href))

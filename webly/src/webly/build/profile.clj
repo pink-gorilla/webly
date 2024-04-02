@@ -54,8 +54,7 @@
                   :bundle {:shadow-verbose true
                            :cljs-build :webly
                            :shadow-mode :watch
-                           :size-report false}}
-   })
+                           :size-report false}}})
 
 (defn str->profile [profile-str]
   (let [p (keyword profile-str)]

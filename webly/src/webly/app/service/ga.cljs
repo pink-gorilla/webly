@@ -4,7 +4,7 @@
    [frontend.analytics.events]))
 
 (defn start-ga []
-   (dispatch [:ga/init]))
+  (dispatch [:ga/init]))
 
 
 

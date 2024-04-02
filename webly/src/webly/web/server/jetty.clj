@@ -5,15 +5,15 @@
 
 (defn jetty-ws-map [websocket jetty-ws-routes]
   (let [chsk-get-handler (get-in websocket [:bidi-routes "chsk" :get])]
-  (->> (map (fn [route]
-              [route chsk-get-handler])
-            jetty-ws-routes)
-       (into {}))))
+    (->> (map (fn [route]
+                [route chsk-get-handler])
+              jetty-ws-routes)
+         (into {}))))
 
 (defn start-jetty
   [ring-handler websocket config]
   (run-jetty-server ring-handler
-                    (jetty-ws-map websocket (:jetty-ws config) )
+                    (jetty-ws-map websocket (:jetty-ws config))
                     (assoc config :join? false)))
 
 (defn stop-jetty

@@ -1,8 +1,7 @@
 (ns webly.app.mode.shadow-load
-  (:require 
+  (:require
    [taoensso.timbre :refer-macros [info warn]]
-   [shadow.loader :as l]
-   ))
+   [shadow.loader :as l]))
 
 (defn change-url [url relative-res-path]
   ; url "/r/tick.js" => "/index-files/"

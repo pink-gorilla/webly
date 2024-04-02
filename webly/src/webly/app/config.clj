@@ -26,7 +26,6 @@
     {:available (reduce merge {} (map :available themes))
      :current (reduce merge {} (map :current themes))}))
 
-
 (defn configure [{:keys [spa google-analytics prefix keybindings settings]
                   :or {spa {}
                        keybindings default/keybindings
@@ -57,6 +56,5 @@
   (get-routes exts)
   (get-theme exts)
 
-
-  ; 
+; 
   )

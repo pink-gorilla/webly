@@ -12,12 +12,11 @@
 (def page-name "index")
 
 (def resource-path
-   "target/static/r/")
+  "target/static/r/")
 
 (defn- ensure-directory [path]
   (when-not (.exists (io/file path))
     (.mkdir (java.io.File. path))))
-
 
 (defn save-resources []
   (info "exporting resources..")
@@ -57,4 +56,4 @@
   (ensure-directory (str resource-path "cljs-runtime"))
   (copy-js)
 ;  
-)
+  )
