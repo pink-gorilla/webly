@@ -1,8 +1,10 @@
 (ns demo.test
   (:require
    [extension :refer [discover write-service]]
+    [bidi.bidi :as bidi]
+
    [webly.module.build :refer [create-modules shadow-module-config
-                               create-modules get-loadables
+                               create-modules 
                                get-lazy-ns
                                ]]))
 
@@ -17,14 +19,18 @@
 
 (comment 
   
+  (->> (bidi/tag :demo/job :wunderbar)
+       pr-str
+   )
+   
+  
+
+
   (def exts (discover))
 
   (def modules (create-modules exts))
   
-  (macroexpand-1
-   (get-loadables)
-   )
-  
+
   (get-lazy-ns)
   (macroexpand (get-lazy-ns))
   

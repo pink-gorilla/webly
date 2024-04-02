@@ -1,14 +1,9 @@
 {:name "demo-webly"
  :lazy-sci false
  :cljs-namespace [demo.page.main
-                  ;demo.page.help
-                  ;demo.page.job
                   demo.time
                   demo.events]
- :cljs-ns-bindings {'demo.page.main {'main demo.page.main/main
-                                     ;'job demo.page.job/job
-                                    ;'help demo.page.help/help
-                                     }}
+ :cljs-ns-bindings {'demo.page.main {'main demo.page.main/main}}
  ; runtime
  :api-routes {"time"   {:get demo.handler/time-handler}
               "timejava"   {:get demo.handler/time-java-handler-wrapped}
@@ -17,8 +12,7 @@
                         :post demo.handler.test/test-handler  ; used in unit-test
                         }
               "snippet"   {:get demo.handler/snippet-handler-wrapped}
-              "bindata"  demo.handler.binary/binary-handler
-              }
+              "bindata"  demo.handler.binary/binary-handler}
 
  :cljs-routes {""        :demo/main
                "help"    demo.page/help ; :demo/help

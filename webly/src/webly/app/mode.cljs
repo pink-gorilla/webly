@@ -1,7 +1,7 @@
 (ns webly.app.mode
-  (:require-macros 
+  (:require-macros
    [webly.build.prefs :refer [get-pref]])
-  (:require 
+  (:require
    [taoensso.timbre :refer-macros [info warn]]
    [webly.app.mode.url :refer [current-path entry-path]]
    [shadow.loader :as shadow-loader]))
@@ -39,13 +39,14 @@
   (if (= mode "static")
     (let [cpath (current-path)
           epath (entry-path)
-          resource-path (str epath "r/")] 
+          resource-path (str epath "r/")]
       (reset! mode-a :static)
-      (info "static mode: routing-path:" cpath " resource-path:" resource-path)  
+      (info "static mode: routing-path:" cpath " resource-path:" resource-path)
       (reset! routing-path-a cpath)
       (reset! resource-path-a resource-path)
       (shadow-loader/init epath))
-    (do 
-      (info "dynamic mode: routing-path:" (get-routing-path) " resource-path:" (get-resource-path))  
-      (shadow-loader/init "/r/"))))
+    (let [resource-path "/r/"]
+      (reset! resource-path-a resource-path)
+      (info "dynamic mode: routing-path:" (get-routing-path) " resource-path:" (get-resource-path))
+      (shadow-loader/init ""))))
 
