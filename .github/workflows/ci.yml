@@ -67,4 +67,4 @@ jobs:
         clojure -X:webly:compile
         clojure -X:webly:static
         cp node_modules/@icon target/static/index_files -r
-        cp target/static ../docs
+        cp -r target/static ../docs
