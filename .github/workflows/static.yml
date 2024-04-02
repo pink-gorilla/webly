@@ -33,11 +33,31 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Prepare java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu' # https://github.com/actions/setup-java/blob/main/README.md#Supported-distributions
+          java-version: '14'
+          java-package: jdk # optional (jdk or jre) - defaults to jdk
+      - name: Install clojure tools
+        uses: DeLaGuardo/setup-clojure@3.5
+        with:
+          cli: 1.10.3.1029 # Clojure CLI based on tools.deps
+      - name: build gh-pages
+        if: success()
+        run: |
+          cd demo-webly
+          clojure -X:webly:compile
+          clojure -X:webly:static
+          cp node_modules/@icon target/static/index_files -r
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          path: "demo-webly/target/static"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
