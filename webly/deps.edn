@@ -3,7 +3,7 @@
          ]
  :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
         org.clojure/core.async {:mvn/version  "1.6.673"}
-
+        com.rpl/specter {:mvn/version "1.1.4"}
         ; logging
         ;org.slf4j/slf4j-api {:mvn/version "2.0.0-alpha1"}
         ;org.fzakaria/slf4j-timbre {:git/url "https://github.com/SimpleValue/slf4j-timbre"
@@ -17,15 +17,6 @@
         luminus/ring-ttl-session {:mvn/version "0.3.3"}
 
         ; webly/core
-        
-        reagent/reagent {:mvn/version "1.1.1"} ; https://github.com/reagent-project/reagent
-        re-frame/re-frame {:mvn/version "1.2.0"}
-        cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
-        day8.re-frame/http-fx {:mvn/version "0.2.3"}  ; reframe based http requests
-        day8.re-frame/re-frame-10x {:mvn/version  "1.1.12"} ;; https://github.com/day8/re-frame-10x
-        ;day8.re-frame/tracing {:mvn/version  "0.6.2"} ; https://github.com/day8/re-frame-debux
-        ;{day8.re-frame/tracing-stubs "0.6.2"}
-
         ; shadow-cljs
         ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler
         ; will fail because shadow contains core.async which is not compatible with 
@@ -37,11 +28,12 @@
         
         luminus/ring-undertow-adapter {:mvn/version "1.3.1"}
         ; modular
-        org.pinkgorilla/webserver {:mvn/version "0.0.9"} ; brings modular
-        org.pinkgorilla/websocket {:mvn/version "0.0.7"}
+        org.pinkgorilla/extension {:mvn/version "0.0.11"}
+        org.pinkgorilla/webserver {:mvn/version "0.0.12"} ; brings modular
+        org.pinkgorilla/websocket {:mvn/version "0.0.9"}
         modular/frontend {:local/root "../frontend" :deps/manifest :deps}
-        
-        org.pinkgorilla/permission {:mvn/version "0.0.13"}
+        org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
+        org.pinkgorilla/permission {:mvn/version "0.0.15"}
         ;modular/rest {:local/root "../rest" :deps/manifest :deps}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
         }
@@ -77,10 +69,12 @@
           :main-opts ["-m" "clj-check.check"]}
 
  ; tree and list are here just because tools.deps.alpha does not work on my machine
-  :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
-         :exec-fn clojure.tools.cli.api/tree}
-  :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
-         :exec-fn clojure.tools.cli.api/list}
+   :build {:deps {io.github.clojure/tools.build {:git/tag "v0.6.1" :git/sha "515b334"}
+                 io.github.slipset/deps-deploy {:git/sha "b4359c5d67ca002d9ed0c4b41b710d7e5a82e3bf"}
+                 io.github.seancorfield/build-clj {:git/tag "v0.5.4" :git/sha "bc9c0cc"}
+                  ;rewrite-clj/rewrite-clj {:mvn/version "1.0.699-alpha"}
+                 babashka/fs {:mvn/version "0.0.5"}}
+          :ns-default build}
 
 
 ;

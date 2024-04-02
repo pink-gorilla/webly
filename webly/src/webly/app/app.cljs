@@ -1,43 +1,37 @@
 (ns webly.app.app
   (:require
    [reagent.dom]
-   ;[cljs.pprint]
    [taoensso.timbre :refer-macros [info warn]]
    [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db reg-sub]]
    ; side-effects
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
    [day8.re-frame.http-fx]
-   [modular.ws.events]
-   [modular.ws.core]
    ; frontend
-   [frontend.config.events]
-   [frontend.config.subscription]
-   [frontend.routes.events]
-   [frontend.css.events]
-   [frontend.css.loading]
-   [frontend.css.subscriptions]
-   [frontend.keybindings.events]
-   [frontend.analytics.events]
    [frontend.settings.events]
    [frontend.settings.subscriptions]
    [frontend.dialog]
-   [frontend.routes :refer [set-main-path!]]
+   [frontend.page]
+   [webly.app.service.keybindings :refer [start-keybindings]]
+   [webly.app.service.theme :refer [start-theme]]
+   [webly.app.service.ga :refer [start-ga]]
+   [webly.app.service.bidi :refer [start-bidi]]
+   [webly.app.service.ws :refer [start-ws]]
+   [webly.app.service.config :refer [start-config]]
+   [webly.app.service.timbre :refer [timbre-config!]]
    ; webly
    [webly.build.lazy]
+   [webly.module.build :refer [add-lazy-modules print-build-summary webly-resolve]]
    [webly.app.tenx.events]
    [webly.app.views :refer [webly-app]]
    [webly.app.events]
-   [webly.app.routes :refer [make-routes-frontend #_make-routes-backend]]
    [webly.app.status.page] ; side-effects
+   [webly.build.prefs :refer [pref]] 
+   [webly.app.mode :refer [set-mode! mode-a get-resource-path]]))
 
-   [webly.build.prefs :refer [pref]]
-;   [webly.app.static :refer [make-static-adjustment]]
-;   [frontend.config.core :refer [webly-mode-atom]]
-   ))
+(add-lazy-modules)
 
-(defn mount-app []
-  (reagent.dom/render [webly-app]
-                      (.getElementById js/document "app")))
+(warn "setting frontend.page resolver to webly-resolve..")
+(frontend.page/set-resolver! webly-resolve)
 
 ;; see:
 ;; https://shadow-cljs.github.io/docs/UsersGuide.html#_lifecycle_hooks
@@ -48,6 +42,11 @@
 ;; - OR shadow-cljs.edn :devtools section   
 
 ;; before-reload is a good place to stop application stuff before we reload.
+
+
+(defn mount-app []
+  (reagent.dom/render [webly-app]
+                      (.getElementById js/document "app")))
 
 (defn ^:dev/before-load
   before-load []
@@ -75,28 +74,31 @@
     (when (.contains body-classes "loading")
       (.remove body-classes "loading"))))
 
-(defn setup-bidi [user-routes-api user-routes-app]
-  (let [routes-frontend (make-routes-frontend user-routes-app)
-        ;routes-backend (make-routes-backend user-routes-app user-routes-api)
-        ]
-    (dispatch [:bidi/init routes-frontend])))
+
 
 (reg-event-db
  :webly/app-after-config-load
  (fn [db [_ static?]]
-   (let [routes (get-in db [:config :webly :routes])
-         start-user-app (get-in db [:config :webly :start-user-app])]
+   (let [spa (get-in db [:config :spa])
+         start-user-app (-> spa :start-user-app)
+         frontend-routes (get-in db [:config :frontend-routes])
+         theme (get-in db [:config :theme])
+         keybindings (get-in db [:config :keybindings])
+         timbre-cljs (get-in db [:config :timbre/cljs])]
      (info "webly config after-load")
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
-     (setup-bidi (:api routes) (:app routes))
-     (dispatch [:ga/init])
-     (dispatch [:keybindings/init (get-in db [:config :keybindings])])
-     (dispatch [:css/init])
+     (print-build-summary)
+     (timbre-config! timbre-cljs)
+
+     (start-bidi frontend-routes)
+     (start-ga)
+     (start-keybindings keybindings)
+     (start-theme theme)
      (dispatch [:settings/init])
      (if static?
        (warn "websockets are deactivated in static mode.")
-       (dispatch [:ws/init]))
+       (start-ws))
      (dispatch [:webly/set-status :configured? true])
 
      (if start-user-app
@@ -109,15 +111,9 @@
 
 (defn ^:export start [mode]
   (enable-console-print!)
-  (println "webly starting mode:" mode)
-  (info "webly starting mode: " mode " prefs: " (pref))
-  (let [static? (= mode "static")
-        main-path (:main-path (pref))
-        asset-path (:asset-path (pref))]
-    (when static?
-      (set-main-path! main-path))
-    (dispatch [:reframe10x-init])
-    (dispatch [:webly/status :route-init])
-    (dispatch [:webly/status :loading-config])
-    (dispatch [:config/load :webly/app-after-config-load static? main-path])
-    (mount-app)))
+  (set-mode! mode)
+  (dispatch [:reframe10x-init])
+  (dispatch [:webly/status :route-init])
+  (dispatch [:webly/status :loading-config])
+  (start-config)
+  (mount-app))

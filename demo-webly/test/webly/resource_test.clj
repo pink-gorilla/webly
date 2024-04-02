@@ -4,11 +4,10 @@
    [ring.mock.request :refer [request] :rename {request mock-request}]
    [bidi.bidi]
    [bidi.ring]
-   [webly.web.handler :refer [make-handler]]
-   [webly.app.handler :refer [app-handler]]
-   ;[webly.web.resources] ; side-effects
+   [webly.spa.handler.handler :refer [make-handler]]
+   [webly.spa.html.handler :refer [app-handler]]
    [webly.routes :refer [routes-api routes-app]]
-   [webly.app.routes :refer [make-routes-backend make-routes-frontend]]))
+   [webly.spa.handler.routes :refer [make-routes-backend make-routes-frontend]]))
 
 (def routes-backend (make-routes-backend routes-app routes-api))
 (def routes-frontend (make-routes-frontend routes-app))
@@ -44,9 +43,9 @@
 
 (deftest resources-demo []
   (is (= "text/plain"
-         (-> "/r/hello.txt" GET content-type)))
+         (-> "/r/demo/hello.txt" GET content-type)))
   (is (= "image/jpeg"
-         (-> "/r/moon.jpg" GET content-type))))
+         (-> "/r/demo/moon.jpg" GET content-type))))
 
 ; application
 

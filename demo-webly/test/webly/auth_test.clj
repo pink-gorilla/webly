@@ -7,7 +7,7 @@
    [bidi.ring]
    [modular.config :as config]
    [modular.oauth2.local.pass :as pass]
-   [webly.web.handler :refer [make-handler]]
+   [webly.spa.handler.handler :refer [make-handler]]
    [modular.permission.service :refer [add-permissioned-services]]
    [modular.permission.role :as role]
    [modular.permission.websocket :refer [set-user! service-authorized?]]

@@ -21,6 +21,12 @@ Clone this repo and run: `bb demo-webly`
 
 ```
 clj -X:demo-webly :profile :npm-install
+
+cd demo-webly
+clj -X:webly:npm-install
+clj -X:webly:compile
+clj -X:webly:run 
+
 ```
 
 The demo runs a webserver on port 8080 with shadow-cljs "watch" mode.
@@ -94,6 +100,21 @@ Check this to see what goes on:  https://unpkg.com/@ricokahler/oauth2-popup-flow
 ## unit tests
 - clj `bb test-clj`
 - cljs: `bb test-cljs`
+
+## static build
+
+```
+  cd demo-webly
+  clj -X:webly:compile
+  clj -X:webly:static
+  cp node_modules/@icon target/static/index_files -r
+ ./http-server.sh
+
+```
+
+  
+
+
 
 # notes
 

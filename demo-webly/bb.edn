@@ -1,0 +1,14 @@
+{:paths ["target/node_modules"]
+ :deps {babashka/fs {:mvn/version "0.1.1"}
+        org.babashka/http-server {:mvn/version "0.1.11"}}
+
+ :tasks {:requires [[clojure.edn :as edn]
+                    [babashka.http-server :as http-server]
+                    [babashka.fs :as fs]]
+                  
+         ; dev tools
+         httpserver (http-server/exec {:port 8080
+                                :dir "./target/static"})
+
+ ;        
+         }}

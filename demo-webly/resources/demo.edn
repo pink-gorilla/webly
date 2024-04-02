@@ -1,28 +1,18 @@
-{:webly {; routes
-         ; routes can be a map or a symbol.
-         ; if you do lots of merging of routes, you might prefer a symbol
-         :routes demo.routes/routes
-         ; cljs
-         :ns-cljs [demo.app]
-         :modules {:snippets [snippets.snip]
-                   :hello [snippets.hello
-                           snippets.bye]}
-         :module-loader-init true
-         :title "Webly Demo"
-         :start-user-app [:demo/start]
-         :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
-                                     false []}
-                             :tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
-                                        "dark"  ["tailwindcss/dist/tailwind-dark.min.css"]}
-                             :webly-dialog {true ["webly/dialog.css"]
-                                            false []}
-                             }
-                 :current {:emoji    false
-                           :tailwind "light"
-                           :webly-dialog true
-                           }}}
+{:build {:disabled-extensions #{; extensions using sci-configs will not work in webly.
+                                "reagent" "re-frame"
+                                "funcool-promesa"
+                                "applied-science.js-interop"
+                                ; webly2 is now in webly. needs to be removed from ui-repl.
+                                "webly2"
+                                "ui-repl"
+                                "cljs-ajax"}}
 
- :static-main-path "/webly" ; for static-page build (github pages)
+ :spa {:title "Webly Demo"
+       :start-user-app [:demo/start]
+       ;:spinner "webly/loading.svg"
+       ;:icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
+       ;:loading-image-url "webly/loadimage/library.jpg" ; 
+       }
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
@@ -74,8 +64,7 @@
               :service {:time/now nil ; no permission needed for this.
                         :time/now-date #{} ; only logged in users can access this service
                         :time/now-date-local #{:supervisor}
-                        :demo/connected nil
-                        }}
+                        :demo/connected nil}}
 
  :users {:demo {:roles #{:logistic}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
@@ -83,20 +72,16 @@
          :boss {:roles #{:logistic :supervisor :accounting}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["boss@doe.com"]}
-         
+
          :florian {:roles #{:logistic}
                    :password "a231498f6c1f441aa98482ea0b224ffa" ; 1234
                    :email ["hoertlehner@gmail.com"]}
          :john {:roles #{:logistic}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["john@doe.com"]}}
-  
- :ns-clj [demo.time
-          demo.routes
-          demo.handler2
-          demo.app
-          ]
 
- :runner webly.app.app/webly-runner
+ :ns-clj [demo.time
+          demo.app]
+
 ;                
  }

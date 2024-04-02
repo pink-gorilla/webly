@@ -6,24 +6,24 @@
    [cljs.reader :refer [read-string]]
    [bidi.bidi]
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
-   [modular.log :refer [timbre-config!]]
    [modular.encoding.transit :refer [decode]]
    [modular.encoding.edn :refer [read-edn]]
    [frontend.notifications.core :refer [add-notification]]
-   [frontend.routes :refer [static-main-path-atom]]
-  ; [webly.build.prefs :refer [pref]]
+   [webly.app.mode :refer [get-resource-path get-mode]]
+   [frontend.config.subscription] ; side effects
    ))
 
 ; load configuration
 
 (reg-event-fx
  :config/load
- (fn [{:keys [db]} [_ after-config-load static?]]
-   (let [format (if static?
+ (fn [{:keys [db]} [_ after-config-load]]
+   (let [static? (= (get-mode) :static)
+         format (if static?
                   (ajax/text-response-format)
                   (ajax/transit-response-format :json decode))
          uri (if static?
-               (str @static-main-path-atom "/r/config.edn")
+               (str (get-resource-path) "config.edn")
                "/api/config")]
      (infof "loading config static?: %s from url: %s then dispatch: %s" static? uri after-config-load)
      {;:db   (assoc-in db [:build] (pref))
@@ -56,7 +56,6 @@
          fx {:db (assoc-in (:db cofx) [:config] config)
              :dispatch [after-config-load static?]}]
      (info "config load-success!")
-     (timbre-config! (:timbre/cljs config))
      (debug "config: " config)
      (if after-config-load
        fx

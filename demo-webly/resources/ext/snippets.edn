@@ -1,0 +1,3 @@
+{:name "snippets"
+ :lazy-sci true
+ :cljs-namespace [snippets.snip]}

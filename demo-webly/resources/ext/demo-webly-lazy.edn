@@ -1,0 +1,15 @@
+{:name "demo-webly-lazy"
+ :lazy-sci true
+ :cljs-namespace [;demo.pages.main
+                  demo.page.help
+                  demo.page.party
+                  demo.page.job
+                  ;demo.time
+                  ;demo.events
+                  ]
+ :cljs-ns-bindings {'demo.page {;'main demo.page.main/main
+                                'party demo.page.party/party-page
+                                'job demo.page.job/job
+                                'help demo.page.help/help}}
+ ;
+ }

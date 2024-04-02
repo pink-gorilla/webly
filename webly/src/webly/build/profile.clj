@@ -1,8 +1,6 @@
 (ns webly.build.profile
   (:require
    [taoensso.timbre :as timbre :refer [info error]]
-   [modular.config :refer [config-atom]]
-   [modular.writer :refer [write-target]]
    [webly.build.prefs :refer [prefs-atom]]))
 
 (defonce profiles
@@ -12,14 +10,7 @@
                           :shadow-mode :release
                           :size-report false}}
 
-   :static  {:prefs   {:tenx false
-                       :static? true}
-             :bundle {:shadow-verbose false
-                      :cljs-build :webly
-                      :shadow-mode :release ; production build - no source maps
-                      :advanced true
-                      :size-report false
-                      :static? true}}
+   :static  {:static? true}
 
    :release     {:prefs   {:tenx false}
                  :bundle {:shadow-verbose false
@@ -45,13 +36,13 @@
                  :bundle {:shadow-verbose false
                           :cljs-build :webly
                           :shadow-mode :compile  ; compile has source maps
-                          :size-report true}}
+                          :size-report false}}
 
    :compile2    {:prefs   {:tenx false}
                  :bundle {:shadow-verbose false
                           :cljs-build :webly
                           :shadow-mode :compile  ; compile has source maps
-                          :size-report true}}
+                          :size-report false}}
 
    :watch       {:prefs   {:tenx true}
                  :bundle {:shadow-verbose true
@@ -64,14 +55,8 @@
                            :cljs-build :webly
                            :shadow-mode :watch
                            :size-report false}}
-
-;:httpkit      {:prefs   {:tenx true}
-   ;               :server {:type :httpkit
-   ;                        :wrap-handler-reload false}}
-
-   ;:undertow    {:server {:type :undertow
-   ;                       :wrap-handler-reload false}}
    })
+
 (defn str->profile [profile-str]
   (let [p (keyword profile-str)]
     (get profiles p)))
@@ -101,7 +86,7 @@
       (error "no profile. valid profiles are: " (profiles-available))
       (do
         (info "webly profile-name: " profile-name " profile: " profile)
-        (swap! config-atom merge {:profile profile})
+        ;(swap! config-atom merge {:profile profile})
         (swap! prefs-atom merge (get-build-prefs profile))
         (swap! prefs-atom assoc :profile (str profile-name))
         (info "build prefs: " @prefs-atom)))

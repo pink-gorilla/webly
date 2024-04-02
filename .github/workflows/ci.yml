@@ -27,11 +27,20 @@ jobs:
       uses: DeLaGuardo/setup-clojure@3.5
       with:
         cli: 1.10.3.1029 # Clojure CLI based on tools.deps
-    - name: Install Babashka
-      run: bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
-    - name: bb ci-check
-      run: bb ci-check
-    - name: bb ci-deploy
+    - name: cljfmt lint
+      run: |
+       cd webly 
+       clojure -M:cljfmt check src
+       clojure -M:lint src
+    - name: test cljs+clj
+      if: success()
+      run: |
+       cd ../demo-webly
+       clojure -X:webly:npm-install
+       clojure -X:webly:ci
+       npm test
+       clojure -X:test-clj
+    - name: clojars deploy
       if: success()
       # if: github.event_name == 'push'
       env:
@@ -41,7 +50,9 @@ jobs:
       run: |
         git config --global user.email "ci@pinkgorilla.org"
         git config --global user.name "CI/CD"
-        bb ci-deploy
+        cd ../webly
+        clojure -T:build jar
+        clojure -T:build deploy
       # bash <(curl -s https://codecov.io/bash)
       # lein with-profile +relay-jetty cloverage
       #  bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
@@ -49,4 +60,11 @@ jobs:
       # Could not transfer metadata foo:bar/maven-metadata.xml from/to releases (https://clojars.org/repo): Read timed out
       # Default 10000 not enough for us
       # export LEIN_JVM_OPTS="-Dmaven.wagon.rto=90000"
-      
+    - name: github pages
+      if: success()
+      run: |
+        cd demo-webly
+        clojure -X:webly:compile
+        clojure -X:webly:static
+        cp node_modules/@icon target/static/index_files -r
+        cp target/static ../docs

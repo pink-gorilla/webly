@@ -2,7 +2,9 @@
   (:require
    [clojure.string :as str]
    [taoensso.timbre :refer-macros [info warn error]]
-   [re-frame.core :refer [reg-sub]]))
+   [re-frame.core :refer [reg-sub]]
+   [webly.app.mode :refer [get-resource-path]]
+   ))
 
 (reg-sub
  :settings
@@ -12,7 +14,7 @@
 (reg-sub
  :prefix
  (fn [db _]
-   (let [prefix (get-in db [:settings :prefix])]
+   (let [prefix (get-resource-path)]
      (if (str/blank? prefix)
        (do (error "prefix is blank - returning /r/")
            "/r/")

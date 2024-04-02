@@ -1,69 +1,79 @@
 (ns webly.app.app
-  (:require
-   [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [modular.config :refer [load-config! config-atom]]
-   [modular.system :as system]
-   [modular.writer :refer [write-status]]
-   [modular.ws.core :refer [init-ws!]]
-   [modular.permission.service :refer [service-authorized?]]
-   [webly.build.profile :refer [setup-profile server?]]
-   [webly.build.core :refer [build]]
-   [webly.build.shadow :refer [stop-shadow]]
-   [webly.web.server :as web-server]
-   [webly.web.handler :refer [make-handler]]
-   [webly.app.handler :refer [app-handler]]
-   [webly.app.routes :refer [make-routes-frontend make-routes-backend]]
-   [modular.permission.app :refer [start-permissions]])
-  (:gen-class))
+   (:require
+    [taoensso.timbre :as timbre :refer [debug info warn error]]
+    [extension :refer [discover write-service get-extensions]]
+    [modular.config :refer [load-config! get-in-config]]
+    [modular.writer :refer [write-status]]
+    [modular.permission.service :refer [service-authorized?]]
+    [modular.permission.app :refer [start-permissions]]
+    [modular.ws.core :refer [start-websocket-server]]
+    [webly.build.profile :refer [setup-profile server?]]
+    [webly.build.core :refer [build]]
+    [webly.build.shadow :refer [stop-shadow]]
+    [webly.web.server :as web-server]
+    [webly.spa.handler.core :as webly-handler]
+    [webly.spa.html.handler :refer [app-handler]]
+    [webly.spa.handler.routes.config :refer [create-config-routes]]
+    [webly.spa.default :as default]
+    [webly.build.static :refer [build-static]]
+    [webly.app.config :refer [configure]]
+    )
+   (:gen-class))
 
-(defn create-ring-handler
-  "creates a ring-handler
-   uses configuration in webly-config to do so
-   the def statement defines a variable in this ns. This is used by shadow-cljs to resolve the handler.
-   "
-  [routes]
-  (debug "create-ring-handler: " routes) ; debugt because we write full config to routes.edn file.
-  (let [routes-backend (make-routes-backend (:app routes) (:api routes))
-        routes-frontend (make-routes-frontend (:app routes))
-        ;_ (info "all-api-routes:" routes-backend "all-app-routes:" routes-frontend)
-        h (make-handler app-handler routes-backend routes-frontend)]
-    (write-status "routes" {:frontend routes-frontend :backend routes-backend})
-    (def ring-handler h) ; needed by shadow-watch
-    h))
+ (defn watch? [profile-name]
+   (case profile-name
+     "watch" true
+     "watch2" true
+     false))
 
-(defn watch? [profile-name]
-  (case profile-name
-    "watch" true
-    "watch2" true
-    false))
 
-(defn hack-routes-symbol [routes]
-  (if (symbol? routes)
-    (let [routes (-> routes requiring-resolve var-get)]
-      (swap! config-atom assoc-in [:webly :routes] routes)
-      routes)
-    routes))
+;; HANDLER RELATED
 
-(defn start-webly [config server-type]
+(defn create-ring-handler [app-handler routes config-route websocket-routes]
+  (let [{:keys [handler routes]} (webly-handler/create-ring-handler app-handler routes config-route websocket-routes)]
+    (def ring-handler handler) ; needed by shadow-watch
+    (write-status "routes" routes)
+    handler))
+
+
+(defn ensure-keyword [kw]
+  (if (keyword? kw)
+    kw
+    (keyword kw)))
+
+(defn start-webly [{:keys [web-server sente-debug? spa google-analytics prefix]
+                    :or {sente-debug? false
+                         web-server default/webserver
+                         google-analytics default/google-analytics
+                         prefix default/prefix}
+                    :as config}
+                   server-type]
   (info "start-webly: " server-type)
-  (start-permissions)
-  (let [ring-handler (let [routes (get-in config [:webly :routes])
-                           routes (hack-routes-symbol routes)]
-                       (create-ring-handler routes))
-        webserver  (if (watch? server-type)
-                     (web-server/start ring-handler :jetty)
-                     (web-server/start ring-handler (keyword server-type)))
+  (let [server-type (ensure-keyword server-type)
+        ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
+        exts (discover ext-config)
+        {:keys [routes frontend-config]} (configure config exts)
+        permission (start-permissions)
+        config-route (create-config-routes frontend-config)
+        websocket (start-websocket-server server-type sente-debug?)
+        websocket-routes (:bidi-routes websocket)
+        app-handler (app-handler frontend-config)
+        ring-handler (create-ring-handler app-handler routes config-route websocket-routes)
+        webserver (if (watch? server-type)
+                    (web-server/start web-server ring-handler websocket :jetty)
+                    (web-server/start web-server ring-handler websocket (keyword server-type)))
         shadow   (when (watch? server-type)
-                  ; (init-ws! :undertow)
                    (let [profile-full (setup-profile server-type)]
                      (when (:bundle profile-full)
-                       (build profile-full))))]
+                       (build config profile-full))))]
     ; return config of started services (needed to stop)
     {:profile server-type
+     :permission permission
+     :websocket websocket
      :webserver webserver
      :shadow shadow}))
 
-(defn stop-webly [{:keys [profile webserver shadow]}]
+(defn stop-webly [{:keys [webserver websocket shadow]}]
   (info "stopping webly..")
   (when webserver
     (web-server/stop webserver))
@@ -74,8 +84,28 @@
 
 (defn webly-build [{:keys [config profile]}]
   (load-config! config)
-  ;(require-namespaces (get-in-config [:ns-clj])) ; 2023 07 awb: not needed for build
-  ;(resolve-config-key config [:webly :routes]); 2023 07 awb: not needed for build
-  (let [profile (setup-profile profile)]
-    (when (:bundle profile)
-      (build profile))))
+  (let [config (get-in-config [])
+        ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
+        exts (discover ext-config)
+        {:keys [routes frontend-config] :as opts} (configure config exts)
+        ]
+    (write-service exts :extensions-all (:extensions exts))
+    (write-service exts :extensions-disabled (:extensions-disabled exts))
+    (write-status "webly-build-config" config)
+    (let [profile (setup-profile profile)]
+      (when (:bundle profile)
+        (build exts config profile))
+      (when (:static? profile)
+        (info "creating static page ..")
+        (build-static (assoc frontend-config :prefix "./r/")))
+      
+      )))
+
+
+(comment
+  (def exts (discover {}))
+  (get-extensions exts {:api-routes {}})
+
+ ; 
+  )
+
