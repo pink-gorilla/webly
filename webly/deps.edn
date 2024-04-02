@@ -69,10 +69,12 @@
           :main-opts ["-m" "clj-check.check"]}
 
  ; tree and list are here just because tools.deps.alpha does not work on my machine
-  :tree {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
-         :exec-fn clojure.tools.cli.api/tree}
-  :list {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.14.1178"}}
-         :exec-fn clojure.tools.cli.api/list}
+   :build {:deps {io.github.clojure/tools.build {:git/tag "v0.6.1" :git/sha "515b334"}
+                 io.github.slipset/deps-deploy {:git/sha "b4359c5d67ca002d9ed0c4b41b710d7e5a82e3bf"}
+                 io.github.seancorfield/build-clj {:git/tag "v0.5.4" :git/sha "bc9c0cc"}
+                  ;rewrite-clj/rewrite-clj {:mvn/version "1.0.699-alpha"}
+                 babashka/fs {:mvn/version "0.0.5"}}
+          :ns-default build}
 
 
 ;

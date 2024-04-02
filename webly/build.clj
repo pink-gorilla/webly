@@ -9,19 +9,14 @@
 
 
 (def lib 'org.pinkgorilla/webly)
-(def version (format "0.4.%s" (b/git-count-revs nil)))
+(def version (format "0.5.%s" (b/git-count-revs nil)))
 
 (defn jar "build the JAR" [opts]
   (println "Building hte JAR")
-  (spit (doto (fs/file "resources/META-INF/pink-gorilla/webly/meta.edn")
-          (-> fs/parent fs/create-dirs)) {:module-name "webly"
-                                          :version version})
   (-> opts
       (assoc :lib lib
              :version version
              :transitive true)
-      ;(bb/run-tests)
-      ;(bb/clean)
       (bb/jar)))
 
 
