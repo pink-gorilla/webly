@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :as rf]
-   [frontend.notifications.core :refer [add-notification]]
+   [frontend.notification :refer [show-notification]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 
 ;; DIALOG
@@ -18,7 +18,7 @@
 (defn demo-dialog []
   [block2 "dialog"
    [:ol
-    [:li [link-fn #(add-notification "welcome to wonderland") "show notification"]]
-    [:li [link-fn #(add-notification :error "something bad happened") "show notification - error"]]
-    [:li [link-fn #(add-notification :error compile-error 0) "show compile error"]]
+    [:li [link-fn #(show-notification "welcome to wonderland") "show notification"]]
+    [:li [link-fn #(show-notification :error "something bad happened") "show notification - error"]]
+    [:li [link-fn #(show-notification :error compile-error 0) "show compile error"]]
     [:li [link-fn show-dialog-demo "show dialog"]]]])

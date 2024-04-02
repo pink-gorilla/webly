@@ -1,7 +1,4 @@
 {:name "webly-spa"
- :lazy-sci false
+ :lazy false
  :cljs-namespace [webly.app.app]
-
- :theme {:available {:webly-dialog {true ["webly/dialog.css"]
-                                    false []}}
-         :current {:webly-dialog true}}}
+}

@@ -6,7 +6,7 @@
   (:require
    [taoensso.timbre :refer-macros [info]]
    [re-frame.core :refer [reg-event-db]]
-   [frontend.notifications.core :refer [add-notification]]))
+   [frontend.notification :refer [show-notification]]))
 
 (reg-event-db
  :reframe10x-init
@@ -17,5 +17,5 @@
 (reg-event-db
  :reframe10x-toggle
  (fn [db _]
-   (add-notification :error "tenx not included in bundle!")
+   (show-notification :error "tenx not included in bundle!")
    db))

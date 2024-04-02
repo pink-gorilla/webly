@@ -4,7 +4,7 @@
    [re-frame.core :refer [subscribe]]
    [webly.app.status.subscriptions] ; side-effects
    [webly.app.status.events] ; side-effects
-   [webly.app.mode :refer [get-resource-path]]))
+   [webly.spa.mode :refer [get-resource-path]]))
 
 (defn status-page []
   (let [status (subscribe [:webly/status])

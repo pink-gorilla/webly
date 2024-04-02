@@ -2,7 +2,7 @@
   (:require
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [webly.app.mode :refer [get-resource-path]]
+   [webly.spa.mode :refer [get-resource-path]]
    [pinkgorilla.repl.cljs.http :refer [get-json]]))
 
 (defn link-fn [fun text]

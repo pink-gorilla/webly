@@ -1,4 +1,4 @@
-(ns frontend.config.events
+(ns webly.spa.config.events
   "Events related configuration loading"
   (:require
    [taoensso.timbre :refer-macros [debug info infof error]]
@@ -8,9 +8,9 @@
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
    [modular.encoding.transit :refer [decode]]
    [modular.encoding.edn :refer [read-edn]]
-   [frontend.notifications.core :refer [add-notification]]
-   [webly.app.mode :refer [get-resource-path get-mode]]
-   [frontend.config.subscription] ; side effects
+   [frontend.notification :refer [show-notification]]
+   [webly.spa.mode :refer [get-resource-path get-mode]]
+   [webly.spa.config.subscription] ; side effects
    ))
 
 ; load configuration
@@ -66,6 +66,6 @@
  (fn [db [_ response]]
    (error "config-load-error: " response)
    (let [details (str (:status-text response) " (" (:status response) ")")]
-     (add-notification :error "Error loading config")
+     (show-notification :error "Error loading config")
      (error "config load error: " details)
      db)))

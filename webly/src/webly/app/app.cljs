@@ -7,8 +7,7 @@
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
    [day8.re-frame.http-fx]
    ; frontend
-   [frontend.settings.events]
-   [frontend.settings.subscriptions]
+
    [frontend.dialog]
    [frontend.page]
    [webly.app.service.keybindings :refer [start-keybindings]]
@@ -26,7 +25,7 @@
    [webly.app.events]
    [webly.app.status.page] ; side-effects
    [webly.build.prefs :refer [pref]]
-   [webly.app.mode :refer [set-mode! mode-a get-resource-path]]))
+   [webly.spa.mode :refer [set-mode! mode-a get-resource-path]]))
 
 (add-lazy-modules)
 
@@ -86,18 +85,17 @@
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
      (print-build-summary)
+     ; services
      (timbre-config! timbre-cljs)
-
      (start-bidi frontend-routes)
      (start-ga)
      (start-keybindings keybindings)
      (start-theme theme)
-     (dispatch [:settings/init])
      (if static?
        (warn "websockets are deactivated in static mode.")
        (start-ws))
+     ; 
      (dispatch [:webly/set-status :configured? true])
-
      (if start-user-app
        (do (info "starting user app: " start-user-app)
            (dispatch start-user-app))

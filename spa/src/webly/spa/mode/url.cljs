@@ -1,4 +1,4 @@
-(ns webly.app.mode.url
+(ns webly.spa.mode.url
   (:require
    [taoensso.timbre :as timbre :refer-macros [debug debugf info warn error]]
    [clojure.string :refer [last-index-of ends-with?]]

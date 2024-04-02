@@ -1,4 +1,4 @@
-(ns webly.app.config
+(ns webly.spa.config
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [extension :refer [discover write-service get-extensions]]

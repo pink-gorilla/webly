@@ -6,7 +6,6 @@
    [demo.page.main.route :refer [demo-routing]]
    [demo.page.main.css :refer [demo-css]]
    [demo.page.main.ws :refer [demo-ws]]
-   [demo.page.main.settings :refer [demo-settings]]
    [demo.page.main.dialog :refer [demo-dialog]]
    [demo.page.main.keybinding :refer [demo-keybinding]]))
 
@@ -24,10 +23,8 @@
     [demo-routing]
     [demo-css]
     [demo-ws]
-
     [demo-lazy]
     [demo-dialog]
-    [demo-settings]
     [demo-keybinding]]])
 
 (add-page :demo/main main)

@@ -3,7 +3,7 @@
    [taoensso.timbre :refer-macros [info warn]]
    [re-frame.core :refer [dispatch]]
    [frontend.routes.events]
-   [webly.app.mode :refer [get-routing-path]]))
+   [webly.spa.mode :refer [get-routing-path]]))
 
 (defn make-routes-frontend [rpath user-routes-app]
   [rpath user-routes-app])

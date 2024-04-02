@@ -1,4 +1,4 @@
-(ns webly.app.mode.shadow-load
+(ns webly.spa.mode.shadow-load
   (:require
    [taoensso.timbre :refer-macros [info warn]]
    [shadow.loader :as l]))

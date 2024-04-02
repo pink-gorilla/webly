@@ -1,6 +1,0 @@
-{:name "webly-ui"
- ; build
- :lazy false
- :cljs-namespace [pinkgorilla.repl.cljs.webly]
- :cljs-ns-bindings {'ui.webly {'notify pinkgorilla.repl.cljs.webly/notify
-                               'dialog pinkgorilla.repl.cljs.webly/dialog}}}

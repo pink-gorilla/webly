@@ -1,9 +1,9 @@
-(ns webly.app.mode
+(ns webly.spa.mode
   (:require-macros
    [webly.build.prefs :refer [get-pref]])
   (:require
    [taoensso.timbre :refer-macros [info warn]]
-   [webly.app.mode.url :refer [current-path entry-path]]
+   [webly.spa.mode.url :refer [current-path entry-path]]
    [shadow.loader :as shadow-loader]))
 
 ;; mode

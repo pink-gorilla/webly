@@ -2,7 +2,7 @@
   (:require
    [re-frame.core :refer [subscribe]]
    [frontend.css.view :refer [load-css]]
-   [frontend.notifications.dialog :refer [notifications-container]]
+   [frontend.notification :refer [notification-container]]
    [frontend.dialog :refer [modal-container]]
    [frontend.page.viewer :refer [page-viewer]]
    [webly.app.status.page :refer [status-page]]))
@@ -20,6 +20,6 @@
 (defn webly-app []
   [:div; .w-full.h-full
    [modal-container]
-   [notifications-container]
+   [notification-container]
    [load-css]
    [webly-page]])

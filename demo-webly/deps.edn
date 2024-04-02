@@ -1,9 +1,8 @@
 {:paths ["src"
          "target/node_modules"  ; css png resources from npm modules (tailwind)
-         "resources"
-         ]
+         "resources"]
  :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
-        org.pinkgorilla/oauth2 {:mvn/version "0.0.20"}
+        org.pinkgorilla/oauth2 {:mvn/version "0.0.22"}
         ; lazy ui modules:
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.26"}
         org.pinkgorilla/ui-vega {:mvn/version "0.0.31"}}
@@ -19,7 +18,7 @@
                           ring/ring-mock {:mvn/version "0.4.0"}}
              :main-opts ["-m" "cognitect.test-runner"]
              :exec-fn cognitect.test-runner.api/test}
- 
+
   ; demo
   ; unit tests use demo profile for resource tests
   ; so the demo serves two purposes
@@ -27,7 +26,7 @@
   ; 2. run unit tests 
 
   ; BUILD BUNDLE (then exit)
-  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.0.74"}  ; http cors test
+  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.92"}  ; http cors test
                        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}}
           :extra-paths ["src" "resources" "test" "test/resources"]
           :exec-fn webly.app.app/webly-build
@@ -42,7 +41,19 @@
   :release-adv {:exec-args {:profile "release-adv"}}
   :static {:exec-args {:profile "static"}}
   :ci {:exec-args {:profile "ci"}}
-  
+
+  :gh-release-artifact
+  {:extra-deps {io.github.borkdude/gh-release-artifact
+                {:git/sha "05f8d8659e6805d513c59447ff41dc8497878462"}}
+   :exec-fn borkdude.gh-release-artifact/release-artifact
+   :exec-args {:org "borkdude"
+               :repo "test-repo"
+               :tag "v0.0.15"
+               :commit "8495a6b872637ea31879c5d56160b8d8e94c9d1c"
+               :file "README.md"
+               :sha256 true
+               :overwrite true}}
+
   ; RUN SERVICES (keep running)
   :run {:exec-fn modular.system/start!
         :exec-args {:profile "jetty"
@@ -56,6 +67,6 @@
   :demo-build {:extra-deps {org.pinkgorilla/ui-highcharts {:mvn/version "0.0.26"}
                             org.pinkgorilla/ui-vega {:mvn/version "0.0.31"}}
                :exec-fn demo.test/test}
- 
+
   ;
   }}

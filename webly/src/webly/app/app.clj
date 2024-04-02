@@ -16,7 +16,7 @@
    [webly.spa.handler.routes.config :refer [create-config-routes]]
    [webly.spa.default :as default]
    [webly.build.static :refer [build-static]]
-   [webly.app.config :refer [configure]])
+   [webly.spa.config :refer [configure]])
   (:gen-class))
 
 (defn watch? [profile-name]

@@ -3,7 +3,7 @@
    [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :as rf]
    [frontend.css.config :refer [css-app]]
-   [webly.app.mode :refer [get-resource-path]]
+   [webly.spa.mode :refer [get-resource-path]]
    ))
 
 (rf/reg-sub

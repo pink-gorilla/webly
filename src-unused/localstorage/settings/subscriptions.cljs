@@ -3,7 +3,7 @@
    [clojure.string :as str]
    [taoensso.timbre :refer-macros [info warn error]]
    [re-frame.core :refer [reg-sub]]
-   [webly.app.mode :refer [get-resource-path]]
+   [webly.spa.mode :refer [get-resource-path]]
    ))
 
 (reg-sub
