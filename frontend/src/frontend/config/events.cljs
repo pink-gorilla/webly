@@ -10,6 +10,7 @@
    [modular.encoding.edn :refer [read-edn]]
    [frontend.notifications.core :refer [add-notification]]
    [webly.app.mode :refer [get-resource-path get-mode]]
+   [frontend.config.subscription] ; side effects
    ))
 
 ; load configuration

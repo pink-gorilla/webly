@@ -1,4 +1,4 @@
-(ns demo.pages.main.ws
+(ns demo.page.main.ws
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [reagent.core :as r]

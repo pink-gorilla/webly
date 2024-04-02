@@ -1,13 +1,13 @@
 {:name "demo-webly"
  :lazy-sci false
- :cljs-namespace [demo.pages.main
-                  ;demo.pages.help
-                  ;demo.pages.job
+ :cljs-namespace [demo.page.main
+                  ;demo.page.help
+                  ;demo.page.job
                   demo.time
                   demo.events]
- :cljs-ns-bindings {'demo.page.main {'main demo.pages.main/main
-                                     ;'job demo.pages.job/job
-                                    ;'help demo.pages.help/help
+ :cljs-ns-bindings {'demo.page.main {'main demo.page.main/main
+                                     ;'job demo.page.job/job
+                                    ;'help demo.page.help/help
                                      }}
  ; runtime
  :api-routes {"time"   {:get demo.handler/time-handler}

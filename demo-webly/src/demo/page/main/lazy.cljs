@@ -1,4 +1,4 @@
-(ns demo.pages.main.lazy
+(ns demo.page.main.lazy
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [reagent.core :as r]

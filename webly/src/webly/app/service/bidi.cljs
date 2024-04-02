@@ -1,5 +1,6 @@
 (ns webly.app.service.bidi
   (:require
+   [taoensso.timbre :refer-macros [info warn]]
    [re-frame.core :refer [dispatch]]
    [frontend.routes.events]
    [webly.app.mode :refer [get-routing-path]]
@@ -12,4 +13,5 @@
 (defn start-bidi [user-routes-app]
   (let [rpath (get-routing-path)
         routes-frontend (make-routes-frontend rpath user-routes-app)]
+    (warn "bidi routes: " routes-frontend)
     (dispatch [:bidi/init routes-frontend])))

@@ -1,4 +1,4 @@
-(ns demo.pages.party
+(ns demo.page.party
   (:require
    [reagent.core :as r]
    [re-frame.core :as rf]

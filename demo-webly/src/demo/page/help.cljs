@@ -1,4 +1,4 @@
-(ns demo.pages.help
+(ns demo.page.help
   (:require
    [reagent.core :as r]
    [re-frame.core :as rf]

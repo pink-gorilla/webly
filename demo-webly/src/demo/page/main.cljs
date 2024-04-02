@@ -1,15 +1,14 @@
-(ns demo.pages.main
+(ns demo.page.main
   (:require
    [frontend.page :refer [add-page]]
    ; webly
-   [demo.pages.main.lazy :refer [demo-lazy]]
-   [demo.pages.main.route :refer [demo-routing]]
-   [demo.pages.main.css :refer [demo-css]]
-   [demo.pages.main.ws :refer [demo-ws]]
-   ; frontend
-   [demo.pages.main.settings :refer [demo-settings]]
-   [demo.pages.main.dialog :refer [demo-dialog]]
-   [demo.pages.main.keybinding :refer [demo-keybinding]]))
+   [demo.page.main.lazy :refer [demo-lazy]]
+   [demo.page.main.route :refer [demo-routing]]
+   [demo.page.main.css :refer [demo-css]]
+   [demo.page.main.ws :refer [demo-ws]]
+   [demo.page.main.settings :refer [demo-settings]]
+   [demo.page.main.dialog :refer [demo-dialog]]
+   [demo.page.main.keybinding :refer [demo-keybinding]]))
 
 (defn main [_route]
   [:div.dark

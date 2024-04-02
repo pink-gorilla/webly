@@ -1,4 +1,4 @@
-(ns demo.pages.main.route
+(ns demo.page.main.route
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [frontend.page.viewer :refer [refresh-page]]
@@ -9,20 +9,20 @@
 (defn demo-routing []
   [block2 "routes"
    [:div.flex.flex-col
-    [link-dispatch [:bidi/goto "/help"]
+    [link-dispatch [:bidi/goto 'demo.page/help]
      "help! (as an url)"]
     [link-dispatch [:bidi/goto "https://google.com"]
      "google (test for external url)"]
-    [link-dispatch [:bidi/goto :demo/help]
+    [link-dispatch [:bidi/goto 'demo.page/help]
      "help! (map with optional args))"]
 
     [link-dispatch [:bidi/goto :demo/save-non-existing]
      "save-as (test for not implemented)"]
-    [link-dispatch [:bidi/goto :demo/party :location "Vienna"]
+    [link-dispatch [:bidi/goto 'demo.page/party :location "Vienna"]
      "party in vienna (test for route-params)"]
-    [link-dispatch [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}]
+    [link-dispatch [:bidi/goto 'demo.page/party :location "Bali" :query-params {:expected-guests 299}]
      "party in Bali (test for query-params)"]
-    [link-dispatch [:bidi/goto-route {:handler :demo/party
+    [link-dispatch [:bidi/goto-route {:handler 'demo.page/party
                                       :route-params {:location "Panama"}
                                       :query-params {:expected-guests 44}
                                       :tag nil}]

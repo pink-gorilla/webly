@@ -1,4 +1,4 @@
-(ns demo.pages.main.dialog
+(ns demo.page.main.dialog
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :as rf]

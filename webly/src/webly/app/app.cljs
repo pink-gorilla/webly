@@ -25,18 +25,13 @@
    [webly.app.views :refer [webly-app]]
    [webly.app.events]
    [webly.app.status.page] ; side-effects
-   [webly.build.prefs :refer [pref]]
-   
+   [webly.build.prefs :refer [pref]] 
    [webly.app.mode :refer [set-mode! mode-a get-resource-path]]))
-
 
 (add-lazy-modules)
 
 (warn "setting frontend.page resolver to webly-resolve..")
 (frontend.page/set-resolver! webly-resolve)
-;; bidi
-
-
 
 ;; see:
 ;; https://shadow-cljs.github.io/docs/UsersGuide.html#_lifecycle_hooks
@@ -47,7 +42,6 @@
 ;; - OR shadow-cljs.edn :devtools section   
 
 ;; before-reload is a good place to stop application stuff before we reload.
-
 
 
 (defn mount-app []

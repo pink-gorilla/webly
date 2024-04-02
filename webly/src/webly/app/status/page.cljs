@@ -2,20 +2,18 @@
   (:require
    [taoensso.timbre :refer-macros [info infof error]]
    [re-frame.core :refer [subscribe]]
-   [modular.config :refer-macros [get-in-config-cljs]]
    [webly.app.status.subscriptions] ; side-effects
    [webly.app.status.events] ; side-effects
-   [webly.app.mode :refer [get-resource-path]]
-   ))
+   [webly.app.mode :refer [get-resource-path]]))
 
 (defn status-page []
   (let [status (subscribe [:webly/status])
-        loading-image-url (get-in-config-cljs [:webly :loading-image-url])
-        spinner (get-in-config-cljs [:webly :spinner])
+        config (subscribe [:webly/config])
+        loading-image-url (get-in @config [:spa :loading-image-url])
+        spinner (get-in @config [:spa :spinner])
         prefix (get-resource-path)]
     (info "compile time config " {:webly {:spinner spinner
                                           :loading-image-url loading-image-url}})
-    (info "runtime resource path:" prefix)
     (fn []
       [:div
        {:style {:background-image (str "url(" prefix loading-image-url ")") ; no-repeat center center fixed"

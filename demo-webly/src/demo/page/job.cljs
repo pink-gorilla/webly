@@ -1,4 +1,4 @@
-(ns demo.pages.job
+(ns demo.page.job
   (:require
    [re-frame.core :as rf]
    [frontend.page :refer [add-page]]))

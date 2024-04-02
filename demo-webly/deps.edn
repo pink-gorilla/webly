@@ -57,6 +57,7 @@
   :compile {:exec-args {:profile "compile2"}}
   :release {:exec-args {:profile "release"}}
   :static {:exec-args {:profile "static"}}
+  :ci {:exec-args {:profile "ci"}}
   
   ; RUN SERVICES (keep running)
   :run {:exec-fn modular.system/start!

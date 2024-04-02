@@ -1,4 +1,4 @@
-(ns demo.pages.main.keybinding
+(ns demo.page.main.keybinding
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :as rf]
