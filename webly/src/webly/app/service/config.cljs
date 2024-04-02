@@ -4,6 +4,5 @@
    [frontend.config.events]
    [frontend.config.subscription]))
 
-
-(defn start-config [ ]
+(defn start-config []
   (dispatch [:config/load :webly/app-after-config-load]))

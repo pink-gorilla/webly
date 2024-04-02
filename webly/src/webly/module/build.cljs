@@ -6,7 +6,6 @@
    [taoensso.timbre :refer-macros [debug info warn error]]
    [shadow.lazy]))
 
-
 (defonce lazy-modules-a (atom {}))
 ; key: module-name
 ; val: false/true (is-loaded?)
@@ -66,7 +65,6 @@
   ;(info "lazy-ns-loadable FULL: "  @lazy-ns-loadable-a)
   (info "lazy-ns-vars: " (keys @lazy-ns-vars-a)))
 
-
 (defn load-namespace-raw
   "returns a promise containing the resolved loadables for a namespace"
   [ns-name]
@@ -86,7 +84,6 @@
         (error "shadow.lazy/load could not load ns: " ns-name "error: " ex)
         (p/reject! rp ex)))
     rp))
-
 
 (defn- ns-assemble [ns-vars vars]
   (->> (map (fn [n v]
@@ -110,7 +107,6 @@
           (p/reject! rp (str "cannot load-namespace: "
                              ns-name " - no ns-vars defined (could be sci-config-ns)"))))
     rp))
-
 
 (defn webly-resolve [fq-symbol]
   (info "resolving: " fq-symbol)

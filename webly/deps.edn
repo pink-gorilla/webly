@@ -34,19 +34,17 @@
         modular/frontend {:local/root "../frontend" :deps/manifest :deps}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
         org.pinkgorilla/permission {:mvn/version "0.0.15"}
-        ;modular/rest {:local/root "../rest" :deps/manifest :deps}
-        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
-        }
+        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}}
  :aliases
  {; https://github.com/weavejester/cljfmt
-  :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "RELEASE"}}
+  :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}
            :main-opts ["-m" "cljfmt.main"
                        "--indents" "cljfmt.edn"
                        ; "fix"  "check"
-                       ]}
-
+                      ]}
+ 
  ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
-  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
+  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.03.13"}}
          :main-opts ["-m" "clj-kondo.main"
                      "--fail-level" "error"
                      "--config" "cljkondo.edn"

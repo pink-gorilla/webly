@@ -25,7 +25,7 @@
    [webly.app.views :refer [webly-app]]
    [webly.app.events]
    [webly.app.status.page] ; side-effects
-   [webly.build.prefs :refer [pref]] 
+   [webly.build.prefs :refer [pref]]
    [webly.app.mode :refer [set-mode! mode-a get-resource-path]]))
 
 (add-lazy-modules)
@@ -42,7 +42,6 @@
 ;; - OR shadow-cljs.edn :devtools section   
 
 ;; before-reload is a good place to stop application stuff before we reload.
-
 
 (defn mount-app []
   (reagent.dom/render [webly-app]
@@ -73,8 +72,6 @@
     (.. spinner (remove))
     (when (.contains body-classes "loading")
       (.remove body-classes "loading"))))
-
-
 
 (reg-event-db
  :webly/app-after-config-load
