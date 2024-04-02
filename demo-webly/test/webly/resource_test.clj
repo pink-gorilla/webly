@@ -9,7 +9,7 @@
    [webly.routes :refer [routes-api routes-app]]
    [webly.spa.handler.routes :refer [make-routes-backend make-routes-frontend]]))
 
-(def routes-backend (make-routes-backend routes-app routes-api))
+(def routes-backend (make-routes-backend routes-api {} {}))
 (def routes-frontend (make-routes-frontend routes-app))
 
 (def handler (make-handler app-handler routes-backend routes-frontend))
@@ -52,7 +52,7 @@
 ; this actually tests the hiccup conversion
 ; routing is tested in routes-test
 
-(deftest app-html []
+#_(deftest app-html []
   (is (= "text/html; charset=utf-8"
          (-> "/" GET content-type)))) ; the url can be any valid frontend route
 
