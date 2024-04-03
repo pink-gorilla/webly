@@ -53,8 +53,8 @@
 ; routing is tested in routes-test
 
 #_(deftest app-html []
-  (is (= "text/html; charset=utf-8"
-         (-> "/" GET content-type)))) ; the url can be any valid frontend route
+    (is (= "text/html; charset=utf-8"
+           (-> "/" GET content-type)))) ; the url can be any valid frontend route
 
 ; cljs-bundle
 

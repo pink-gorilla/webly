@@ -113,8 +113,8 @@
 (defn- module? [{:keys [cljs-namespace]}]
   (> (count cljs-namespace) 0))
 
-(defn- lazy-module? [{:keys [lazy-sci lazy]}]
-  (or lazy lazy-sci))
+(defn- lazy-module? [{:keys [lazy]}]
+  lazy)
 
 (defn create-modules
   "processes discovered extensions

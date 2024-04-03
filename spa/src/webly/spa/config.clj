@@ -2,7 +2,9 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [extension :refer [discover write-service get-extensions]]
-   [webly.spa.default :as default]))
+   [webly.spa.default :as default]
+   [frontend.css :as theme]
+   ))
 
  ;; Extension config
 
@@ -20,11 +22,7 @@
   {:api (get-api-routes exts)
    :app (get-cljs-routes exts)})
 
-(defn- get-theme [exts]
-  (let [themes (->> (get-extensions exts {:theme {:available {} :current {}}})
-                    (map :theme))]
-    {:available (reduce merge {} (map :available themes))
-     :current (reduce merge {} (map :current themes))}))
+
 
 (defn configure [{:keys [spa google-analytics prefix keybindings settings]
                   :or {spa {}
@@ -35,7 +33,7 @@
                   :as config} exts]
   (let [timbre-cljs (or (:timbre/cljs config) default/timbre-cljs)
         routes (get-routes exts)
-        theme (get-theme exts)
+        theme (theme/get-theme-config exts)
         spa (merge default/spa spa)
         frontend-config  {:prefix prefix
                           :spa spa

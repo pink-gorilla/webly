@@ -34,7 +34,7 @@
                   (println "*** NS LOAD ERROR: err: " x)))))
 
 (defn load-namespace-highcharts [& _]
-  (let [rp (load-namespace 'ui.highcharts )]
+  (let [rp (load-namespace 'ui.highcharts)]
     (p/then rp (fn [r]
                  (println "*** NS HIGHCHARTS LOAD SUCCESS: " r)))
     (p/catch rp (fn [x]

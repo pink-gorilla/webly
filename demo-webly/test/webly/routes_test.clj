@@ -27,8 +27,8 @@
 #_(deftest path->handler []
   ;(is (= (:handler (GET "/")) :demo/main))
   ;(is (= (:handler (GET "/help")) :demo/help))
-  (is (= (:handler (GET "/api/time")) 'demo.handler/time-handler))
-  (is (= (:handler (POST "/api/test")) 'demo.handler.test/test-handler)))
+    (is (= (:handler (GET "/api/time")) 'demo.handler/time-handler))
+    (is (= (:handler (POST "/api/test")) 'demo.handler.test/test-handler)))
 
 (deftest resource-routes []
   (is (not (= (:handler (GET "/r/webly/icon/silver.ico")) nil)))

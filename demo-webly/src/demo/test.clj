@@ -1,12 +1,11 @@
 (ns demo.test
   (:require
    [extension :refer [discover write-service]]
-    [bidi.bidi :as bidi]
+   [bidi.bidi :as bidi]
 
    [webly.module.build :refer [create-modules shadow-module-config
-                               create-modules 
-                               get-lazy-ns
-                               ]]))
+                               create-modules
+                               get-lazy-ns]]))
 
 (defn test [& _]
   (println "creating modules..")
@@ -16,23 +15,17 @@
     (write-service exts :shadow-modules shadow-modules)
     (println "creating modules..done!")))
 
+(comment
 
-(comment 
-  
   (->> (bidi/tag :demo/job :wunderbar)
-       pr-str
-   )
-   
-  
-
+       pr-str)
 
   (def exts (discover))
 
   (def modules (create-modules exts))
-  
 
   (get-lazy-ns)
   (macroexpand (get-lazy-ns))
-  
+
  ; 
   )

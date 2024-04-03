@@ -3,8 +3,11 @@
          "resources"]
  :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
         ; lazy ui modules:
-        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.26"}
-        org.pinkgorilla/ui-vega {:mvn/version "0.0.31"}}
+        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.27"}
+        org.pinkgorilla/ui-vega {:mvn/version "0.0.31"}
+        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
+        org.pinkgorilla/oauth2 {:mvn/version "0.0.25"}
+        }
  :aliases
  {:test-clj {:extra-paths ["src"
                            "resources"
@@ -26,7 +29,7 @@
 
   ; BUILD BUNDLE (then exit)
   :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.92"}  ; http cors test
-                       org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}}
+                       }
           :extra-paths ["src" "resources" "test" "test/resources"]
           :exec-fn webly.app.app/webly-build
           :exec-args {:config ["demo.edn"

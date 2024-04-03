@@ -1,7 +1,0 @@
-{:paths ["src"
-         "resources"  ; dialog css
-         ]
- :deps {com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
-      
-;
-        }}
