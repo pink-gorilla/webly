@@ -2,7 +2,6 @@
          "target/node_modules"  ; css png resources from npm modules (tailwind)
          "resources"]
  :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
-        org.pinkgorilla/oauth2 {:mvn/version "0.0.22"}
         ; lazy ui modules:
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.26"}
         org.pinkgorilla/ui-vega {:mvn/version "0.0.31"}}
