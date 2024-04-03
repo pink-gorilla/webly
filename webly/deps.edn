@@ -33,9 +33,7 @@
         org.pinkgorilla/websocket {:mvn/version "0.0.9"}
         modular/frontend {:local/root "../frontend" :deps/manifest :deps}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
-        org.pinkgorilla/permission {:mvn/version "0.0.15"}
-        ;modular/rest {:local/root "../rest" :deps/manifest :deps}
-        org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}}
+        org.pinkgorilla/permission {:mvn/version "0.0.15"}}
  :aliases
  {; https://github.com/weavejester/cljfmt
   :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}

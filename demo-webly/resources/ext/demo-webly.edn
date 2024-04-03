@@ -1,5 +1,5 @@
 {:name "demo-webly"
- :lazy-sci false
+ :lazy false
  :cljs-namespace [demo.page.main
                   demo.time
                   demo.events]

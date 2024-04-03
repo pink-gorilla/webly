@@ -1,5 +1,5 @@
 {:name "hello"
- :lazy-sci true
+ :lazy true
  :cljs-namespace [snippets.hello
                   snippets.bye]
  }

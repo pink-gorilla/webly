@@ -1,5 +1,5 @@
 {:name "demo-webly-lazy"
- :lazy-sci true
+ :lazy true
  :cljs-namespace [;demo.pages.main
                   demo.page.help
                   demo.page.party

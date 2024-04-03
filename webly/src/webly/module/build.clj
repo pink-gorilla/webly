@@ -113,8 +113,8 @@
 (defn- module? [{:keys [cljs-namespace]}]
   (> (count cljs-namespace) 0))
 
-(defn- lazy-module? [{:keys [lazy-sci]}]
-  lazy-sci)
+(defn- lazy-module? [{:keys [lazy-sci lazy]}]
+  (or lazy lazy-sci))
 
 (defn create-modules
   "processes discovered extensions
@@ -122,7 +122,7 @@
    consider it the start-fn of a service."
   [exts]
   (let [modules (get-extensions exts {:name "unknown"
-                                      :lazy-sci false
+                                      :lazy false
                                       :cljs-namespace []
                                       :cljs-ns-bindings {}})
         valid-modules (filter module? modules)
