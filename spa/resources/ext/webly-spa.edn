@@ -1,4 +1,6 @@
 {:name "webly-spa"
  :lazy false
- :cljs-namespace [webly.spa]
-}
+ :cljs-namespace [webly.spa
+                  webly.spa.resolve]
+ :cljs-ns-bindings {'webly.spa.resolve {'get-resolver webly.spa.resolve/get-resolver
+                                        'set-resolver! webly.spa.resolve/set-resolver!}}}
