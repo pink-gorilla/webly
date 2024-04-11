@@ -1,6 +1,7 @@
 (ns webly.module.build
   (:require
    [clojure.string :as str]
+   [clojure.set]
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [extension :refer [get-extensions write-service]]))
 
@@ -124,7 +125,9 @@
   (let [modules (get-extensions exts {:name "unknown"
                                       :lazy false
                                       :cljs-namespace []
-                                      :cljs-ns-bindings {}})
+                                      :cljs-ns-bindings {}
+                                      :depends-on #{}
+                                      })
         valid-modules (filter module? modules)
         lazy-modules (filter lazy-module? valid-modules)
         main-modules (remove lazy-module? valid-modules)]
@@ -142,9 +145,12 @@
                      (into []))]
     [:webly {:entries entries}]))
 
-(defn- lazy-shadow-module [{:keys [name cljs-namespace]}]
+(defn- lazy-shadow-module [{:keys [name cljs-namespace depends-on]}]
+  (let [depends-on (clojure.set/union #{:webly} depends-on)]
+  (println "module: " name " depends-on: " depends-on)  
   [(keyword name) {:entries (vec cljs-namespace)
-                   :depends-on #{:webly}}])
+                   :depends-on depends-on}]  
+    ))
 
 (defn shadow-module-config
   "input: the state created by create-modules

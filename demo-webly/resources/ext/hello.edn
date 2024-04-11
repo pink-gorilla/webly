@@ -1,5 +1,6 @@
 {:name "hello"
  :lazy true
+ :depends-on #{:snippets}
  :cljs-namespace [snippets.hello
                   snippets.bye]
  }
