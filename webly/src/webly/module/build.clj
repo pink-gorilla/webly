@@ -126,8 +126,7 @@
                                       :lazy false
                                       :cljs-namespace []
                                       :cljs-ns-bindings {}
-                                      :depends-on #{}
-                                      })
+                                      :depends-on #{}})
         valid-modules (filter module? modules)
         lazy-modules (filter lazy-module? valid-modules)
         main-modules (remove lazy-module? valid-modules)]
@@ -147,10 +146,9 @@
 
 (defn- lazy-shadow-module [{:keys [name cljs-namespace depends-on]}]
   (let [depends-on (clojure.set/union #{:webly} depends-on)]
-  (println "module: " name " depends-on: " depends-on)  
-  [(keyword name) {:entries (vec cljs-namespace)
-                   :depends-on depends-on}]  
-    ))
+    (println "module: " name " depends-on: " depends-on)
+    [(keyword name) {:entries (vec cljs-namespace)
+                     :depends-on depends-on}]))
 
 (defn shadow-module-config
   "input: the state created by create-modules
