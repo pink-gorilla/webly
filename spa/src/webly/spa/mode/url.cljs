@@ -26,3 +26,13 @@
     (if (ends-with? path index-html)
       (subs path 0 (- (count path) (count index-html)))
       path)))
+
+(defn entry-path-full []
+  (let [path (entry-path )
+        full (-> (current-url) (url))
+        full-path (assoc full :path path)
+        url (.toString full-path)
+        ]
+    (if (ends-with? url "/")
+      (subs url 0 (dec (count url)))
+      url)))

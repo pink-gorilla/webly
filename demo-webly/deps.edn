@@ -44,18 +44,6 @@
   :static {:exec-args {:profile "static"}}
   :ci {:exec-args {:profile "ci"}}
 
-  :gh-release-artifact
-  {:extra-deps {io.github.borkdude/gh-release-artifact
-                {:git/sha "05f8d8659e6805d513c59447ff41dc8497878462"}}
-   :exec-fn borkdude.gh-release-artifact/release-artifact
-   :exec-args {:org "borkdude"
-               :repo "test-repo"
-               :tag "v0.0.15"
-               :commit "8495a6b872637ea31879c5d56160b8d8e94c9d1c"
-               :file "README.md"
-               :sha256 true
-               :overwrite true}}
-
   ; RUN SERVICES (keep running)
   :run {:exec-fn modular.system/start!
         :exec-args {:profile "jetty"

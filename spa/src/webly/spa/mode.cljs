@@ -4,7 +4,7 @@
   (:require
    [clojure.string :as str]
    [taoensso.timbre :refer-macros [info warn]]
-   [webly.spa.mode.url :refer [current-path entry-path]]
+   [webly.spa.mode.url :refer [current-path entry-path entry-path-full]]
    [shadow.loader :as shadow-loader]))
 
 ;; mode
@@ -40,14 +40,16 @@
   (if (= mode "static")
     (let [cpath (current-path)
           epath (entry-path)
+          epath-full (entry-path-full)
           resource-path (if (str/ends-with? epath "/")
                             (str epath "r/")
                             (str epath "/r/"))]
       (reset! mode-a :static)
-      (info "static mode: routing-path:" cpath " resource-path:" resource-path)
+      (info "static mode: routing-path:" cpath " resource-path:" resource-path "entry-path: " epath)
+      (info "full-entry-path: " epath-full)
       (reset! routing-path-a cpath)
       (reset! resource-path-a resource-path)
-      (shadow-loader/init epath))
+      (shadow-loader/init epath-full))
     (let [resource-path "/r/"]
       (reset! resource-path-a resource-path)
       (info "dynamic mode: routing-path:" (get-routing-path) " resource-path:" (get-resource-path))
