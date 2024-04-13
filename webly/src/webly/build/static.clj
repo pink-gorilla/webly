@@ -25,7 +25,7 @@
 
 (defn copy-pattern [from dest p]
   (let [files (fs/glob from p)]
-    (doall (map #(fs/copy % dest) files))))
+    (doall (map #(fs/copy % dest {:replace-existing true}) files))))
 
 (defn copy-js []
   (info "copying .js files..")
