@@ -6,7 +6,7 @@
 
  (defn get-handler-backend-symbol [s]
    (try
-     (warn "resolving handler symbol: " s)
+     (debug "resolving handler symbol: " s)
      (requiring-resolve s)
      (catch Exception ex
        (error "api-handler-symbol resolve exception: " ex)
@@ -25,7 +25,7 @@
 
 
  (defn resolve-handler [routes]
-   (warn "resolving handlers on startup.. ")
+   (info "resolving handlers on start .. ")
    (specter/transform
     [TREE-VALUES symbol?]
     get-handler-backend-symbol routes))
