@@ -32,7 +32,8 @@
         org.pinkgorilla/webserver {:mvn/version "0.0.12"} ; brings modular
         org.pinkgorilla/websocket {:mvn/version "0.0.9"}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
-        org.pinkgorilla/permission {:mvn/version "0.0.15"}}
+        org.pinkgorilla/permission {:mvn/version "0.0.15"}
+        org.pinkgorilla/timbre {:mvn/version "0.0.2"}}
  :aliases
  {; https://github.com/weavejester/cljfmt
   :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}
