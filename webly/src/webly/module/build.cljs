@@ -59,19 +59,19 @@
 
 (defn print-build-summary []
   (println (str "webly-build summary:"
-                "\nlazy modules: " (keys @lazy-modules-a)
-                "\nlazy-ns-loadable: " (keys @lazy-ns-loadable-a)
-                "\nlazy-ns-vars: " (keys @lazy-ns-vars-a)
+                "\nlazy modules: " (-> @lazy-modules-a keys sort)
+                "\nlazy-ns-loadable: " (-> @lazy-ns-loadable-a keys sort)
+                "\nlazy-ns-vars: " (-> @lazy-ns-vars-a keys sort)
                 ;"\nlazy-ns-loadable FULL: "  @lazy-ns-loadable-a)  
                 )))
 (defn load-namespace-raw
   "returns a promise containing the resolved loadables for a namespace"
   [ns-name]
-  (println "lazy-ns-loadable-keys: " (keys @lazy-ns-loadable-a) "ns: " ns-name)
+  ;(println "lazy-ns-loadable-keys: " (keys @lazy-ns-loadable-a) "ns: " ns-name)
   (let [loadable  (get @lazy-ns-loadable-a ns-name)
         rp (p/deferred)
         on-error (fn [err]
-                   (println "could not load ns: " ns-name "! ERROR: " err)
+                   (println "could not load ns: " ns-name " ERROR: " err)
                    (p/reject! rp err))
         on-success (fn [vars]
                      (println "ns [" ns-name "] loaded successfully!")
