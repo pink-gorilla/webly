@@ -52,9 +52,6 @@
               :exec-args   {:src-ns-path  ["src"]
                             :test-ns-path ["test"]}}
 
-  :outdated {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1095"}}
-             :main-opts ["-m" "antq.core"]}
-
   :check {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
                                         :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
           :main-opts ["-m" "clj-check.check"]}
