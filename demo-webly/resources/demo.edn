@@ -5,7 +5,12 @@
                                 ; webly2 is now in webly. needs to be removed from ui-repl.
                                 "webly2"
                                 "ui-repl"
-                                "cljs-ajax"}}
+                                "cljs-ajax"
+                                 "goog.string"
+                                "clojure.walk"
+                                "clojure.string"
+                                  "goog.object"
+                                }}
 
  :spa {:title "Webly Demo"
        :start-user-app [:demo/start]

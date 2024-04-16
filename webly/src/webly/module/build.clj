@@ -117,6 +117,17 @@
 (defn- lazy-module? [{:keys [lazy]}]
   lazy)
 
+(defn- consolidate-main-modules [main-modules]
+  (let [entries (->> (map :cljs-namespace main-modules)
+                     (apply concat)
+                     (into []))
+        bindings (->> (map :cljs-ns-bindings main-modules)
+                      (apply merge))]
+    {:name "webly"
+     :cljs-namespace  entries
+     :cljs-ns-bindings bindings
+     :depends-on #{:init}}))
+
 (defn create-modules
   "processes discovered extensions
    outputs a state that contains module information
@@ -129,11 +140,13 @@
                                       :depends-on #{}})
         valid-modules (filter module? modules)
         lazy-modules (filter lazy-module? valid-modules)
-        main-modules (remove lazy-module? valid-modules)]
-    (write-service exts :cljsbuild-module-lazy lazy-modules)
-    (write-service exts :cljsbuild-module-main main-modules)
-    (set-lazy-modules! exts lazy-modules)
-    {:modules {:main main-modules
+        main-modules (remove lazy-module? valid-modules)
+        main-module (consolidate-main-modules main-modules)
+        lazy-modules2 (conj lazy-modules main-module)]
+    (write-service exts :cljsbuild-module-lazy lazy-modules2)
+    ;(write-service exts :cljsbuild-module-main main-modules)
+    (set-lazy-modules! exts lazy-modules2)
+    {:modules {:main [main-module]
                :lazy lazy-modules}}))
 
 ;; SHADOW CONFIG
@@ -142,10 +155,11 @@
   (let [entries (->> (map :cljs-namespace main-modules)
                      (apply concat)
                      (into []))]
-    [:webly {:entries entries}]))
+    [:webly {:entries entries
+             :depends-on #{:init}}]))
 
 (defn- lazy-shadow-module [{:keys [name cljs-namespace depends-on]}]
-  (let [depends-on (clojure.set/union #{:webly} depends-on)]
+  (let [depends-on (clojure.set/union #{:webly} depends-on)] ; :init
     (println "module: " name " depends-on: " depends-on)
     [(keyword name) {:entries (vec cljs-namespace)
                      :depends-on depends-on}]))
@@ -155,9 +169,13 @@
    output: the :modules section of the shadow-config"
   [{:keys [modules]}]
   (let [{:keys [main lazy]} modules
-        modules-lazy (map lazy-shadow-module lazy)
+        module-init [:init {:entries ['webly.init],
+                            :depends-on #{}}]
         module-main (main-shadow-module main)
-        modules (conj modules-lazy module-main)]
+        modules-lazy (map lazy-shadow-module lazy)
+        modules (-> modules-lazy
+                    (conj module-main)
+                    (conj module-init))]
     (into {} modules)))
 
 

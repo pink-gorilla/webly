@@ -3,7 +3,6 @@
    [webly.module.build :refer [get-lazy-modules get-lazy-ns set-ns-loadables! set-ns-vars!]])
   (:require
    [promesa.core :as p]
-   [taoensso.timbre :refer-macros [debug info warn error]]
    [shadow.lazy]))
 
 (defonce lazy-modules-a (atom {}))
@@ -59,29 +58,29 @@
     :ok))
 
 (defn print-build-summary []
-  (warn "webly-build summary:")
-  (info "lazy modules: " (keys @lazy-modules-a))
-  (info "lazy-ns-loadable: " (keys @lazy-ns-loadable-a))
-  ;(info "lazy-ns-loadable FULL: "  @lazy-ns-loadable-a)
-  (info "lazy-ns-vars: " (keys @lazy-ns-vars-a)))
-
+  (println (str "webly-build summary:"
+                "\nlazy modules: " (keys @lazy-modules-a)
+                "\nlazy-ns-loadable: " (keys @lazy-ns-loadable-a)
+                "\nlazy-ns-vars: " (keys @lazy-ns-vars-a)
+                ;"\nlazy-ns-loadable FULL: "  @lazy-ns-loadable-a)  
+                )))
 (defn load-namespace-raw
   "returns a promise containing the resolved loadables for a namespace"
   [ns-name]
-  (warn "lazy-ns-loadable-keys: " (keys @lazy-ns-loadable-a) "ns: " ns-name)
+  (println "lazy-ns-loadable-keys: " (keys @lazy-ns-loadable-a) "ns: " ns-name)
   (let [loadable  (get @lazy-ns-loadable-a ns-name)
         rp (p/deferred)
         on-error (fn [err]
-                   (error "could not load ns: " ns-name "! ERROR: " err)
+                   (println "could not load ns: " ns-name "! ERROR: " err)
                    (p/reject! rp err))
         on-success (fn [vars]
-                     (info "ns [" ns-name "] loaded successfully!")
+                     (println "ns [" ns-name "] loaded successfully!")
                      (p/resolve! rp vars))]
     ; lazy/load does return a google deferred, so we cannot use promises here.
     (try
       (shadow.lazy/load loadable on-success on-error)
       (catch :default ex
-        (error "shadow.lazy/load could not load ns: " ns-name "error: " ex)
+        (println "shadow.lazy/load could not load ns: " ns-name "error: " ex)
         (p/reject! rp ex)))
     rp))
 
@@ -100,16 +99,16 @@
       (let [rp2 (load-namespace-raw ns-name)]
         (-> rp2
             (p/then (fn [vars]
-                      (info "load-namespace vars successfully received!")
+                      (println "load-namespace vars successfully received!")
                       (p/resolve! rp (ns-assemble ns-vars vars))))))
-      (do (error "load-namespace [" (pr-str ns-name)
-                 "failed (no ns-vars defined, could be sci-config-ns)")
+      (do (println "load-namespace [" (pr-str ns-name)
+                   "failed (no ns-vars defined, could be sci-config-ns)")
           (p/reject! rp (str "cannot load-namespace: "
                              ns-name " - no ns-vars defined (could be sci-config-ns)"))))
     rp))
 
 (defn webly-resolve [fq-symbol]
-  (info "resolving: " fq-symbol)
+  (println "resolving: " fq-symbol)
   (let [rp (p/deferred)
         ns-symbol (-> fq-symbol namespace symbol)
         fn-symbol (-> fq-symbol name symbol)
@@ -117,11 +116,11 @@
     (-> ns-rp
         (p/then (fn [ns-map]
                   (if-let [fun (get ns-map fn-symbol)]
-                    (do (info "resolved successfully: " fq-symbol)
+                    (do (println "resolved successfully: " fq-symbol)
                         (p/resolve! rp fun))
-                    (do (error "could not resolve: " fq-symbol)
+                    (do (println "could not resolve: " fq-symbol)
                         (p/reject! rp (str "namespace does not contain function: " fn-symbol))))))
         (p/catch (fn [err]
-                   (error "error in resolving " fq-symbol ": namespace not found: " ns-symbol " error: " err)
+                   (println "error in resolving " fq-symbol ": namespace not found: " ns-symbol " error: " err)
                    (p/reject! rp (str "namespace could not get loaded: " ns-symbol)))))
     rp))

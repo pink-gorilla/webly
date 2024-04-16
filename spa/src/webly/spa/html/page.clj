@@ -98,9 +98,9 @@
            [:div#sente-csrf-token {:data-csrf-token csrf-token}]
            [:div#app]
            [:div  ; .w-screen.h-screen
-            [:script {:src (str prefix "webly.js")
+            [:script {:src (str prefix "init.js")
                       :type "text/javascript"
-                      :onload "webly.spa.start ('dynamic');"}]]])))
+                      :onload "webly.init.start ('dynamic');"}]]])))
 
 (defn config-prefix-adjust [prefix static-main-path]
   (let [asset-path (str static-main-path prefix)]
@@ -115,9 +115,9 @@
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
              [:div#app]
              [:div  ; .w-screen.h-screen
-              [:script {:src (str prefix "webly.js")
+              [:script {:src (str prefix "init.js")
                         :type "text/javascript"
-                        :onload "webly.spa.start ('static');"}]]])))
+                        :onload "webly.init.start ('static');"}]]])))
 
 
 
