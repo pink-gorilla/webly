@@ -45,7 +45,7 @@
 (defn add-lazy-modules
   ;"adds modules to the build. Needs to be called from the cljs-app."
   []
-  (println "************ add-lazy-modules .....")
+  (println "add-lazy-modules .....")
   (let [modules (get-lazy-modules)
         modules-map (module-list->map modules)
         ns-list (get-lazy-ns)
@@ -61,7 +61,7 @@
   (println (str "webly-build summary:"
                 "\nlazy modules: " (-> @lazy-modules-a keys sort)
                 "\nlazy-ns-loadable: " (-> @lazy-ns-loadable-a keys sort)
-                "\nlazy-ns-vars: " (-> @lazy-ns-vars-a keys sort)
+                ;"\nlazy-ns-vars: " (-> @lazy-ns-vars-a keys sort) ; KEYS identical to lazy-ns-loadable
                 ;"\nlazy-ns-loadable FULL: "  @lazy-ns-loadable-a)  
                 )))
 (defn load-namespace-raw
@@ -89,22 +89,29 @@
               [n v]) ns-vars vars)
        (into {})))
 
+(defn simple-namespace? [ns-name]
+  (let [ns-vars (get @lazy-ns-vars-a ns-name)]
+    (println "simple-namespace? " ns-name "type: " (type ns-vars) "vector?" (vector? ns-vars))
+    (vector? ns-vars)))
+
+(defn assemble-simple-ns [ns-name vars]
+  (let [ns-vars (get @lazy-ns-vars-a ns-name)]
+    (ns-assemble ns-vars vars)))
+
 (defn load-namespace
   "returns a promise containing 
    a map. keys = ns publics, values = vars"
   [ns-name]
-  (let [ns-vars (get @lazy-ns-vars-a ns-name)
-        rp (p/deferred)]
-    (if ns-vars
+  (let [rp (p/deferred)]
+    (if (simple-namespace? ns-name)
       (let [rp2 (load-namespace-raw ns-name)]
         (-> rp2
             (p/then (fn [vars]
                       (println "load-namespace vars successfully received!")
-                      (p/resolve! rp (ns-assemble ns-vars vars))))))
-      (do (println "load-namespace [" (pr-str ns-name)
-                   "failed (no ns-vars defined, could be sci-config-ns)")
+                      (p/resolve! rp (assemble-simple-ns ns-name vars))))))
+      (do (println "cannot load-namespace [" (pr-str ns-name) " - not a simple-namespace!")
           (p/reject! rp (str "cannot load-namespace: "
-                             ns-name " - no ns-vars defined (could be sci-config-ns)"))))
+                             ns-name " - is not a simple-namespace"))))
     rp))
 
 (defn webly-resolve [fq-symbol]
