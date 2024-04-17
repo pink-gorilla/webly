@@ -14,7 +14,7 @@
                            "resources"
                            "test"
                            "test/resources"]
-             :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.100"} ; http cors test
+             :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.104"} ; http cors test
                           io.github.cognitect-labs/test-runner
                           {:git/url "https://github.com/cognitect-labs/test-runner.git"
                            :sha "cc75980b43011773162b485f46f939dc5fba91e4"}
@@ -29,7 +29,7 @@
   ; 2. run unit tests 
 
   ; BUILD BUNDLE (then exit)
-  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.100"}  ; http cors test
+  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.104"}  ; http cors test
                        }
           :extra-paths ["src" "resources" "test" "test/resources"]
           :exec-fn webly.app.app/webly-build
