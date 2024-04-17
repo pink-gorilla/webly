@@ -3,7 +3,6 @@
   (:require
    [taoensso.timbre :refer-macros [debug info infof error]]
    [ajax.core :as ajax]
-   [cljs.reader :refer [read-string]]
    [bidi.bidi]
    [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
    [modular.encoding.transit :refer [decode]]
@@ -56,7 +55,7 @@
          fx {:db (assoc-in (:db cofx) [:config] config)
              :dispatch [after-config-load static?]}]
      (info "config load-success!")
-     (debug "config: " config)
+     (debug "config keys: " (keys config))
      (if after-config-load
        fx
        (dissoc fx :dispatch)))))
