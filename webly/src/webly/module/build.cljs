@@ -91,7 +91,7 @@
 
 (defn simple-namespace? [ns-name]
   (let [ns-vars (get @lazy-ns-vars-a ns-name)]
-    (println "simple-namespace? " ns-name "type: " (type ns-vars) "vector?" (vector? ns-vars))
+    ;(println "simple-namespace? " ns-name "type: " (type ns-vars) "vector?" (vector? ns-vars))
     (vector? ns-vars)))
 
 (defn assemble-simple-ns [ns-name vars]
