@@ -1,6 +1,5 @@
 (ns webly.spa.default)
 
-
 (def webserver
   {:port 8080
    :host "0.0.0.0"
@@ -32,10 +31,10 @@
 
 (def timbre-cljs
   {:min-level [[#{"pinkgorilla.nrepl.client.connection"} :info]
-                          [#{"org.eclipse.jetty.*"} :info]
-                          [#{"webly.*"} :info]
-                          [#{"*"} :info]]})
- 
+               [#{"org.eclipse.jetty.*"} :info]
+               [#{"webly.*"} :info]
+               [#{"*"} :info]]})
+
 (def settings {:use-localstorage  false})
 
 (def shadow
@@ -43,7 +42,6 @@
    :dev-http {:port 8000}
    :http {:port 8001 :host "0.0.0.0"}; "localhost"}
    :nrepl {:port 8002}})
-
 
 (def build
   {:ns-cljs []

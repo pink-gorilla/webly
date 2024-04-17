@@ -8,7 +8,6 @@
    [modular.webserver.handler.registry :refer [handler-registry]]
    [webly.spa.handler.routes-resolve :refer [get-handler-backend-symbol]]))
 
-
 ; server request serving
 
 (defn get-handler-keyword [handler-kw]

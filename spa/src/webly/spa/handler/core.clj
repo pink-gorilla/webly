@@ -1,7 +1,7 @@
 (ns webly.spa.handler.core
-  (:require 
-    [webly.spa.handler.handler :refer [make-handler]]
-    [webly.spa.handler.routes :refer [make-routes-frontend make-routes-backend]]))
+  (:require
+   [webly.spa.handler.handler :refer [make-handler]]
+   [webly.spa.handler.routes :refer [make-routes-frontend make-routes-backend]]))
 
 (defn create-ring-handler
   "creates a ring-handler

@@ -3,10 +3,9 @@
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [extension :refer [discover write-service get-extensions]]
    [webly.spa.default :as default]
-   [frontend.css :as theme]
-   ))
+   [frontend.css :as theme]))
 
- ;; Extension config
+;; Extension config
 
 (defn- get-api-routes [exts]
   (->> (get-extensions exts {:api-routes {}})
@@ -21,8 +20,6 @@
 (defn- get-routes [exts]
   {:api (get-api-routes exts)
    :app (get-cljs-routes exts)})
-
-
 
 (defn configure [{:keys [spa google-analytics prefix keybindings settings]
                   :or {spa {}

@@ -1,7 +1,7 @@
 (ns webly.init
   (:require
    [webly.module.build :refer [add-lazy-modules print-build-summary webly-resolve]]
-   [webly.spa.mode :refer [set-mode! mode-a get-resource-path]]))
+   [webly.spa.mode :refer [set-mode!]]))
 
 (add-lazy-modules)
 (print-build-summary)

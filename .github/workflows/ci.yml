@@ -35,7 +35,7 @@ jobs:
     - name: test cljs+clj
       if: success()
       run: |
-       cd demo-webly
+       cd demo
        clojure -X:webly:npm-install
        clojure -X:webly:ci
        npm test

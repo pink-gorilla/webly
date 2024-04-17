@@ -55,8 +55,7 @@
 
 ;; APP
 
-
-(defn head [{:keys [title loading-image-url icon] :as _spa} 
+(defn head [{:keys [title loading-image-url icon] :as _spa}
             theme
             prefix
             google-analytics]
@@ -79,35 +78,35 @@
     (into head
           (css->hiccup prefix theme))))
 
-(defn layout [{:keys [spinner] :as spa} 
-              theme 
+(defn layout [{:keys [spinner] :as spa}
+              theme
               prefix
               google-analytics
               page]
-    (page/html5
-     {:mode :html}
-     (head spa theme prefix google-analytics)
-     [:body.loading
-      (loading (str prefix spinner))
-      [:div#webly page]]))
+  (page/html5
+   {:mode :html}
+   (head spa theme prefix google-analytics)
+   [:body.loading
+    (loading (str prefix spinner))
+    [:div#webly page]]))
 
 (defn app-page-dynamic [frontend-config csrf-token]
-   (let [{:keys [spa theme prefix google-analytics]} frontend-config]
-  (layout spa theme prefix google-analytics
-          [:div
-           [:div#sente-csrf-token {:data-csrf-token csrf-token}]
-           [:div#app]
-           [:div  ; .w-screen.h-screen
-            [:script {:src (str prefix "init.js")
-                      :type "text/javascript"
-                      :onload "webly.init.start ('dynamic');"}]]])))
+  (let [{:keys [spa theme prefix google-analytics]} frontend-config]
+    (layout spa theme prefix google-analytics
+            [:div
+             [:div#sente-csrf-token {:data-csrf-token csrf-token}]
+             [:div#app]
+             [:div  ; .w-screen.h-screen
+              [:script {:src (str prefix "init.js")
+                        :type "text/javascript"
+                        :onload "webly.init.start ('dynamic');"}]]])))
 
 (defn config-prefix-adjust [prefix static-main-path]
   (let [asset-path (str static-main-path prefix)]
     (info "static asset path: " asset-path)
     asset-path))
 
-(defn app-page-static [frontend-config csrf-token] 
+(defn app-page-static [frontend-config csrf-token]
   (let [{:keys [spa theme prefix google-analytics]} frontend-config]
     (info "static prefix: " prefix)
     (layout spa theme prefix google-analytics ; :prefix "/r/"

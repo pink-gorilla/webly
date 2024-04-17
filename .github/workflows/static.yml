@@ -50,7 +50,7 @@ jobs:
       - name: build gh-pages
         if: success()
         run: |
-          cd demo-webly
+          cd demo
           clojure -X:webly:npm-install
           clojure -X:webly:release-adv
           clojure -X:webly:static
@@ -58,7 +58,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "demo-webly/target/static"
+          path: "demo/target/static"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

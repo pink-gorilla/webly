@@ -10,7 +10,20 @@
         org.pinkgorilla/pinkie {:mvn/version "0.5.232"}
         }
  :aliases
- {:test-clj {:extra-paths ["src"
+ {:cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}
+            :main-opts ["-m" "cljfmt.main"
+                        "--indents" "../webly/cljfmt.edn"
+                                  ; "fix"  "check"
+                        ]}
+  
+            ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
+   :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.03.13"}}
+          :main-opts ["-m" "clj-kondo.main"
+                      "--fail-level" "error"
+                      "--config" "../webly/cljkondo.edn"
+                      "--lint"]}
+  
+  :test-clj {:extra-paths ["src"
                            "resources"
                            "test"
                            "test/resources"]

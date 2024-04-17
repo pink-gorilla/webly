@@ -15,7 +15,6 @@
                           ""))]
     (str proto ":" (:host app-url) port-postfix (str/replace (:path app-url) #"[^/]*$" path))))
 
-
 #_(defn sente-ws-url [db]
     (let [app-url (application-url)
           {:keys [protocol host port]} app-url

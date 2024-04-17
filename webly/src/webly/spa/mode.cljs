@@ -6,8 +6,11 @@
    [webly.spa.mode.url :refer [current-path entry-path entry-path-full]]
    [shadow.loader :as shadow-loader]))
 
+; we don't want to move clojure.string to :bootstrap(:init) bundle.
+; so we re-implement some features we need here.
+
 (defn ends-with? [s e]
-  (js/endsWith s e))
+  (.endsWith s e))
 
 (defn str2 [s1 s2]
   (.concat s1 s2))

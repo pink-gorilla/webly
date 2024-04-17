@@ -24,7 +24,6 @@
    #{"r" "jarres"} (->ResourcesMaybe {:prefix "public"})
    "code/"  (->ResourcesMaybe {:prefix ""})})
 
-
 (defn make-routes-backend [user-routes-api config-route websocket-routes]
   (let [api-routes (merge config-route websocket-routes user-routes-api)
         _ (write-status "webly-api-handlers" api-routes)

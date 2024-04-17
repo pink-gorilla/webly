@@ -34,7 +34,7 @@
     ;(response/header res "session" session)
       res)))
 
-  (defn app-handler [frontend-config]
-    (-> (make-handler-raw frontend-config)
-        wrap-ws))
+(defn app-handler [frontend-config]
+  (-> (make-handler-raw frontend-config)
+      wrap-ws))
 

@@ -25,8 +25,6 @@
    [webly.spa.loader.page] ; side-effects
    [webly.build.prefs :refer [pref]]))
 
-
-
 (warn "setting frontend.page resolver to webly-resolve..")
 (frontend.page/set-resolver! webly-resolve)
 
@@ -82,7 +80,7 @@
      (info "webly config after-load")
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
-     
+
      ; services
      (timbre-config! timbre-cljs)
      (start-bidi frontend-routes)

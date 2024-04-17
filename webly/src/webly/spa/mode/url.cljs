@@ -4,10 +4,10 @@
    [cemerick.url :refer [url]]))
 
 (defn ends-with? [s e]
-  (js/endsWith s e))
+  (.endsWith s e))
 
 (defn last-index-of [s e]
-  (js/lastIndexOf s e))
+  (.lastIndexOf s e))
 
 (defn current-url []
   (-> js/window .-location .-href))

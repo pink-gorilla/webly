@@ -17,7 +17,7 @@
 ;        (config/load-cljs-edn!)]
 
 (defn install-npm [config opts]
-  (info "installing npm deps.." config opts)
+  (info "installing npm deps .. ")
   ;; always install since its a noop if everything is in package.json
   ;; and a server restart is not required for them to be picked up
   (npm-deps/main config opts))
@@ -72,7 +72,7 @@
                          ;(watch-cli cljs-build)
                          (watch-api cljs-build)  ; hot reloading
                          )
-              (debug "not building cljs bundle"))]
+              nil)]
 
       (when size-report
         (info "creating size report ..")
