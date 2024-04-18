@@ -7,6 +7,7 @@
                   ;demo.time
                   ;demo.events
                   ]
+ :depends-on #{:ui-repl}
  :cljs-ns-bindings {'demo.page {;'main demo.page.main/main
                                 'party demo.page.party/party-page
                                 'job demo.page.job/job

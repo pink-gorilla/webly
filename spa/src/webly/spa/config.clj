@@ -22,25 +22,21 @@
   {:api (get-api-routes exts)
    :app (get-cljs-routes exts)})
 
-(defn configure [{:keys [spa google-analytics prefix keybindings settings]
+(defn configure [{:keys [spa google-analytics prefix settings]
                   :or {spa {}
-                       keybindings default/keybindings
                        settings default/settings
                        google-analytics default/google-analytics
                        prefix default/prefix}
                   :as config} exts]
-  (let [timbre-cljs (or (:timbre/cljs config) default/timbre-cljs)
-        routes (get-routes exts)
+  (let [routes (get-routes exts)
         theme (theme/get-theme-config exts)
         spa (merge default/spa spa)
         frontend-config  {:prefix prefix
                           :spa spa
                           :frontend-routes (:app routes)
                           :theme theme
-                          :keybindings keybindings
                           :settings settings
-                          :timbre/cljs timbre-cljs
-                          :cljs-services (cljs-services exts)
+                          :cljs-services (cljs-services config exts)
                           :google-analytics google-analytics}]
     {:routes routes
      :frontend-config frontend-config}))

@@ -45,7 +45,7 @@
 (defn add-lazy-modules
   ;"adds modules to the build. Needs to be called from the cljs-app."
   []
-  (println "add-lazy-modules .....")
+  ;(println "add-lazy-modules .....")
   (let [modules (get-lazy-modules)
         modules-map (module-list->map modules)
         ns-list (get-lazy-ns)
@@ -53,8 +53,7 @@
         ]
     (reset! lazy-modules-a modules-map)
     (reset! lazy-ns-a ns-list)
-    (println "compile-time lazy-ns-a: " @lazy-ns-a)
-
+    ;(println "compile-time lazy-ns-a: " (sort @lazy-ns-a))
     :ok))
 
 (defn print-build-summary []

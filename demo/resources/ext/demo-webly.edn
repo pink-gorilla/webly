@@ -24,7 +24,7 @@
                "save"    :demo/save-non-existing ; there is no handler defined for this on purpose
                }
  
- :cljs-service {:init-fn demo.service/start}
+ :cljs-service {:start-fn demo.service/start}
 
 
  :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]

@@ -1,16 +1,4 @@
-{:build {:disabled-extensions #{; extensions using sci-configs will not work in webly.
-                                "reagent" "re-frame"
-                                "funcool-promesa"
-                                "applied-science.js-interop"
-                                ; webly2 is now in webly. needs to be removed from ui-repl.
-                                "webly2"
-                                "ui-repl"
-                                "cljs-ajax"
-                                 "goog.string"
-                                "clojure.walk"
-                                "clojure.string"
-                                  "goog.object"
-                                }}
+{:build {:disabled-extensions #{}}
 
  :spa {:title "Webly Demo"
        :start-user-app [:demo/start]
@@ -20,12 +8,6 @@
        }
 
  :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
-
- :timbre/cljs {:min-level [[#{"org.eclipse.jetty.*"} :info]
-                           [#{"modular.ws.*"} :info]
-                           [#{"webly.user.*"} :info]
-                           [#{"webly.*"} :info]
-                           [#{"*"} :debug]]}
 
  :timbre/clj {:min-level [[#{"org.eclipse.jetty.*"} :warn]
                           [#{"*"} :info]]

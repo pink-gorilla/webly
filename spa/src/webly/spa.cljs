@@ -11,12 +11,11 @@
    [frontend.page]
    [webly.spa.service.config :refer [start-config]]
    [webly.spa.service :refer [start-cljs-services]]
-   [webly.spa.service.keybindings :refer [start-keybindings]]
    [webly.spa.service.theme :refer [start-theme]]
    [webly.spa.service.ga :refer [start-ga]]
    [webly.spa.service.bidi :refer [start-bidi]]
    [webly.spa.service.ws :refer [start-ws]]
-   [webly.spa.service.timbre :refer [timbre-config!]]
+   ;[webly.spa.service.timbre :refer [timbre-config!]]
    ; webly
    [webly.build.lazy]
    [webly.module.build :refer [webly-resolve]]
@@ -76,19 +75,15 @@
          cljs-services (get-in db [:config :cljs-services])
          start-user-app (-> spa :start-user-app)
          frontend-routes (get-in db [:config :frontend-routes])
-         theme (get-in db [:config :theme])
-         keybindings (get-in db [:config :keybindings])
-         timbre-cljs (get-in db [:config :timbre/cljs])]
+         theme (get-in db [:config :theme])]
      (info "webly config after-load")
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
 
      ; services
      (start-cljs-services cljs-services)
-     (timbre-config! timbre-cljs)
      (start-bidi frontend-routes)
      (start-ga)
-     (start-keybindings keybindings)
      (start-theme theme)
      (if static?
        (warn "websockets are deactivated in static mode.")
