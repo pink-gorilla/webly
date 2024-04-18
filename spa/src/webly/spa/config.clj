@@ -3,7 +3,8 @@
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [extension :refer [discover write-service get-extensions]]
    [webly.spa.default :as default]
-   [frontend.css :as theme]))
+   [frontend.css :as theme]
+   [webly.spa.service :refer [cljs-services]]))
 
 ;; Extension config
 
@@ -39,6 +40,7 @@
                           :keybindings keybindings
                           :settings settings
                           :timbre/cljs timbre-cljs
+                          :cljs-services (cljs-services exts)
                           :google-analytics google-analytics}]
     {:routes routes
      :frontend-config frontend-config}))

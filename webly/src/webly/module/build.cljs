@@ -109,7 +109,7 @@
             (p/then (fn [vars]
                       (println "load-namespace vars successfully received!")
                       (p/resolve! rp (assemble-simple-ns ns-name vars))))))
-      (do (println "cannot load-namespace [" (pr-str ns-name) " - not a simple-namespace!")
+      (do (println "cannot load-namespace [" (pr-str ns-name) "] - not a simple-namespace!")
           (p/reject! rp (str "cannot load-namespace: "
                              ns-name " - is not a simple-namespace"))))
     rp))

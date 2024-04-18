@@ -9,12 +9,13 @@
    ; frontend
    [frontend.dialog]
    [frontend.page]
+   [webly.spa.service.config :refer [start-config]]
+   [webly.spa.service :refer [start-cljs-services]]
    [webly.spa.service.keybindings :refer [start-keybindings]]
    [webly.spa.service.theme :refer [start-theme]]
    [webly.spa.service.ga :refer [start-ga]]
    [webly.spa.service.bidi :refer [start-bidi]]
    [webly.spa.service.ws :refer [start-ws]]
-   [webly.spa.service.config :refer [start-config]]
    [webly.spa.service.timbre :refer [timbre-config!]]
    ; webly
    [webly.build.lazy]
@@ -72,6 +73,7 @@
  :webly/app-after-config-load
  (fn [db [_ static?]]
    (let [spa (get-in db [:config :spa])
+         cljs-services (get-in db [:config :cljs-services])
          start-user-app (-> spa :start-user-app)
          frontend-routes (get-in db [:config :frontend-routes])
          theme (get-in db [:config :theme])
@@ -82,6 +84,7 @@
      (dispatch [:webly/status :configuring-app])
 
      ; services
+     (start-cljs-services cljs-services)
      (timbre-config! timbre-cljs)
      (start-bidi frontend-routes)
      (start-ga)

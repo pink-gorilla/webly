@@ -2,8 +2,10 @@
  :lazy false
  :cljs-namespace [demo.page.main
                   demo.time
-                  demo.events]
- :cljs-ns-bindings {'demo.page.main {'main demo.page.main/main}}
+                  demo.events
+                  demo.service]
+ :cljs-ns-bindings {'demo.page.main {'main demo.page.main/main}
+                    'demo.service {'start demo.service/start}}
  ; runtime
  :api-routes {"time"   {:get demo.handler/time-handler}
               "timejava"   {:get demo.handler/time-java-handler-wrapped}
@@ -22,6 +24,9 @@
                "save"    :demo/save-non-existing ; there is no handler defined for this on purpose
                }
  
+ :cljs-service {:init-fn demo.service/start}
+
+
  :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
                             false []}
                     :tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
