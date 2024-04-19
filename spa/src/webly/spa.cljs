@@ -71,17 +71,13 @@
  (fn [db [_ static?]]
    (let [spa (get-in db [:config :spa])
          start-user-app (-> spa :start-user-app)
-         ;frontend-routes (get-in db [:config :frontend-routes])
-         ;theme (get-in db [:config :theme])
          cljs-services (get-in db [:config :cljs-services])
          services-p  (start-cljs-services cljs-services)]
      (info "webly config after-load")
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
      ; services
-     ;(start-bidi frontend-routes)
      (start-ga)
-     ;(start-theme theme)
      (if static?
        (warn "websockets are deactivated in static mode.")
        (start-ws))
