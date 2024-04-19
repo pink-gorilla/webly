@@ -16,15 +16,11 @@
    [webly.spa.service.ws :refer [start-ws]]
    ; webly
    [webly.build.lazy]
-   [webly.module.build :refer [webly-resolve]]
    [webly.spa.tenx.events]
    [webly.spa.views :refer [webly-app]]
    [webly.spa.events] ; side effects
    [webly.spa.loader.page] ; side-effects
    ))
-
-(warn "setting frontend.page resolver to webly-resolve..")
-(frontend.page/set-resolver! webly-resolve)
 
 ;; see:
 ;; https://shadow-cljs.github.io/docs/UsersGuide.html#_lifecycle_hooks

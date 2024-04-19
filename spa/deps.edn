@@ -19,7 +19,7 @@
         org.pinkgorilla/websocket {:mvn/version "0.0.9"}
         org.pinkgorilla/permission {:mvn/version "0.0.15"}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.0.5"}
-        org.pinkgorilla/ui-bidi {:mvn/version "0.1.34"}
+        org.pinkgorilla/ui-bidi {:mvn/version "0.1.36"}
         org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.10"}
         org.pinkgorilla/css-theme {:mvn/version "0.1.6"}}
  :aliases
