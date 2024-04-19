@@ -3,9 +3,6 @@
  :components
  {:config {:start (modular.config/load-config! (:config #ref [:modular]))}
 
-  ;:ns-require {:start (modular.require/require-namespaces
-  ;                     (:ns-clj (deref (clip/ref :config))))}
-
   :timbre {:start (modular.log/timbre-config!
                    (:timbre/clj (deref (clip/ref :config))))}
 

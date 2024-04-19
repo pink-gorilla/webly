@@ -1,0 +1,7 @@
+{:name "bidi-config"
+ :lazy false
+ :cljs-namespace [frontend.bidi-init]
+ :cljs-ns-bindings {'frontend.bidi-init {'start-bidi frontend.bidi-init/start-bidi}}
+ ; runtime
+ :cljs-service {:config-fn frontend.bidi-init/get-cljs-routes
+                :start-fn frontend.bidi-init/start-bidi}}

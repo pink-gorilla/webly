@@ -3,6 +3,7 @@
    [reagent.dom]
    [taoensso.timbre :refer-macros [info warn]]
    [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db reg-sub]]
+   [promesa.core :as p]
    ; side-effects
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
    [day8.re-frame.http-fx]
@@ -11,11 +12,8 @@
    [frontend.page]
    [webly.spa.service.config :refer [start-config]]
    [webly.spa.service :refer [start-cljs-services]]
-   [webly.spa.service.theme :refer [start-theme]]
    [webly.spa.service.ga :refer [start-ga]]
-   [webly.spa.service.bidi :refer [start-bidi]]
    [webly.spa.service.ws :refer [start-ws]]
-   ;[webly.spa.service.timbre :refer [timbre-config!]]
    ; webly
    [webly.build.lazy]
    [webly.module.build :refer [webly-resolve]]
@@ -23,7 +21,7 @@
    [webly.spa.views :refer [webly-app]]
    [webly.spa.events] ; side effects
    [webly.spa.loader.page] ; side-effects
-   [webly.build.prefs :refer [pref]]))
+   ))
 
 (warn "setting frontend.page resolver to webly-resolve..")
 (frontend.page/set-resolver! webly-resolve)
@@ -72,30 +70,31 @@
  :webly/app-after-config-load
  (fn [db [_ static?]]
    (let [spa (get-in db [:config :spa])
-         cljs-services (get-in db [:config :cljs-services])
          start-user-app (-> spa :start-user-app)
-         frontend-routes (get-in db [:config :frontend-routes])
-         theme (get-in db [:config :theme])]
+         ;frontend-routes (get-in db [:config :frontend-routes])
+         ;theme (get-in db [:config :theme])
+         cljs-services (get-in db [:config :cljs-services])
+         services-p  (start-cljs-services cljs-services)]
      (info "webly config after-load")
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
-
      ; services
-     (start-cljs-services cljs-services)
-     (start-bidi frontend-routes)
+     ;(start-bidi frontend-routes)
      (start-ga)
-     (start-theme theme)
+     ;(start-theme theme)
      (if static?
        (warn "websockets are deactivated in static mode.")
        (start-ws))
      ; 
-     (dispatch [:webly/set-status :configured? true])
-     (if start-user-app
-       (do (info "starting user app: " start-user-app)
-           (dispatch start-user-app))
-       (warn "no user app startup defined."))
-     ;(dispatch [:webly/status :running])
-     )
+     (p/then services-p (fn [_]
+                          (warn "services are all configured!")
+                          (dispatch [:webly/set-status :configured? true])
+                          (if start-user-app
+                            (do (info "starting user app: " start-user-app)
+                                (dispatch start-user-app))
+                            (warn "no user app startup defined."))
+                            ;(dispatch [:webly/status :running])                     
+                          )))
    db))
 
 (defn ^:export start [mode]

@@ -4,5 +4,4 @@
  :cljs-namespace [snippets.hello
                   snippets.bye]
  :cljs-ns-bindings {'snippets.hello {'hello snippets.hello/hello
-                                     'start snippets.hello/start}}
- :cljs-service {:start-fn snippets.hello/start}}
+                                     'start snippets.hello/start}}}

@@ -2,9 +2,8 @@
   "generates shadow-cljs.edn based on profile and config"
   (:require
    [webly.spa.default :as default]
-   [modular.writer :refer [write-target]]
    [webly.build.prefs :refer [if-pref-fn prefs-atom]]
-   [extension :refer [write-service]]
+   [webly.helper :refer [write-target2]]
    [webly.module.build :refer [create-modules shadow-module-config]]))
 
 ;; build-options
@@ -48,7 +47,7 @@
            :asset-path asset-path
            :advanced? advanced?
            :start-user-app start-user-app)
-    (write-service exts :shadow-modules shadow-modules)
+    (write-target2 :shadow-modules shadow-modules)
     {:cache-root ".shadow-cljs"
      :verbose (if shadow-verbose true false)
      :lein false

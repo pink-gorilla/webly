@@ -1,6 +1,6 @@
 (ns webly.spa.handler.routes
   (:require
-   [modular.writer :refer [write-status]]
+   [webly.helper :refer [write-target2]]
    [modular.webserver.handler.files :refer [->ResourcesMaybe ->FilesMaybe]]
    [webly.spa.handler.routes-resolve :refer [resolve-handler]]))
 
@@ -26,7 +26,7 @@
 
 (defn make-routes-backend [user-routes-api config-route websocket-routes]
   (let [api-routes (merge config-route websocket-routes user-routes-api)
-        _ (write-status "webly-api-handlers" api-routes)
+        _ (write-target2 "webly-api-handlers" api-routes)
         api-routes (resolve-handler api-routes)]
     ["/" {"api/"    api-routes
           ; ""       app-routes

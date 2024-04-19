@@ -1,4 +1,4 @@
-(ns webly.spa.service.bidi
+(ns frontend.bidi-init
   (:require
    [taoensso.timbre :refer-macros [info warn]]
    [re-frame.core :refer [dispatch]]

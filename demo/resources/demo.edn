@@ -35,10 +35,10 @@
                 {:kb "ctrl-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
                 {:kb "win-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
 
-                {:kb "alt-g 1" :handler [:bidi/goto :demo/main] :desc "goto main"}
+                {:kb "alt-g 1" :handler [:bidi/goto 'demo.page.main/main-page] :desc "goto main"}
                 {:kb "alt-g 2" :handler [:bidi/goto :demo/party :location "Vienna"] :desc "goto party vienna"}
                 {:kb "alt-g 3" :handler [:bidi/goto :demo/help] :desc "goto help"}
-                {:kb "alt-g 4" :handler [:bidi/goto :demo/job] :desc "goto job"}
+                {:kb "alt-g 4" :handler [:bidi/goto 'demo.page.job/job-page] :desc "goto job"}
                 {:kb "alt-g 5" :handler [:bidi/goto :demo/party :location "Bali" :query-params {:expected-guests 299}] :desc "goto party bali"}
                 {:kb "alt-y l" :handler [:login/dialog] :desc "login"}
                 {:kb "ctrl-y l" :handler [:login/dialog] :desc "login"}
@@ -65,8 +65,6 @@
          :john {:roles #{:logistic}
                 :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                 :email ["john@doe.com"]}}
-
- ;:ns-clj [demo.time]
 
 ;                
  }

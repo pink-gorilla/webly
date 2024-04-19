@@ -1,0 +1,7 @@
+{:name "theme-config"
+ :lazy false
+ :cljs-namespace [frontend.theme-init]
+ :cljs-ns-bindings {'frontend.theme-init {'start-theme frontend.theme-init/start-theme}}
+ ; runtime
+ :cljs-service {:config-fn frontend.theme-init/config-theme
+                :start-fn frontend.theme-init/start-theme}}

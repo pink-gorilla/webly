@@ -1,7 +1,8 @@
 (ns demo.page.main
   (:require
-   [frontend.page :refer [add-page]]
    ; webly
+   [webly.spa.mode :refer [get-mode]]
+   ; demo
    [demo.page.main.lazy :refer [demo-lazy]]
    [demo.page.main.route :refer [demo-routing]]
    [demo.page.main.css :refer [demo-css]]
@@ -9,7 +10,7 @@
    [demo.page.main.dialog :refer [demo-dialog]]
    [demo.page.main.keybinding :refer [demo-keybinding]]))
 
-(defn main [_route]
+(defn main-page [_route]
   [:div.dark
    [:div {:class (str
                   "w-screen h-screen overflow-hidden m-0 p-0"
@@ -22,12 +23,13 @@
                   "xl:grid-cols-4 ")}
     [demo-routing]
     [demo-css]
-    [demo-ws]
+    (when (= :dynamic (get-mode))
+      [demo-ws])
     [demo-lazy]
     [demo-dialog]
     [demo-keybinding]]])
 
-(add-page :demo/main main)
+
 
 
 

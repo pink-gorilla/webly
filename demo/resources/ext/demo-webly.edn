@@ -1,10 +1,17 @@
 {:name "demo-webly"
- :lazy false
+ :lazy true
+ :depends-on #{:ui-repl}
  :cljs-namespace [demo.page.main
+                  demo.page.help
+                  demo.page.party
+                  demo.page.job
                   demo.time
                   demo.events
                   demo.service]
- :cljs-ns-bindings {'demo.page.main {'main demo.page.main/main}
+ :cljs-ns-bindings {'demo.page.main {'main-page demo.page.main/main-page}
+                    'demo.page.job {'job-page demo.page.job/job-page}
+                    'demo.page.help {'help-page demo.page.help/help-page}
+                    'demo.page.party {'party-page demo.page.party/party-page}
                     'demo.service {'start demo.service/start}}
  ; runtime
  :api-routes {"time"   {:get demo.handler/time-handler}
@@ -16,16 +23,15 @@
               "snippet"   {:get demo.handler/snippet-handler-wrapped}
               "bindata"  demo.handler.binary/binary-handler}
 
- :cljs-routes {""        :demo/main
-               "help"    demo.page/help ; :demo/help
-               ["party/" :location]  demo.page/party 
-               "job"     :demo/job ;(bidi/tag :demo/job :wunderbar)
-               "job2"   :demo/job ;  (bidi/tag :demo/job {:flags 3 :context :wunderbar})
-               "save"    :demo/save-non-existing ; there is no handler defined for this on purpose
+ :cljs-routes {""       demo.page.main/main-page
+               "help"    demo.page.help/help-page
+               ["party/" :location]  demo.page.party/party-page
+               "job"     demo.page.job/job-page ;(bidi/tag :demo/job :wunderbar)
+               "job2"    demo.page.job/job-page ;  (bidi/tag :demo/job {:flags 3 :context :wunderbar})
+               "save"    demo.page.unknown/unknown-page ; there is no handler defined for this on purpose
                }
  
  :cljs-service {:start-fn demo.service/start}
-
 
  :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
                             false []}

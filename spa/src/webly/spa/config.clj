@@ -3,7 +3,6 @@
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [extension :refer [discover write-service get-extensions]]
    [webly.spa.default :as default]
-   [frontend.css :as theme]
    [webly.spa.service :refer [cljs-services]]))
 
 ;; Extension config
@@ -13,7 +12,8 @@
        (map :api-routes)
        (apply merge)))
 
-(defn- get-cljs-routes [exts]
+; duplicate of bidi2 
+(defn get-cljs-routes [exts]
   (->> (get-extensions exts {:cljs-routes {}})
        (map :cljs-routes)
        (apply merge)))
@@ -29,12 +29,10 @@
                        prefix default/prefix}
                   :as config} exts]
   (let [routes (get-routes exts)
-        theme (theme/get-theme-config exts)
+        ;theme (theme/get-theme-config exts)
         spa (merge default/spa spa)
         frontend-config  {:prefix prefix
                           :spa spa
-                          :frontend-routes (:app routes)
-                          :theme theme
                           :settings settings
                           :cljs-services (cljs-services config exts)
                           :google-analytics google-analytics}]
@@ -47,7 +45,6 @@
   (get-api-routes exts)
   (get-cljs-routes exts)
   (get-routes exts)
-  (get-theme exts)
 
 ; 
   )

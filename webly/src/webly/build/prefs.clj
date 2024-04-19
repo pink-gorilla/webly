@@ -1,7 +1,7 @@
 (ns webly.build.prefs
   (:require
    [modular.date :refer [now-str]]
-   [modular.writer :refer [write-target]]))
+   [webly.helper :refer [write-target2]]))
 
 (defonce prefs-atom (atom {}))
 
@@ -29,4 +29,4 @@
     without))
 
 (defn write-build-prefs []
-  (write-target "cljsbuild-prefs" @prefs-atom))
+  (write-target2 "cljsbuild-prefs" @prefs-atom))

@@ -1,9 +1,9 @@
 (ns webly.app.app
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [extension :refer [discover write-service get-extensions]]
+   [extension :refer [discover get-extensions]]
    [modular.config :refer [load-config! get-in-config]]
-   [modular.writer :refer [write-status]]
+   [webly.helper :refer [write-target2]]
    [modular.permission.service :refer [service-authorized?]]
    [modular.permission.app :refer [start-permissions]]
    [modular.ws.core :refer [start-websocket-server]]
@@ -30,7 +30,7 @@
 (defn create-ring-handler [app-handler routes config-route websocket-routes]
   (let [{:keys [handler routes]} (webly-handler/create-ring-handler app-handler routes config-route websocket-routes)]
     (def ring-handler handler) ; needed by shadow-watch
-    (write-status "routes" routes)
+    (write-target2 "routes" routes)
     handler))
 
 (defn ensure-keyword [kw]
@@ -83,9 +83,9 @@
         ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
         exts (discover ext-config)
         {:keys [routes frontend-config] :as opts} (configure config exts)]
-    (write-service exts :extensions-all (:extensions exts))
-    (write-service exts :extensions-disabled (:extensions-disabled exts))
-    (write-status "webly-build-config" config)
+    (write-target2 :extensions-all (:extensions exts))
+    (write-target2 :extensions-disabled (:extensions-disabled exts))
+    (write-target2 "webly-build-config" config)
     (let [profile (setup-profile profile)]
       (when (:bundle profile)
         (build exts config profile))

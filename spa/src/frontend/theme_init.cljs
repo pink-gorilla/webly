@@ -1,4 +1,4 @@
-(ns webly.spa.service.theme
+(ns frontend.theme-init
   (:require
    [re-frame.core :refer [dispatch]]
    [frontend.css.events]

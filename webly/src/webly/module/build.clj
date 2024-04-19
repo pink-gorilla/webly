@@ -3,7 +3,8 @@
    [clojure.string :as str]
    [clojure.set]
    [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [extension :refer [get-extensions write-service]]))
+   [webly.helper :refer [write-target2]]
+   [extension :refer [get-extensions]]))
 
 ;; NAMESPACE
 
@@ -64,9 +65,9 @@
   (let [spec (modules->ns-map lazy-modules)
         ns-vars (ns-map->vars spec)
         ns-loadable (ns-map->loadable spec)]
-    (write-service exts :cljsbuild-lazy-namespaces spec)
-    (write-service exts :cljsbuild-lazy-ns-vars ns-vars)
-    (write-service exts :cljsbuild-lazy-ns-loadable ns-loadable)
+    (write-target2 :cljsbuild-lazy-namespaces spec)
+    (write-target2 :cljsbuild-lazy-ns-vars ns-vars)
+    (write-target2 :cljsbuild-lazy-ns-loadable ns-loadable)
     (reset! lazy-modules-a (map :name lazy-modules))
     (reset! lazy-ns-a spec)
     (reset! lazy-ns-vars-a ns-vars)
@@ -143,7 +144,7 @@
         main-modules (remove lazy-module? valid-modules)
         main-module (consolidate-main-modules main-modules)
         lazy-modules2 (conj lazy-modules main-module)]
-    (write-service exts :cljsbuild-module-lazy lazy-modules2)
+    (write-target2 :cljsbuild-module-lazy lazy-modules2)
     ;(write-service exts :cljsbuild-module-main main-modules)
     (set-lazy-modules! exts lazy-modules2)
     {:modules {:main [main-module]

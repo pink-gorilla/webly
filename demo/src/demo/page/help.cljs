@@ -20,7 +20,7 @@
 (def data-config (r/atom {:data nil}))
 (def firstt (r/atom true))
 
-(defn help [_route]
+(defn help-page [_route]
   (let [url-moon (str (get-resource-path) "demo/moon.jpg")
         url-config (str (get-resource-path) "config.edn")]
     [:div
@@ -30,7 +30,7 @@
        (get-json "http://api.open-notify.org/iss-now.json" data-iss [:data]) ;cors test
        (get-json url-config data-config [:data])
        nil)
-     [:p [link-dispatch [:bidi/goto  :demo/main] "main"]]
+     [:p [link-dispatch [:bidi/goto 'demo.page.main/main-page] "main"]]
      [:p "url config: " url-config]
      [:h1 "help!"]
      [:div.bg-blue-300 "iss data (cors test - there should be data coming!):" (pr-str @data-iss)]

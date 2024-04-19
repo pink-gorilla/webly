@@ -2,7 +2,7 @@
   (:require
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
+   [demo.helper.ui :refer [link-dispatch]]))
 
 ; themeable css for party
 
@@ -21,7 +21,7 @@
         (rf/dispatch [:css/add-components components config])
         (reset! first false))
       [:div.party
-       [link-dispatch [:bidi/goto :demo/main] "main"]
+       [link-dispatch [:bidi/goto 'demo.page.main/main-page] "main"]
        [:p "This is a test for bidi route/query parameters."]
 
        [:p "This is a test for theme css switching."]

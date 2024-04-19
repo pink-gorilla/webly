@@ -2,8 +2,8 @@
   (:require
    [clojure.java.io :as io]
    [babashka.fs :as fs]
-   [taoensso.timbre  :refer [debug info warn]]
-   [modular.writer :refer [write write-status write-target]]
+   [taoensso.timbre  :refer [info]]
+   [modular.writer :refer [write]]
    [modular.resource.load :refer [write-resources-to]]
    [webly.spa.html.page :refer [app-page-static]]))
 
