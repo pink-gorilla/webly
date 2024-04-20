@@ -34,14 +34,8 @@
  :cljs-service {:start-fn demo.service/start}
 
  :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
-                            false []}
-                    :tailwind {"light" ["tailwindcss/dist/tailwind.min.css"]
-                               "dark"  ["tailwindcss/dist/tailwind-dark.min.css"]}
-                    :webly-dialog {true ["webly/dialog.css"]
-                                   false []}}
-        :current {:emoji    false
-                  :tailwind "light"
-                  :webly-dialog true}}
+                            false []}}
+        :current {:emoji    false}}
 
  ;
  }

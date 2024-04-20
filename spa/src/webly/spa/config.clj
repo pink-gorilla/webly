@@ -2,6 +2,7 @@
   (:require
    [taoensso.timbre :as timbre :refer [debug info warn error]]
    [extension :refer [discover write-service get-extensions]]
+   [frontend.css :refer [get-theme-config]]
    [webly.spa.default :as default]
    [webly.spa.service :refer [cljs-services]]))
 
@@ -29,11 +30,12 @@
                        prefix default/prefix}
                   :as config} exts]
   (let [routes (get-routes exts)
-        ;theme (theme/get-theme-config exts)
+        theme (get-theme-config exts)
         spa (merge default/spa spa)
         frontend-config  {:prefix prefix
                           :spa spa
                           :settings settings
+                          :theme theme
                           :cljs-services (cljs-services config exts)
                           :google-analytics google-analytics}]
     {:routes routes
