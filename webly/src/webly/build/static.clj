@@ -28,11 +28,12 @@
     (doall (map #(fs/copy % dest {:replace-existing true}) files))))
 
 (defn copy-js []
-  (info "copying .js files..")
-  (copy-pattern "target/webly/public" resource-path "*.js")
-  (when (fs/exists? "target/webly/public/cljs-runtime")
-    (copy-pattern "target/webly/public/cljs-runtime" (str resource-path "cljs-runtime/") "*.js")
-    (copy-pattern "target/webly/public/cljs-runtime" (str resource-path "cljs-runtime/") "*.js.map")))
+  (when (fs/exists? "target/webly/public")
+    (info "copying .js files..")
+    (copy-pattern "target/webly/public" resource-path "*.js")
+    (when (fs/exists? "target/webly/public/cljs-runtime")
+      (copy-pattern "target/webly/public/cljs-runtime" (str resource-path "cljs-runtime/") "*.js")
+      (copy-pattern "target/webly/public/cljs-runtime" (str resource-path "cljs-runtime/") "*.js.map"))))
 
 (defn generate-static-html [frontend-config]
   (info "generating static html page ..")
