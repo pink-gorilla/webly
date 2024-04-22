@@ -1,7 +1,11 @@
 {:name "webly-spa"
  :lazy false
  :cljs-namespace [webly.spa
+                  webly.spa.mode
                   webly.spa.resolve]
  :cljs-ns-bindings {'webly.spa {'start webly.spa/start}
+                    'webly.spa.mode {'get-mode  webly.spa.mode/get-mode
+                                     'get-resource-path webly.spa.mode/get-resource-path
+                                     'get-routing-path webly.spa.mode/get-routing-path}
                     'webly.spa.resolve {'get-resolver webly.spa.resolve/get-resolver
                                         'set-resolver! webly.spa.resolve/set-resolver!}}}
