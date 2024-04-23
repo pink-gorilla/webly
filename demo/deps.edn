@@ -3,8 +3,8 @@
          "resources"]
  :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
         ; lazy ui modules:
-        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.28"}
-        org.pinkgorilla/ui-vega {:mvn/version "0.3.219"}
+        org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
+        org.pinkgorilla/ui-vega {:mvn/version "0.3.220"}
         org.pinkgorilla/oauth2 {:mvn/version "0.0.25"}
         org.pinkgorilla/pinkie {:mvn/version "0.5.232"}
         }
@@ -67,8 +67,8 @@
   :jetty {:exec-args {:profile "jetty"}}
   :watch {:exec-args {:profile "watch2"}}
 
-  :demo-build {:extra-deps {org.pinkgorilla/ui-highcharts {:mvn/version "0.0.28"}
-                            org.pinkgorilla/ui-vega {:mvn/version "0.3.219"}}
+  :demo-build {:extra-deps {org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
+                            org.pinkgorilla/ui-vega {:mvn/version "0.3.220"}}
                :exec-fn demo.test/test}
 
   ;
