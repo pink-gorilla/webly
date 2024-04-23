@@ -17,11 +17,8 @@
 
 # run the ui demo
 
-Clone this repo and run: `bb demo-webly`
-
+Clone this repo and run:
 ```
-clj -X:demo-webly :profile :npm-install
-
 cd demo-webly
 clj -X:webly:npm-install
 clj -X:webly:compile
@@ -29,7 +26,7 @@ clj -X:webly:run
 
 ```
 
-The demo runs a webserver on port 8080 with shadow-cljs "watch" mode.
+The demo runs a webserver on port 8080.
 
 A simple demo is on [Webly Github Pages](https://pink-gorilla.github.io/webly/)
 
