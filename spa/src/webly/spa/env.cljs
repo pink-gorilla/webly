@@ -1,6 +1,6 @@
 (ns webly.spa.env
-  (:require 
-    [webly.spa.mode]))
+  (:require
+   [webly.spa.mode]))
 
 (defn get-mode []
   (webly.spa.mode/get-mode))

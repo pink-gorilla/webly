@@ -1,0 +1,10 @@
+{:name "webly-devtools"
+ :lazy true
+ :depends-on #{:cljs-frisk}
+ :cljs-namespace [webly.spa.devtools.config
+                  webly.spa.devtools.bundle]
+ :cljs-ns-bindings {'webly.spa.devtools.config {'config-page webly.spa.devtools.config/config-page}
+                    'webly.spa.devtools.bundle {'bundle-page webly.spa.devtools.bundle/bundle-page}}
+ ; runtime
+ :dev-page {"config" webly.spa.devtools.config/config-page
+            "bundle" webly.spa.devtools.bundle/bundle-page}}
