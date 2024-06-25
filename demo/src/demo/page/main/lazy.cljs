@@ -1,12 +1,10 @@
 (ns demo.page.main.lazy
   (:require
-   [taoensso.timbre :refer-macros [debug info warn error]]
    [reagent.core :as r]
    [promesa.core :as p]
-   [re-frame.core :as rf]
    [webly.build.lazy :refer-macros [wrap-lazy] :refer [available]]
    [webly.module.build :refer [load-namespace-raw load-namespace webly-resolve]]
-   [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
+   [demo.helper.ui :refer [link-fn block2]]))
 
 (defn lazy1 []
   (let [ui-add (wrap-lazy snippets.snip/ui-add)]

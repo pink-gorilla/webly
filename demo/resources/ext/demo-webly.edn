@@ -30,12 +30,16 @@
                "job2"    demo.page.job/job-page ;  (bidi/tag :demo/job {:flags 3 :context :wunderbar})
                "save"    demo.page.unknown/unknown-page ; there is no handler defined for this on purpose
                }
- 
+
  :cljs-service {:start-fn demo.service/start}
 
  :theme {:available {:emoji {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
-                            false []}}
-        :current {:emoji    false}}
+                             false []}}
+         :current {:emoji    false}}
+
+ :clj-services {:name "webly-demo-services-public"
+                :permission  nil ; #{}
+                :symbols [:time/now]}
 
  ;
  }

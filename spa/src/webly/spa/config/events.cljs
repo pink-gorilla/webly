@@ -4,7 +4,7 @@
    [taoensso.timbre :refer-macros [debug info infof error]]
    [ajax.core :as ajax]
    [bidi.bidi]
-   [re-frame.core :refer [reg-event-db reg-event-fx dispatch]]
+   [re-frame.core :refer [reg-event-db reg-event-fx]]
    [modular.encoding.transit :refer [decode]]
    [modular.encoding.edn :refer [read-edn]]
    [frontend.notification :refer [show-notification]]
@@ -16,7 +16,7 @@
 
 (reg-event-fx
  :config/load
- (fn [{:keys [db]} [_ after-config-load]]
+ (fn [{:keys [_db]} [_ after-config-load]]
    (let [static? (= (get-mode) :static)
          format (if static?
                   (ajax/text-response-format)

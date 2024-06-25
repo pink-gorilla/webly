@@ -15,7 +15,7 @@
   [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
    {:href href} text])
 
-(defn job-page [{:keys [route-params query-params handler tag] :as p}]
+(defn job-page [{:keys [_route-params _query-params _handler _tag] :as p}]
   [:div.party
    [link-dispatch [:bidi/goto 'demo.page.main/main-page] "main"]
    [:p "This is a test for bidi route/query parameters."]

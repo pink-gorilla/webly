@@ -22,7 +22,7 @@
 ;; APP
 
 (defn make-handler-raw  [frontend-config]
-  (fn [req]
+  (fn [_req]
     (let [; csrf-token and session are sente requirements
           csrf-token (get-csrf-token)
         ;session  (sente-session-with-uid req)

@@ -16,7 +16,7 @@
   (react/lazy
    (fn []
      (-> (lazy/load loadable)
-         (.then (fn [root-el]
+         (.then (fn [_root-el]
                    ;; React.lazy expects to load a ES6 module with a React Component as default export
 
                    ;; this would be more correct in production settings

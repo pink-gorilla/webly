@@ -1,6 +1,5 @@
 (ns demo.helper.ui
   (:require
-   [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :as rf]))
 
 (defn link-fn [fun text]

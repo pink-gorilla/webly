@@ -1,9 +1,9 @@
 (ns demo.page.main.css
   (:require
-   [taoensso.timbre :refer-macros [debug info warn error]]
+   [taoensso.timbre :refer-macros [warn]]
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]
+   [demo.helper.ui :refer [link-dispatch link-fn block2]]
    [demo.emoji :refer [emoji]]))
 
 ; CSS

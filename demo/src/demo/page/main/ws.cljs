@@ -1,9 +1,9 @@
 (ns demo.page.main.ws
   (:require
-   [taoensso.timbre :refer-macros [debug info warn error]]
+   [taoensso.timbre :refer-macros [warn]]
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
+   [demo.helper.ui :refer [link-fn block2]]))
 
 ; WEBSOCKET
 (defn print-status [x]
@@ -27,5 +27,4 @@
         [:p "date-local needs supervisor role, which demo does not have!"]
         [:p "user: boss pwd:1234  does have the supervisor role!"]
         [link-fn #(rf/dispatch [:ws/send [:time/now-date-local []] set-time-date 5000]) " request time (as date local)"]
-        [link-fn #(rf/dispatch [:ws/send [:demo/connected []] print-status 5000]) "request connections (see log)"]
         [link-fn #(rf/dispatch [:ws/send [:demo/xxx [123 456 789]]]) "no-server-handler (see log)"]]])))

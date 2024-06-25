@@ -1,6 +1,6 @@
 (ns webly.build.lazy
   (:require
-   [taoensso.timbre :refer-macros [debug info warn error]]))
+   [taoensso.timbre :refer-macros [debug]]))
 
 (defmacro wrap-lazy [symbol-fn]
   (taoensso.timbre/debug "compile-time lazy wrapping: " symbol-fn)

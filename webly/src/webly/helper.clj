@@ -1,6 +1,6 @@
 (ns webly.helper
   (:require
-   [modular.writer :refer [write write-status write-target ensure-directory]]))
+   [modular.writer :refer [write ensure-directory]]))
 
 (defn write-target2 [name data]
   (ensure-directory "./target")

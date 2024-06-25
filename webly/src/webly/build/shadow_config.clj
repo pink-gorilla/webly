@@ -22,7 +22,7 @@
                            spa default/spa
                            prefix default/prefix
                            static-main-path ""}
-                      :as config} profile]
+                      :as _config} profile]
   (let [;; PROFILE *************************************************
         advanced? (get-in profile [:bundle :advanced])
         shadow-verbose (get-in profile [:bundle :shadow-verbose])

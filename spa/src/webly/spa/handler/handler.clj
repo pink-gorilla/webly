@@ -31,7 +31,7 @@
 
 (defn get-handler-frontend [app-handler routes-frontend path req]
   (debug "frontend?" path)
-  (let [{:keys [handler route-params] :as match-context}
+  (let [{:keys [handler _route-params] :as _match-context}
         (bidi/match-route* routes-frontend path req)]
     (when handler
       (info "serving app-bundle initial location: " handler)

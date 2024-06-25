@@ -1,9 +1,8 @@
 (ns demo.page.main.dialog
   (:require
-   [taoensso.timbre :refer-macros [debug info warn error]]
    [re-frame.core :as rf]
    [frontend.notification :refer [show-notification]]
-   [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
+   [demo.helper.ui :refer [link-fn block2]]))
 
 ;; DIALOG
 (def compile-error

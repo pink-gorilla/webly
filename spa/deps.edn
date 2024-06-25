@@ -16,14 +16,14 @@
         com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
         ; modular
         org.pinkgorilla/webserver {:mvn/version "0.0.12"} ; brings modular
-        org.pinkgorilla/websocket {:mvn/version "0.0.9"}
-        org.pinkgorilla/permission {:mvn/version "0.0.15"}
+        org.pinkgorilla/websocket {:mvn/version "0.0.13"}
+        org.pinkgorilla/permission {:mvn/version "0.2.18"}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
         org.pinkgorilla/ui-bidi {:mvn/version "0.1.36"}
         org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.10"}
         org.pinkgorilla/css-theme {:mvn/version "0.1.6"}
         ; devtools
-        org.pinkgorilla/devtools {:mvn/version "0.5.19"}
+        org.pinkgorilla/devtools {:mvn/version "0.5.20"}
         org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.6.564"}}
  :aliases
  {:cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}

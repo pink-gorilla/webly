@@ -1,6 +1,6 @@
 (ns webly.spa.service
   (:require
-   [extension :refer [write-service get-extensions]]
+   [extension :refer [get-extensions]]
    [webly.helper :refer [write-target2]]))
 
 ;; discovery

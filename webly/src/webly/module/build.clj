@@ -2,7 +2,7 @@
   (:require
    [clojure.string :as str]
    [clojure.set]
-   [taoensso.timbre :as timbre :refer [debug info warn error]]
+   [taoensso.timbre :as timbre :refer [warn]]
    [webly.helper :refer [write-target2]]
    [extension :refer [get-extensions]]))
 
@@ -61,7 +61,7 @@
     (warn "lazy namespaces: " l)
     (into [] l)))
 
-(defn- set-lazy-modules! [exts lazy-modules]
+(defn- set-lazy-modules! [_exts lazy-modules]
   (let [spec (modules->ns-map lazy-modules)
         ns-vars (ns-map->vars spec)
         ns-loadable (ns-map->loadable spec)]

@@ -1,6 +1,5 @@
 (ns demo.page.main.route
   (:require
-   [taoensso.timbre :refer-macros [debug info warn error]]
    [frontend.page.viewer :refer [refresh-page]]
    [demo.helper.ui :refer [link-dispatch link-href link-fn block2]]))
 

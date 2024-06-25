@@ -1,7 +1,6 @@
 (ns webly.spa.config
   (:require
-   [taoensso.timbre :as timbre :refer [debug info warn error]]
-   [extension :refer [discover write-service get-extensions]]
+   [extension :refer [discover get-extensions]]
    [frontend.css :refer [get-theme-config]]
    [webly.spa.default :as default]
    [webly.spa.service :refer [cljs-services]]))

@@ -1,6 +1,6 @@
 (ns webly.spa.devtools.bundle)
 
-(defn bundle-page [{:keys [route-params query-params handler] :as route}]
+(defn bundle-page [{:keys [_route-params _query-params _handler] :as _route}]
   [:iframe {:src "/r/bundlesizereport.html"
             :title "bundle size"
             :height "100%"

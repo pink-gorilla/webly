@@ -89,7 +89,7 @@
                           )))
    db))
 
-(defn ^:export start [mode]
+(defn ^:export start [_mode]
   (enable-console-print!)
   (dispatch [:reframe10x-init])
   (dispatch [:webly/status :route-init])

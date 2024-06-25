@@ -1,22 +1,20 @@
 (ns webly.app.app
   (:require
-   [taoensso.timbre :as timbre :refer [debug info warn error]]
+   [taoensso.timbre :as timbre :refer [info]]
    [extension :refer [discover get-extensions]]
    [modular.config :refer [load-config! get-in-config]]
-   [webly.helper :refer [write-target2]]
-   [modular.permission.service :refer [service-authorized?]]
-   [modular.permission.app :refer [start-permissions]]
    [modular.ws.core :refer [start-websocket-server]]
-   [webly.build.profile :refer [setup-profile server?]]
+   [webly.helper :refer [write-target2]]
+   [webly.build.profile :refer [setup-profile]]
    [webly.build.core :refer [build]]
    [webly.build.shadow :refer [stop-shadow]]
+   [webly.build.static :refer [build-static]]
    [webly.web.server :as web-server]
    [webly.spa.handler.core :as webly-handler]
    [webly.spa.html.handler :refer [app-handler]]
    [webly.spa.handler.routes.config :refer [create-config-routes]]
-   [webly.spa.default :as default]
-   [webly.build.static :refer [build-static]]
-   [webly.spa.config :refer [configure]])
+   [webly.spa.config :refer [configure]]
+   [webly.spa.default :as default])
   (:gen-class))
 
 (defn watch? [profile-name]
@@ -38,17 +36,15 @@
     kw
     (keyword kw)))
 
-(defn start-webly [{:keys [web-server sente-debug?]
+(defn start-webly [exts
+                   {:keys [web-server sente-debug?]
                     :or {sente-debug? false
                          web-server default/webserver}
                     :as config}
                    server-type]
   (info "start-webly: " server-type)
   (let [server-type (ensure-keyword server-type)
-        ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
-        exts (discover ext-config)
         {:keys [routes frontend-config]} (configure config exts)
-        permission (start-permissions)
         config-route (create-config-routes frontend-config)
         websocket (start-websocket-server server-type sente-debug?)
         websocket-routes (:bidi-routes websocket)
@@ -63,12 +59,11 @@
                        (build exts config profile-full))))]
     ; return config of started services (needed to stop)
     {:profile server-type
-     :permission permission
-     :websocket websocket
      :webserver webserver
+     :websocket websocket
      :shadow shadow}))
 
-(defn stop-webly [{:keys [webserver websocket shadow]}]
+(defn stop-webly [{:keys [webserver _websocket shadow]}]
   (info "stopping webly..")
   (when webserver
     (web-server/stop webserver))
@@ -82,7 +77,7 @@
   (let [config (get-in-config [])
         ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
         exts (discover ext-config)
-        {:keys [routes frontend-config] :as opts} (configure config exts)]
+        {:keys [_routes frontend-config] :as _opts} (configure config exts)]
     (write-target2 :extensions-all (:extensions exts))
     (write-target2 :extensions-disabled (:extensions-disabled exts))
     (write-target2 "webly-build-config" config)

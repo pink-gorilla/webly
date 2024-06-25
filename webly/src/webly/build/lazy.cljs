@@ -32,7 +32,7 @@
   (try
     (lazy/load load-spec (partial add-loaded symbol-fn))
     (catch :default e
-      (error "Lazy Loading failed for: " symbol-fn))))
+      (error "Lazy Loading failed for: " symbol-fn " error: " e))))
 
 (defn run [f args]
   (if args

@@ -1,7 +1,7 @@
 (ns webly.build.shadow
   "call shadow-cljs functions"
   (:require
-   [taoensso.timbre :as timbre :refer [debug info warn]]
+   [taoensso.timbre :as timbre :refer [info warn]]
    [shadow.cljs.devtools.server.npm-deps :as npm-deps]
    [shadow.cljs.devtools.cli]
    [shadow.cljs.devtools.api :as shadow-api]
@@ -22,7 +22,7 @@
   ;; and a server restart is not required for them to be picked up
   (npm-deps/main config opts))
 
-(defn generate-bundlesize-report [profile shadow-config]
+(defn generate-bundlesize-report [_profile shadow-config]
   ;(println "generate-bundlesize-report profile:" profile " shadow-config: " shadow-config)
   (let [build-data (-> shadow-config :builds :webly)]
     ;(println "generate-bundlesize-report build-data: " build-data)
@@ -54,7 +54,7 @@
 
 (defn shadow-build [profile shadow-config]
   (let [full-profile  (get profile :bundle)
-        {:keys [shadow-verbose cljs-build shadow-mode size-report npm-install static?]} full-profile
+        {:keys [shadow-verbose cljs-build shadow-mode size-report npm-install _static?]} full-profile
         shadow-opts {:verbose shadow-verbose}]
     (ensure-package-json)
     (ensure-karma)

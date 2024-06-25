@@ -46,25 +46,8 @@
                 {:kb "win-z l" :handler [:login/dialog] :desc "login"}]
 
 
- :permission {:default nil
-              :service {:time/now nil ; no permission needed for this.
-                        :time/now-date #{} ; only logged in users can access this service
-                        :time/now-date-local #{:supervisor}
-                        :demo/connected nil}}
 
- :users {:demo {:roles #{:logistic}
-                :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
-                :email ["john@doe.com"]}
-         :boss {:roles #{:logistic :supervisor :accounting}
-                :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
-                :email ["boss@doe.com"]}
 
-         :florian {:roles #{:logistic}
-                   :password "a231498f6c1f441aa98482ea0b224ffa" ; 1234
-                   :email ["hoertlehner@gmail.com"]}
-         :john {:roles #{:logistic}
-                :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
-                :email ["john@doe.com"]}}
 
 ;                
  }

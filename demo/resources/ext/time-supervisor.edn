@@ -1,0 +1,4 @@
+{:clj-services {:name "webly-demo-services-time-supervisor"
+                :permission  #{:supervisor}
+                :symbols [:time/now-date-local]}}
+

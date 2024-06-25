@@ -17,5 +17,5 @@
 
 (reg-event-db
  :webly/before-load
- (fn [db [_]]
+ (fn [_db [_]]
    (warn "add reframe event :webly/before-load for custom reloading during development")))

@@ -21,7 +21,7 @@
 ;(def dynamic-base app-load-path)
 
 (defn current-path []
-  (let [{:keys [protocol port host path]} (-> (current-url) (url))]
+  (let [{:keys [_protocol _port _host path]} (-> (current-url) (url))]
     path))
 
 (defn entry-path []

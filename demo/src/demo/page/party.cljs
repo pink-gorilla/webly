@@ -14,7 +14,7 @@
 (def config
   {:party :red})
 
-(defn party [location expected-guests]
+(defn party [_location _expected-guests]
   (let [first (r/atom true)]
     (fn [location expected-guests]
       (when @first
@@ -37,7 +37,7 @@
        [:a {:href "/party/kabul"}
         [:p.bg-red-400.m-3 "secret party"]]])))
 
-(defn party-page [{:keys [handler route-params query-params]}]
+(defn party-page [{:keys [_handler route-params query-params]}]
   (let [{:keys [location]} route-params
         {:keys [expected-guests]} query-params]
     [party location expected-guests]))

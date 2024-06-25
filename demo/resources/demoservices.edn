@@ -6,15 +6,35 @@
   :timbre {:start (modular.log/timbre-config!
                    (:timbre/clj (deref (clip/ref :config))))}
 
+  :exts {:start (extension/discover)}
+
+  :permission {:start (modular.permission.core/start-permissions
+                       {:demo {:roles #{:logistic}
+                               :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
+                               :email ["john@doe.com"]}
+                        :boss {:roles #{:logistic :supervisor :accounting}
+                               :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
+                               :email ["boss@doe.com"]}
+
+                        :florian {:roles #{:logistic}
+                                  :password "a231498f6c1f441aa98482ea0b224ffa" ; 1234
+                                  :email ["hoertlehner@gmail.com"]}
+                        :john {:roles #{:logistic}
+                               :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
+                               :email ["john@doe.com"]}})}
+
   :webly {:start (webly.app.app/start-webly
-                  (deref (clip/ref :config))
-                  (:profile #ref [:modular]))
+                    (clip/ref :exts)
+                    (deref (clip/ref :config))
+                    (:profile #ref [:modular]))
           :stop (webly.app.app/stop-webly this)}
 
-  :nrepl {:start (nrepl.server/start-server :bind "0.0.0.0" :port 9100)
-          :stop (.close this)}
-
-  :time {:start (demo.time/start-time-sender!)
+  :time {:start (demo.time/start-time-sender! (:websocket (clip/ref :webly)))
          :stop  (demo.time/stop! this)}
 
-  :modular-test {:start (println "modular environment: " #ref [:modular])}}}
+  :modular-test {:start (println "modular environment: " #ref [:modular])}
+  
+  :nrepl {:start (nrepl.server/start-server :bind "0.0.0.0" :port 9100)
+          :stop (.close this)}
+  
+  }}

@@ -1,6 +1,5 @@
 (ns frontend.helper
   (:require
-   [taoensso.timbre :refer-macros [info infof error]]
    [clojure.string :as str]
    [cemerick.url :as url]))
 

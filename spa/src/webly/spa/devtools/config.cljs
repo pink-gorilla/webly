@@ -3,7 +3,7 @@
    [re-frame.core :as rf]
    [ui.frisk :refer [frisk]]))
 
-(defn config-page [{:keys [route-params query-params handler] :as route}]
+(defn config-page [{:keys [_route-params _query-params _handler] :as _route}]
   (let [config (rf/subscribe [:webly/config])]
     (fn []
       [:div
