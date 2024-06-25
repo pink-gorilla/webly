@@ -3,27 +3,18 @@
    [taoensso.timbre :as log :refer [tracef debugf info infof warn error errorf]]
    [clojure.core.async :as async  :refer [<! <!! >! >!! put! chan go go-loop]]
    [modular.date :refer [now-str now  now-local]]
-   [modular.ws.core :refer [send-all!]]
-   [modular.ws.msg-handler :refer [-event-msg-handler send-response]]))
+   [modular.ws.core :refer [send-all!]]))
 
 ; EVENTHANDLER
 
-(defmethod -event-msg-handler :time/now
-  [{:as req :keys [event _id _?data _ring-req _?reply-fn _send-fn]}]
-  (infof ":time/now: %s" event)
-  (let [stime (now-str)]
-    (info "sending time: " stime)
-    (send-response req :demo/time stime)))
+(defn time-now []
+  (now-str))
 
-(defmethod -event-msg-handler :time/now-date
-  [{:as req :keys [event _id _?data _ring-req _?reply-fn _send-fn]}]
-  (infof ":time/now: %s" event)
-  (send-response req :demo/time-date (now)))
+(defn time-now-date []
+  (now))
 
-(defmethod -event-msg-handler :time/now-date-local
-  [{:as req :keys [event _id _?data _ring-req _?reply-fn _send-fn]}]
-  (infof ":time/now: %s" event)
-  (send-response req :demo/time-date-local (now-local)))
+(defn time-now-date-local []
+  (now-local))
 
 ; TIME PUSHER
 

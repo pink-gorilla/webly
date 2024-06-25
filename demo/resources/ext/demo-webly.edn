@@ -38,8 +38,8 @@
          :current {:emoji    false}}
 
  :clj-services {:name "webly-demo-services-public"
-                :permission  nil ; #{}
-                :symbols [:time/now]}
+                :permission  nil
+                :symbols [demo.time/time-now]}
 
  ;
  }

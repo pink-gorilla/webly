@@ -22,6 +22,10 @@
                         :john {:roles #{:logistic}
                                :password "a231498f6c1f441aa98482ea0b224ffa" ; "1234"
                                :email ["john@doe.com"]}})}
+  
+  :clj-service {:start (clj-service.core/start-clj-services
+                       (clip/ref :permission)
+                       (clip/ref :exts))}
 
   :webly {:start (webly.app.app/start-webly
                     (clip/ref :exts)

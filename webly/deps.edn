@@ -4,9 +4,6 @@
  :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
         org.clojure/core.async {:mvn/version  "1.6.673"}
         com.rpl/specter {:mvn/version "1.1.4"}
-        ; logging
-        ;; {ring.middleware.logger "0.5.0"}
-
         ;; old
         luminus/ring-ttl-session {:mvn/version "0.3.3"}
 
