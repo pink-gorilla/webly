@@ -1,8 +1,7 @@
 (ns webly.encoding-sente-packer-test
   (:require
-   [taoensso.timbre :as log :refer [info infof]]
-   [taoensso.sente.packers.transit :as sente-transit :refer [get-transit-packer]]
    [clojure.test :refer [deftest is testing]]
+   [taoensso.sente.packers.transit :as sente-transit :refer [get-transit-packer]]
    [taoensso.sente.interfaces :as interfaces :refer (pack unpack)]
    [modular.encoding.transit :as e]
    [modular.date :refer [now-date]]))

@@ -16,7 +16,7 @@
         com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
         ; modular
         org.pinkgorilla/webserver {:mvn/version "0.0.12"} ; brings modular
-        org.pinkgorilla/websocket {:mvn/version "0.0.13"}
+        org.pinkgorilla/websocket {:mvn/version "0.0.17"}
         org.pinkgorilla/permission {:mvn/version "0.2.18"}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
         org.pinkgorilla/ui-bidi {:mvn/version "0.1.36"}
