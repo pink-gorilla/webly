@@ -1,4 +1,0 @@
-{:clj-services {:name "webly-demo-services-time-user"
-                :permission  #{}
-                :symbols [demo.time/time-now-date]}}
-

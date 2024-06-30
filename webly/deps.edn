@@ -2,10 +2,10 @@
          "resources"  ; webly resources (svg/img)
          ]
  :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
-        org.clojure/core.async {:mvn/version  "1.6.673"}
+        ;org.clojure/core.async {:mvn/version  "1.6.673"}
         com.rpl/specter {:mvn/version "1.1.4"}
         ;; old
-        luminus/ring-ttl-session {:mvn/version "0.3.3"}
+        ;luminus/ring-ttl-session {:mvn/version "0.3.3"}
 
         ; webly/core
         ; shadow-cljs
@@ -21,9 +21,9 @@
         ; modular
         org.pinkgorilla/timbre {:mvn/version "0.0.7"}
         org.pinkgorilla/extension {:mvn/version "0.0.12"}
-        org.pinkgorilla/permission {:mvn/version "0.2.18"}
+        ;org.pinkgorilla/permission {:mvn/version "0.2.19"}
         org.pinkgorilla/webserver {:mvn/version "0.0.12"} ; brings modular
-        org.pinkgorilla/websocket {:mvn/version "0.0.17"}
+        org.pinkgorilla/websocket {:mvn/version "0.0.18"}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}}
  :aliases
  {; https://github.com/weavejester/cljfmt
@@ -34,7 +34,7 @@
                        ]}
 
   ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
-  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.03.13"}}
+  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.05.24"}}
          :main-opts ["-m" "clj-kondo.main"
                      "--fail-level" "error"
                      "--config" "cljkondo.edn"

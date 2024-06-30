@@ -2,9 +2,9 @@
          "resources"  ; webly resources (svg/img)
          ]
  :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
-        org.clojure/core.async {:mvn/version  "1.6.673"}
+        ;org.clojure/core.async {:mvn/version  "1.6.673"}
         ;; old
-        luminus/ring-ttl-session {:mvn/version "0.3.3"}
+        ;luminus/ring-ttl-session {:mvn/version "0.3.3"}
         ; frontend
         reagent/reagent {:mvn/version "1.1.1"} ; https://github.com/reagent-project/reagent
         re-frame/re-frame {:mvn/version "1.2.0"}
@@ -17,7 +17,6 @@
         ; modular
         org.pinkgorilla/webserver {:mvn/version "0.0.12"} ; brings modular
         org.pinkgorilla/websocket {:mvn/version "0.0.18"}
-        org.pinkgorilla/permission {:mvn/version "0.2.18"}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
         org.pinkgorilla/ui-bidi {:mvn/version "0.1.36"}
         org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.10"}

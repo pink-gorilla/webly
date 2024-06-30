@@ -5,17 +5,6 @@
    [modular.date :refer [now-str now  now-local]]
    [modular.ws.core :refer [send-all!]]))
 
-; EVENTHANDLER
-
-(defn time-now []
-  (now-str))
-
-(defn time-now-date []
-  (now))
-
-(defn time-now-date-local []
-  (now-local))
-
 ; TIME PUSHER
 
 (defn stop! [this]

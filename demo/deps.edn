@@ -1,13 +1,14 @@
 {:paths ["src"
          "target/node_modules"  ; css png resources from npm modules (tailwind)
          "resources"]
- :deps {org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
+ :deps {org.clojure/core.async {:mvn/version  "1.6.673"}
         ; lazy ui modules:
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
         org.pinkgorilla/ui-vega {:mvn/version "0.3.220"}
-        org.pinkgorilla/clj-service {:mvn/version "0.3.17"}
-        org.pinkgorilla/oauth2 {:mvn/version "0.0.27"}
-        org.pinkgorilla/pinkie {:mvn/version "0.5.232"}}
+        ;org.pinkgorilla/clj-service {:mvn/version "0.3.18"}
+        org.pinkgorilla/pinkie {:mvn/version "0.5.232"}
+        org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
+        }
  :aliases
  {:cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}
            :main-opts ["-m" "cljfmt.main"
@@ -16,7 +17,7 @@
                        ]}
 
             ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
-  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.03.13"}}
+  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.05.24"}}
          :main-opts ["-m" "clj-kondo.main"
                      "--fail-level" "error"
                      "--config" "../webly/cljkondo.edn"
