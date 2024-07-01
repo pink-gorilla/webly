@@ -1,7 +1,7 @@
 {:paths ["src"
          "target/node_modules"  ; css png resources from npm modules (tailwind)
          "resources"]
- :deps {org.clojure/core.async {:mvn/version  "1.6.673"}
+ :deps {org.clojure/core.async {:mvn/version  "1.6.673"} ; time pusher
         ; lazy ui modules:
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
         org.pinkgorilla/ui-vega {:mvn/version "0.3.220"}
