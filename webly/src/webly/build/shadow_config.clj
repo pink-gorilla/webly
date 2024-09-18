@@ -7,12 +7,12 @@
    [webly.module.build :refer [create-modules shadow-module-config]]))
 
 ;; build-options
-(defn build-ns-aliases []
-  (if-pref-fn :tenx
-              {'webly.spa.tenx.events 'webly.spa.tenx.events-on}
-              {'webly.spa.tenx.events 'webly.spa.tenx.events-off
+#_(defn build-ns-aliases []
+    (if-pref-fn :tenx
+                {'webly.spa.tenx.events 'webly.spa.tenx.events-on}
+                {'webly.spa.tenx.events 'webly.spa.tenx.events-off
                ;'day8.re-frame.tracing 'day8.re-frame.tracing-stubs
-               }))
+                 }))
 
 ;; shadow config
 (defn shadow-config [exts
@@ -69,7 +69,7 @@
                       :modules shadow-modules
                     ;:devtools {:before-load (symbol "webly.web.app/before-load")
                     ;           :after-load (symbol "webly.web.app/after-load")}
-                      :build-options    {:ns-aliases (build-ns-aliases)}
+                      ;:build-options    {:ns-aliases (build-ns-aliases)}
                       :compiler-options {:optimizations (if advanced?
                                                           :advanced
                                                           :simple)

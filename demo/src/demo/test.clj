@@ -2,7 +2,6 @@
   (:require
    [extension :refer [discover write-service]]
    [bidi.bidi :as bidi]
-
    [webly.module.build :refer [create-modules shadow-module-config
                                create-modules
                                get-lazy-ns]]))

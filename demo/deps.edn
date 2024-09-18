@@ -42,17 +42,15 @@
   ; 2. run unit tests 
 
   ; BUILD BUNDLE (then exit)
-  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.105"}  ; http cors test
+  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.108"} ; http cors test
                        }
           :extra-paths ["src" "resources" "test" "test/resources"]
           :exec-fn webly.app.app/webly-build
-          :exec-args {:config ["demo.edn"
-                               ;"creds-localhost.edn"
-                               "/home/florian/repo/myLinux/myvault/trateg/creds.edn"] ; does not get used!
+          :exec-args {:config ["demo.edn"] 
                       :profile "npm-install"}}
 
   :npm-install {:exec-args {:profile "npm-install"}}
-  :compile {:exec-args {:profile "compile2"}}
+  :compile {:exec-args {:profile "compile"}}
   :release {:exec-args {:profile "release"}}
   :release-adv {:exec-args {:profile "release-adv"}}
   :static {:exec-args {:profile "static"}}

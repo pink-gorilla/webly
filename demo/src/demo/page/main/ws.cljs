@@ -3,7 +3,7 @@
    [taoensso.timbre :refer-macros [warn]]
    [reagent.core :as r]
    [re-frame.core :as rf]
-   [demo.helper.ui :refer [link-fn block2]]))
+   [demo.helper.ui :refer [block2]]))
 
 ; WEBSOCKET
 (defn print-status [x]

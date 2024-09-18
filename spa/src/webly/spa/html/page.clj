@@ -5,7 +5,8 @@
    [taoensso.timbre :refer [debug info error]]
    [frontend.analytics.google-tag :refer [script-tag-src script-tag-config]]
    [frontend.css.config :refer [css-app]]
-   [webly.spa.tenx.view :refer [tenx-script]]))
+   ;[webly.spa.tenx.view :refer [tenx-script]]
+   ))
 
 ;; CSS
 
@@ -71,7 +72,7 @@
               ; <meta name= "keywords" content= "keywords,here" >
               [:title title]
               [:link {:rel "shortcut icon" :href (str prefix icon)}]
-              (tenx-script)
+              ;(tenx-script)
               (body-loading-style (str prefix loading-image-url))
               (script-tag-src google-analytics)
               (script-tag-config google-analytics)]]

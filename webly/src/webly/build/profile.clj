@@ -4,7 +4,7 @@
    [webly.build.prefs :refer [prefs-atom]]))
 
 (defonce profiles
-  {:ci          {:prefs   {:tenx false}
+  {:ci          {:prefs   {}
                  :bundle {:shadow-verbose false
                           :cljs-build :ci
                           :shadow-mode :release
@@ -12,49 +12,37 @@
 
    :static  {:static? true}
 
-   :release     {:prefs   {:tenx false}
+   :release     {:prefs   {}
                  :bundle {:shadow-verbose false
                           :cljs-build :webly
                           :shadow-mode :release ; production build - no source maps
                           :size-report true}}
 
-   :release-adv  {:prefs   {:tenx false}
+   :release-adv  {:prefs   {}
                   :bundle {:shadow-verbose false
                            :cljs-build :webly
                            :shadow-mode :release ; production build - no source maps
                            :advanced true
                            :size-report true}}
 
-   :npm-install  {:prefs   {:tenx false}
+   :npm-install  {:prefs   {}
                   :bundle {:shadow-verbose false
                            :cljs-build :webly
                            :shadow-mode nil ; no build, just npm install
                            :size-report false
                            :npm-install true}}
 
-   :compile     {:prefs   {:tenx true}
+   :compile     {:prefs   {}
                  :bundle {:shadow-verbose false
                           :cljs-build :webly
                           :shadow-mode :compile  ; compile has source maps
                           :size-report false}}
 
-   :compile2    {:prefs   {:tenx false}
-                 :bundle {:shadow-verbose false
-                          :cljs-build :webly
-                          :shadow-mode :compile  ; compile has source maps
-                          :size-report false}}
-
-   :watch       {:prefs   {:tenx true}
+   :watch       {:prefs   {}
                  :bundle {:shadow-verbose true
                           :cljs-build :webly
                           :shadow-mode :watch
-                          :size-report false}}
-
-   :watch2       {:prefs   {:tenx false}
-                  :bundle {:shadow-verbose true
-                           :cljs-build :webly
-                           :shadow-mode :watch
-                           :size-report false}}})
+                          :size-report false}}})
 
 (defn str->profile [profile-str]
   (let [p (keyword profile-str)]

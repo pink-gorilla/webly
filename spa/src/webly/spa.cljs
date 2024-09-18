@@ -16,7 +16,7 @@
    [webly.spa.service.ws :refer [start-ws]]
    ; webly
    [webly.build.lazy]
-   [webly.spa.tenx.events]
+   ;[webly.spa.tenx.events]
    [webly.spa.views :refer [webly-app]]
    [webly.spa.events] ; side effects
    [webly.spa.loader.page] ; side-effects
@@ -91,7 +91,7 @@
 
 (defn ^:export start [_mode]
   (enable-console-print!)
-  (dispatch [:reframe10x-init])
+  ;(dispatch [:reframe10x-init])
   (dispatch [:webly/status :route-init])
   (dispatch [:webly/status :loading-config])
   (start-config)
