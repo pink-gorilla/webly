@@ -17,11 +17,18 @@
    [webly.spa.default :as default])
   (:gen-class))
 
+;; shadow watch hack
+
 (defn watch? [profile-name]
   (case profile-name
     "watch" true
-    "watch2" true
     false))
+
+(defn shadow-dev-http-port [config profile]
+  (if (watch? profile)
+    ;(get-in config [:shadow :dev-http :port])
+    (get-in default/shadow [:dev-http :port])
+    0))
 
 ;; HANDLER RELATED
 
@@ -41,24 +48,31 @@
                     :or {sente-debug? false
                          web-server default/webserver}
                     :as config}
-                   server-type]
-  (info "start-webly: " server-type)
-  (let [server-type (ensure-keyword server-type)
+                   profile]
+  (info "start-webly: " profile)
+  (let [server-type (if (= profile "watch")
+                      :jetty
+                      (ensure-keyword profile))
+        port-config {; shadow-dev-http-port is set to shadow-dev http server port
+                     ; when using "watch" profile. Otherwise it is 0.
+                     :ports {:shadow-dev-http-port (shadow-dev-http-port config profile)
+                             :webly-http-port (:port web-server)}}
+        _ (info "webly port config: " port-config)
+        config (merge config port-config)
         {:keys [routes frontend-config]} (configure config exts)
         config-route (create-config-routes frontend-config)
         websocket (start-websocket-server server-type sente-debug?)
         websocket-routes (:bidi-routes websocket)
         app-handler (app-handler frontend-config)
         ring-handler (create-ring-handler app-handler routes config-route websocket-routes)
-        webserver (if (watch? server-type)
-                    (web-server/start web-server ring-handler websocket :jetty)
-                    (web-server/start web-server ring-handler websocket (keyword server-type)))
-        shadow   (when (watch? server-type)
-                   (let [profile-full (setup-profile server-type)]
+        _ (info "starting webserver type: " server-type)
+        webserver (web-server/start web-server ring-handler websocket server-type)
+        shadow   (when (watch? profile)
+                   (let [profile-full (setup-profile profile)]
                      (when (:bundle profile-full)
                        (build exts config profile-full))))]
     ; return config of started services (needed to stop)
-    {:profile server-type
+    {:profile profile
      :webserver webserver
      :websocket websocket
      :shadow shadow}))

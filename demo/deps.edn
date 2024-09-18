@@ -1,11 +1,9 @@
 {:paths ["src"
          "target/node_modules"  ; css png resources from npm modules (tailwind)
          "resources"]
- :deps {org.clojure/core.async {:mvn/version  "1.6.673"} ; time pusher
-        ; lazy ui modules:
+ :deps {; lazy ui modules:
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
         org.pinkgorilla/ui-vega {:mvn/version "0.3.220"}
-        ;org.pinkgorilla/clj-service {:mvn/version "0.3.18"}
         org.pinkgorilla/pinkie {:mvn/version "0.5.232"}
         org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
         }
@@ -64,7 +62,7 @@
   :httpkit {:extra-deps {http-kit/http-kit {:mvn/version "2.5.3"}}
             :exec-args {:profile "httpkit"}}
   :jetty {:exec-args {:profile "jetty"}}
-  :watch {:exec-args {:profile "watch2"}}
+  :watch {:exec-args {:profile "watch"}}
 
   :demo-build {:extra-deps {org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
                             org.pinkgorilla/ui-vega {:mvn/version "0.3.220"}}

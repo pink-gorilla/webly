@@ -3,8 +3,8 @@
    [clojure.string :as str]
    [hiccup.page :as page]
    [taoensso.timbre :refer [debug info error]]
-   [frontend.analytics.google-tag :refer [script-tag-src script-tag-config]]
    [frontend.css.config :refer [css-app]]
+   ;[frontend.analytics.google-tag :refer [script-tag-src script-tag-config]]
    ;[webly.spa.tenx.view :refer [tenx-script]]
    ))
 
@@ -59,7 +59,8 @@
 (defn head [{:keys [title loading-image-url icon] :as _spa}
             theme
             prefix
-            google-analytics]
+            ;google-analytics
+            ]
   (let [head [:head
               [:meta {:http-equiv "Content-Type"
                       :content "text/html; charset=utf-8"}]
@@ -74,26 +75,27 @@
               [:link {:rel "shortcut icon" :href (str prefix icon)}]
               ;(tenx-script)
               (body-loading-style (str prefix loading-image-url))
-              (script-tag-src google-analytics)
-              (script-tag-config google-analytics)]]
+              ;(script-tag-src google-analytics)
+              ;(script-tag-config google-analytics)
+              ]]
     (into head
           (css->hiccup prefix theme))))
 
 (defn layout [{:keys [spinner] :as spa}
               theme
               prefix
-              google-analytics
+              #_google-analytics
               page]
   (page/html5
    {:mode :html}
-   (head spa theme prefix google-analytics)
+   (head spa theme prefix #_google-analytics)
    [:body.loading
     (loading (str prefix spinner))
     [:div#webly page]]))
 
 (defn app-page-dynamic [frontend-config csrf-token]
-  (let [{:keys [spa theme prefix google-analytics]} frontend-config]
-    (layout spa theme prefix google-analytics
+  (let [{:keys [spa theme prefix #_google-analytics]} frontend-config]
+    (layout spa theme prefix #_google-analytics
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
              [:div#app]
@@ -108,9 +110,9 @@
     asset-path))
 
 (defn app-page-static [frontend-config csrf-token]
-  (let [{:keys [spa theme prefix google-analytics]} frontend-config]
+  (let [{:keys [spa theme prefix #_google-analytics]} frontend-config]
     (info "static prefix: " prefix)
-    (layout spa theme prefix google-analytics ; :prefix "/r/"
+    (layout spa theme prefix #_google-analytics ; :prefix "/r/"
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
              [:div#app]

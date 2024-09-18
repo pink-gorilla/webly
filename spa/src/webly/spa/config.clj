@@ -22,10 +22,10 @@
   {:api (get-api-routes exts)
    :app (get-cljs-routes exts)})
 
-(defn configure [{:keys [spa google-analytics prefix settings]
+(defn configure [{:keys [spa #_google-analytics prefix settings ports]
                   :or {spa {}
                        settings default/settings
-                       google-analytics default/google-analytics
+                       ;google-analytics default/google-analytics
                        prefix default/prefix}
                   :as config} exts]
   (let [routes (get-routes exts)
@@ -36,7 +36,9 @@
                           :settings settings
                           :theme theme
                           :cljs-services (cljs-services config exts)
-                          :google-analytics google-analytics}]
+                          :ports ports
+                          ;:google-analytics google-analytics
+                          }]
     {:routes routes
      :frontend-config frontend-config}))
 

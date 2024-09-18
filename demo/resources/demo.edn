@@ -7,7 +7,7 @@
        ;:loading-image-url "webly/loadimage/library.jpg" ; 
        }
 
- :google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
+ ;:google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
  :timbre/clj {:min-level [[#{"org.eclipse.jetty.*"} :warn]
                           [#{"*"} :info]]

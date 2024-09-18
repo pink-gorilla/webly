@@ -12,7 +12,7 @@
    [frontend.page]
    [webly.spa.service.config :refer [start-config]]
    [webly.spa.service :refer [start-cljs-services]]
-   [webly.spa.service.ga :refer [start-ga]]
+   ;[webly.spa.service.ga :refer [start-ga]]
    [webly.spa.service.ws :refer [start-ws]]
    ; webly
    [webly.build.lazy]
@@ -68,15 +68,16 @@
    (let [spa (get-in db [:config :spa])
          start-user-app (-> spa :start-user-app)
          cljs-services (get-in db [:config :cljs-services])
-         services-p  (start-cljs-services cljs-services)]
+         services-p  (start-cljs-services cljs-services)
+         http-ports (get-in db [:config :ports])]
      (info "webly config after-load")
      (remove-spinner)
      (dispatch [:webly/status :configuring-app])
      ; services
-     (start-ga)
+     ;(start-ga)
      (if static?
        (warn "websockets are deactivated in static mode.")
-       (start-ws))
+       (start-ws http-ports))
      ; 
      (p/then services-p (fn [_]
                           (warn "services are all configured!")

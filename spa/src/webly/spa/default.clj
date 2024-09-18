@@ -16,10 +16,11 @@
    :start-user-app [:webly/start-default]  ; after config loaded}
    })
 
-(def google-analytics
-  {:enabled false ; set to false to disable google-analytics tracking. 
-   :id "UA-154548494-1" ; not a secret
-   })
+;(def google-analytics
+;  {:enabled false ; set to false to disable google-analytics tracking. 
+;   :id "UA-154548494-1" ; not a secret
+;   })
+
 (def settings {:use-localstorage  false})
 
 (def shadow

@@ -5,13 +5,11 @@
 - With webly you can build clj/cljs web apps (server: clj, frontend: reagent/reframe)
 - webly uses great tools such as: reagent, reframe, tailwind-css, shadow-cljs
 - webly brings a things that can be hard to configure (or repetitive) when you develop a web app such as:
-  - ten-x developer console
   - unit test runner
   - routing (via edn config), extensible both in frontend  and backend
   - keybindings
   - loading animation
   - notifications and dialogs
-  - google analytics (can be disabled)
 
 - webly is used in [Goldly](https://github.com/pink-gorilla/goldly).
 
@@ -53,8 +51,7 @@ To start webly you have to pass it two parameter: **profile** and **config**
 # Webly Compile Profiles
 
 **Webly profile** can be one of the following strings:
-- watch: builds with ten-x and runs shadow dev server (shadow-cljs watch)
-- watch2: shadow-cljs watch without ten-x devtools
+- watch: builds and runs shadow dev server (shadow-cljs watch)
 - compile: builds bundle and output bundle stats
 - release: builds release bundle (for production)  no tenx. no source-maps bundle stats
 - jetty: runs app, with bundle compiled via compile or release 
