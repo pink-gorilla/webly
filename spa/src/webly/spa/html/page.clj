@@ -91,7 +91,10 @@
    (head spa theme prefix #_google-analytics)
    [:body.loading
     (loading (str prefix spinner))
-    [:div#webly page]]))
+    [:div#webly page]
+    [:div {; required by glide data grid.
+           :id "portal"
+           :style "position: fixed; left: 0; top: 0; z-index: 9999;"}]]))
 
 (defn app-page-dynamic [frontend-config csrf-token]
   (let [{:keys [spa theme prefix #_google-analytics]} frontend-config]

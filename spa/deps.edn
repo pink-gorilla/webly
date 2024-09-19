@@ -2,7 +2,6 @@
          "resources"  ; webly resources (svg/img)
          ]
  :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
-        ;org.clojure/core.async {:mvn/version  "1.6.673"}
         ;; old
         ;luminus/ring-ttl-session {:mvn/version "0.3.3"}
         ; frontend
