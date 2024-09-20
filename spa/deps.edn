@@ -11,6 +11,7 @@
         cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
         com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
         ; modular
+        org.pinkgorilla/modular {:mvn/version "0.2.58"} ; encoding, app-config-services
         org.pinkgorilla/webserver {:mvn/version "0.0.12"} ; brings modular
         org.pinkgorilla/websocket {:mvn/version "0.0.18"}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
