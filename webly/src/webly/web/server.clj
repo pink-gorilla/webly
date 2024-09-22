@@ -7,7 +7,6 @@
 (defn start [webserver-config ring-handler websocket server-type]
   (let [server (case server-type
                  :jetty (jetty/start-jetty ring-handler websocket webserver-config)
-                  ;:undertow (run-undertow-server ring-handler port host api)
                  :httpkit (httpkit/start-httpkit ring-handler webserver-config)
                   ;:shadow (run-shadow-server)
                  (do (error "start-server failed: server type not found: " type)
