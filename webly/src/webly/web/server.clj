@@ -8,7 +8,6 @@
   (let [server (case server-type
                  :jetty (jetty/start-jetty ring-handler websocket webserver-config)
                  :httpkit (httpkit/start-httpkit ring-handler webserver-config)
-                  ;:shadow (run-shadow-server)
                  (do (error "start-server failed: server type not found: " type)
                      nil))]
     {:server-type server-type

@@ -46,11 +46,12 @@
 (defn start-webly [exts
                    {:keys [web-server sente-debug?]
                     :or {sente-debug? false
-                         web-server default/webserver}
+                         web-server {}}
                     :as config}
                    profile]
   (info "start-webly: " profile)
-  (let [server-type (if (= profile "watch")
+  (let [web-server (merge default/webserver web-server)
+        server-type (if (= profile "watch")
                       :jetty
                       (ensure-keyword profile))
         port-config {; shadow-dev-http-port is set to shadow-dev http server port

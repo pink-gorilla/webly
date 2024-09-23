@@ -25,7 +25,7 @@
                            "resources"
                            "test"
                            "test/resources"]
-             :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.105"} ; http cors test
+             :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.108"} ; http cors test
                           io.github.cognitect-labs/test-runner
                           {:git/url "https://github.com/cognitect-labs/test-runner.git"
                            :sha "cc75980b43011773162b485f46f939dc5fba91e4"}

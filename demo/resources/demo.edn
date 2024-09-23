@@ -1,4 +1,8 @@
 {:build {:disabled-extensions #{}}
+ 
+
+ :web-server {:port 8090}
+
 
  :spa {:title "Webly Demo"
        ;:start-user-app [:demo/start]
@@ -6,8 +10,6 @@
        ;:icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
        ;:loading-image-url "webly/loadimage/library.jpg" ; 
        }
-
- ;:google-analytics {:enabled false} ; set to false to disable google-analytics tracking.
 
  :timbre/clj {:min-level [[#{"org.eclipse.jetty.*"} :warn]
                           [#{"*"} :info]]
