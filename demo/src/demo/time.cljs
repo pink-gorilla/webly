@@ -12,3 +12,12 @@
  (fn [db _]
    (:time db)))
 
+(reg-event-db
+ :demo/time2
+ (fn [db [_ t]]
+   (assoc db :time2 t)))
+
+(reg-sub
+ :demo/time2
+ (fn [db _]
+   (:time2 db)))

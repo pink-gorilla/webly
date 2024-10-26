@@ -12,9 +12,9 @@
 (defn demo-ws []
   (let [t (rf/subscribe [:demo/time])
         c (rf/subscribe [:ws/connected?])
-        a (r/atom nil)]
+        t2  (rf/subscribe [:demo/time2])]
     (fn []
       [block2 "websocket"
        [:p (str "connected:" (if @c @c "not connected"))]
        [:p (str "time: " (if @t @t " no time received :-("))]
-       [:p "time as date: " (when @a (str @a))]])))
+       [:p "time as date: " (when @t2 (str @t2))]])))

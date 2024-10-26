@@ -17,7 +17,7 @@
         ;org.clojure/clojurescript {:mvn/version "1.10.879"} ; already referred from shadow-cljs
         ; modular
         org.pinkgorilla/timbre {:mvn/version "0.0.7"}
-        org.pinkgorilla/extension {:mvn/version "0.0.13"} ; brings modular
+        org.pinkgorilla/extension {:mvn/version "0.0.14"} ; brings modular
         org.pinkgorilla/webserver {:mvn/version "0.0.12"} ; brings modular
         org.pinkgorilla/websocket {:mvn/version "0.0.18"}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}}

@@ -1,7 +1,7 @@
 (ns demo.time
   (:require
    [taoensso.timbre :as log :refer [info warn error]]
-   [modular.date :refer [now-str]]
+   [tick.core :as t]
    [modular.ws.core :refer [send-all!]]))
 
 ; TIME PUSHER
@@ -17,10 +17,13 @@
     (future
       (loop []
         (when  @running?
-          (send-all! this [:demo/time (now-str)])
+          (send-all! this [:demo/time (str (t/instant))])
+          ;(send-all! this [:demo/time2 (t/instant)])
+          (send-all! this [:demo/time2 (t/zoned-date-time)])
           (Thread/sleep 1000))
         (if @running?
           (recur)
           (info "time sender is stopping.."))))
     running?))
+
 
