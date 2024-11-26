@@ -70,10 +70,10 @@
   (let [loadable  (get @lazy-ns-loadable-a ns-name)
         rp (p/deferred)
         on-error (fn [err]
-                   (println "could not load ns: " ns-name " ERROR: " err)
+                   ;(println "could not load ns: " ns-name " ERROR: " err)
                    (p/reject! rp err))
         on-success (fn [vars]
-                     (println "ns [" ns-name "] loaded successfully!")
+                     ;(println "ns [" ns-name "] loaded successfully!")
                      (p/resolve! rp vars))]
     ; lazy/load does return a google deferred, so we cannot use promises here.
     (try
@@ -106,7 +106,7 @@
       (let [rp2 (load-namespace-raw ns-name)]
         (-> rp2
             (p/then (fn [vars]
-                      (println "load-namespace vars successfully received!")
+                      ;(println "load-namespace vars successfully received!")
                       (p/resolve! rp (assemble-simple-ns ns-name vars))))))
       (do (println "cannot load-namespace [" (pr-str ns-name) "] - not a simple-namespace!")
           (p/reject! rp (str "cannot load-namespace: "
@@ -122,8 +122,8 @@
     (-> ns-rp
         (p/then (fn [ns-map]
                   (if-let [fun (get ns-map fn-symbol)]
-                    (do (println "resolved successfully: " fq-symbol)
-                        (p/resolve! rp fun))
+                    (do ;(println "resolved successfully: " fq-symbol)
+                      (p/resolve! rp fun))
                     (do (println "could not resolve: " fq-symbol)
                         (p/reject! rp (str "namespace does not contain function: " fn-symbol))))))
         (p/catch (fn [err]

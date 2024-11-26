@@ -7,17 +7,24 @@
 (defn start-cljs-service [resolver {:keys [name config start-fn]}]
   (let [r-p (p/deferred)
         start-p (resolver start-fn)]
-    (warn "starting cljs-service name: " name "start-fn: " start-fn)
+    (info "starting cljs-service name: " name "start-fn: " start-fn)
     (-> start-p
         (p/then (fn [start]
                   (let [r (start config)]
                     (if (p/promise? r)
                       (-> r
-                          (p/then (fn [_] (p/resolve! r-p nil)))
+                          (p/then (fn [_]
+                                    (info "clj-service name: " name " successfully started!")
+                                    (p/resolve! r-p nil)))
                           (p/catch (fn [err]
-                                     (error "error in starting service: " start-fn " err: " err)))
-                          r)
-                      (p/resolve! r-p nil))))))
+                                     (error  "clj-service name: " name "cannot be started. start-fn: "  start-fn " error: " err)
+                                     (p/reject! r-p nil))))
+                      (do
+                        (info "clj-service name: " name " successfully started!")
+                        (p/resolve! r-p nil))))))
+        (p/catch (fn [err]
+                   (error "could not resolve service: " start-fn " error: " err)
+                   (p/reject! r-p nil))))
     r-p))
 
 (defn start-cljs-services [services]
