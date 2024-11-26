@@ -16,7 +16,6 @@
    ; webly
    [webly.build.lazy]
    [webly.spa.views :refer [webly-app]]
-   [webly.spa.events] ; side effects
    [webly.spa.loader.page] ; side-effects
    ))
 
@@ -56,36 +55,39 @@
     (when (.contains body-classes "loading")
       (.remove body-classes "loading"))))
 
+(def ws-open-p (p/deferred))
+
+(reg-event-db
+ :ws/open-first
+ (fn [db [_ state-map]]
+   (info "ws connected for the first time!")
+   (p/resolve! ws-open-p true)
+   db))
+
 (reg-event-db
  :webly/app-after-config-load
  (fn [db [_ static?]]
-   (let [spa (get-in db [:config :spa])
-         start-user-app (-> spa :start-user-app)
-         cljs-services (get-in db [:config :cljs-services])
+   (let [cljs-services (get-in db [:config :cljs-services])
          services-p  (start-cljs-services cljs-services)
-         http-ports (get-in db [:config :ports])]
+         http-ports (get-in db [:config :ports])
+         all-p (if static?
+                 (do (warn "websockets are deactivated in static mode.")
+                     services-p)
+                 (do (start-ws http-ports)
+                     (p/all [services-p ws-open-p])))]
      (info "webly config after-load")
      (remove-spinner)
      (info "mounting webly-app ..")
-     (mount-app)
+     (mount-app) ; mount needs to wait until config is loaded.
      (dispatch [:webly/status :configuring-app])
-     ; services
-     (if static?
-       (warn "websockets are deactivated in static mode.")
-       (start-ws http-ports))
-     ; 
-     (-> services-p
+
+     (-> all-p
          (p/then (fn [_]
-                   (warn "services are all configured!")
+                   (warn "services/websocket running!")
                    (dispatch [:webly/set-status :configured? true])
-                   (if start-user-app
-                     (do (info "starting user app: " start-user-app)
-                         (dispatch start-user-app))
-                     (warn "no user app startup defined."))
-                                 ;(dispatch [:webly/status :running])                     
-                   ))
+                   (dispatch [:webly/status :running])))
          (p/catch (fn [err]
-                    (error "services start error: " err)))))
+                    (error "service start error: " err)))))
 
    db))
 
@@ -93,6 +95,4 @@
   (enable-console-print!)
   (dispatch [:webly/status :route-init])
   (dispatch [:webly/status :loading-config])
-  (start-config)
-  ;(mount-app)
-  )
+  (start-config))
