@@ -18,7 +18,7 @@
         [loader-page]))))
 
 (defn webly-app []
-  [:div; .w-full.h-full
+  [:div
    [modal-container]
    [notification-container]
    [load-css]

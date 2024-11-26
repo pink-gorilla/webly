@@ -30,8 +30,6 @@
     (if served-by-shadow-dev?
       (info "this is a shadow-cljs-dev session. connecting websocket to WEBLY SERVER route: " route " port: " port)
       (info "connecting websocket route: " route " port: " port))
-
-     ;(dispatch [:ws/init])
     (if port
       (start-websocket-client! route port)
       (error "WEBSOCKET cannot connect. port nil! webly-http-port: " webly-http-port " shadow-port: " shadow-dev-http-port))))

@@ -5,28 +5,14 @@
    [bidi.bidi :as bidi]
    [bidi.ring]
    [modular.webserver.handler.not-found :refer [not-found-handler]]
-   [modular.webserver.handler.registry :refer [handler-registry]]
    [webly.spa.handler.routes-resolve :refer [get-handler-backend-symbol]]))
 
 ; server request serving
 
-(defn get-handler-keyword [handler-kw]
-  (error "get-handler-backend-keyword:" handler-kw)
-  (if-let [handler (handler-kw @handler-registry)]
-    handler
-    (do (error "handler-registry does not contain handler for: " handler-kw)
-        nil)))
-
 (defn get-handler-backend
   [h]
-  (cond
-    (keyword? h) ;resources have a wrapped handler
-    (get-handler-keyword h)
-
-    (symbol? h)
+  (if (symbol? h)
     (get-handler-backend-symbol h)
-
-    :else
     h))
 
 (defn get-handler-frontend [app-handler routes-frontend path req]

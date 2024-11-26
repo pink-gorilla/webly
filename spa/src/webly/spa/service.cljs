@@ -1,6 +1,6 @@
 (ns webly.spa.service
   (:require
-   [taoensso.timbre :refer-macros [info warn]]
+   [taoensso.timbre :refer-macros [info warn error]]
    [promesa.core :as p]
    [webly.spa.resolve :refer [get-resolver]]))
 
@@ -12,7 +12,11 @@
         (p/then (fn [start]
                   (let [r (start config)]
                     (if (p/promise? r)
-                      (p/then r (fn [_] (p/resolve! r-p nil)))
+                      (-> r
+                          (p/then (fn [_] (p/resolve! r-p nil)))
+                          (p/catch (fn [err]
+                                     (error "error in starting service: " start-fn " err: " err)))
+                          r)
                       (p/resolve! r-p nil))))))
     r-p))
 

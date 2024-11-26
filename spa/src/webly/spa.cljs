@@ -1,7 +1,7 @@
 (ns webly.spa
   (:require
    [reagent.dom]
-   [taoensso.timbre :refer-macros [info warn]]
+   [taoensso.timbre :refer-macros [info warn error]]
    [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db reg-sub]]
    [promesa.core :as p]
    ; side-effects
@@ -12,11 +12,9 @@
    [frontend.page]
    [webly.spa.service.config :refer [start-config]]
    [webly.spa.service :refer [start-cljs-services]]
-   ;[webly.spa.service.ga :refer [start-ga]]
    [webly.spa.service.ws :refer [start-ws]]
    ; webly
    [webly.build.lazy]
-   ;[webly.spa.tenx.events]
    [webly.spa.views :refer [webly-app]]
    [webly.spa.events] ; side effects
    [webly.spa.loader.page] ; side-effects
@@ -47,11 +45,7 @@
   (info "after-load")
 
   (info "clearing reframe subscription cache..")
-  (clear-subscription-cache!)
-
-  (info "mounting webly-app ..")
-  (dispatch [:ga/event {:category "webly" :action "mounted" :label 77 :value 13}])
-  (mount-app))
+  (clear-subscription-cache!))
 
 (defn remove-spinner []
   (let [spinner (.. js/document (getElementById "spinner"))
@@ -72,28 +66,33 @@
          http-ports (get-in db [:config :ports])]
      (info "webly config after-load")
      (remove-spinner)
+     (info "mounting webly-app ..")
+     (mount-app)
      (dispatch [:webly/status :configuring-app])
      ; services
-     ;(start-ga)
      (if static?
        (warn "websockets are deactivated in static mode.")
        (start-ws http-ports))
      ; 
-     (p/then services-p (fn [_]
-                          (warn "services are all configured!")
-                          (dispatch [:webly/set-status :configured? true])
-                          (if start-user-app
-                            (do (info "starting user app: " start-user-app)
-                                (dispatch start-user-app))
-                            (warn "no user app startup defined."))
-                            ;(dispatch [:webly/status :running])                     
-                          )))
+     (-> services-p
+         (p/then (fn [_]
+                   (warn "services are all configured!")
+                   (dispatch [:webly/set-status :configured? true])
+                   (if start-user-app
+                     (do (info "starting user app: " start-user-app)
+                         (dispatch start-user-app))
+                     (warn "no user app startup defined."))
+                                 ;(dispatch [:webly/status :running])                     
+                   ))
+         (p/catch (fn [err]
+                    (error "services start error: " err)))))
+
    db))
 
 (defn ^:export start [_mode]
   (enable-console-print!)
-  ;(dispatch [:reframe10x-init])
   (dispatch [:webly/status :route-init])
   (dispatch [:webly/status :loading-config])
   (start-config)
-  (mount-app))
+  ;(mount-app)
+  )

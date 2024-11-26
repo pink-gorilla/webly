@@ -5,7 +5,7 @@
    
 
 (def lib 'org.pinkgorilla/webly)
-(def version (format "0.7.%s" (b/git-count-revs nil)))
+(def version (format "0.8.%s" (b/git-count-revs nil)))
 
 (defn jar "build the JAR" [opts]
   (println "Building hte JAR")

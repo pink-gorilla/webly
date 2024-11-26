@@ -1,6 +1,6 @@
 (ns demo.time
   (:require
-   [taoensso.timbre :as log :refer [info warn error]]
+   [taoensso.timbre :refer [info warn error]]
    [tick.core :as t]
    [modular.ws.core :refer [send-all!]]))
 
@@ -19,7 +19,7 @@
         (when  @running?
           (send-all! this [:demo/time (str (t/instant))])
           ;(send-all! this [:demo/time2 (t/instant)])
-          (send-all! this [:demo/time2 (t/zoned-date-time)])
+          (send-all! this [:demo/time2 (t/instant)])
           (Thread/sleep 1000))
         (if @running?
           (recur)

@@ -5,7 +5,6 @@
                   demo.page.help
                   demo.page.party
                   demo.page.job
-                  demo.time
                   demo.events
                   demo.service]
  :cljs-ns-bindings {'demo.page.main {'main-page demo.page.main/main-page}

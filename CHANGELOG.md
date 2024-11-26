@@ -10,3 +10,6 @@
 - webly profile: "static": writes all resources neded for a static page
 - static build working.
 
+
+# 2024-11-25
+- sente updated, so now on jetty 11.

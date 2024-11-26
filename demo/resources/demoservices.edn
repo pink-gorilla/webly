@@ -17,7 +17,7 @@
   :time {:start (demo.time/start-time-sender! (:websocket (clip/ref :webly)))
          :stop  (demo.time/stop! this)}
 
-  :modular-test {:start (println "modular environment: " #ref [:modular])}
+ ; :modular-test {:start (println "modular environment: " #ref [:modular])}
   
   :nrepl {:start (nrepl.server/start-server :bind "0.0.0.0" :port 9100)
           :stop (.close this)}

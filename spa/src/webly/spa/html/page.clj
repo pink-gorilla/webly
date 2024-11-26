@@ -97,12 +97,12 @@
            :style "position: fixed; left: 0; top: 0; z-index: 9999;"}]]))
 
 (defn app-page-dynamic [frontend-config csrf-token]
-  (let [{:keys [spa theme prefix #_google-analytics]} frontend-config]
-    (layout spa theme prefix #_google-analytics
+  (let [{:keys [spa theme prefix]} frontend-config]
+    (layout spa theme prefix
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
              [:div#app]
-             [:div  ; .w-screen.h-screen
+             [:div
               [:script {:src (str prefix "init.js")
                         :type "text/javascript"
                         :onload "webly.init.start ('dynamic');"}]]])))
@@ -113,13 +113,13 @@
     asset-path))
 
 (defn app-page-static [frontend-config csrf-token]
-  (let [{:keys [spa theme prefix #_google-analytics]} frontend-config]
+  (let [{:keys [spa theme prefix]} frontend-config]
     (info "static prefix: " prefix)
-    (layout spa theme prefix #_google-analytics ; :prefix "/r/"
+    (layout spa theme prefix ; :prefix "/r/"
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
              [:div#app]
-             [:div  ; .w-screen.h-screen
+             [:div
               [:script {:src (str prefix "init.js")
                         :type "text/javascript"
                         :onload "webly.init.start ('static');"}]]])))

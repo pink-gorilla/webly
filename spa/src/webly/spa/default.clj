@@ -6,7 +6,7 @@
    :ssl-port 8443
    :keystore "../webserver/certs/keystore.p12"
    :key-password "password"; Password you gave when creating the keystore
-   :jetty-ws ["/api/chsk"]})
+   })
 
 (def spa
   {:title "webly"
@@ -15,11 +15,6 @@
    :loading-image-url "webly/loadimage/library.jpg" ; 
    :start-user-app [:webly/start-default]  ; after config loaded}
    })
-
-;(def google-analytics
-;  {:enabled false ; set to false to disable google-analytics tracking. 
-;   :id "UA-154548494-1" ; not a secret
-;   })
 
 (def settings {:use-localstorage  false})
 

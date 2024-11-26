@@ -3,13 +3,13 @@
    [taoensso.timbre :as timbre :refer [info]]
    [extension :refer [discover get-extensions]]
    [modular.config :refer [load-config! get-in-config]]
+   [modular.webserver.server :as web-server]
    [modular.ws.core :refer [start-websocket-server]]
    [webly.helper :refer [write-target2]]
    [webly.build.profile :refer [setup-profile]]
    [webly.build.core :refer [build]]
    [webly.build.shadow :refer [stop-shadow]]
    [webly.build.static :refer [build-static]]
-   [webly.web.server :as web-server]
    [webly.spa.handler.core :as webly-handler]
    [webly.spa.html.handler :refer [app-handler]]
    [webly.spa.handler.routes.config :refer [create-config-routes]]
@@ -44,9 +44,8 @@
     (keyword kw)))
 
 (defn start-webly [exts
-                   {:keys [web-server sente-debug?]
-                    :or {sente-debug? false
-                         web-server {}}
+                   {:keys [web-server]
+                    :or {web-server {}}
                     :as config}
                    profile]
   (info "start-webly: " profile)
@@ -62,12 +61,12 @@
         config (merge config port-config)
         {:keys [routes frontend-config]} (configure config exts)
         config-route (create-config-routes frontend-config)
-        websocket (start-websocket-server server-type sente-debug?)
+        websocket (start-websocket-server server-type)
         websocket-routes (:bidi-routes websocket)
         app-handler (app-handler frontend-config)
         ring-handler (create-ring-handler app-handler routes config-route websocket-routes)
         _ (info "starting webserver type: " server-type)
-        webserver (web-server/start web-server ring-handler websocket server-type)
+        webserver (web-server/start web-server ring-handler server-type)
         shadow   (when (watch? profile)
                    (let [profile-full (setup-profile profile)]
                      (when (:bundle profile-full)

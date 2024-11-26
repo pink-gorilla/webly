@@ -114,7 +114,7 @@
     rp))
 
 (defn webly-resolve [fq-symbol]
-  (println "resolving: " fq-symbol)
+  ;(println "resolving: " fq-symbol)
   (let [rp (p/deferred)
         ns-symbol (-> fq-symbol namespace symbol)
         fn-symbol (-> fq-symbol name symbol)

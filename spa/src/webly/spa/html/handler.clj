@@ -14,11 +14,6 @@
   ;(:anti-forgery-token ring-req)] 
   (force *anti-forgery-token*))
 
-(defn unique-id
-  "Get a unique id."
-  []
-  (str (java.util.UUID/randomUUID)))
-
 ;; APP
 
 (defn make-handler-raw  [frontend-config]
