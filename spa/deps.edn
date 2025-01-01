@@ -14,7 +14,8 @@
         org.pinkgorilla/modular {:mvn/version "0.2.61"} ; encoding, app-config-services
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
         org.pinkgorilla/ui-bidi {:mvn/version "0.1.36"}
-        org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.10"}
+        org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.11"}
+        ;org.pinkgorilla/ui-dialog-keybindings {:local/root "../../ui-dialog-keybindings" :deps/manifest :deps}
         org.pinkgorilla/css-theme {:mvn/version "0.1.6"}
         ; devtools
         org.pinkgorilla/devtools {:mvn/version "0.5.21"}

@@ -19,8 +19,13 @@ Clone this repo and run:
 ```
 cd demo-webly
 clj -X:webly:npm-install
+
+either:
 clj -X:webly:compile
 clj -X:webly:run 
+or
+
+clj -X:webly:run:watch
 
 ```
 

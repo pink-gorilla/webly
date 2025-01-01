@@ -14,10 +14,22 @@
   (rf/dispatch [:modal/open [:h1.bg-blue-300.p-5 "dummy dialog"]
                 :small]))
 
+(defn show-dialog-custom-size []
+  (rf/dispatch [:modal/open
+                [:div {:style {:width "3cm"
+                               :height "10cm"
+                               :padding "5px"
+                               :border-radius "8px"
+                               :box-shadow "0 4px 6px rgba(0, 0, 0, 0.1)"}
+                       :class "bg-red-100"}
+                 "custom size dialog"]]))
+
 (defn demo-dialog []
   [block2 "dialog"
    [:ol
     [:li [link-fn #(show-notification "welcome to wonderland") "show notification"]]
     [:li [link-fn #(show-notification :error "something bad happened") "show notification - error"]]
     [:li [link-fn #(show-notification :error compile-error 0) "show compile error"]]
-    [:li [link-fn show-dialog-demo "show dialog"]]]])
+    ; dialog
+    [:li [link-fn show-dialog-demo "show dialog (small)"]]
+    [:li [link-fn show-dialog-custom-size "show dialog (custom)"]]]])
