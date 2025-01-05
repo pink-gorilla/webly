@@ -12,7 +12,9 @@
   (url/url (-> js/window .-location .-href)))
 
 (defn server-port []
-  (-> (application-url) :port))
+  (let [port (-> (application-url) :port)]
+    (info "detected server port: " port)
+    port))
 
 (defn is-https? []
   (let [{:keys [protocol]} (application-url)]
@@ -21,17 +23,28 @@
 (defn start-ws [{:keys [webly-http-port shadow-dev-http-port] :as ports}]
   ; sente websockets dont work on shadow-dev-http server.
   ; therefore we use webly-http port when browser uses shadow-dev-http 
-  (let [port (server-port)
-        served-by-shadow-dev? (= port shadow-dev-http-port)
-        port (if served-by-shadow-dev?
-               webly-http-port
-               port)
-        route "/api/chsk"]
-    (if served-by-shadow-dev?
-      (info "this is a shadow-cljs-dev session. connecting websocket to WEBLY SERVER route: " route " port: " port)
-      (info "connecting websocket route: " route " port: " port))
+  (let [protocol (if (is-https?)
+                   :https
+                   :http)
+        route "/api/chsk"
+        detected-port (server-port)
+        port (cond
+               ; https always on 443
+               (is-https?)
+               443
+
+               ; if the port matches the shadow-dev-http port, we are on shadow-dev, so we redirect
+               (= detected-port shadow-dev-http-port)
+               (do
+                 (info "this is a shadow-cljs-dev session. connecting websocket to WEBLY SERVER on port: " shadow-dev-http-port)
+                 webly-http-port)
+
+               ; in all other cases we use the detected port
+               :else
+               detected-port)]
     (if port
-      (start-websocket-client! route port)
+      (do (info "connecting websocket protocol: " protocol "route: " route " port: " port)
+          (start-websocket-client! protocol route port))
       (error "WEBSOCKET cannot connect. port nil! webly-http-port: " webly-http-port " shadow-port: " shadow-dev-http-port))))
 
 

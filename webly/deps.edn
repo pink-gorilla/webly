@@ -17,7 +17,7 @@
         org.pinkgorilla/extension {:mvn/version "0.0.14"} ; brings modular
         org.pinkgorilla/webserver {:mvn/version "0.0.13"}
         ;org.pinkgorilla/webserver {:local/root "../../webserver" :deps/manifest :deps}
-        org.pinkgorilla/websocket {:mvn/version "0.0.23"}
+        org.pinkgorilla/websocket {:mvn/version "0.0.24"}
         ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}}
  :aliases
