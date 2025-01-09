@@ -1,6 +1,3 @@
-
-
-
 # 2024-04-14
 
 - webly uses clip (easier to create an app)
@@ -13,3 +10,7 @@
 
 # 2024-11-25
 - sente updated, so now on jetty 11.
+
+
+# 2025-01-09
+- webserver updated, now with letsencrypt-proxy as an included option

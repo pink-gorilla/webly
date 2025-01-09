@@ -1,12 +1,13 @@
 (ns webly.spa.default)
 
 (def webserver
-  {:port 8080
-   :host "0.0.0.0"
-   :ssl-port 8443
-   :keystore "../webserver/certs/keystore.p12"
-   :key-password "password"; Password you gave when creating the keystore
-   })
+  {:http {:port 8080
+          :ip "0.0.0.0"}
+   :https {:port 0} ; by default https is disabled
+   :letsencrypt {:domain nil
+                 :email nil
+                 :force-renewal false ; to test renewal
+                 }})
 
 (def spa
   {:title "webly"

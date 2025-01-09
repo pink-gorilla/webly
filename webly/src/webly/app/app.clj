@@ -56,17 +56,16 @@
         port-config {; shadow-dev-http-port is set to shadow-dev http server port
                      ; when using "watch" profile. Otherwise it is 0.
                      :ports {:shadow-dev-http-port (shadow-dev-http-port config profile)
-                             :webly-http-port (:port web-server)}}
+                             :webly-http-port (get-in web-server [:http :port])}}
         _ (info "webly port config: " port-config)
         config (merge config port-config)
         {:keys [routes frontend-config]} (configure config exts)
         config-route (create-config-routes frontend-config)
-        websocket (start-websocket-server server-type)
+        websocket (start-websocket-server :jetty)
         websocket-routes (:bidi-routes websocket)
         app-handler (app-handler frontend-config)
         ring-handler (create-ring-handler app-handler routes config-route websocket-routes)
-        _ (info "starting webserver type: " server-type)
-        webserver (web-server/start web-server ring-handler server-type)
+        webserver (web-server/start-webserver ring-handler web-server)
         shadow   (when (watch? profile)
                    (let [profile-full (setup-profile profile)]
                      (when (:bundle profile-full)

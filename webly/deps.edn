@@ -15,7 +15,7 @@
         ; modular
         org.pinkgorilla/timbre {:mvn/version "0.0.8"}
         org.pinkgorilla/extension {:mvn/version "0.0.14"} ; brings modular
-        org.pinkgorilla/webserver {:mvn/version "0.0.13"}
+        org.pinkgorilla/webserver {:mvn/version "0.0.47"}
         ;org.pinkgorilla/webserver {:local/root "../../webserver" :deps/manifest :deps}
         org.pinkgorilla/websocket {:mvn/version "0.0.24"}
         ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}

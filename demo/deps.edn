@@ -59,9 +59,9 @@
         :exec-args {:profile "jetty"
                     :services "demoservices.edn"}}
 
-  :httpkit {:extra-deps {http-kit/http-kit {:mvn/version "2.5.3"}}
-            :exec-args {:profile "httpkit"}}
-  :jetty {:exec-args {:profile "jetty"}}
+  ;:httpkit {:extra-deps {http-kit/http-kit {:mvn/version "2.5.3"}}
+  ;          :exec-args {:profile "httpkit"}}
+  ;:jetty {:exec-args {:profile "jetty"}}
   :watch {:exec-args {:profile "watch"}}
 
   :demo-build {:extra-deps {org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}

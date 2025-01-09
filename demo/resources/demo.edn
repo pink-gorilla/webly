@@ -1,8 +1,6 @@
 {:build {:disabled-extensions #{}}
  
-
- :web-server {:port 8090}
-
+ :web-server {:http {:port 8090}}
 
  :spa {:title "Webly Demo"
        ;:start-user-app [:demo/start]
