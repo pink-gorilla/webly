@@ -14,9 +14,9 @@ jobs:
       with:
         fetch-depth: 0
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v4
       with:
-        node-version: 12.x
+        node-version: lts
     - name: Prepare java    # java needs to be installed before clojure.
       uses: actions/setup-java@v3
       with:
