@@ -1,5 +1,5 @@
-(ns webly.build.lazy
-  (:require-macros [webly.build.lazy])
+(ns shadowx.build.lazy
+  (:require-macros [shadowx.build.lazy])
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [reagent.core :as r]

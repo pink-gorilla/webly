@@ -2,7 +2,9 @@
          "resources"  ; webly resources (svg/img)
          ]
  :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
-        com.rpl/specter {:mvn/version "1.1.4"}
+        ;com.rpl/specter {:mvn/version "1.1.4"}
+        funcool/promesa {:mvn/version "11.0.674"} ; lazy module condig
+        cheshire/cheshire {:mvn/version "5.13.0"} ; json pretty writer
         ; webly/core
         ; shadow-cljs
         ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler
@@ -15,13 +17,7 @@
         ; modular
         org.pinkgorilla/timbre {:mvn/version "0.0.8"}
         org.pinkgorilla/extension {:mvn/version "0.0.14"} ; brings modular
-        org.pinkgorilla/webserver {:mvn/version "0.0.47"}
-        ;org.pinkgorilla/webserver {:local/root "../../webserver" :deps/manifest :deps}
-        org.pinkgorilla/websocket {:mvn/version "0.0.24"}
-        ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}
-        org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
-        org.pinkgorilla/shadowx {:local/root "../shadowx" :deps/manifest :deps}
-        }
+       }
  :aliases
  {; https://github.com/weavejester/cljfmt
   :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}
@@ -37,15 +33,6 @@
                      "--config" "cljkondo.edn"
                      "--lint"]}
 
-  :cloverage {:extra-paths ["test"]
-              :extra-deps  {cloverage/cloverage {:mvn/version "RELEASE"}}
-              :main-opts   ["-m" "cloverage.coverage"
-                            "--src-ns-path" "src"
-                            "--test-ns-path" "test"]
-              :exec-fn     cloverage.coverage/run-project
-              :exec-args   {:src-ns-path  ["src"]
-                            :test-ns-path ["test"]}}
-
   :check {:extra-deps {athos/clj-check {:git/url "https://github.com/athos/clj-check.git"
                                         :sha "518d5a1cbfcd7c952f548e6dbfcb9a4a5faf9062"}}
           :main-opts ["-m" "clj-check.check"]}
@@ -59,4 +46,3 @@
 
 ;
   }}
-

@@ -1,6 +1,6 @@
 (ns webly.init
   (:require
-   [webly.module.build :refer [add-lazy-modules print-build-summary webly-resolve]]
+   [shadowx.module.build :refer [add-lazy-modules print-build-summary webly-resolve]]
    [webly.spa.mode :refer [set-mode!]]))
 
 (add-lazy-modules)

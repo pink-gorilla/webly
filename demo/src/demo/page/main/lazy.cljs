@@ -2,8 +2,8 @@
   (:require
    [reagent.core :as r]
    [promesa.core :as p]
-   [webly.build.lazy :refer-macros [wrap-lazy] :refer [available]]
-   [webly.module.build :refer [load-namespace-raw load-namespace webly-resolve]]
+   [shadowx.build.lazy :refer-macros [wrap-lazy] :refer [available]]
+   [shadowx.module.build :refer [load-namespace-raw load-namespace webly-resolve]]
    [demo.helper.ui :refer [link-fn block2]]))
 
 (defn lazy1 []

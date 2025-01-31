@@ -14,7 +14,7 @@
    [webly.spa.service :refer [start-cljs-services]]
    [webly.spa.service.ws :refer [start-ws]]
    ; webly
-   [webly.build.lazy]
+   [shadowx.build.lazy]
    [webly.spa.views :refer [webly-app]]
    [webly.spa.loader.page] ; side-effects
    ))

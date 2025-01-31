@@ -1,7 +1,7 @@
-(ns webly.build.profile
+(ns shadowx.build.profile
   (:require
    [taoensso.timbre :as timbre :refer [info error]]
-   [webly.build.prefs :refer [prefs-atom]]))
+   [shadowx.build.prefs :refer [prefs-atom]]))
 
 (defonce profiles
   {:ci          {:prefs   {}

@@ -1,11 +1,10 @@
-(ns webly.build.core
+(ns shadowx.build.core
   (:require
    [taoensso.timbre  :refer [debug info warn]]
-   [webly.helper :refer [write-target2]]
-   [modular.writer :refer [write]]
-   [webly.build.shadow-config :refer [shadow-config]]
-   [webly.build.shadow :refer [shadow-build]] ; shadow via generated config file
-   [webly.build.prefs :refer [write-build-prefs]]))
+   [shadowx.writer :refer [write write-target2]]
+   [shadowx.build.shadow-config :refer [shadow-config]]
+   [shadowx.build.shadow :refer [shadow-build]] ; shadow via generated config file
+   [shadowx.build.prefs :refer [write-build-prefs]]))
 
 (defn write-shadow-config [config]
   (write "shadow-cljs.edn" config))

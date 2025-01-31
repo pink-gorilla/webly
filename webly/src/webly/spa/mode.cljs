@@ -1,6 +1,6 @@
 (ns webly.spa.mode
   (:require-macros
-   [webly.build.prefs :refer [get-pref]])
+   [shadowx.build.prefs :refer [get-pref]])
   (:require
    ;[clojure.string :as str]
    [webly.spa.mode.url :refer [current-path entry-path entry-path-full]]

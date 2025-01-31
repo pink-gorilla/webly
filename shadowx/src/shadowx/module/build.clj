@@ -1,4 +1,4 @@
-(ns webly.module.build
+(ns shadowx.module.build
   (:require
    [clojure.string :as str]
    [clojure.set]
@@ -75,8 +75,8 @@
 
 (defmacro set-ns-vars! []
   (let [ns-vars @lazy-ns-vars-a]
-    ;`(reset! webly.module.build/lazy-ns-vars-a ~ns-vars)
-    `(webly.module.build/set-ns-vars ~ns-vars)))
+    ;`(reset! shadowx.module.build/lazy-ns-vars-a ~ns-vars)
+    `(shadowx.module.build/set-ns-vars ~ns-vars)))
 
 #_(defmacro set-ns-loadables-test! []
     ;specs
@@ -84,7 +84,7 @@
     ; - a qualified symbol, 
     ; - a vector of symbols or
     ; - a map of keyword to symbol.
-    `(reset! webly.module.build/lazy-ns-loadable-a
+    `(reset! shadowx.module.build/lazy-ns-loadable-a
              {:'bongistan.core (shadow.lazy/loadable
                                 [snippets.snip/add
                                  snippets.snip/ui-add])}))
@@ -96,8 +96,8 @@
     ; - a qualified symbol, 
     ; - a vector of symbols or
     ; - a map of keyword to symbol.
-    ;`(reset! webly.module.build/lazy-ns-loadable-a
-    `(webly.module.build/set-ns-loadables
+    ;`(reset! shadowx.module.build/lazy-ns-loadable-a
+    `(shadowx.module.build/set-ns-loadables
       ~(->> (map (fn [[ns-kw l]]
                    `[~ns-kw (shadow.lazy/loadable ~l)]) loadables)
             (into {})))))

@@ -1,6 +1,6 @@
-(ns webly.module.build
+(ns shadowx.module.build
   (:require-macros
-   [webly.module.build :refer [get-lazy-modules get-lazy-ns set-ns-loadables! set-ns-vars!]])
+   [shadowx.module.build :refer [get-lazy-modules get-lazy-ns set-ns-loadables! set-ns-vars!]])
   (:require
    [promesa.core :as p]
    [shadow.lazy]))

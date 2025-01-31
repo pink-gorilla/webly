@@ -1,10 +1,10 @@
-(ns webly.build.shadow-config
+(ns shadowx.build.shadow-config
   "generates shadow-cljs.edn based on profile and config"
   (:require
-   [webly.spa.default :as default]
-   [webly.build.prefs :refer [if-pref-fn prefs-atom]]
-   [webly.helper :refer [write-target2]]
-   [webly.module.build :refer [create-modules shadow-module-config]]))
+   [shadowx.default :as default]
+   [shadowx.build.prefs :refer [if-pref-fn prefs-atom]]
+   [shadowx.writer :refer [write-target2]]
+   [shadowx.module.build :refer [create-modules shadow-module-config]]))
 
 ;; build-options
 #_(defn build-ns-aliases []
@@ -19,7 +19,6 @@
                      {:keys [build shadow spa prefix static-main-path]
                       :or {build default/build
                            shadow default/shadow
-                           spa default/spa
                            prefix default/prefix
                            static-main-path ""}
                       :as _config} profile]
@@ -29,10 +28,8 @@
         static? (get-in profile [:bundle :static?])
         ;; CONFIG **************************************************
         build (merge default/build build) ; in case user just specified some keys
-        spa (merge default/spa spa)
         shadow (merge default/shadow shadow)
         {:keys [module-loader-init output-dir]} build
-        {:keys [start-user-app]} spa
         dev-http-port (get-in shadow [:dev-http :port])
         http-port (get-in shadow [:http :port])
         http-host (get-in shadow [:http :host])
@@ -45,8 +42,7 @@
     (swap! prefs-atom assoc
            :main-path main-path
            :asset-path asset-path
-           :advanced? advanced?
-           :start-user-app start-user-app)
+           :advanced? advanced?)
     (write-target2 :shadow-modules shadow-modules)
     {:cache-root ".shadow-cljs"
      :verbose (if shadow-verbose true false)

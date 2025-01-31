@@ -1,7 +1,7 @@
-(ns webly.build.prefs
+(ns shadowx.build.prefs
   (:require
    [modular.date :refer [now-str]]
-   [webly.helper :refer [write-target2]]))
+   [shadowx.writer :refer [write-target2]]))
 
 (defonce prefs-atom (atom {}))
 

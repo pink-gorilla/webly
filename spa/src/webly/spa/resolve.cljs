@@ -1,6 +1,6 @@
 (ns webly.spa.resolve
   (:require
-   [webly.module.build :refer [webly-resolve]]))
+   [shadowx.module.build :refer [webly-resolve]]))
 
 (def resolver-a (atom webly-resolve))
 

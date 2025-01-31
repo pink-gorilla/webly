@@ -1,4 +1,4 @@
-(ns webly.build.shadow
+(ns shadowx.build.shadow
   "call shadow-cljs functions"
   (:require
    [taoensso.timbre :as timbre :refer [info warn]]
@@ -7,7 +7,7 @@
    [shadow.cljs.devtools.api :as shadow-api]
    [shadow.cljs.devtools.server :as shadow-server]
    [shadow.cljs.build-report]
-   [webly.build.npm-writer :refer [ensure-package-json ensure-karma]]))
+   [shadowx.build.npm-writer :refer [ensure-package-json ensure-karma]]))
 
 ;https://github.com/thheller/shadow-cljs/blob/master/src/main/shadow/cljs/devtools/cli_actual.clj
 ; (let [{:keys [action builds options summary errors] :as opts}

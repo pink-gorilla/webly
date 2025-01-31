@@ -1,6 +1,6 @@
 (ns webly.spa.tenx.view
   (:require
-   [webly.build.prefs :refer [if-pref-fn]]))
+   [shadowx.build.prefs :refer [if-pref-fn]]))
 
 (defn tenx-script []
   (if-pref-fn :tenx

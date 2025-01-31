@@ -1,12 +1,12 @@
-(ns webly.build.lazy
+(ns shadowx.build.lazy
   (:require
    [taoensso.timbre :refer-macros [debug]]))
 
 (defmacro wrap-lazy [symbol-fn]
   (taoensso.timbre/debug "compile-time lazy wrapping: " symbol-fn)
   `(do
-     (webly.build.lazy/add-available (quote ~symbol-fn))
-     (webly.build.lazy/show-lazy
+     (shadowx.build.lazy/add-available (quote ~symbol-fn))
+     (shadowx.build.lazy/show-lazy
       (shadow.lazy/loadable ~symbol-fn)
       (quote ~symbol-fn))))
 
