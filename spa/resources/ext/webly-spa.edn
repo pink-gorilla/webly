@@ -10,5 +10,4 @@
                     'webly.spa.resolve {'get-resolver webly.spa.resolve/get-resolver
                                         'set-resolver! webly.spa.resolve/set-resolver!}}
  ; runtime
- :dev-page {"config" webly.spa.devtools.config/config-page
-            "bundle" webly.spa.devtools.bundle/bundle-page}}
+ :dev-page {"bundle" webly.spa.devtools.bundle/bundle-page}}
