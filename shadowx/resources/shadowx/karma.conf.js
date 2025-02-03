@@ -1,4 +1,4 @@
-// automatically copied from webly resources
+// automatically copied from shadowx resources
 module.exports = function (config) {
     config.set({
         browsers: ['ChromiumHeadless'],
