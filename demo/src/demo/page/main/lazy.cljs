@@ -12,11 +12,6 @@
      [:p "I am lazy:"]
      [ui-add 7 7]]))
 
-(defn lazy2 []
-  (let [ui-add-more (wrap-lazy snippets.snip/ui-add-more)]
-    [:div
-     [ui-add-more 7 7]]))
-
 (defn load-namespace-raw-highcharts [& _]
   (let [rp (load-namespace-raw 'ui.highcharts)]
     (p/then rp (fn [r]
@@ -41,16 +36,15 @@
 (defn resolve-highcharts [& _]
   (let [rp (webly-resolve 'ui.highcharts/highstock)]
     (p/then rp (fn [r]
-                 (println "*** webly resovle SUCCESS: " r)))
+                 (println "*** webly resolve SUCCESS: " r)))
     (p/catch rp (fn [x]
                   (println "*** webly resolve ERROR: err: " x)))))
 (defn demo-lazy []
-  (let [show-lazy1 (r/atom false)
-        show-lazy2 (r/atom false)]
+  (let [show-lazy1 (r/atom false)]
     (fn []
       [block2 "lazy ui"
        [link-fn #(reset! show-lazy1 true) "lazy load1"]
-       [link-fn #(reset! show-lazy2 true) "lazy load2 (not working)"]
+
        [link-fn load-namespace-raw-highcharts "lazy-highcharts-raw"]
        [link-fn load-namespace-test-bad "lazy-non-existing-namespace"]
        [link-fn load-namespace-highcharts "lazy-highcharts"]
@@ -58,6 +52,5 @@
        [:div "loaded lazy renderer: " (pr-str (available))]
        (when @show-lazy1
          [lazy1])
-       (when @show-lazy2
-         [lazy2])])))
+      ])))
 

@@ -14,7 +14,9 @@
    [webly.spa.html.handler :refer [app-handler]]
    [webly.spa.handler.routes.config :refer [create-config-routes]]
    [webly.spa.config :refer [configure]]
-   [webly.spa.default :as default])
+   [webly.spa.default :as default]
+   [shadowx.default :as shadow-default]
+   )
   (:gen-class))
 
 ;; shadow watch hack
@@ -27,7 +29,7 @@
 (defn shadow-dev-http-port [config profile]
   (if (watch? profile)
     ;(get-in config [:shadow :dev-http :port])
-    (get-in default/shadow [:dev-http :port])
+    (get-in shadow-default/shadow [:dev-http :port])
     0))
 
 ;; HANDLER RELATED
