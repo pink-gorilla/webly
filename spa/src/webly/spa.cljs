@@ -6,7 +6,7 @@
    [promesa.core :as p]
    ; side-effects
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
-   [day8.re-frame.http-fx]
+   ;[day8.re-frame.http-fx]
    ; frontend
    [frontend.dialog]
    [webly.spa.service.config :refer [get-config]]

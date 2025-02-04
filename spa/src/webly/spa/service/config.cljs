@@ -3,7 +3,7 @@
   (:require
    [taoensso.timbre :refer-macros [debug info infof error]]
    [promesa.core :as p]
-   [ajax.core]
+   [ajax.core] ; https://github.com/JulianBirch/cljs-ajax
    [modular.encoding.transit :refer [decode]]
    [modular.encoding.edn :refer [read-edn]]
    [webly.spa.mode :refer [get-resource-path get-mode]]
