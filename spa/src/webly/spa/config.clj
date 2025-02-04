@@ -1,7 +1,7 @@
 (ns webly.spa.config
   (:require
    [extension :refer [discover get-extensions]]
-   [frontend.css :refer [get-theme-config]]
+   ;[frontend.css :refer [get-theme-config]]
    [webly.spa.default :as default]
    [webly.spa.service :refer [cljs-services]]))
 
@@ -22,22 +22,17 @@
   {:api (get-api-routes exts)
    :app (get-cljs-routes exts)})
 
-(defn configure [{:keys [spa #_google-analytics prefix settings ports]
-                  :or {spa {}
-                       settings default/settings
-                       ;google-analytics default/google-analytics
+(defn configure [{:keys [spa prefix ports]
+                  :or {spa {} 
                        prefix default/prefix}
                   :as config} exts]
   (let [routes (get-routes exts)
-        theme (get-theme-config exts)
         spa (merge default/spa spa)
         frontend-config  {:prefix prefix
                           :spa spa
-                          :settings settings
-                          :theme theme
+                          ;:theme theme
                           :cljs-services (cljs-services config exts)
                           :ports ports
-                          ;:google-analytics google-analytics
                           }]
     {:routes routes
      :frontend-config frontend-config}))

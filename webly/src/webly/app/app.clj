@@ -41,11 +41,6 @@
     (write-target2 "routes" routes)
     handler))
 
-(defn ensure-keyword [kw]
-  (if (keyword? kw)
-    kw
-    (keyword kw)))
-
 (defn start-webly [exts
                    {:keys [web-server]
                     :or {web-server {}}
@@ -53,16 +48,16 @@
                    profile]
   (info "start-webly: " profile)
   (let [web-server (merge default/webserver web-server)
-        server-type (if (= profile "watch")
-                      :jetty
-                      (ensure-keyword profile))
-        port-config {; shadow-dev-http-port is set to shadow-dev http server port
+        mode-config {; shadow-dev-http-port is set to shadow-dev http server port
                      ; when using "watch" profile. Otherwise it is 0.
                      :ports {:shadow-dev-http-port (shadow-dev-http-port config profile)
-                             :webly-http-port (get-in web-server [:http :port])}}
-        _ (info "webly port config: " port-config)
-        config (merge config port-config)
+                             :webly-http-port (get-in web-server [:http :port])}
+                     :mode :dynamic
+                     :profile profile}
+        _ (info "webly mode config: " mode-config)
+        config (merge config mode-config)
         {:keys [routes frontend-config]} (configure config exts)
+        _ (write-target2 :frontend-config frontend-config)
         config-route (create-config-routes frontend-config)
         websocket (start-websocket-server :jetty)
         websocket-routes (:bidi-routes websocket)

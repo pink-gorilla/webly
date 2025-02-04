@@ -4,8 +4,6 @@
    [hiccup.page :as page]
    [taoensso.timbre :refer [debug info error]]
    [frontend.css.links :refer [css-links]]
-   ;[frontend.analytics.google-tag :refer [script-tag-src script-tag-config]]
-   ;[webly.spa.tenx.view :refer [tenx-script]]
    ))
 
 

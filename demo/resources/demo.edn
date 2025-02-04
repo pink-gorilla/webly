@@ -22,9 +22,6 @@
                                      :path "target/workflow.log"
                                      :pattern :monthly}}}
 
- :settings {:use-localstorage  true  ; allow user to change settings via localstorage
-            :bongo 777}
-
  :keybindings  [; https://github.com/piranha/keybind
                 ; shift, ctrl, alt, win, cmd, defmod, "left" "right"
                 ; "meta-shift-l" "alt-shift-p" "ctrl-shift-left" "ctrl-shift-right"

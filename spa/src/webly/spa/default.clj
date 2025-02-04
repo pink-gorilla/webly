@@ -17,8 +17,5 @@
    :start-user-app [:webly/start-default]  ; after config loaded}
    })
 
-(def settings {:use-localstorage  false})
-
-
 
 (def prefix "/r/")

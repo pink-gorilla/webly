@@ -16,7 +16,7 @@
         org.pinkgorilla/ui-bidi {:mvn/version "0.1.36"}
         org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.11"}
         ;org.pinkgorilla/ui-dialog-keybindings {:local/root "../../ui-dialog-keybindings" :deps/manifest :deps}
-        org.pinkgorilla/css-theme {:mvn/version "0.1.7"}
+        org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
         ;org.pinkgorilla/css-theme {:local/root "../../css-theme" :deps/manifest :deps}
         ; devtools
         org.pinkgorilla/devtools {:mvn/version "0.5.21"}
