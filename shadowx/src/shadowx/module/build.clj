@@ -3,8 +3,8 @@
    [clojure.string :as str]
    [clojure.set]
    [taoensso.timbre :as timbre :refer [warn]]
-   [webly.helper :refer [write-target2]]
-   [extension :refer [get-extensions]]))
+   [extension :refer [get-extensions]]
+   [shadowx.writer :refer [write-target2]]))
 
 ;; NAMESPACE
 

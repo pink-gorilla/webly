@@ -5,17 +5,18 @@
    [modular.config :refer [load-config! get-in-config]]
    [modular.webserver.server :as web-server]
    [modular.ws.core :refer [start-websocket-server]]
-   [webly.helper :refer [write-target2]]
    [shadowx.build.profile :refer [setup-profile]]
    [shadowx.build.core :refer [build]]
    [shadowx.build.shadow :refer [stop-shadow]]
+   [shadowx.default :as shadow-default]
+   [webly.helper :refer [write-target2]]
    [webly.build.static :refer [build-static]]
    [webly.spa.handler.core :as webly-handler]
    [webly.spa.html.handler :refer [app-handler]]
    [webly.spa.handler.routes.config :refer [create-config-routes]]
    [webly.spa.config :refer [configure]]
    [webly.spa.default :as default]
-   [shadowx.default :as shadow-default]
+   
    )
   (:gen-class))
 

@@ -3,7 +3,6 @@
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
    [reagent.core :as r]
-   [frontend.css :refer [loading?]]
    [shadow.lazy :as lazy]))
 
 ; https://code.thheller.com/blog/shadow-cljs/2019/03/03/code-splitting-clojurescript.html
@@ -48,9 +47,9 @@
 (defn show-lazy [load-spec symbol-fn]
   (fn [& args]
     (let [r (get-in @renderer [symbol-fn :fun])]
-      (if r ; (and r (not @loading?))
+      (if r
         [run r args]
-        (do (.setTimeout js/window #(start-load symbol-fn load-spec) 1)
+        (do (start-load symbol-fn load-spec)
             [loading-status symbol-fn]
             )))))
 

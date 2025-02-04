@@ -26,7 +26,7 @@
                    ;; since React will keep a reference to the initially loaded fn and won't update it
                   #js {:default (r/reactify-component (fn [props] [@loadable props]))}))))))
 
-; propshas to be a map
+; props has to be a map
 (defn show-lazy
   ([lazy-component props]
    [:> react/Suspense {:fallback (r/as-element [:div "Loading ..."])}
