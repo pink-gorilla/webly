@@ -8,10 +8,10 @@
    [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
    ;[day8.re-frame.http-fx]
    ; frontend
-   [frontend.dialog]
+   ;[frontend.dialog]
    [webly.spa.service.config :refer [get-config]]
    [webly.spa.service :refer [start-cljs-services]]
-   [webly.spa.service.ws :refer [start-ws]]
+   [webly.spa.service.ws :refer [start-ws-p]]
    ; webly
    [shadowx.build.lazy]
    [webly.spa.views :refer [webly-app]]
@@ -54,14 +54,7 @@
     (when (.contains body-classes "loading")
       (.remove body-classes "loading"))))
 
-(def ws-open-p (p/deferred))
 
-(reg-event-db
- :ws/open-first
- (fn [db [_ state-map]]
-   (info "ws connected for the first time!")
-   (p/resolve! ws-open-p true)
-   db))
 
 (defn start-app [config]
   (let [{:keys [ports static? cljs-services]} config
@@ -69,8 +62,8 @@
         all-p (if static?
                  (do (warn "websockets are deactivated in static mode.")
                      services-p)
-                 (do (start-ws ports)
-                     (p/all [services-p ws-open-p])))]
+                 (let [ws-p (start-ws-p ports)]
+                   (p/all [services-p ws-p])))]
      (info "webly config after-load")
      (-> all-p
          (p/then (fn [_]

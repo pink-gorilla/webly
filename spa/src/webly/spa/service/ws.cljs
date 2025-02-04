@@ -1,6 +1,8 @@
 (ns webly.spa.service.ws
   (:require
    [taoensso.timbre :refer-macros [debug info warn error]]
+   [promesa.core :as p]
+   [re-frame.core :as rf]
    [cemerick.url :as url]
    [modular.ws.core :refer [start-websocket-client!]]
    [modular.ws.events] ; websocket re-frame events
@@ -47,4 +49,16 @@
           (start-websocket-client! protocol route port))
       (error "WEBSOCKET cannot connect. port nil! webly-http-port: " webly-http-port " shadow-port: " shadow-dev-http-port))))
 
+(def ws-open-p (p/deferred))
 
+(rf/reg-event-db
+ :ws/open-first
+ (fn [db [_ state-map]]
+   (info "ws connected for the first time!")
+   (p/resolve! ws-open-p true)
+   db))
+
+
+(defn start-ws-p [ports]
+  (start-ws ports)
+  ws-open-p)
