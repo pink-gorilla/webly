@@ -1,7 +1,6 @@
 (ns webly.spa.config
   (:require
    [extension :refer [discover get-extensions]]
-   ;[frontend.css :refer [get-theme-config]]
    [webly.spa.default :as default]
    [webly.spa.service :refer [cljs-services]]))
 
@@ -30,7 +29,6 @@
         spa (merge default/spa spa)
         frontend-config  {:prefix prefix
                           :spa spa
-                          ;:theme theme
                           :cljs-services (cljs-services config exts)
                           :ports ports
                           }]

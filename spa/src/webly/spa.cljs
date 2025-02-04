@@ -9,7 +9,6 @@
    [day8.re-frame.http-fx]
    ; frontend
    [frontend.dialog]
-   [frontend.page]
    [webly.spa.service.config :refer [get-config]]
    [webly.spa.service :refer [start-cljs-services]]
    [webly.spa.service.ws :refer [start-ws]]
