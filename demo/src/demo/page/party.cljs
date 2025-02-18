@@ -1,7 +1,6 @@
 (ns demo.page.party
   (:require
    [reagent.core :as r]
-   [re-frame.core :as rf]
    [demo.helper.ui :refer [link-dispatch link-fn]]
    [frontend.css :refer [set-theme-component add-components]]
    ))

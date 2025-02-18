@@ -4,9 +4,6 @@
    [taoensso.timbre :refer-macros [info warn error]]
    [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db reg-sub]]
    [promesa.core :as p]
-   ; side-effects
-   [ajax.core :as ajax] ; https://github.com/JulianBirch/cljs-ajax used by http-fx
-   ;[day8.re-frame.http-fx]
    ; frontend
    ;[frontend.dialog]
    [webly.spa.service.config :refer [get-config]]
