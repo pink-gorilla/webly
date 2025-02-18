@@ -8,7 +8,6 @@
    ;[frontend.dialog]
    [webly.spa.service.config :refer [get-config]]
    [webly.spa.service :refer [start-cljs-services]]
-   [webly.spa.service.ws :refer [start-ws-p]]
    ; webly
    [shadowx.build.lazy]
    [webly.spa.views :refer [webly-app]]
@@ -54,15 +53,16 @@
 
 
 (defn start-app [config]
+  (info "webly config after-load")
   (let [{:keys [ports static? cljs-services]} config
         services-p  (start-cljs-services cljs-services)
-        all-p (if static?
-                 (do (warn "websockets are deactivated in static mode.")
-                     services-p)
-                 (let [ws-p (start-ws-p ports)]
-                   (p/all [services-p ws-p])))]
-     (info "webly config after-load")
-     (-> all-p
+        ;all-p (if static?
+        ;         (do (warn "websockets are deactivated in static mode.")
+        ;             services-p)
+        ;         (let [ws-p (start-ws-p ports)]
+        ;           (p/all [services-p ws-p])))
+        ]
+     (-> services-p
          (p/then (fn [_]
                    (warn "webly bootstrap done. mounting app")
                    (remove-spinner)

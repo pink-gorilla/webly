@@ -1,5 +1,4 @@
 (ns webly.spa.service.config
-  "Events related configuration loading"
   (:require
    [taoensso.timbre :refer-macros [debug info infof error]]
    [promesa.core :as p]
