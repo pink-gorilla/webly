@@ -3,7 +3,7 @@ module.exports = function (config) {
     config.set({
         browsers: ['ChromiumHeadless'],
         // The directory where the output file lives
-        basePath: 'target',
+        basePath: '.gorilla',
         // The file itself
         files: ['ci.js'],
         frameworks: ['cljs-test'],

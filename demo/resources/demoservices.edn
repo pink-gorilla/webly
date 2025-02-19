@@ -8,11 +8,12 @@
 
   :exts {:start (extension/discover)}
 
-  :webly {:start (webly.app.app/start-webly
-                    (clip/ref :exts)
-                    (deref (clip/ref :config))
-                    (:profile #ref [:modular]))
-          :stop (webly.app.app/stop-webly this)}
+  :webly {:start (webly.spa/start-webly
+                  {:exts (clip/ref :exts)
+                   :ctx {}}
+                   (deref (clip/ref :config))
+                   (:profile #ref [:modular]))
+          :stop (webly.spa/stop-webly this)}
 
   :time {:start (demo.time/start-time-sender! (:websocket (clip/ref :webly)))
          :stop  (demo.time/stop! this)}

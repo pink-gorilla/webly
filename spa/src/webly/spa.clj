@@ -1,23 +1,19 @@
-(ns webly.app.app
+(ns webly.spa
   (:require
    [taoensso.timbre :as timbre :refer [info]]
    [extension :refer [discover get-extensions]]
    [modular.config :refer [load-config! get-in-config]]
-   [modular.webserver.server :as web-server]
+   [modular.writer :refer [write-edn-private]]
+   [webserver.router :refer [create-handler]]
+   [webserver.server :refer [start-webserver stop-webserver]]
    [modular.ws.core :refer [start-websocket-server]]
    [shadowx.build.profile :refer [setup-profile]]
    [shadowx.build.core :refer [build]]
    [shadowx.build.shadow :refer [stop-shadow]]
    [shadowx.default :as shadow-default]
-   [webly.helper :refer [write-target2]]
-   [webly.build.static :refer [build-static]]
-   [webly.spa.handler.core :as webly-handler]
-   [webly.spa.html.handler :refer [app-handler]]
-   [webly.spa.handler.routes.config :refer [create-config-routes]]
-   [webly.spa.config :refer [configure]]
-   [webly.spa.default :as default]
-   
-   )
+   [webly.spa.static :refer [build-static]]
+   [webly.spa.frontend-config :refer [create-frontend-config]]
+   [webly.spa.default :as default])
   (:gen-class))
 
 ;; shadow watch hack
@@ -35,15 +31,16 @@
 
 ;; HANDLER RELATED
 
-(defn create-ring-handler [app-handler routes config-route websocket-routes]
-  (let [{:keys [handler routes]} (webly-handler/create-ring-handler app-handler routes config-route websocket-routes)]
+(defn create-ring-handler [services user-routes]
+  (let [handler (create-handler services user-routes)]
     (def ring-handler handler) ; needed by shadow-watch
-    (write-target2 "routes" routes)
     handler))
 
-(defn start-webly [exts
-                   {:keys [web-server]
-                    :or {web-server {}}
+(defn start-webly [{:keys [exts ctx]
+                    :or {ctx {}} :as services}
+                   {:keys [web-server routes]
+                    :or {web-server {}
+                         routes []}
                     :as config}
                    profile]
   (info "start-webly: " profile)
@@ -56,14 +53,15 @@
                      :profile profile}
         _ (info "webly mode config: " mode-config)
         config (merge config mode-config)
-        {:keys [routes frontend-config]} (configure config exts)
-        _ (write-target2 :frontend-config frontend-config)
-        config-route (create-config-routes frontend-config)
+        frontend-config (create-frontend-config config exts)
+        _ (write-edn-private :frontend-config frontend-config)
         websocket (start-websocket-server :jetty)
-        websocket-routes (:bidi-routes websocket)
-        app-handler (app-handler frontend-config)
-        ring-handler (create-ring-handler app-handler routes config-route websocket-routes)
-        webserver (web-server/start-webserver ring-handler web-server)
+        ctx (assoc ctx 
+                   :frontend-config frontend-config
+                   :sente websocket)
+        services (assoc services :ctx ctx)
+        ring-handler (create-ring-handler services routes)
+        webserver (start-webserver ring-handler web-server)
         shadow   (when (watch? profile)
                    (let [profile-full (setup-profile profile)]
                      (when (:bundle profile-full)
@@ -77,7 +75,7 @@
 (defn stop-webly [{:keys [webserver _websocket shadow]}]
   (info "stopping webly..")
   (when webserver
-    (web-server/stop webserver))
+    (stop-webserver webserver))
   (when shadow
     (stop-shadow shadow)))
 
@@ -88,10 +86,10 @@
   (let [config (get-in-config [])
         ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
         exts (discover ext-config)
-        {:keys [_routes frontend-config] :as _opts} (configure config exts)]
-    (write-target2 :extensions-all (:extensions exts))
-    (write-target2 :extensions-disabled (:extensions-disabled exts))
-    (write-target2 "webly-build-config" config)
+        frontend-config (create-frontend-config config exts)]
+    (write-edn-private :extensions-all (:extensions exts))
+    (write-edn-private :extensions-disabled (:extensions-disabled exts))
+    (write-edn-private "webly-build-config" config)
     (let [profile (setup-profile profile)]
       (when (:bundle profile)
         (build exts config profile))

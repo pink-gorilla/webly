@@ -3,8 +3,8 @@
    [clojure.string :as str]
    [clojure.set]
    [taoensso.timbre :as timbre :refer [warn]]
-   [extension :refer [get-extensions]]
-   [shadowx.writer :refer [write-target2]]))
+   [modular.writer :refer [write-edn-private]]
+   [extension :refer [get-extensions]]))
 
 ;; NAMESPACE
 
@@ -65,9 +65,9 @@
   (let [spec (modules->ns-map lazy-modules)
         ns-vars (ns-map->vars spec)
         ns-loadable (ns-map->loadable spec)]
-    (write-target2 :cljsbuild-lazy-namespaces spec)
-    (write-target2 :cljsbuild-lazy-ns-vars ns-vars)
-    (write-target2 :cljsbuild-lazy-ns-loadable ns-loadable)
+    (write-edn-private :cljsbuild-lazy-namespaces spec)
+    (write-edn-private :cljsbuild-lazy-ns-vars ns-vars)
+    (write-edn-private :cljsbuild-lazy-ns-loadable ns-loadable)
     (reset! lazy-modules-a (map :name lazy-modules))
     (reset! lazy-ns-a spec)
     (reset! lazy-ns-vars-a ns-vars)
@@ -144,7 +144,7 @@
         main-modules (remove lazy-module? valid-modules)
         main-module (consolidate-main-modules main-modules)
         lazy-modules2 (conj lazy-modules main-module)]
-    (write-target2 :cljsbuild-module-lazy lazy-modules2)
+    (write-edn-private :cljsbuild-module-lazy lazy-modules2)
     ;(write-service exts :cljsbuild-module-main main-modules)
     (set-lazy-modules! exts lazy-modules2)
     {:modules {:main [main-module]

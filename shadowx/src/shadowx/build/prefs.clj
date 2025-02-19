@@ -1,7 +1,7 @@
 (ns shadowx.build.prefs
   (:require
    [modular.date :refer [now-str]]
-   [shadowx.writer :refer [write-target2]]))
+   [modular.writer :refer [write-edn-private]]))
 
 (defonce prefs-atom (atom {}))
 
@@ -29,4 +29,4 @@
     without))
 
 (defn write-build-prefs []
-  (write-target2 "cljsbuild-prefs" @prefs-atom))
+  (write-edn-private "cljsbuild-prefs" @prefs-atom))

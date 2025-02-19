@@ -43,7 +43,7 @@
   :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.112"} ; http cors test
                        }
           :extra-paths ["src" "resources" "test" "test/resources"]
-          :exec-fn webly.app.app/webly-build
+          :exec-fn webly.spa/webly-build
           :exec-args {:config ["demo.edn"] 
                       :profile "npm-install"}}
 

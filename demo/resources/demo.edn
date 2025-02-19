@@ -13,13 +13,13 @@
                           [#{"*"} :info]]
               :appenders {:default {:type :console-color}
                           :file {:type :file
-                                 :fname "target/file.log"}
+                                 :fname ".gorilla/file.log"}
                           :rolling {:type :file-rolling
-                                    :path "target/rolling.log"
+                                    :path ".gorilla/rolling.log"
                                     :pattern :monthly}
                           :workflow {:type :file-rolling-context
                                      :context :scheduled-data-import
-                                     :path "target/workflow.log"
+                                     :path ".gorilla/workflow.log"
                                      :pattern :monthly}}}
 
  :keybindings  [; https://github.com/piranha/keybind

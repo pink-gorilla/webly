@@ -1,7 +1,7 @@
 (ns shadowx.build.core
   (:require
    [taoensso.timbre  :refer [debug info warn]]
-   [shadowx.writer :refer [write write-target2]]
+   [modular.writer :refer [write write-edn-private]]
    [shadowx.build.shadow-config :refer [shadow-config]]
    [shadowx.build.shadow :refer [shadow-build]] ; shadow via generated config file
    [shadowx.build.prefs :refer [write-build-prefs]]))
@@ -16,7 +16,7 @@
     (if bundle
       (do (info "building bundle: " bundle)
           (write-shadow-config shadow-config)
-          (write-target2 "shadow-cljs" shadow-config)
+          (write-edn-private "shadow-cljs" shadow-config)
 
           (write-build-prefs)
           (shadow-build profile shadow-config)

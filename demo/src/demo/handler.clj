@@ -1,7 +1,7 @@
 (ns demo.handler
   (:require
    [clojure.string]
-   [modular.webserver.middleware.api :refer [wrap-api-handler]]
+   [webserver.middleware.api :refer [wrap-api-handler]]
    [demo.handler.time :as time]
    [demo.handler.ping :as ping]
    [demo.handler.snippet :as snippet]

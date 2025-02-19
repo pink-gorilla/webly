@@ -1,9 +1,9 @@
 (ns shadowx.build.shadow-config
   "generates shadow-cljs.edn based on profile and config"
   (:require
+   [modular.writer :refer [write-edn-private]]
    [shadowx.default :as default]
    [shadowx.build.prefs :refer [if-pref-fn prefs-atom]]
-   [shadowx.writer :refer [write-target2]]
    [shadowx.module.build :refer [create-modules shadow-module-config]]))
 
 ;; build-options
@@ -43,7 +43,7 @@
            :main-path main-path
            :asset-path asset-path
            :advanced? advanced?)
-    (write-target2 :shadow-modules shadow-modules)
+    (write-edn-private :shadow-modules shadow-modules)
     {:cache-root ".shadow-cljs"
      :verbose (if shadow-verbose true false)
      :lein false
@@ -84,6 +84,6 @@
                     ;                     }
                       }
               :ci     {:target :karma
-                       :output-to  "target/ci.js"
+                       :output-to  ".gorilla/ci.js"
                        :ns-regexp "-test$"}}}))
 

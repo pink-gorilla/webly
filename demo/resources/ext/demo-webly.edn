@@ -13,15 +13,19 @@
                     'demo.page.party {'party-page demo.page.party/party-page}
                     'demo.service {'start demo.service/start}}
  ; runtime
- :api-routes {"time"   {:get demo.handler/time-handler}
-              "timejava"   {:get demo.handler/time-java-handler-wrapped}
-              "biditest"   {:get demo.handler/bidi-test-handler-wrapped}
-              "test"   {:get demo.handler.test/test-handler
-                        :post demo.handler.test/test-handler  ; used in unit-test
-                        }
-              "snippet"   {:get demo.handler/snippet-handler-wrapped}
-              "bindata"  demo.handler.binary/binary-handler}
-
+ :web/routes [["/api/snippet" {:get demo.handler/snippet-handler-wrapped}]
+              ["/api/bindata" {:get demo.handler.binary/binary-handler}]
+              ["/api/timejava" {:get demo.handler/time-java-handler-wrapped}]
+              ["/api/biditest" {:get demo.handler/bidi-test-handler-wrapped}]
+              ["/api/test" {:get demo.handler.test/test-handler
+                            :post demo.handler.test/test-handler  ; used in unit-test
+                            }]
+              ["/api/time" {:get demo.handler/time-handler
+                            ;:middleware [webserver.middleware.ctx/ctx-middleware]
+                            ;:services #{:sente}
+                            }
+               ]]
+ 
  :cljs-routes {""       demo.page.main/main-page
                "help"    demo.page.help/help-page
                ["party/" :location]  demo.page.party/party-page

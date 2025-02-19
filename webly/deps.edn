@@ -2,7 +2,6 @@
          "resources"  ; webly resources (svg/img)
          ]
  :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
-        com.rpl/specter {:mvn/version "1.1.4"}
         ; webly/core
         ; shadow-cljs
         ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler
@@ -15,10 +14,10 @@
         ; modular
         org.pinkgorilla/timbre {:mvn/version "0.0.8"}
         org.pinkgorilla/extension {:mvn/version "0.0.14"} ; brings modular
-        org.pinkgorilla/webserver {:mvn/version "0.0.47"}
+        org.pinkgorilla/modular {:mvn/version "0.2.65"} ; encoding + appstart
+        org.pinkgorilla/webserver {:mvn/version "0.2.59"}
         ;org.pinkgorilla/webserver {:local/root "../../webserver" :deps/manifest :deps}
-        ;org.pinkgorilla/websocket {:mvn/version "0.0.24"}
-        org.pinkgorilla/websocket {:mvn/version "0.0.25"}
+        org.pinkgorilla/websocket {:mvn/version "0.2.26"}
         ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
         org.pinkgorilla/shadowx {:local/root "../shadowx" :deps/manifest :deps}

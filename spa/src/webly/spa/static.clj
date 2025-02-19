@@ -1,4 +1,4 @@
-(ns webly.build.static
+(ns webly.spa.static
   (:require
    [clojure.java.io :as io]
    [babashka.fs :as fs]
@@ -7,12 +7,12 @@
    [modular.resource.load :refer [write-resources-to]]
    [webly.spa.html.page :refer [app-page-static]]))
 
-(def root "target/static/")
+(def root ".gorilla/static/")
 
 (def page-name "index")
 
 (def resource-path
-  "target/static/r/")
+  ".gorilla/static/r/")
 
 (defn- ensure-directory [path]
   (when-not (.exists (io/file path))

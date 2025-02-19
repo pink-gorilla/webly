@@ -31,7 +31,7 @@
      {; tag
     ; data-file
       :print-table true
-      :report-file "target/webly/public/bundlesizereport.html"}))) ;".webly/bundlesizereport.html"
+      :report-file ".gorilla/public/bundlesizereport.html"}))) ;".webly/bundlesizereport.html"
 
 (defn watch-cli [cljs-build]
   (let [id  (name cljs-build)]

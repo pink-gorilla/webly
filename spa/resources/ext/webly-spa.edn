@@ -10,4 +10,15 @@
                     'webly.spa.resolve {'get-resolver webly.spa.resolve/get-resolver
                                         'set-resolver! webly.spa.resolve/set-resolver!}}
  ; runtime
- :dev-page {"bundle" webly.spa.devtools.bundle/bundle-page}}
+ :dev-page {"bundle" webly.spa.devtools.bundle/bundle-page}
+ 
+ :web/routes [["/" {:get webly.spa.handler.app/app-handler
+                    :middleware [webserver.middleware.ctx/ctx-middleware
+                                 modular.ws.service.middleware/wrap-ws]
+                    :services #{:frontend-config}}]
+              ["/api/config" {:get webly.spa.handler.config/config-handler
+                              :middleware [webserver.middleware.ctx/ctx-middleware
+                                           webserver.middleware.api/wrap-api-handler]
+                              :services #{:frontend-config}}]]
+ 
+ }
