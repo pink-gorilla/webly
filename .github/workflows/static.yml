@@ -54,11 +54,11 @@ jobs:
           clojure -X:webly:npm-install
           clojure -X:webly:release-adv
           clojure -X:webly:static
-          cp node_modules/@icon target/static/index_files -r
+          cp node_modules/@icon .gorilla/static/index_files -r
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "demo/target/static"
+          path: "demo/.gorilla/static"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
