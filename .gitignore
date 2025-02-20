@@ -38,3 +38,5 @@ creds-localhost.edn
 \#*\#
 .\#*
 .~*
+.gorilla
+demo/karma.conf.js

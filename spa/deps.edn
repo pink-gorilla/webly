@@ -2,21 +2,21 @@
          "resources"  ; webly resources (svg/img)
          ]
  :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
-        ;; old
-        ;luminus/ring-ttl-session {:mvn/version "0.3.3"}
         ; frontend
         reagent/reagent {:mvn/version "1.2.0"} ; https://github.com/reagent-project/reagent
         re-frame/re-frame {:mvn/version "1.2.0"}
-        day8.re-frame/http-fx {:mvn/version "0.2.3"}  ; reframe based http requests
+        ;day8.re-frame/http-fx {:mvn/version "0.2.3"}  ; reframe based http requests
         cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
         com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
         ; modular
         org.pinkgorilla/modular {:mvn/version "0.2.61"} ; encoding, app-config-services
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
-        org.pinkgorilla/ui-bidi {:mvn/version "0.1.36"}
-        org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.11"}
+        org.pinkgorilla/ui-bidi {:mvn/version "0.1.37"}
+        ;org.pinkgorilla/ui-bidi {:local/root "../../ui-bidi" :deps/manifest :deps}
+        org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}
         ;org.pinkgorilla/ui-dialog-keybindings {:local/root "../../ui-dialog-keybindings" :deps/manifest :deps}
-        org.pinkgorilla/css-theme {:mvn/version "0.1.6"}
+        org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
+        ;org.pinkgorilla/css-theme {:local/root "../../css-theme" :deps/manifest :deps}
         ; devtools
         org.pinkgorilla/devtools {:mvn/version "0.5.21"}
         org.pinkgorilla/ui-pprint-frisk {:mvn/version "0.6.565"}}

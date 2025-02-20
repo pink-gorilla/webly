@@ -1,7 +1,7 @@
 (ns webly.spa.service
   (:require
    [extension :refer [get-extensions]]
-   [webly.helper :refer [write-target2]]))
+   [modular.writer :refer [write-edn-private]]))
 
 ;; discovery
 
@@ -29,7 +29,7 @@
 (defn cljs-services [config exts]
   (let [services (->> (get-cljs-services exts)
                       (map #(service-config config exts %)))]
-    (write-target2 :cljs-services services)
+    (write-edn-private :cljs-services services)
     services))
 
 ;; simple-config

@@ -1,4 +1,4 @@
-#!/usr/bin/env /home/florian/babashka/bb
+#!/usr/bin/env bb
 
 (require '[babashka.deps :as deps])
 (deps/add-deps
@@ -7,4 +7,4 @@
 (require '[babashka.http-server :as http-server])
 
 (http-server/exec {:port 8080
-              :dir "./target/static"})
+              :dir "./.gorilla/static"})

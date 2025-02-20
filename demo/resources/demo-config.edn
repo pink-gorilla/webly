@@ -1,0 +1,48 @@
+{:build {:disabled-extensions #{}}
+ 
+ :web-server {:http {:port 8090}}
+
+ :spa {:title "Webly Demo"
+       ;:start-user-app [:demo/start]
+       ;:spinner "webly/loading.svg"
+       ;:icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
+       ;:loading-image-url "webly/loadimage/library.jpg" ; 
+       }
+
+ :timbre/clj {:min-level [[#{"org.eclipse.jetty.*"} :warn]
+                          [#{"*"} :info]]
+              :appenders {:default {:type :console-color}
+                          :file {:type :file
+                                 :fname ".gorilla/file.log"}
+                          :rolling {:type :file-rolling
+                                    :path ".gorilla/rolling.log"
+                                    :pattern :monthly}
+                          :workflow {:type :file-rolling-context
+                                     :context :scheduled-data-import
+                                     :path ".gorilla/workflow.log"
+                                     :pattern :monthly}}}
+
+ :keybindings  [; https://github.com/piranha/keybind
+                ; shift, ctrl, alt, win, cmd, defmod, "left" "right"
+                ; "meta-shift-l" "alt-shift-p" "ctrl-shift-left" "ctrl-shift-right"
+                {:kb "esc"     :handler [:modal/close]            :desc "Dialog Close"} ; for ALL dialogs!
+                {:kb "alt-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
+                {:kb "ctrl-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
+                {:kb "win-g k" :handler [:palette/show]           :desc "Keybindings dialog"}
+
+                {:kb "alt-g 1" :handler [:bidi/goto demo.page.main/main-page] :desc "goto main"}
+                {:kb "alt-g 2" :handler [:bidi/goto demo.page.party/party-page :location "Vienna"] :desc "goto party vienna"}
+                {:kb "alt-g 3" :handler [:bidi/goto  demo.page.help/help-page] :desc "goto help"}
+                {:kb "alt-g 4" :handler [:bidi/goto demo.page.job/job-page] :desc "goto job"}
+                {:kb "alt-g 5" :handler [:bidi/goto demo.page.party/party-page :location "Bali" :query-params {:expected-guests 299}] :desc "goto party bali"}
+                {:kb "alt-y l" :handler [:login/dialog] :desc "login"}
+                {:kb "ctrl-y l" :handler [:login/dialog] :desc "login"}
+                {:kb "win-y l" :handler [:login/dialog] :desc "login"}
+                {:kb "win-z l" :handler [:login/dialog] :desc "login"}]
+
+
+
+
+
+;                
+ }

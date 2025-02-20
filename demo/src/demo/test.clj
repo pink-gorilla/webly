@@ -2,9 +2,9 @@
   (:require
    [extension :refer [discover write-service]]
    [bidi.bidi :as bidi]
-   [webly.module.build :refer [create-modules shadow-module-config
-                               create-modules
-                               get-lazy-ns]]))
+   [shadowx.module.build :refer [create-modules shadow-module-config
+                                 create-modules
+                                 get-lazy-ns]]))
 
 (defn test [& _]
   (println "creating modules..")

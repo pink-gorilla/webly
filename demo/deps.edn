@@ -25,7 +25,7 @@
                            "resources"
                            "test"
                            "test/resources"]
-             :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.108"} ; http cors test
+             :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.112"} ; http cors test
                           io.github.cognitect-labs/test-runner
                           {:git/url "https://github.com/cognitect-labs/test-runner.git"
                            :sha "cc75980b43011773162b485f46f939dc5fba91e4"}
@@ -40,11 +40,11 @@
   ; 2. run unit tests 
 
   ; BUILD BUNDLE (then exit)
-  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.108"} ; http cors test
+  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.112"} ; http cors test
                        }
           :extra-paths ["src" "resources" "test" "test/resources"]
-          :exec-fn webly.app.app/webly-build
-          :exec-args {:config ["demo.edn"] 
+          :exec-fn webly.spa/webly-build
+          :exec-args {:config ["demo-config.edn"] 
                       :profile "npm-install"}}
 
   :npm-install {:exec-args {:profile "npm-install"}}
@@ -57,7 +57,7 @@
   ; RUN SERVICES (keep running)
   :run {:exec-fn modular.system/start!
         :exec-args {:profile "jetty"
-                    :services "demoservices.edn"}}
+                    :services "demo-services.edn"}}
 
   ;:httpkit {:extra-deps {http-kit/http-kit {:mvn/version "2.5.3"}}
   ;          :exec-args {:profile "httpkit"}}

@@ -3,24 +3,7 @@
    [clojure.string :as str]
    [hiccup.page :as page]
    [taoensso.timbre :refer [debug info error]]
-   [frontend.css.config :refer [css-app]]
-   ;[frontend.analytics.google-tag :refer [script-tag-src script-tag-config]]
-   ;[webly.spa.tenx.view :refer [tenx-script]]
-   ))
-
-;; CSS
-
-(defn css-link [link]
-  [:link {:class "webly"
-          :rel "stylesheet"
-          :type "text/css"
-          :href link}])
-
-(defn css->hiccup [prefix theme]
-  (let [{:keys [available current]} theme
-        css-links (css-app prefix available current)]
-    (debug "css links: " css-links)
-    (doall (map css-link css-links))))
+   [frontend.css.links :refer [css-links]]))
 
 ;; loading spinner
 (defn style [s]
@@ -79,7 +62,7 @@
               ;(script-tag-config google-analytics)
               ]]
     (into head
-          (css->hiccup prefix theme))))
+          (css-links prefix theme))))
 
 (defn layout [{:keys [spinner] :as spa}
               theme

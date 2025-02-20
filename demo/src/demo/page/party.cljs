@@ -1,8 +1,8 @@
 (ns demo.page.party
   (:require
    [reagent.core :as r]
-   [re-frame.core :as rf]
-   [demo.helper.ui :refer [link-dispatch]]))
+   [demo.helper.ui :refer [link-dispatch link-fn]]
+   [frontend.css :refer [set-theme-component add-components]]))
 
 ; themeable css for party
 
@@ -18,16 +18,17 @@
   (let [first (r/atom true)]
     (fn [location expected-guests]
       (when @first
-        (rf/dispatch [:css/add-components components config])
+        (add-components {:available components
+                         :current config})
         (reset! first false))
       [:div.party
        [link-dispatch [:bidi/goto 'demo.page.main/main-page] "main"]
        [:p "This is a test for bidi route/query parameters."]
 
        [:p "This is a test for theme css switching."]
-       [link-dispatch [:css/set-theme-component :party :red] "theme red"]
-       [link-dispatch [:css/set-theme-component :party :blue] "theme blue"]
-       [link-dispatch [:css/set-theme-component :party :cool] "theme cool"]
+       [link-fn #(set-theme-component :party :red) "theme red"]
+       [link-fn #(set-theme-component :party :blue) "theme blue"]
+       [link-fn #(set-theme-component :party :cool) "theme cool"]
 
        [:h1.text-3xl.text-blue-500 "There is a party in " location]
        (if expected-guests
