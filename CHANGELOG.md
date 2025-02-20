@@ -14,3 +14,12 @@
 
 # 2025-01-09
 - webserver updated, now with letsencrypt-proxy as an included option
+
+
+# 2025-02-20
+- webserver updated:
+  - now with reitit router and middleware to inject services to handlers
+  - routing moved 100% to webserver
+  - namespace change from "modular.webserver" to just "webserver"
+- 0.9.xxx because of breaking changes  
+

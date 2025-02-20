@@ -10,8 +10,7 @@
    [webly.spa.service :refer [start-cljs-services]]
    ; webly
    [shadowx.build.lazy]
-   [webly.spa.views :refer [webly-app]]
-   ))
+   [webly.spa.views :refer [webly-app]]))
 
 ;; see:
 ;; https://shadow-cljs.github.io/docs/UsersGuide.html#_lifecycle_hooks
@@ -26,7 +25,6 @@
 (defn mount-app []
   (let [root (rdom/create-root (.getElementById js/document "app"))]
     (rdom/render root [webly-app])))
-
 
 (defn ^:dev/before-load
   before-load []
@@ -50,8 +48,6 @@
     (when (.contains body-classes "loading")
       (.remove body-classes "loading"))))
 
-
-
 (defn start-app [config]
   (info "webly config after-load")
   (let [{:keys [ports static? cljs-services]} config
@@ -62,15 +58,15 @@
         ;         (let [ws-p (start-ws-p ports)]
         ;           (p/all [services-p ws-p])))
         ]
-     (-> services-p
-         (p/then (fn [_]
-                   (warn "webly bootstrap done. mounting app")
-                   (remove-spinner)
-                   (info "mounting webly-app ..")
-                   (mount-app) ; mount needs to wait until config is loaded.
+    (-> services-p
+        (p/then (fn [_]
+                  (warn "webly bootstrap done. mounting app")
+                  (remove-spinner)
+                  (info "mounting webly-app ..")
+                  (mount-app) ; mount needs to wait until config is loaded.
                   ))
-         (p/catch (fn [err]
-                    (error "service start error: " err))))))
+        (p/catch (fn [err]
+                   (error "service start error: " err))))))
 
 (defn ^:export start [_mode]
   (enable-console-print!)

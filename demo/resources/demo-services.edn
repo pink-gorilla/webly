@@ -1,18 +1,19 @@
 {:modular (modular.system/modular-env)
  ;:secrets #include "secrets.edn" ;; externalised and usually "mounted" as a docker/kubernetes secret
  :components
- {:config {:start (modular.config/load-config! (:config #ref [:modular]))}
+ {:config1 {:start (modular.config/load-config! (:config #ref [:modular]))}
+  :config {:start (deref (clip/ref :config1))}
 
   :timbre {:start (modular.log/timbre-config!
-                   (:timbre/clj (deref (clip/ref :config))))}
+                   (:timbre/clj (clip/ref :config)))}
 
   :exts {:start (extension/discover)}
 
   :webly {:start (webly.spa/start-webly
                   {:exts (clip/ref :exts)
                    :ctx {}}
-                   (deref (clip/ref :config))
-                   (:profile #ref [:modular]))
+                  (clip/ref :config)
+                  (:profile #ref [:modular]))
           :stop (webly.spa/stop-webly this)}
 
   :time {:start (demo.time/start-time-sender! (:websocket (clip/ref :webly)))

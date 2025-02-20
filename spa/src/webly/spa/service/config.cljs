@@ -5,20 +5,18 @@
    [ajax.core] ; https://github.com/JulianBirch/cljs-ajax
    [modular.encoding.transit :refer [decode]]
    [modular.encoding.edn :refer [read-edn]]
-   [webly.spa.mode :refer [get-resource-path get-mode]]
-   ))
+   [webly.spa.mode :refer [get-resource-path get-mode]]))
 
 (defn GET
   [url params]
   (p/create
    (fn [resolve reject]
      (ajax.core/GET url
-                (merge params
-                       {:handler (fn [response]
-                                   (resolve response))
-                        :error-handler (fn [error]
-                                         (reject error))})))))
-
+       (merge params
+              {:handler (fn [response]
+                          (resolve response))
+               :error-handler (fn [error]
+                                (reject error))})))))
 
 ; load configuration
 
@@ -31,8 +29,8 @@
     (p/then p-get
             (fn [config-txt]
               (-> config-txt
-                 (read-edn) ; (cljs.reader/read-string config)
-                 (assoc :static? true))))))
+                  (read-edn) ; (cljs.reader/read-string config)
+                  (assoc :static? true))))))
 
 (defn get-config-api []
   (let [url "/api/config"
@@ -40,7 +38,7 @@
         p-get (GET url {:timeout         10000                        ;; optional see API docs
                         :response-format (ajax.core/transit-response-format :json decode) ;; IMPORTANT!: You must provide this.
                         })]
-     (p/then p-get
+    (p/then p-get
             (fn [config]
               (-> config
                   (assoc :static? false))))))

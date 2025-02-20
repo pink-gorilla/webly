@@ -15,25 +15,24 @@
   ".gorilla/static/r/")
 
 (defn- ensure-directory [path]
-  (when-not (.exists (io/file path))
-    (.mkdir (java.io.File. path))))
+  (fs/create-dirs path))
 
 (defn save-resources []
   (info "exporting resources..")
-  (write-resources-to "target/static" "public")
-  (fs/move "target/static/public" "target/static/r"))
+  (write-resources-to ".gorilla/static" "public")
+  (fs/move ".gorilla/static/public" ".gorilla/static/r"))
 
 (defn copy-pattern [from dest p]
   (let [files (fs/glob from p)]
     (doall (map #(fs/copy % dest {:replace-existing true}) files))))
 
 (defn copy-js []
-  (when (fs/exists? "target/webly/public")
+  (when (fs/exists? ".gorilla/public")
     (info "copying .js files..")
-    (copy-pattern "target/webly/public" resource-path "*.js")
-    (when (fs/exists? "target/webly/public/cljs-runtime")
-      (copy-pattern "target/webly/public/cljs-runtime" (str resource-path "cljs-runtime/") "*.js")
-      (copy-pattern "target/webly/public/cljs-runtime" (str resource-path "cljs-runtime/") "*.js.map"))))
+    (copy-pattern ".gorilla/public" resource-path "*.js")
+    (when (fs/exists? ".gorilla/public/cljs-runtime")
+      (copy-pattern ".gorilla/public/cljs-runtime" (str resource-path "cljs-runtime/") "*.js")
+      (copy-pattern ".gorilla/public/cljs-runtime" (str resource-path "cljs-runtime/") "*.js.map"))))
 
 (defn generate-static-html [frontend-config]
   (info "generating static html page ..")
@@ -48,9 +47,9 @@
     (write filename opts)))
 
 (defn build-static [frontend-config]
-  (ensure-directory "target")
-  (fs/delete-tree "target/static")
-  (ensure-directory "target/static")
+  (ensure-directory ".gorilla")
+  (fs/delete-tree ".gorilla/static")
+  (ensure-directory ".gorilla/static")
   (save-resources)
   (write-static-config frontend-config)
   (generate-static-html frontend-config)

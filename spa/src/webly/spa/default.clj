@@ -16,6 +16,4 @@
    :loading-image-url "webly/loadimage/library.jpg" ; 
    :start-user-app [:webly/start-default]  ; after config loaded}
    })
-
-
 (def prefix "/r/")

@@ -15,7 +15,7 @@
         org.pinkgorilla/timbre {:mvn/version "0.0.8"}
         org.pinkgorilla/extension {:mvn/version "0.0.14"} ; brings modular
         org.pinkgorilla/modular {:mvn/version "0.2.65"} ; encoding + appstart
-        org.pinkgorilla/webserver {:mvn/version "0.2.59"}
+        org.pinkgorilla/webserver {:mvn/version "0.2.60"}
         ;org.pinkgorilla/webserver {:local/root "../../webserver" :deps/manifest :deps}
         org.pinkgorilla/websocket {:mvn/version "0.2.26"}
         ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}

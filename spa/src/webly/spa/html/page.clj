@@ -3,9 +3,7 @@
    [clojure.string :as str]
    [hiccup.page :as page]
    [taoensso.timbre :refer [debug info error]]
-   [frontend.css.links :refer [css-links]]
-   ))
-
+   [frontend.css.links :refer [css-links]]))
 
 ;; loading spinner
 (defn style [s]

@@ -3,8 +3,8 @@
    [extension :refer [discover write-service]]
    [bidi.bidi :as bidi]
    [shadowx.module.build :refer [create-modules shadow-module-config
-                               create-modules
-                               get-lazy-ns]]))
+                                 create-modules
+                                 get-lazy-ns]]))
 
 (defn test [& _]
   (println "creating modules..")

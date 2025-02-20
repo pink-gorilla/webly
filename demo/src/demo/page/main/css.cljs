@@ -17,9 +17,8 @@
         add-bad-css! (fn []
                        (warn "adding bad css ..")
                        (add-components {:available {:bad {true  ["non-existing.css"]}}
-                                        :current {:bad :true}}))
-        
-        ]
+                                        :current {:bad :true}}))]
+
     (fn []
       [block2 "css loader"
        [:div.flex.flex-col

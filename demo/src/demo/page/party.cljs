@@ -2,8 +2,7 @@
   (:require
    [reagent.core :as r]
    [demo.helper.ui :refer [link-dispatch link-fn]]
-   [frontend.css :refer [set-theme-component add-components]]
-   ))
+   [frontend.css :refer [set-theme-component add-components]]))
 
 ; themeable css for party
 
@@ -19,7 +18,7 @@
   (let [first (r/atom true)]
     (fn [location expected-guests]
       (when @first
-        (add-components {:available components 
+        (add-components {:available components
                          :current config})
         (reset! first false))
       [:div.party

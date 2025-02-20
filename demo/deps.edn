@@ -44,7 +44,7 @@
                        }
           :extra-paths ["src" "resources" "test" "test/resources"]
           :exec-fn webly.spa/webly-build
-          :exec-args {:config ["demo.edn"] 
+          :exec-args {:config ["demo-config.edn"] 
                       :profile "npm-install"}}
 
   :npm-install {:exec-args {:profile "npm-install"}}
@@ -57,7 +57,7 @@
   ; RUN SERVICES (keep running)
   :run {:exec-fn modular.system/start!
         :exec-args {:profile "jetty"
-                    :services "demoservices.edn"}}
+                    :services "demo-services.edn"}}
 
   ;:httpkit {:extra-deps {http-kit/http-kit {:mvn/version "2.5.3"}}
   ;          :exec-args {:profile "httpkit"}}

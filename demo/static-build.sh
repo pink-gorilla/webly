@@ -1,5 +1,5 @@
 #!/bin/sh
-rm target -r
+rm .gorilla -r
 rm .shadow-cljs -r
 clojure -X:webly:npm-install
 # clojure -X:webly:release-adv

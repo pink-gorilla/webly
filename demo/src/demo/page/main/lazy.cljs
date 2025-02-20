@@ -51,6 +51,5 @@
        [link-fn resolve-highcharts "webly-resolve-highcharts"]
        [:div "loaded lazy renderer: " (pr-str (available))]
        (when @show-lazy1
-         [lazy1])
-      ])))
+         [lazy1])])))
 

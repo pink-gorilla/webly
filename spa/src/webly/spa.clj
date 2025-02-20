@@ -16,20 +16,11 @@
    [webly.spa.default :as default])
   (:gen-class))
 
-;; shadow watch hack
-
-(defn watch? [profile-name]
-  (case profile-name
-    "watch" true
-    false))
-
-(defn shadow-dev-http-port [config profile]
-  (if (watch? profile)
+(defn shadow-dev-http-port [config watch?]
+  (if watch?
     ;(get-in config [:shadow :dev-http :port])
     (get-in shadow-default/shadow [:dev-http :port])
     0))
-
-;; HANDLER RELATED
 
 (defn create-ring-handler [services user-routes]
   (let [handler (create-handler services user-routes)]
@@ -43,29 +34,37 @@
                          routes []}
                     :as config}
                    profile]
-  (info "start-webly: " profile)
+  (info (str "start-webly: [" profile "]"))
   (let [web-server (merge default/webserver web-server)
+        watch?  (case profile
+                  "watch" true
+                  false)
         mode-config {; shadow-dev-http-port is set to shadow-dev http server port
                      ; when using "watch" profile. Otherwise it is 0.
-                     :ports {:shadow-dev-http-port (shadow-dev-http-port config profile)
-                             :webly-http-port (get-in web-server [:http :port])}
+                     :ports {:shadow-dev-http-port (shadow-dev-http-port config watch?)
+                             :webly-http-port (get-in web-server [:http :port])
+                             :profile profile
+                             :mode :dynamic
+                             :watch? watch?}
                      :mode :dynamic
-                     :profile profile}
-        _ (info "webly mode config: " mode-config)
+                     :profile profile
+                     :watch? watch?}
         config (merge config mode-config)
         frontend-config (create-frontend-config config exts)
         _ (write-edn-private :frontend-config frontend-config)
         websocket (start-websocket-server :jetty)
-        ctx (assoc ctx 
+        ctx (assoc ctx
                    :frontend-config frontend-config
                    :sente websocket)
         services (assoc services :ctx ctx)
         ring-handler (create-ring-handler services routes)
         webserver (start-webserver ring-handler web-server)
-        shadow   (when (watch? profile)
-                   (let [profile-full (setup-profile profile)]
+        shadow   (if watch?
+                   (let [_ (info "starting shadow-watch..")
+                         profile-full (setup-profile profile)]
                      (when (:bundle profile-full)
-                       (build exts config profile-full))))]
+                       (build exts config profile-full)))
+                   (info "webly is serving a compiled cljs bundle."))]
     ; return config of started services (needed to stop)
     {:profile profile
      :webserver webserver
