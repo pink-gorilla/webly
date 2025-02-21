@@ -3,7 +3,7 @@
          ]
  :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
         ; frontend
-        reagent/reagent {:mvn/version "1.2.0"} ; https://github.com/reagent-project/reagent
+        reagent/reagent {:mvn/version "1.3.0"} ; https://github.com/reagent-project/reagent
         re-frame/re-frame {:mvn/version "1.2.0"}
         ;day8.re-frame/http-fx {:mvn/version "0.2.3"}  ; reframe based http requests
         cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
