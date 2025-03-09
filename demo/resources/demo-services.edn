@@ -7,7 +7,7 @@
   :timbre {:start (modular.log/timbre-config!
                    (:timbre/clj (clip/ref :config)))}
 
-  :exts {:start (extension/discover)}
+  :exts {:start (extension/discover (:extension (clip/ref :config)))}
 
   :sente-websocket {:start (modular.ws.core/start-websocket-server :jetty)}
 

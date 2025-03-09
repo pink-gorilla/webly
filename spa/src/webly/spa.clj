@@ -78,7 +78,7 @@
 (defn webly-build [{:keys [config profile]}]
   (load-config! config)
   (let [config (get-in-config [])
-        ext-config {:disabled-extensions (or (get-in config [:build :disabled-extensions]) #{})}
+        ext-config {:disabled (or (get-in config [:extension :disabled]) #{})}
         exts (discover ext-config)
         frontend-config (create-frontend-config config exts)]
     (write-edn-private :extensions-all (:extensions exts))

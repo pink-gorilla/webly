@@ -1,4 +1,4 @@
-{:build {:disabled-extensions #{}}
+{:extension {:disabled #{"letitbe"}}
  
  :web-server {:http {:port 8090}}
 
