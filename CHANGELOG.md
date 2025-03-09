@@ -23,3 +23,8 @@
   - namespace change from "modular.webserver" to just "webserver"
 - 0.9.xxx because of breaking changes  
 
+# 2025-03-09
+- sente websocket is now debundled.
+- ui-pprint-frisk is debundled
+- devtools is debundled
+

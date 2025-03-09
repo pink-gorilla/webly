@@ -5,8 +5,9 @@
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
         org.pinkgorilla/ui-vega {:mvn/version "0.3.220"}
         org.pinkgorilla/pinkie {:mvn/version "0.5.232"}
-        org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}
-        }
+        org.pinkgorilla/websocket {:mvn/version "0.2.26"}
+        ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}
+        org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}}
  :aliases
  {:cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}
            :main-opts ["-m" "cljfmt.main"
@@ -38,7 +39,7 @@
   ; so the demo serves two purposes
   ; 1. ilustrate links in web-app
   ; 2. run unit tests 
-
+  
   ; BUILD BUNDLE (then exit)
   :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.112"} ; http cors test
                        }

@@ -1,6 +1,0 @@
-{:name "webly-devtools"
- :lazy true
- :cljs-namespace [webly.spa.devtools.bundle]
- :cljs-ns-bindings {'webly.spa.devtools.bundle {'bundle-page webly.spa.devtools.bundle/bundle-page}}
- ; runtime
- :dev-page {"bundle" webly.spa.devtools.bundle/bundle-page}}

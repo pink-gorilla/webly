@@ -9,14 +9,17 @@
 
   :exts {:start (extension/discover)}
 
+  :sente-websocket {:start (modular.ws.core/start-websocket-server :jetty)}
+
   :webly {:start (webly.spa/start-webly
                   {:exts (clip/ref :exts)
-                   :ctx {}}
+                   :ctx {:sente (clip/ref :sente-websocket)}}
                   (clip/ref :config)
                   (:profile #ref [:modular]))
           :stop (webly.spa/stop-webly this)}
 
-  :time {:start (demo.time/start-time-sender! (:websocket (clip/ref :webly)))
+
+  :time {:start (demo.time/start-time-sender! (clip/ref :sente-websocket))
          :stop  (demo.time/stop! this)}
 
  ; :modular-test {:start (println "modular environment: " #ref [:modular])}

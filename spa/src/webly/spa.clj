@@ -6,7 +6,6 @@
    [modular.writer :refer [write-edn-private]]
    [webserver.router :refer [create-handler]]
    [webserver.server :refer [start-webserver stop-webserver]]
-   [modular.ws.core :refer [start-websocket-server]]
    [shadowx.build.profile :refer [setup-profile]]
    [shadowx.build.core :refer [build]]
    [shadowx.build.shadow :refer [stop-shadow]]
@@ -52,10 +51,7 @@
         config (merge config mode-config)
         frontend-config (create-frontend-config config exts)
         _ (write-edn-private :frontend-config frontend-config)
-        websocket (start-websocket-server :jetty)
-        ctx (assoc ctx
-                   :frontend-config frontend-config
-                   :sente websocket)
+        ctx (assoc ctx :frontend-config frontend-config)
         services (assoc services :ctx ctx)
         ring-handler (create-ring-handler services routes)
         webserver (start-webserver ring-handler web-server)
@@ -68,7 +64,6 @@
     ; return config of started services (needed to stop)
     {:profile profile
      :webserver webserver
-     :websocket websocket
      :shadow shadow}))
 
 (defn stop-webly [{:keys [webserver _websocket shadow]}]

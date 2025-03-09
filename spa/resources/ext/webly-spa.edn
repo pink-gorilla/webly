@@ -13,8 +13,7 @@
  :dev-page {"bundle" webly.spa.devtools.bundle/bundle-page}
  
  :web/routes [["/" {:get webly.spa.handler.app/app-handler
-                    :middleware [webserver.middleware.ctx/ctx-middleware
-                                 modular.ws.service.middleware/wrap-ws]
+                    :middleware [webserver.middleware.ctx/ctx-middleware]
                     :services #{:frontend-config}}]
               ["/api/config" {:get webly.spa.handler.config/config-handler
                               :middleware [webserver.middleware.ctx/ctx-middleware
