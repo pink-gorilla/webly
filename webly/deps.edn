@@ -14,8 +14,8 @@
         ; modular
         org.pinkgorilla/timbre {:mvn/version "0.0.8"}
         org.pinkgorilla/extension {:mvn/version "0.0.16"} ; brings modular
-        org.pinkgorilla/modular {:mvn/version "0.2.65"} ; encoding + appstart
-        org.pinkgorilla/webserver {:mvn/version "0.2.60"}
+        org.pinkgorilla/modular {:mvn/version "0.2.69"} ; encoding + appstart
+        org.pinkgorilla/webserver {:mvn/version "0.2.64"}
         ;org.pinkgorilla/webserver {:local/root "../../webserver" :deps/manifest :deps}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
         org.pinkgorilla/shadowx {:local/root "../shadowx" :deps/manifest :deps}

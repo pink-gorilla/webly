@@ -9,8 +9,8 @@
         cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
         com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
         ; modular
-        org.pinkgorilla/modular {:mvn/version "0.2.61"} ; encoding, app-config-services
-        org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
+        org.pinkgorilla/transit-ajax {:mvn/version "0.1.10"} ; transit encoding
+        org.pinkgorilla/modular {:mvn/version "0.2.69"} ; encoding, app-config-services
         org.pinkgorilla/ui-bidi {:mvn/version "0.1.37"}
         ;org.pinkgorilla/ui-bidi {:local/root "../../ui-bidi" :deps/manifest :deps}
         org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}

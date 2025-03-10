@@ -16,8 +16,8 @@
         ;org.clojure/clojurescript {:mvn/version "1.10.879"} ; already referred from shadow-cljs
         ; modular
         org.pinkgorilla/timbre {:mvn/version "0.0.8"}
-        org.pinkgorilla/extension {:mvn/version "0.0.14"} ; brings modular
-       }
+        org.pinkgorilla/extension {:mvn/version "0.0.16"} ; brings modular
+        }
  :aliases
  {; https://github.com/weavejester/cljfmt
   :cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}

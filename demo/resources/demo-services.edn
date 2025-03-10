@@ -8,6 +8,7 @@
                    (:timbre/clj (clip/ref :config)))}
 
   :exts {:start (extension/discover (:extension (clip/ref :config)))}
+  :transit-tick {:start (transit.type.tick/add-tick-handlers!)}
 
   :sente-websocket {:start (modular.ws.core/start-websocket-server :jetty)}
 

@@ -5,8 +5,10 @@
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
         org.pinkgorilla/ui-vega {:mvn/version "0.3.220"}
         org.pinkgorilla/pinkie {:mvn/version "0.5.232"}
-        org.pinkgorilla/websocket {:mvn/version "0.2.26"}
+        org.pinkgorilla/websocket {:mvn/version "0.2.28"}
         ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}
+        org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
+        org.pinkgorilla/ui-repl {:mvn/version "0.1.114"} ; tick encoding start
         org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}}
  :aliases
  {:cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}
@@ -26,7 +28,7 @@
                            "resources"
                            "test"
                            "test/resources"]
-             :extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.112"} ; http cors test
+             :extra-deps {
                           io.github.cognitect-labs/test-runner
                           {:git/url "https://github.com/cognitect-labs/test-runner.git"
                            :sha "cc75980b43011773162b485f46f939dc5fba91e4"}
@@ -41,8 +43,7 @@
   ; 2. run unit tests 
   
   ; BUILD BUNDLE (then exit)
-  :webly {:extra-deps {org.pinkgorilla/ui-repl {:mvn/version "0.1.112"} ; http cors test
-                       }
+  :webly {:extra-deps {}
           :extra-paths ["src" "resources" "test" "test/resources"]
           :exec-fn webly.spa/webly-build
           :exec-args {:config ["demo-config.edn"] 
