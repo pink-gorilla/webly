@@ -1,16 +1,13 @@
 (ns webly.spa
   (:require
-   [reagent.dom.client :as rdom]
    [taoensso.timbre :refer-macros [info warn error]]
-   [re-frame.core :refer [clear-subscription-cache! dispatch reg-event-db reg-sub]]
    [promesa.core :as p]
    ; frontend
-   ;[frontend.dialog]
    [webly.spa.service.config :refer [get-config]]
    [webly.spa.service :refer [start-cljs-services]]
+   [webly.spa.resolve :refer [get-resolver]]
    ; webly
-   [shadowx.build.lazy]
-   [webly.spa.views :refer [webly-app]]))
+   [shadowx.build.lazy]))
 
 ;; see:
 ;; https://shadow-cljs.github.io/docs/UsersGuide.html#_lifecycle_hooks
@@ -21,23 +18,6 @@
 ;; - OR shadow-cljs.edn :devtools section   
 
 ;; before-reload is a good place to stop application stuff before we reload.
-
-(defn mount-app []
-  (let [root (rdom/create-root (.getElementById js/document "app"))]
-    (rdom/render root [webly-app])))
-
-(defn ^:dev/before-load
-  before-load []
-  (info "before-load")
-  (dispatch [:webly/before-load]))
-
-(defn ^:dev/after-load
-  after-load []
-  (enable-console-print!)
-  (info "after-load")
-
-  (info "clearing reframe subscription cache..")
-  (clear-subscription-cache!))
 
 (defn remove-spinner []
   (let [spinner (.. js/document (getElementById "spinner"))
@@ -50,21 +30,25 @@
 
 (defn start-app [config]
   (info "webly config after-load")
-  (let [{:keys [ports static? cljs-services]} config
-        services-p  (start-cljs-services cljs-services)
-        ;all-p (if static?
-        ;         (do (warn "websockets are deactivated in static mode.")
-        ;             services-p)
-        ;         (let [ws-p (start-ws-p ports)]
-        ;           (p/all [services-p ws-p])))
-        ]
+  (let [{:keys [ports static? cljs-services spa]} config
+        services-p  (start-cljs-services cljs-services)]
     (-> services-p
         (p/then (fn [_]
                   (warn "webly bootstrap done. mounting app")
                   (remove-spinner)
                   (info "mounting webly-app ..")
-                  (mount-app) ; mount needs to wait until config is loaded.
-                  ))
+                  ; mount needs to wait until config is loaded.
+                  (let [resolve-fn (get-resolver)
+                        mount-fn  (:mount-fn spa)
+                        _ (println "mounting: " mount-fn)
+                        mount-p (resolve-fn mount-fn)
+                        _ (println "mount-p: " mount-p)]
+                    (-> mount-p
+                        (p/then (fn [mount]
+                                  (println "mount-fn resolved to: " mount)
+                                  (mount)))
+                        (p/catch (fn [err]
+                                   (println "mount-fn error: " err)))))))
         (p/catch (fn [err]
                    (error "service start error: " err))))))
 

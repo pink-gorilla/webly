@@ -3,7 +3,6 @@
  :web-server {:http {:port 8090}}
 
  :spa {:title "Webly Demo"
-       ;:start-user-app [:demo/start]
        ;:spinner "webly/loading.svg"
        ;:icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
        ;:loading-image-url "webly/loadimage/library.jpg" ; 

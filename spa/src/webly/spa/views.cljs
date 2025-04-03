@@ -1,5 +1,6 @@
 (ns webly.spa.views
   (:require
+   [reagent.dom.client :as rdom]
    [frontend.css :refer [css-loader]]
    [frontend.notification :refer [notification-container]]
    [frontend.dialog :refer [modal-container]]
@@ -15,3 +16,7 @@
    [notification-container]
    [css-loader (get-resource-path)]
    [page-viewer]])
+
+(defn mount-app []
+  (let [root (rdom/create-root (.getElementById js/document "app"))]
+    (rdom/render root [webly-app])))

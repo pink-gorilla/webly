@@ -11,7 +11,7 @@
    [shadowx.build.shadow :refer [stop-shadow]]
    [shadowx.default :as shadow-default]
    [webly.spa.static :refer [build-static]]
-   [webly.spa.frontend-config :refer [create-frontend-config]]
+   [webly.spa.service :refer [cljs-services]]
    [webly.spa.default :as default])
   (:gen-class))
 
@@ -25,6 +25,17 @@
   (let [handler (create-handler services user-routes)]
     (def ring-handler handler) ; needed by shadow-watch
     handler))
+
+(defn create-frontend-config [{:keys [spa prefix ports]
+                               :or {spa {}
+                                    prefix default/prefix}
+                               :as config} exts]
+  (let [spa (merge default/spa spa)
+        frontend-config  {:prefix prefix
+                          :spa spa
+                          :cljs-services (cljs-services config exts)
+                          :ports ports}]
+    frontend-config))
 
 (defn start-webly [{:keys [exts ctx]
                     :or {ctx {}} :as services}

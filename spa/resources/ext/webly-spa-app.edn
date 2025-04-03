@@ -1,0 +1,7 @@
+{:name "webly-spa-app"
+ :lazy true
+ :cljs-namespace [webly.spa.views]
+ :cljs-ns-bindings {'webly.spa.views {'mount-app webly.spa.views/mount-app} ; default app
+                    }
+ 
+ }
