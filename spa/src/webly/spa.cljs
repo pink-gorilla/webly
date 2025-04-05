@@ -17,8 +17,6 @@
 ;; - EITHER via METADATA
 ;; - OR shadow-cljs.edn :devtools section   
 
-;; before-reload is a good place to stop application stuff before we reload.
-
 (defn remove-spinner []
   (let [spinner (.. js/document (getElementById "spinner"))
         body-classes (.. js/document -body -classList)]

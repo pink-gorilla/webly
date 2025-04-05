@@ -10,7 +10,8 @@
    [demo.page.main.dialog :refer [demo-dialog]]
    [demo.page.main.keybinding :refer [demo-keybinding]]))
 
-(defn main-page [_route]
+(defn main-page [match]
+  (println "main page parameters: " (:parameters match))
   [:div.dark
    [:div {:class (str
                   "w-screen h-screen overflow-hidden m-0 p-0"

@@ -13,6 +13,6 @@
   {:title "webly"
    :spinner "webly/loading.svg"
    :icon "webly/icon/pinkgorilla32.png" ; "webly/icon/silver.ico"  ; gorilla is much smaller than silver
-   :loading-image-url "webly/loadimage/library.jpg" ; 
-   :mount-fn 'webly.spa.views/mount-app})
+   :loading-image-url "webly/loadimage/library.jpg"})
+
 (def prefix "/r/")

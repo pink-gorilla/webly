@@ -39,7 +39,6 @@ A simple demo is on [Webly Github Pages](https://pink-gorilla.github.io/webly/)
 ## web app
 - dynamically generated app html that works with csrf
 - ring middleware for api calls
-- routing with bidi (this allows to have links within the web-app)
 - this means a registry for ring-handlers and reagent-views
 
 ## webly build 

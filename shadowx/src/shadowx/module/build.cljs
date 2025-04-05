@@ -124,7 +124,7 @@
                   (if-let [fun (get ns-map fn-symbol)]
                     (do ;(println "resolved successfully: " fq-symbol)
                       (p/resolve! rp fun))
-                    (do (println "could not resolve: " fq-symbol)
+                    (do (println "could not resolve: " fq-symbol " in namespace: " ns-symbol)
                         (p/reject! rp (str "namespace does not contain function: " fn-symbol))))))
         (p/catch (fn [err]
                    (println "error in resolving " fq-symbol ": namespace not found: " ns-symbol " error: " err)

@@ -53,9 +53,6 @@
       (get-config-static)
       (get-config-api))))
 
-;(def config
-;  {'bidi.bidi.TaggedMatch bidi/map->TaggedMatch})
-
 ;(defn read-str [s]
 ;  (read-string
 ;   {:readers config} s))

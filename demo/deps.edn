@@ -9,6 +9,12 @@
         ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
         org.pinkgorilla/ui-repl {:mvn/version "0.1.114"} ; tick encoding start
+        org.pinkgorilla/ui-router {:mvn/version "0.2.40"}
+        ;org.pinkgorilla/ui-router {:local/root "../../ui-router" :deps/manifest :deps}
+        org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}
+        ;org.pinkgorilla/ui-dialog-keybindings {:local/root "../../ui-dialog-keybindings" :deps/manifest :deps}
+        org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
+        ;org.pinkgorilla/css-theme {:local/root "../../css-theme" :deps/manifest :deps}
         org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}}
  :aliases
  {:cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}

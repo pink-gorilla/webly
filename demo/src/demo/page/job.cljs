@@ -1,24 +1,13 @@
 (ns demo.page.job
   (:require
-   [re-frame.core :as rf]))
+   [demo.helper.ui :refer [link]]))
 
-; ui helper   
-
-(defn link-fn [fun text]
-  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
-   {:on-click fun} text])
-
-(defn link-dispatch [rf-evt text]
-  (link-fn #(rf/dispatch rf-evt) text))
-
-(defn link-href [href text]
-  [:a.bg-blue-300.cursor-pointer.hover:bg-red-700.m-1
-   {:href href} text])
-
-(defn job-page [{:keys [_route-params _query-params _handler _tag] :as p}]
-  [:div.party
-   [link-dispatch [:bidi/goto 'demo.page.main/main-page] "main"]
-   [:p "This is a test for bidi route/query parameters."]
-
-   [:p "params: " (pr-str p)]])
+(defn job-page [;{:keys [_route-params _query-params _handler _tag] :as p}
+                match]
+  (println "job page parameters: " (:parameters match))
+  [:div
+   [link ['demo.page.main/main-page] "main"]
+   [:h1 "JOB PAGE"]
+   [:p "This is a test for reitit route/query parameters."]
+   [:p "parameters: " (pr-str (:parameters match))]])
 

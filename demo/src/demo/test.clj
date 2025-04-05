@@ -1,7 +1,6 @@
 (ns demo.test
   (:require
    [extension :refer [discover write-service]]
-   [bidi.bidi :as bidi]
    [shadowx.module.build :refer [create-modules shadow-module-config
                                  create-modules
                                  get-lazy-ns]]))
@@ -15,9 +14,6 @@
     (println "creating modules..done!")))
 
 (comment
-
-  (->> (bidi/tag :demo/job :wunderbar)
-       pr-str)
 
   (def exts (discover))
 

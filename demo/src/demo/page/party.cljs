@@ -1,7 +1,7 @@
 (ns demo.page.party
   (:require
    [reagent.core :as r]
-   [demo.helper.ui :refer [link-dispatch link-fn]]
+   [demo.helper.ui :refer [link-fn link]]
    [frontend.css :refer [set-theme-component add-components]]))
 
 ; themeable css for party
@@ -22,8 +22,9 @@
                          :current config})
         (reset! first false))
       [:div.party
-       [link-dispatch [:bidi/goto 'demo.page.main/main-page] "main"]
-       [:p "This is a test for bidi route/query parameters."]
+       [:h1 "PARTY PAGE"]
+       [link ['demo.page.main/main-page] "main"]
+       [:p "This is a test for reitit route/query parameters."]
 
        [:p "This is a test for theme css switching."]
        [link-fn #(set-theme-component :party :red) "theme red"]
@@ -35,10 +36,12 @@
          [:p "Expected Guests: " expected-guests]
          [:p "We don't know how many guests to expect!"])
 
-       [:a {:href "/party/kabul"}
+       [:a {:href "/#/party/kabul"}
         [:p.bg-red-400.m-3 "secret party"]]])))
 
-(defn party-page [{:keys [_handler route-params query-params]}]
-  (let [{:keys [location]} route-params
-        {:keys [expected-guests]} query-params]
-    [party location expected-guests]))
+(defn party-page [match]
+  (println "party page parameters: " (:parameters match))
+  (let [{:keys [parameters]} match
+        {:keys [path query fragment]} parameters]
+    [party (:location path) (:expected-guests query)]))
+
