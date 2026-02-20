@@ -1,6 +1,6 @@
 (ns webly.spa
   (:require
-   [taoensso.timbre :as timbre :refer [info]]
+   [taoensso.timbre :as timbre :refer [info error]]
    [extension :refer [discover get-extensions]]
    [modular.config :refer [load-config! get-in-config]]
    [modular.writer :refer [write-edn-private]]
@@ -46,38 +46,42 @@
                          routes []}
                     :as config}
                    profile]
-  (info (str "start-webly: [" profile "]"))
-  (let [web-server (merge default/webserver web-server)
-        watch?  (case profile
-                  "watch" true
-                  false)
-        mode-config {; shadow-dev-http-port is set to shadow-dev http server port
+  (try
+    (info (str "start-webly: [" profile "]"))
+    (let [web-server (merge default/webserver web-server)
+          watch?  (case profile
+                    "watch" true
+                    false)
+          mode-config {; shadow-dev-http-port is set to shadow-dev http server port
                      ; when using "watch" profile. Otherwise it is 0.
-                     :ports {:shadow-dev-http-port (shadow-dev-http-port config watch?)
-                             :webly-http-port (get-in web-server [:http :port])
-                             :profile profile
-                             :mode :dynamic
-                             :watch? watch?}
-                     :mode :dynamic
-                     :profile profile
-                     :watch? watch?}
-        config (merge config mode-config)
-        frontend-config (create-frontend-config config exts)
-        _ (write-edn-private :frontend-config frontend-config)
-        ctx (assoc ctx :frontend-config frontend-config)
-        services (assoc services :ctx ctx)
-        ring-handler (create-ring-handler services routes)
-        webserver (start-webserver ring-handler web-server)
-        shadow   (if watch?
-                   (let [_ (info "starting shadow-watch..")
-                         profile-full (setup-profile profile)]
-                     (when (:bundle profile-full)
-                       (build exts config profile-full)))
-                   (info "webly is serving a compiled cljs bundle."))]
+                       :ports {:shadow-dev-http-port (shadow-dev-http-port config watch?)
+                               :webly-http-port (get-in web-server [:http :port])
+                               :profile profile
+                               :mode :dynamic
+                               :watch? watch?}
+                       :mode :dynamic
+                       :profile profile
+                       :watch? watch?}
+          config (merge config mode-config)
+          frontend-config (create-frontend-config config exts)
+          _ (write-edn-private :frontend-config frontend-config)
+          ctx (assoc ctx :frontend-config frontend-config)
+          services (assoc services :ctx ctx)
+          ring-handler (create-ring-handler services routes)
+          webserver (start-webserver ring-handler web-server)
+          shadow   (if watch?
+                     (let [_ (info "starting shadow-watch..")
+                           profile-full (setup-profile profile)]
+                       (when (:bundle profile-full)
+                         (build exts config profile-full)))
+                     (info "webly is serving a compiled cljs bundle."))]
     ; return config of started services (needed to stop)
-    {:profile profile
-     :webserver webserver
-     :shadow shadow}))
+      {:profile profile
+       :webserver webserver
+       :shadow shadow})
+    (catch Exception ex
+      (error "webly start error " (ex-message ex))
+      (throw (ex-info "webly start error" {:message (ex-message ex)})))))
 
 (defn stop-webly [{:keys [webserver _websocket shadow]}]
   (info "stopping webly..")
