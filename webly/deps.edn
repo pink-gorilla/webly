@@ -1,7 +1,7 @@
 {:paths ["src"
          "resources"  ; webly resources (svg/img)
          ]
- :deps {org.clojure/clojure {:mvn/version  "1.11.1"}
+ :deps {org.clojure/clojure {:mvn/version  "1.12.4"}
         ; webly/core
         ; shadow-cljs
         ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler
@@ -14,8 +14,8 @@
         ; modular
         org.pinkgorilla/timbre {:mvn/version "0.0.8"}
         org.pinkgorilla/extension {:mvn/version "0.0.16"} ; brings modular
-        org.pinkgorilla/modular {:mvn/version "0.2.69"} ; encoding + appstart
-        org.pinkgorilla/webserver {:mvn/version "0.2.64"}
+        org.pinkgorilla/modular {:mvn/version "0.3.73"} ; encoding + appstart 
+        org.pinkgorilla/webserver {:mvn/version "0.2.67"}
         ;org.pinkgorilla/webserver {:local/root "../../webserver" :deps/manifest :deps}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
         org.pinkgorilla/shadowx {:local/root "../shadowx" :deps/manifest :deps}
@@ -29,7 +29,7 @@
                        ]}
 
   ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
-  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.05.24"}}
+  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2026.01.19"}}
          :main-opts ["-m" "clj-kondo.main"
                      "--fail-level" "error"
                      "--config" "cljkondo.edn"

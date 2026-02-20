@@ -3,13 +3,13 @@
          "resources"]
  :deps {; lazy ui modules:
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
-        org.pinkgorilla/ui-vega {:mvn/version "0.3.220"}
+        org.pinkgorilla/ui-vega {:mvn/version "0.3.221"}
         org.pinkgorilla/pinkie {:mvn/version "0.5.232"}
         org.pinkgorilla/websocket {:mvn/version "0.2.28"}
         ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
-        org.pinkgorilla/ui-repl {:mvn/version "0.1.114"} ; tick encoding start
-        org.pinkgorilla/ui-router {:mvn/version "0.2.40"}
+        org.pinkgorilla/ui-repl {:mvn/version "0.1.115"} ; tick encoding start
+        org.pinkgorilla/ui-router {:mvn/version "0.2.43"}
         ;org.pinkgorilla/ui-router {:local/root "../../ui-router" :deps/manifest :deps}
         org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}
         ;org.pinkgorilla/ui-dialog-keybindings {:local/root "../../ui-dialog-keybindings" :deps/manifest :deps}
@@ -24,7 +24,7 @@
                        ]}
 
             ; https://github.com/clj-kondo/clj-kondo/blob/master/doc/jvm.md
-  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.05.24"}}
+  :lint {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2026.01.19"}}
          :main-opts ["-m" "clj-kondo.main"
                      "--fail-level" "error"
                      "--config" "../webly/cljkondo.edn"
@@ -64,8 +64,9 @@
 
   ; RUN SERVICES (keep running)
   :run {:exec-fn modular.system/start!
-        :exec-args {:profile "jetty"
-                    :services "demo-services.edn"}}
+        :exec-args {:config ["demo-config.edn"] 
+                    :services "demo-services.edn"
+                    :profile "jetty"}}
 
   ;:httpkit {:extra-deps {http-kit/http-kit {:mvn/version "2.5.3"}}
   ;          :exec-args {:profile "httpkit"}}
@@ -73,7 +74,7 @@
   :watch {:exec-args {:profile "watch"}}
 
   :demo-build {:extra-deps {org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
-                            org.pinkgorilla/ui-vega {:mvn/version "0.3.220"}}
+                            org.pinkgorilla/ui-vega {:mvn/version "0.3.221"}}
                :exec-fn demo.test/test}
 
   ;

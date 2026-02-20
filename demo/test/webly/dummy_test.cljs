@@ -1,5 +1,5 @@
 (ns webly.dummy-test
-  (:require 
+  (:require
    [cljs.test :refer [deftest is testing run-tests]]))
 
 (deftest add-test

@@ -38,7 +38,7 @@
                   ; mount needs to wait until config is loaded.
                   (let [resolve-fn (get-resolver)
                         mount-fn  (:mount-fn spa)
-                        _ (println "mounting: " mount-fn)
+                        _ (println "mounting: fn-symbol: " mount-fn)
                         mount-p (resolve-fn mount-fn)
                         _ (println "mount-p: " mount-p)]
                     (-> mount-p

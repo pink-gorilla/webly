@@ -22,7 +22,9 @@
     0))
 
 (defn create-ring-handler [services user-routes]
+  (info "creating ring-handler ..")
   (let [handler (create-handler services user-routes)]
+    (info "ring-handler created!")
     (def ring-handler handler) ; needed by shadow-watch
     handler))
 
