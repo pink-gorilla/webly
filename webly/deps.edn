@@ -18,7 +18,7 @@
         org.pinkgorilla/webserver {:mvn/version "0.2.71"}
         ;org.pinkgorilla/webserver {:local/root "../../webserver" :deps/manifest :deps}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
-        org.pinkgorilla/shadow-x {:mvn/version "0.1.12"}
+        org.pinkgorilla/shadow-x {:mvn/version "0.1.13"}
         ;org.pinkgorilla/shadow-x {:local/root "../../shadow-x/shadowx" :deps/manifest :deps}
         }
  :aliases
