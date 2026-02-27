@@ -5,7 +5,8 @@
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
         org.pinkgorilla/ui-vega {:mvn/version "0.3.221"}
         org.pinkgorilla/pinkie {:mvn/version "0.5.232"}
-        org.pinkgorilla/websocket {:mvn/version "0.2.28"}
+        org.pinkgorilla/oauth2 {:mvn/version "0.3.55"}
+        org.pinkgorilla/websocket {:mvn/version "0.2.31"}
         ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
         org.pinkgorilla/ui-repl {:mvn/version "0.1.115"} ; tick encoding start

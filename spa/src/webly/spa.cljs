@@ -28,7 +28,7 @@
 
 (defn start-app [config]
   (info "webly config after-load")
-  (let [{:keys [ports static? cljs-services spa]} config
+  (let [{:keys [ports static? cljs-services spa version]} config
         services-p  (start-cljs-services cljs-services)]
     (-> services-p
         (p/then (fn [_]

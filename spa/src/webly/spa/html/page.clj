@@ -80,13 +80,13 @@
            :style "position: fixed; left: 0; top: 0; z-index: 9999;"}]]))
 
 (defn app-page-dynamic [frontend-config csrf-token]
-  (let [{:keys [spa theme prefix]} frontend-config]
+  (let [{:keys [spa theme prefix version]} frontend-config]
     (layout spa theme prefix
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
              [:div#app]
              [:div
-              [:script {:src (str prefix "init.js")
+              [:script {:src  (str prefix version "/init.js") ; (str prefix "init.js") ;
                         :type "text/javascript"
                         :onload "webly.init.start ('dynamic');"}]]])))
 

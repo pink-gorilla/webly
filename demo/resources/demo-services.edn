@@ -10,17 +10,24 @@
   :exts {:start (extension/discover (:extension (clip/ref :config)))}
   :transit-tick {:start (transit.type.tick/add-tick-handlers!)}
 
-  :sente-websocket {:start (modular.ws.core/start-websocket-server :jetty)}
-
+  :sente {:start (modular.ws.core/start-websocket-server :jetty)}
+  :token {:start (token.core/start-token-service
+                  {:users {}
+                   :secret "AbHzj834ri9"
+                   :providers {}
+                   :auth-expiry 604800})}
+  
   :webly {:start (webly.spa/start-webly
                   {:exts (clip/ref :exts)
-                   :ctx {:sente (clip/ref :sente-websocket)}}
+                   :ctx {:sente (clip/ref :sente)
+                         :token (clip/ref :token)
+                         }}
                   (clip/ref :config)
                   (:profile #ref [:modular]))
           :stop (webly.spa/stop-webly this)}
 
 
-  :time {:start (demo.time/start-time-sender! (clip/ref :sente-websocket))
+  :time {:start (demo.time/start-time-sender! (clip/ref :sente))
          :stop  (demo.time/stop! this)}
 
  ; :modular-test {:start (println "modular environment: " #ref [:modular])}

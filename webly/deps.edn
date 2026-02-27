@@ -14,11 +14,12 @@
         ; modular
         org.pinkgorilla/timbre {:mvn/version "0.0.8"}
         org.pinkgorilla/extension {:mvn/version "0.0.16"} ; brings modular
-        org.pinkgorilla/modular {:mvn/version "0.3.73"} ; encoding + appstart 
-        org.pinkgorilla/webserver {:mvn/version "0.2.70"}
+        org.pinkgorilla/modular {:mvn/version "0.3.74"} ; encoding + appstart 
+        org.pinkgorilla/webserver {:mvn/version "0.2.71"}
         ;org.pinkgorilla/webserver {:local/root "../../webserver" :deps/manifest :deps}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
-        org.pinkgorilla/shadowx {:local/root "../shadowx" :deps/manifest :deps}
+        org.pinkgorilla/shadow-x {:mvn/version "0.1.12"}
+        ;org.pinkgorilla/shadow-x {:local/root "../../shadow-x/shadowx" :deps/manifest :deps}
         }
  :aliases
  {; https://github.com/weavejester/cljfmt
