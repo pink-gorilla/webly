@@ -23,7 +23,8 @@
                          :token (clip/ref :token)
                          }}
                   (clip/ref :config)
-                  (:profile #ref [:modular]))
+                  (:profile #ref [:modular])
+                  (:version #ref [:modular]))
           :stop (webly.spa/stop-webly this)}
 
 

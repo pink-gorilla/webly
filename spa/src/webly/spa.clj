@@ -54,7 +54,7 @@
     profile
     version]
    (try
-     (info (str "start-webly: [" profile "]"))
+     (info (str "start-webly: profile [" profile "] version [" version "]"))
      (let [web-server (merge default/webserver web-server)
            watch?  (case profile
                      "watch" true
@@ -64,6 +64,7 @@
                         :ports {:shadow-dev-http-port (shadow-dev-http-port config watch?)
                                 :webly-http-port (get-in web-server [:http :port])
                                 :profile profile
+                                :version version
                                 :mode :dynamic
                                 :watch? watch?}
                         :mode :dynamic

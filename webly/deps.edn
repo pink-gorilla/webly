@@ -2,19 +2,10 @@
          "resources"  ; webly resources (svg/img)
          ]
  :deps {org.clojure/clojure {:mvn/version  "1.12.4"}
-        ; webly/core
-        ; shadow-cljs
-        ; shadow-cljs MAY NOT be a dependency in lein deps :tree -> if so, bundler
-        ; will fail because shadow contains core.async which is not compatible with 
-        ; self hosted clojurescript
-        thheller/shadow-cljs {:mvn/version #_"2.28.15" "2.24.1"}  ; newer version breaks ci.
-                              ;:exclusions [org.clojure/tools.reader] ; outdated
-        ;{thheller/shadow-cljsjs "0.0.21"}  ; already referred to from shadow-cljs
-        ;org.clojure/clojurescript {:mvn/version "1.10.879"} ; already referred from shadow-cljs
-        ; modular
+        ; gorilla
         org.pinkgorilla/timbre {:mvn/version "0.0.8"}
         org.pinkgorilla/extension {:mvn/version "0.0.16"} ; brings modular
-        org.pinkgorilla/modular {:mvn/version "0.3.74"} ; encoding + appstart 
+        org.pinkgorilla/modular {:mvn/version "0.3.76"} ; encoding, app-config-services + appstart 
         org.pinkgorilla/webserver {:mvn/version "0.2.71"}
         ;org.pinkgorilla/webserver {:local/root "../../webserver" :deps/manifest :deps}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
