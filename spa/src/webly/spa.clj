@@ -46,7 +46,8 @@
   ([services config profile]
    (start-webly services config profile "default"))
   ([{:keys [exts ctx]
-     :or {ctx {}} :as services}
+     :or {ctx {}} 
+     :as services}
     {:keys [web-server routes]
      :or {web-server {}
           routes []}
@@ -109,8 +110,8 @@
         ext-config {:disabled (or (get-in config [:extension :disabled]) #{})}
         exts (discover ext-config)
         frontend-config (create-frontend-config config exts version)]
-    (write-edn-private :webly-extensions-all (:extensions exts))
-    (write-edn-private :webly-extensions-disabled (:extensions-disabled exts))
+    (write-edn-private :webly-build-extensions-all (:extensions exts))
+    (write-edn-private :webly-build-extensions-disabled (:extensions-disabled exts))
     (write-edn-private :webly-build-config config)
     (let [profile (setup-profile profile)]
       (when (:bundle profile)
