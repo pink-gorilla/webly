@@ -1,7 +1,7 @@
 (ns demo.page.main
   (:require
    ; webly
-   [webly.spa.mode :refer [get-mode]]
+   [shadowx.core :refer [get-mode]]
    ; demo
    [demo.page.main.lazy :refer [demo-lazy]]
    [demo.page.main.route :refer [demo-routing]]

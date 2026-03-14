@@ -88,7 +88,7 @@
              [:div
               [:script {:src  (str prefix version "/init.js") ; (str prefix "init.js") ;
                         :type "text/javascript"
-                        :onload "webly.init.start ('dynamic');"}]]])))
+                        :onload "shadowx.core.start ('webly.spa/start', 'dynamic');"}]]])))
 
 (defn config-prefix-adjust [prefix static-main-path]
   (let [asset-path (str static-main-path prefix)]

@@ -10,7 +10,7 @@
         com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
         ; modular
         org.pinkgorilla/transit-ajax {:mvn/version "0.1.11"} ; transit encoding
-        org.pinkgorilla/modular {:mvn/version "0.3.76"} ; encoding, app-config-services
+        org.pinkgorilla/modular {:mvn/version "0.3.77"} ; encoding, app-config-services
         }
  :aliases
  {:cljfmt {:extra-deps {cljfmt/cljfmt {:mvn/version "0.9.2"}}

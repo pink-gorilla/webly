@@ -5,7 +5,7 @@
    [ajax.core] ; https://github.com/JulianBirch/cljs-ajax
    [transit.io :refer [read-opts]]
    [modular.encoding.edn :refer [read-edn]]
-   [webly.spa.mode :refer [get-resource-path get-mode]]))
+   [shadowx.core :refer [get-resource-path get-mode]]))
 
 (defn GET
   [url params]

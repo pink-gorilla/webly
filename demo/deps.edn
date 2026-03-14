@@ -5,18 +5,18 @@
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
         org.pinkgorilla/ui-vega {:mvn/version "0.3.221"}
         org.pinkgorilla/pinkie {:mvn/version "0.5.232"}
-        org.pinkgorilla/oauth2 {:mvn/version "0.3.55"}
-        org.pinkgorilla/websocket {:mvn/version "0.2.31"}
+        org.pinkgorilla/token {:mvn/version "0.4.67"}
+        org.pinkgorilla/websocket {:mvn/version "0.2.35"}
         ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
-        org.pinkgorilla/ui-repl {:mvn/version "0.1.115"} ; tick encoding start
-        org.pinkgorilla/ui-router {:mvn/version "0.2.43"}
+        org.pinkgorilla/ui-repl {:mvn/version "0.1.116"} ; tick encoding start
+        org.pinkgorilla/ui-router {:mvn/version "0.3.45"}
         ;org.pinkgorilla/ui-router {:local/root "../../ui-router" :deps/manifest :deps}
         org.pinkgorilla/ui-dialog-keybindings {:mvn/version "0.1.12"}
         ;org.pinkgorilla/ui-dialog-keybindings {:local/root "../../ui-dialog-keybindings" :deps/manifest :deps}
         org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
         ;org.pinkgorilla/css-theme {:local/root "../../css-theme" :deps/manifest :deps}
-        org.pinkgorilla/modular {:mvn/version "0.3.76"} 
+        org.pinkgorilla/modular {:mvn/version "0.3.77"} 
         ;org.pinkgorilla/modular {:local/root "../../modular" :deps/manifest :deps}
         org.pinkgorilla/webly {:local/root "../webly" :deps/manifest :deps}}
  :aliases

@@ -2,12 +2,11 @@
   (:require
    [taoensso.timbre :refer-macros [info warn error]]
    [promesa.core :as p]
+   [shadowx.core :refer [shadowx-resolve]]
+   ;[shadowx.build.lazy]
    ; frontend
    [webly.spa.service.config :refer [get-config]]
-   [webly.spa.service :refer [start-cljs-services]]
-   [webly.spa.resolve :refer [get-resolver]]
-   ; webly
-   [shadowx.build.lazy]))
+   [webly.spa.service :refer [start-cljs-services]]))
 
 ;; see:
 ;; https://shadow-cljs.github.io/docs/UsersGuide.html#_lifecycle_hooks
@@ -36,10 +35,9 @@
                   (remove-spinner)
                   (info "mounting webly-app ..")
                   ; mount needs to wait until config is loaded.
-                  (let [resolve-fn (get-resolver)
-                        mount-fn  (:mount-fn spa)
+                  (let [mount-fn  (:mount-fn spa)
                         _ (println "mounting: fn-symbol: " mount-fn)
-                        mount-p (resolve-fn mount-fn)
+                        mount-p (shadowx-resolve mount-fn)
                         _ (println "mount-p: " mount-p)]
                     (-> mount-p
                         (p/then (fn [mount]

@@ -11,6 +11,7 @@
    [shadowx.build.core :refer [build]]
    [shadowx.build.shadow :refer [stop-shadow]]
    [shadowx.default :as shadow-default]
+   [shadowx.core] ; to redefine the ring-handler
    ; spa
    [webly.spa.static :refer [build-static]]
    [webly.spa.service :refer [cljs-services]]
@@ -25,9 +26,11 @@
 
 (defn create-ring-handler [services user-routes]
   (info "creating ring-handler ..")
-  (let [handler (create-handler services user-routes)]
+  (let [user-routes (or user-routes [])
+        handler (create-handler services user-routes)]
     (info "ring-handler created!")
-    (def ring-handler handler) ; needed by shadow-watch
+    (alter-var-root #'shadowx.core/ring-handler (constantly handler))
+    ;(def ring-handler handler) ; needed by shadow-watch
     handler))
 
 (defn create-frontend-config [{:keys [spa prefix ports]
@@ -46,7 +49,7 @@
   ([services config profile]
    (start-webly services config profile "default"))
   ([{:keys [exts ctx]
-     :or {ctx {}} 
+     :or {ctx {}}
      :as services}
     {:keys [web-server routes]
      :or {web-server {}
@@ -91,7 +94,9 @@
         :webserver webserver
         :shadow shadow})
      (catch Exception ex
-       (error "webly start error " (ex-message ex))
+       (error "webly start exception: " (ex-message ex))
+       (error "ex-data: " (ex-data ex))
+       (error "ex: " ex)
        (throw (ex-info "webly start error" {:message (ex-message ex)}))))))
 
 (defn stop-webly [{:keys [webserver _websocket shadow]}]

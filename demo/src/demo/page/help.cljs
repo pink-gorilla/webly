@@ -1,6 +1,6 @@
 (ns demo.page.help
   (:require
-   [webly.spa.mode :refer [get-resource-path]]
+   [shadowx.core :refer [get-resource-path]]
    [demo.helper.ui :refer [link]]))
 
 (defn help-page [match]

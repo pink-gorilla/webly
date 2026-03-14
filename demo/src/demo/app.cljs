@@ -3,7 +3,7 @@
    [frontend.css :refer [css-loader]]
    [frontend.notification :refer [notification-container]]
    [frontend.dialog :refer [modal-container]]
-   [webly.spa.env :refer [get-resource-path]]))
+   [shadowx.core :refer [get-resource-path]]))
 
 (defn wrap-webly [page match]
   [:div

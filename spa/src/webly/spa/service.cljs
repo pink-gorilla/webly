@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :refer-macros [info warn error]]
    [promesa.core :as p]
-   [webly.spa.resolve :refer [get-resolver]]))
+   [shadowx.core :refer [get-resolver]]))
 
 (defn start-cljs-service [resolver {:keys [name config start-fn]}]
   (let [r-p (p/deferred)
