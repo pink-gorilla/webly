@@ -1,9 +1,9 @@
-{:name "reagent-spa"
- :lazy false
- :cljs-namespace [webly.spa]
- :cljs-ns-bindings {'webly.spa {'start webly.spa/start}}
+{:extension/name :reagent-spa
+ :cljs/module :main
+ :cljs/namespace [webly.spa]
+ :cljs/ns-bindings {'webly.spa {'start webly.spa/start}}
  ; runtime
-  
+ 
  :web/routes [["/" {:get webly.spa.handler.app/app-handler
                     :middleware [webserver.middleware.ctx/ctx-middleware]
                     :services #{:frontend-config}}]
