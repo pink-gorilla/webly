@@ -5,7 +5,7 @@
         org.pinkgorilla/ui-highcharts {:mvn/version "0.0.29"}
         org.pinkgorilla/ui-vega {:mvn/version "0.3.221"}
         org.pinkgorilla/pinkie {:mvn/version "0.5.232"}
-        org.pinkgorilla/token {:mvn/version "0.4.67"}
+        org.pinkgorilla/token {:mvn/version "0.4.70"}
         org.pinkgorilla/websocket {:mvn/version "0.2.35"}
         ;org.pinkgorilla/websocket {:local/root "../../websocket" :deps/manifest :deps}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
