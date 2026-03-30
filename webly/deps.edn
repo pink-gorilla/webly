@@ -4,12 +4,12 @@
  :deps {org.clojure/clojure {:mvn/version  "1.12.4"}
         ; gorilla
         org.pinkgorilla/timbre {:mvn/version "0.0.8"}
-        org.pinkgorilla/extension {:mvn/version "0.0.16"} ; brings modular
+        org.pinkgorilla/extension {:mvn/version "0.0.19"} ; brings modular
         org.pinkgorilla/modular {:mvn/version "0.3.77"} ; encoding, app-config-services + appstart 
         org.pinkgorilla/webserver {:mvn/version "0.2.75"}
         ;org.pinkgorilla/webserver {:local/root "../../webserver" :deps/manifest :deps}
         org.pinkgorilla/spa {:local/root "../spa" :deps/manifest :deps}
-        org.pinkgorilla/shadow-x {:mvn/version "0.3.22"}
+        org.pinkgorilla/shadow-x {:mvn/version "0.3.24"}
         ;org.pinkgorilla/shadow-x {:local/root "../../shadow-x/shadowx" :deps/manifest :deps}
         }
  :aliases
