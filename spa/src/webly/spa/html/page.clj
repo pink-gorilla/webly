@@ -96,16 +96,16 @@
     asset-path))
 
 (defn app-page-static [frontend-config csrf-token]
-  (let [{:keys [spa theme prefix]} frontend-config]
+  (let [{:keys [spa theme prefix version]} frontend-config]
     (info "static prefix: " prefix)
     (layout spa theme prefix ; :prefix "/r/"
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
              [:div#app]
              [:div
-              [:script {:src (str prefix "init.js")
+              [:script {:src (str prefix version "/init.js")
                         :type "text/javascript"
-                        :onload "webly.init.start ('static');"}]]])))
+                        :onload "shadowx.core.start ('webly.spa/start', 'static');"}]]])))
 
 
 

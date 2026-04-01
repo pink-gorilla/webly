@@ -17,44 +17,55 @@
 (defn- ensure-directory [path]
   (fs/create-dirs path))
 
-(defn save-resources []
-  (info "exporting resources..")
-  (write-resources-to ".gorilla/static" "public")
-  (fs/move ".gorilla/static/public" ".gorilla/static/r"))
+
 
 (defn copy-pattern [from dest p]
   (let [files (fs/glob from p)]
     (doall (map #(fs/copy % dest {:replace-existing true}) files))))
 
-(defn copy-js []
-  (when (fs/exists? ".gorilla/public")
-    (info "copying .js files..")
-    (copy-pattern ".gorilla/public" resource-path "*.js")
-    (when (fs/exists? ".gorilla/public/cljs-runtime")
-      (copy-pattern ".gorilla/public/cljs-runtime" (str resource-path "cljs-runtime/") "*.js")
-      (copy-pattern ".gorilla/public/cljs-runtime" (str resource-path "cljs-runtime/") "*.js.map"))))
+(defn copy-js [version]
+  (let [js-dir (str ".gorilla/public/" version)
+        dest-dir (str ".gorilla/site/" version "/r/" version)]
+    (when (fs/exists? js-dir)
+      (info "copying .js files..")
+      (ensure-directory dest-dir)
+      (copy-pattern js-dir dest-dir "*.js")
+      (let [runtime-dir (str js-dir "/cljs-runtime")
+            dest-runtime-dir (str dest-dir "/cljs-runtime/")]
+        (when (fs/exists? runtime-dir)
+          (ensure-directory dest-runtime-dir)
+          (copy-pattern runtime-dir dest-runtime-dir "*.js")
+          (copy-pattern runtime-dir dest-runtime-dir "*.js.map"))))))
 
-(defn generate-static-html [frontend-config]
+(defn generate-static-html [frontend-config filename]
   (info "generating static html page ..")
   (let [csrf-token "llXxTmFvjm6KXhKBjY7nemz4GNRwF/ZgZbycGDgw8cdF1B/cbmX5JZElY3MCnyEYUUGCi7Cw3k3mUpMI"
-        filename (str root page-name ".html")]
+        ;filename (str root page-name ".html")
+        ]
     (info "writing static page: " filename)
     (->> (app-page-static frontend-config csrf-token)
          (spit filename))))
 
-(defn write-static-config [opts]
-  (let [filename (str resource-path "config.edn")]
-    (write filename opts)))
+(defn save-resources [dir]
+  (info "exporting resources..")
+  (write-resources-to dir "public")
+  (fs/move (str dir "/public") (str dir "/r/"))
+  )
 
-(defn build-static [frontend-config]
-  (ensure-directory ".gorilla")
-  (fs/delete-tree ".gorilla/static")
-  (ensure-directory ".gorilla/static")
-  (save-resources)
-  (write-static-config frontend-config)
-  (generate-static-html frontend-config)
- ; (ensure-directory resource-path)
-  (ensure-directory (str resource-path "cljs-runtime"))
-  (copy-js)
-;  
+(defn build-static [frontend-config version]
+  (let [dir (str ".gorilla/site/" version)]
+    (fs/delete-tree dir)
+    (ensure-directory dir)
+    ; 1. index.html
+    (generate-static-html frontend-config (str dir "/index.html"))
+    ; 2. resources from classpath
+    (save-resources dir)  
+    ; 3. compiled cljs
+    (copy-js version)
+    ; 4. config.edn
+    (write (str dir "/r/config.edn") frontend-config)
+    
+    
+    )
+   
   )

@@ -7,4 +7,4 @@
 (require '[babashka.http-server :as http-server])
 
 (http-server/exec {:port 8080
-              :dir "./.gorilla/static"})
+              :dir "./.gorilla/site/prod1"})
