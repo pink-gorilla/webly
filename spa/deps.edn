@@ -8,7 +8,7 @@
         ;day8.re-frame/http-fx {:mvn/version "0.2.3"}  ; reframe based http requests
         cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; needed for re-frame/http-fx
         com.cemerick/url {:mvn/version "0.1.1"}  ; url query-strings
-        org.pinkgorilla/css-theme {:mvn/version "0.1.8"}
+        org.pinkgorilla/css-theme {:mvn/version "0.1.13"}
         ; modular
         org.pinkgorilla/transit-ajax {:mvn/version "0.1.11"} ; transit encoding
         org.pinkgorilla/modular {:mvn/version "0.3.77"} ; encoding, app-config-services

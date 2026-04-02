@@ -3,7 +3,6 @@
    [taoensso.timbre :refer-macros [info warn error]]
    [promesa.core :as p]
    [shadowx.core :refer [shadowx-resolve]]
-   ;[shadowx.build.lazy]
    ; frontend
    [webly.spa.service.config :refer [get-config]]
    [webly.spa.service :refer [start-cljs-services]]))

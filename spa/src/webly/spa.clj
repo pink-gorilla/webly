@@ -115,9 +115,8 @@
         ext-config {:disabled (or (get-in config [:extension :disabled]) #{})}
         exts (discover ext-config)
         frontend-config (create-frontend-config config exts version)
-        frontend-config (assoc frontend-config :prefix "./r/")] 
-    ;(write-edn-private :webly-build-config config)
-    (write-edn-private :webly-build-frontend-config frontend-config)
+        frontend-config (assoc frontend-config :prefix "./r/")]
+    (write-edn-private :reagent-spa-frontend-config frontend-config)
     (let [profile-id profile
           profile (setup-profile profile-id)]
       (when (:bundle profile)

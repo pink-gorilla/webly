@@ -41,6 +41,14 @@
                 {:kb "win-y l" :handler [:login/dialog] :desc "login"}
                 {:kb "win-z l" :handler [:login/dialog] :desc "login"}]
 
+ 
+  :theme {; test if we can add thems in the config.
+          :available {:emoji-2 {true ["@icon/fontisto-emoji/fontisto-emoji.css"]
+                                false []}}
+          :current {:emoji-2    false
+                    :highcharts "grid-light" ; change theme in app config for an extension that by default uses different theme.
+                    }}
+
 
 
 

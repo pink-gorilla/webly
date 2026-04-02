@@ -17,8 +17,6 @@
 (defn- ensure-directory [path]
   (fs/create-dirs path))
 
-
-
 (defn copy-pattern [from dest p]
   (let [files (fs/glob from p)]
     (doall (map #(fs/copy % dest {:replace-existing true}) files))))
@@ -49,8 +47,7 @@
 (defn save-resources [dir]
   (info "exporting resources..")
   (write-resources-to dir "public")
-  (fs/move (str dir "/public") (str dir "/r/"))
-  )
+  (fs/move (str dir "/public") (str dir "/r/")))
 
 (defn build-static [frontend-config version]
   (let [dir (str ".gorilla/site/" version)]
@@ -59,13 +56,8 @@
     ; 1. index.html
     (generate-static-html frontend-config (str dir "/index.html"))
     ; 2. resources from classpath
-    (save-resources dir)  
+    (save-resources dir)
     ; 3. compiled cljs
     (copy-js version)
     ; 4. config.edn
-    (write (str dir "/r/config.edn") frontend-config)
-    
-    
-    )
-   
-  )
+    (write (str dir "/r/config.edn") frontend-config)))

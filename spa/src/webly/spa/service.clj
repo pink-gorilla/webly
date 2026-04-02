@@ -11,9 +11,21 @@
 (defn select-service [{:keys [cljs-service name]}]
   (assoc cljs-service :name name))
 
+(defn add-ext-name [ext]
+  (assoc ext
+         :name
+         (or (:extension/name ext)
+             (when (:name ext)
+               (if (string? (:name ext))
+                 (keyword (:name ext))
+                 (:name ext)))
+             :unknown)))
+
 (defn- get-cljs-services [exts]
-  (->> (get-extensions exts {:name "unknown"
-                             :cljs-service nil})
+  (->> (get-extensions exts {:cljs-service nil
+                             :name nil
+                             :extension/name nil})
+       (map add-ext-name)
        (filter cljs-service?)
        (map select-service)
        (into [])))

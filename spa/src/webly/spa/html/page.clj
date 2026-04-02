@@ -39,12 +39,16 @@
 
 ;; APP
 
-(defn head [{:keys [title loading-image-url icon] :as _spa}
-            theme
-            prefix
-            ;google-analytics
-            ]
-  (let [head [:head
+(defn get-theme [frontend-config]
+  (->> frontend-config
+       :cljs-services
+       (filter #(= :theme (:name %)))
+       first
+       :config))
+
+(defn head [{:keys [spa prefix] :as frontend-config}]
+  (let [{:keys [title loading-image-url icon]} spa
+        head [:head
               [:meta {:http-equiv "Content-Type"
                       :content "text/html; charset=utf-8"}]
               [:meta {:name "viewport"
@@ -62,26 +66,25 @@
               ;(script-tag-config google-analytics)
               ]]
     (into head
-          (css-links prefix theme))))
+          (css-links prefix (get-theme frontend-config)))))
 
-(defn layout [{:keys [spinner] :as spa}
-              theme
-              prefix
+(defn layout [{:keys [spa theme prefix] :as frontend-config}
               #_google-analytics
               page]
-  (page/html5
-   {:mode :html}
-   (head spa theme prefix #_google-analytics)
-   [:body.loading
-    (loading (str prefix spinner))
-    [:div#webly page]
-    [:div {; required by glide data grid.
-           :id "portal"
-           :style "position: fixed; left: 0; top: 0; z-index: 9999;"}]]))
+  (let [{:keys [spinner]} spa]
+    (page/html5
+     {:mode :html}
+     (head frontend-config)
+     [:body.loading
+      (loading (str prefix spinner))
+      [:div#webly page]
+      [:div {; required by glide data grid.
+             :id "portal"
+             :style "position: fixed; left: 0; top: 0; z-index: 9999;"}]])))
 
 (defn app-page-dynamic [frontend-config csrf-token]
-  (let [{:keys [spa theme prefix version]} frontend-config]
-    (layout spa theme prefix
+  (let [{:keys [prefix version]} frontend-config]
+    (layout frontend-config
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
              [:div#app]
@@ -96,9 +99,9 @@
     asset-path))
 
 (defn app-page-static [frontend-config csrf-token]
-  (let [{:keys [spa theme prefix version]} frontend-config]
+  (let [{:keys [prefix version]} frontend-config]
     (info "static prefix: " prefix)
-    (layout spa theme prefix ; :prefix "/r/"
+    (layout frontend-config ; :prefix "/r/"
             [:div
              [:div#sente-csrf-token {:data-csrf-token csrf-token}]
              [:div#app]
