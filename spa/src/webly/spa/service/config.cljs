@@ -4,7 +4,7 @@
    [promesa.core :as p]
    [ajax.core] ; https://github.com/JulianBirch/cljs-ajax
    [transit.io :refer [read-opts]]
-   [modular.encoding.edn :refer [read-edn]]
+   [ednx.edn :refer [read-edn]]
    [shadowx.core :refer [get-resource-path get-mode]]))
 
 (defn GET
